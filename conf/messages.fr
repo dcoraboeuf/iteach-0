@@ -1,3 +1,0 @@
-app.title = iTeach
-
-page.index = Page d'acceuil
