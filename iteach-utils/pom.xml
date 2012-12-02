@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>net.iteach</groupId>
+		<artifactId>iteach-parent</artifactId>
+		<version>DEV-SNAPSHOT</version>
+	</parent>
+	
+	<artifactId>iteach-utils</artifactId>
+	
+	<name>iteach Utils</name>
+	<description>Common classes for all divisions of the application</description>
+	
+	<dependencies>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jstring</groupId>
+			<artifactId>jstring</artifactId>
+		</dependency>
+	</dependencies>
+</project>

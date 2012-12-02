@@ -34,7 +34,7 @@
 				<script src="static/scripts/${scriptfile}" type="text/javascript"></script>
 			</#list>
 			
-			<title>TODO iTeach - TODO Version - TODO Title</title>
+			<title><@lh key="app.title"/> - TODO Version - TODO Title</title>
 	    </head>
 		<body>
 			<#nested>
@@ -46,7 +46,7 @@
 	<@layout_root pageId=pageId style=style script=script scripts=scripts modules=modules title=title>
 		<section class="page">
 			<header>
-				<span id="page-title" class="page-title">TODO iTeach</span>
+				<h1 class="page-title"><@lh key="app.title"/></h1>
 				<div class="page-meta">
 					TODO Login
 					TODO Settings

@@ -15,6 +15,12 @@
 	<name>iteach Web application</name>
 	
 	<dependencies>
+		<!-- This -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>iteach-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -56,6 +62,12 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<scope>provided</scope>
+		</dependency>
+		<!-- Runtime -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- Logging -->
 		<dependency>
