@@ -18,8 +18,14 @@
 		<!-- This -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>iteach-core</artifactId>
+			<artifactId>iteach-service-api</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>iteach-service-impl</artifactId>
+			<version>${project.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- Spring -->
 		<dependency>

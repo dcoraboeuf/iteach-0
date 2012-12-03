@@ -61,6 +61,8 @@
 	<module>iteach-web</module>
 	<module>iteach-utils</module>
 	<module>iteach-core</module>
+	<module>iteach-service-api</module>
+	<module>iteach-service-impl</module>
 	</modules>
 
 	<dependencyManagement>
