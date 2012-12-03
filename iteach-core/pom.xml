@@ -21,6 +21,15 @@
 			<artifactId>iteach-utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- Model -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+		</dependency>
 	</dependencies>
 	
 	<build>

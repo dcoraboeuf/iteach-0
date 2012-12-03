@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import net.iteach.core.model.Ack;
 import net.sf.jstring.Strings;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,14 @@ public class LocalisationController {
     }
     
     @RequestMapping(value = "/language/{language}", method = RequestMethod.POST)
-    public void setLanguage(String language) {
+    public Ack setLanguage(String language) {
     	// TODO Checks if the language is recognized
     	// Sets the locale
     	Locale locale = new Locale(language);
     	// Changes the locale
 		LocaleContextHolder.setLocale(locale, true);
+		// OK
+		return Ack.OK;
     }
 
     @RequestMapping(value = "/localization", method = RequestMethod.GET)
