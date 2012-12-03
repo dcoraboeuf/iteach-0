@@ -1,0 +1,10 @@
+<dataset>
+
+	<TEACHER id="1" openid="teacher1@test.com" firstName="Mr" lastName="Teacher1" />
+	<TEACHER id="2" openid="teacher2@test.com" firstName="Mr" lastName="Teacher2" />
+	
+	<SCHOOL id="1" teacher="1" name="My school 1" />
+	<SCHOOL id="2" teacher="2" name="My school 2" />
+	<SCHOOL id="3" teacher="1" name="My school 3" />
+
+</dataset>
