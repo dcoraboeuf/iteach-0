@@ -3,7 +3,7 @@
 <#macro lh key>${loc("${key}")?html}</#macro>
 
 <#macro languages>
-	<select id="language">
+	<select id="language" onchange="application.changeLanguage(this)">
 		<#assign selectedLanguage = locSelected() />
 		<@select_option value="en" text=loc("language.en") selection=selectedLanguage />
 		<@select_option value="fr" text=loc("language.fr") selection=selectedLanguage />

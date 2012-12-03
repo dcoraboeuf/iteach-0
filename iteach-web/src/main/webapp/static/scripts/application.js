@@ -91,6 +91,20 @@ var application = function () {
 		displayError(text);
 	}
 	
+	function changeLanguage (input) {
+		var language = input.getValue();
+		var url = "gui/language/" + language;
+		$.get (url, function (data) {
+				if (data.success) {
+					location.reload();
+				} else {
+					application.displayError (loc('message.cannotChangeLanguage'));
+				}
+			})
+			.error(function (jqXHR, textStatus, errorThrown) {
+				myconfig.displayAjaxError (loc('message.cannotChangeLanguage'), jqXHR, textStatus, errorThrown);
+			});
+	}
 
 	function validate (selector, test) {
 		if (test) {
@@ -108,6 +122,7 @@ var application = function () {
 		displayError: displayError,
 		displayAjaxError: displayAjaxError,
 		onConfirmedAction: onConfirmedAction,
+		changeLanguage: changeLanguage,
 		validateTextAsName: function (selector) {
 			var value = $(selector).val();
 			var trimmedValue = value.trim();
