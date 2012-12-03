@@ -1,3 +1,12 @@
 <#-- i18n macros -->
 
 <#macro lh key>${loc("${key}")?html}</#macro>
+
+<#macro languages>
+	<select id="language">
+		<#assign selectedLanguage = locSelected() />
+		<@select_option value="en" text=loc("language.en") selection=selectedLanguage />
+		<@select_option value="fr" text=loc("language.fr") selection=selectedLanguage />
+		<@select_option value="de" text=loc("language.de") selection=selectedLanguage />
+	</select>
+</#macro>
