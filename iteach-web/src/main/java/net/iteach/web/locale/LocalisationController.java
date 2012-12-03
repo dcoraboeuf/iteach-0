@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jstring.Strings;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class LocalisationController {
@@ -26,8 +28,17 @@ public class LocalisationController {
     public LocalisationController(Strings strings) {
         this.strings = strings;
     }
+    
+    @RequestMapping(value = "/language/{language}", method = RequestMethod.POST)
+    public void setLanguage(String language) {
+    	// TODO Checks if the language is recognized
+    	// Sets the locale
+    	Locale locale = new Locale(language);
+    	// Changes the locale
+		LocaleContextHolder.setLocale(locale, true);
+    }
 
-    @RequestMapping(value = "/localization")
+    @RequestMapping(value = "/localization", method = RequestMethod.GET)
     public void localisation(Locale locale, HttpServletResponse response) throws IOException {
         // Locale
         if (locale == null) {

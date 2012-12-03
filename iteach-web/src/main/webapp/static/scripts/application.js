@@ -93,8 +93,8 @@ var application = function () {
 	
 	function changeLanguage (input) {
 		var language = input.getValue();
-		var url = "gui/language/" + language;
-		$.get (url, function (data) {
+		var url = "language/" + language;
+		$.post (url, function (data) {
 				if (data.success) {
 					location.reload();
 				} else {
