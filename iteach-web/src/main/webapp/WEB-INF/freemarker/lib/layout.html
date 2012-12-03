@@ -58,7 +58,9 @@
 				<div class="page-meta">
 					TODO Login
 					TODO Settings
-					TODO Version
+					<#if showVersion>
+						<span class="page-version"><@lh key="app.version" /></span>
+					</#if>
 				</div>
 			</header>
 			<section class="content">
