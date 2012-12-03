@@ -31,12 +31,12 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<mvc:default-servlet-handler/>
 
 	<!-- Interceptors -->
-	<!--
 	<mvc:interceptors>
 		<ref bean="localeInterceptor" />
+		<!--
 		<ref bean="uiInterceptor" />
+		-->
 	</mvc:interceptors>
-	-->
 
 	<!-- Exception handler -->
 
