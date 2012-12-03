@@ -1,5 +1,13 @@
 <#include "/lib/common.html" >
 
+<#macro layout_title pageId title="">
+	<#if title == "">
+		<@lh key = "page." + pageId />
+	<#else>
+		${title?html}
+	</#if>
+</#macro>
+
 <#macro layout_root pageId style=false script=false scripts=[] modules=[] title="">
 	<!DOCTYPE html>
 	<#-- TODO Language -->
@@ -34,7 +42,7 @@
 				<script src="static/scripts/${scriptfile}" type="text/javascript"></script>
 			</#list>
 			
-			<title><@lh key="app.title"/> - TODO Version - TODO Title</title>
+			<title><@lh key="app.title"/> - TODO Version - <@layout_title pageId=pageId title=title /></title>
 	    </head>
 		<body>
 			<#nested>
@@ -64,7 +72,7 @@
 	<@layout_basic pageId=pageId style=style script=script scripts=scripts modules=modules title=title>
 		<#local content><#nested></#local>
 		<article class="content">
-			<h1 id="content-title">TODO Content title</h1>
+			<h1 id="content-title"><@layout_title pageId=pageId title=title /></h1>
 			<div class="content">
 				${content}
 			</div>
