@@ -10,18 +10,16 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
 	<context:component-scan base-package="net.iteach" />
 	
-	<!-- TODO Compatibility layer with Lombok -->
-	<!-- bean id="jacksonObjectMapper" class="com.netbeetle.jackson.ObjectMapperFactory" factory-method="createObjectMapper" /-->
+	<!-- Compatibility layer with Lombok -->
+	<bean id="jacksonObjectMapper" class="com.netbeetle.jackson.ObjectMapperFactory" factory-method="createObjectMapper" />
 
 	<mvc:annotation-driven>
-		<!-- TODO Uncomment after activation of Lombok compatibility
 		<mvc:message-converters>
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter" />
 			<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
 				<property name="objectMapper" ref="jacksonObjectMapper" />
 			</bean>
 		</mvc:message-converters>
-		-->
 	</mvc:annotation-driven>
 	
 	<!-- Static resources -->
@@ -82,9 +80,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	
 	<!-- JSON configuration -->
 	<bean id="jsonViewResolver" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
-		<!-- TODO Uncomment after activation of Lombok compatibility
 		<property name="objectMapper" ref="jacksonObjectMapper" />
-		-->
 	</bean>
 
 </beans>
