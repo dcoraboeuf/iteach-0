@@ -1,2 +1,56 @@
 /* Common styles */
 
+@body-color-bg: #F0F0F0;
+@body-margin: 4px;
+
+@page-title-color-bg: black;
+@page-title-color-fg: white;
+
+@content-title-color-fg: #D24939;
+@content-title-color-bg: white;
+
+body {
+	font-family: sans-serif;
+	background-color: @body-color-bg;
+	margin: 0px;
+}
+
+
+/* layout_basic */
+
+section.page-title {
+	background-color: @page-title-color-bg;
+	color: @page-title-color-fg;
+	padding: @body-margin @body-margin * 2 @body-margin @body-margin *2;
+	span.page-title {
+		font-size: 200%;
+		font-weight: bold;
+		font-family: serif;
+	}
+	div.page-meta {
+		display: inline;
+		float: right;
+		position: relative;
+		top: 10px;
+		right: 15px;
+	}
+}
+
+/* layout_std */
+article.content {
+	> header {
+		padding-left: @body-margin;
+		color: @content-title-color-fg;
+		background-color: @content-title-color-bg;
+		font-weight: bold;
+	}
+	> section.content {
+		margin: @body-margin;
+	}
+}
+
+/* Inline form */
+
+form.button {
+	display: inline;
+}
