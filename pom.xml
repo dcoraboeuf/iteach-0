@@ -53,6 +53,7 @@
 		<springSecurityVersion>3.1.1.RELEASE</springSecurityVersion>
 		<slf4jVersion>1.6.1</slf4jVersion>
 		<groovyVersion>2.0.5</groovyVersion>
+		<lombokVersion>0.11.4</lombokVersion>
 		<!-- General -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -105,7 +106,7 @@
 			<dependency>
 			    <groupId>org.projectlombok</groupId>
 			    <artifactId>lombok</artifactId>
-			    <version>0.11.4</version>
+			    <version>${lombokVersion}</version>
 			</dependency>
 			<!-- JString -->
 			<dependency>
@@ -336,6 +337,26 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>2.3.1</version>
+					<configuration>
+						<compilerId>groovy-eclipse-compiler</compilerId>
+						<verbose>true</verbose>
+						<compilerArguments>
+							<javaAgentClass>lombok.core.Agent</javaAgentClass>
+						</compilerArguments>
+						<fork>true</fork>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.codehaus.groovy</groupId>
+							<artifactId>groovy-eclipse-compiler</artifactId>
+							<version>2.7.0-01</version>
+						</dependency>
+						<dependency>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombokVersion}</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -351,18 +372,6 @@
 					<groupId>org.mortbay.jetty</groupId>
 					<artifactId>jetty-maven-plugin</artifactId>
 					<version>7.6.3.v20120416</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.gmaven</groupId>
-					<artifactId>gmaven-plugin</artifactId>
-					<version>1.4</version>
-					<dependencies>
-						<dependency>
-							<groupId>org.codehaus.groovy</groupId>
-							<artifactId>groovy</artifactId>
-							<version>${groovyVersion}</version>
-						</dependency>
-					</dependencies>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
