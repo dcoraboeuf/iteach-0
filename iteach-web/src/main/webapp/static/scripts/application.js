@@ -92,18 +92,14 @@ var application = function () {
 	}
 	
 	function changeLanguage (input) {
-		var language = input.getValue();
-		var url = "language/" + language;
-		$.post (url, function (data) {
-				if (data.success) {
-					location.reload();
-				} else {
-					application.displayError (loc('message.cannotChangeLanguage'));
-				}
-			})
-			.error(function (jqXHR, textStatus, errorThrown) {
-				myconfig.displayAjaxError (loc('message.cannotChangeLanguage'), jqXHR, textStatus, errorThrown);
-			});
+		var lang = input.value;
+		if (location.search.indexOf("language") > -1) {
+	    	location.search = location.search.replace(/language=[a-z][a-z]/, "language=" + lang);
+		} else if (location.search == "") {
+			location.href += "?language=" + lang;
+		} else {
+			location.href += "&language=" + lang;
+		}
 	}
 
 	function validate (selector, test) {
