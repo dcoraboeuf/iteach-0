@@ -3,7 +3,7 @@
 
 	<environment name="dev">
 		<!-- Application ID (formatted CB_ACCOUNT/APPNAME) -->
-		<appid>${iteach.account}/iteach-dev</appid>
+		<appid>ACCOUNT/iteach-dev</appid>
 
 		<!-- DataSources (use names refererenced via <resource-ref> in WEB-INF/web.xml) -->
 		<resource name="jdbc/iteach" auth="Container" type="javax.sql.DataSource">
