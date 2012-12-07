@@ -181,6 +181,16 @@
 				<artifactId>spring-security-ldap</artifactId>
 				<version>${springSecurityVersion}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-openid</artifactId>
+				<version>${springSecurityVersion}</version>
+			</dependency>
+			<dependency>
+			    <groupId>net.sourceforge.nekohtml</groupId>
+			    <artifactId>nekohtml</artifactId>
+			    <version>1.9.17</version>
+			</dependency>
 			<!-- AOP -->
 			<dependency>
 				<groupId>org.aspectj</groupId>
