@@ -56,7 +56,9 @@
 			<section class="page-title">
 				<span class="page-title"><@lh key="app.title"/></span>
 				<div class="page-meta">
-					<@security />
+					<#if showSecurity>
+						<@security />
+					</#if>
 					<#if showLanguage>
 						<@languages />
 					</#if>
