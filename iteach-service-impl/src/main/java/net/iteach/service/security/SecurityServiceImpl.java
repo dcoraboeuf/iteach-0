@@ -34,6 +34,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 		params.addValue("firstName", firstName);
 		params.addValue("lastName", lastName);
 		// Mode
+		params.addValue("mode", mode.name());
 		if (mode == AuthenticationMode.openid) {
 			params.addValue("identifier", identifier);
 			params.addValue("password", "");
@@ -44,7 +45,7 @@ public class SecurityServiceImpl extends AbstractServiceImpl implements Security
 			throw new UnknownAuthenticationModeException(mode);
 		}
 		// Insert the user
-		getNamedParameterJdbcTemplate().update(SQL.TEACHER_CREATE, params);
+		getNamedParameterJdbcTemplate().update(SQL.USER_CREATE, params);
 	}
 
 }
