@@ -16,7 +16,7 @@ import net.iteach.core.model.SchoolSummary;
 import net.iteach.service.db.SQL;
 
 @Service
-public class SchoolServiceImpl extends AbstractDaoService implements
+public class SchoolServiceImpl extends AbstractServiceImpl implements
 		SchoolService {
 
 	@Autowired
