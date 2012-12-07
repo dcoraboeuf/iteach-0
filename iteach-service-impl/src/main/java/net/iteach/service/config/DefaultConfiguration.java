@@ -1,7 +1,7 @@
 package net.iteach.service.config;
 
-import net.iteach.core.security.DefaultSecurityUtils;
 import net.iteach.core.security.SecurityUtils;
+import net.iteach.service.security.DefaultSecurityUtils;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,7 @@
-package net.iteach.core.security;
+package net.iteach.service.security;
+
+import net.iteach.core.security.SecurityUtils;
+import net.iteach.core.security.User;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;

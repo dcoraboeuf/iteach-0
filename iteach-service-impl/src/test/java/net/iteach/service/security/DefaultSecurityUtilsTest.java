@@ -1,9 +1,10 @@
-package net.iteach.core.security;
+package net.iteach.service.security;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 
 import org.junit.Test;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
