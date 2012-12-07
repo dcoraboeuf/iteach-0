@@ -33,6 +33,20 @@ section.page-title {
 		position: relative;
 		top: 10px;
 		right: 15px;
+		.page-nav-item {
+			margin-right: 10px;
+		}
+		a {
+			.page-nav-item;
+			text-decoration: none;
+			color: @page-title-color-fg;
+			&.app-settings {
+				background-image: url('../images/cog.png');
+				background-repeat: no-repeat;
+				background-position: left center;
+				padding-left: 20px;
+			}
+		}
 	}
 }
 
@@ -47,6 +61,24 @@ article.content {
 	> section.content {
 		margin: @body-margin;
 	}
+}
+
+/* Security */
+
+.sec-login-logout {
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 20px;
+}
+
+a.sec-logout {
+	.sec-login-logout;
+	background-image: url('../images/disconnect.png');
+}
+
+a.sec-login {
+	.sec-login-logout;
+	background-image: url('../images/connect.png');
 }
 
 /* Inline form */
