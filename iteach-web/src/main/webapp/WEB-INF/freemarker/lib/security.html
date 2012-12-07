@@ -1,0 +1,13 @@
+<#include "/lib/i18n.html" />
+
+<#macro security>
+	<#if secLogged()>
+		<!-- Display name & menu -->
+		<span class="sec-name">${ secDisplayName()?html }</span>
+		<!-- Logout -->
+		<a class="sec-logout" href="logout"><@lh key="app.logout" /></a>
+	<#else>
+		<!-- Login -->
+		<a class="sec-login" href="login"><@lh key="app.login" /></a>
+	</#if>
+</#macro>

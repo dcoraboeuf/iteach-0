@@ -42,6 +42,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 			<map>
 				<entry key="loc" value-ref="fnLoc" />
 				<entry key="locSelected" value-ref="fnLocSelected" />
+				<entry key="secLogged" value-ref="fnSecLogged" />
+				<entry key="secDisplayName" value-ref="fnSecDisplayName" />
 				<!--
 				<entry key="loclink" value-ref="fnLocLink" />
 				<entry key="ellipsis" value-ref="fnEllipsis" />
@@ -49,8 +51,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 				<entry key="chk_app_fn" value-ref="fnSecChkAppFn" />
 				<entry key="chk_env_fn" value-ref="fnSecChkEnvFn" />
 				<entry key="secAllowLogin" value-ref="fnSecAllowLogin" />
-				<entry key="secLogged" value-ref="fnSecLogged" />
-				<entry key="secUserName" value-ref="fnSecUserName" />
 				<entry key="secIsAdmin" value-ref="fnSecIsAdmin" />
 				<entry key="settingsAppName" value-ref="fnSettingsAppName" />
 				-->
@@ -60,6 +60,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	
 	<bean id="fnLoc" class="net.iteach.web.support.fm.FnLoc" />
 	<bean id="fnLocSelected" class="net.iteach.web.support.fm.FnLocSelected" />
+	<bean id="fnSecLogged" class="net.iteach.web.support.fm.FnSecLogged" />
+	<bean id="fnSecDisplayName" class="net.iteach.web.support.fm.FnSecDisplayName" />
 	<!--
 	<bean id="fnLocLink" class="net.myconfig.web.support.fm.FnLocLink" />
 	<bean id="fnEllipsis" class="net.myconfig.web.support.fm.FnEllipsis" />
@@ -67,8 +69,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<bean id="fnSecChkAppFn" class="net.myconfig.web.support.fm.security.FnSecChkAppFn" />
 	<bean id="fnSecChkEnvFn" class="net.myconfig.web.support.fm.security.FnSecChkEnvFn" />
 	<bean id="fnSecAllowLogin" class="net.myconfig.web.support.fm.security.FnSecAllowLogin" />
-	<bean id="fnSecLogged" class="net.myconfig.web.support.fm.security.FnSecLogged" />
-	<bean id="fnSecUserName" class="net.myconfig.web.support.fm.security.FnSecUserName" />
 	<bean id="fnSecIsAdmin" class="net.myconfig.web.support.fm.security.FnSecIsAdmin" />
 	<bean id="fnSettingsAppName" class="net.myconfig.web.support.fm.FnSettingsAppName" />
 	-->

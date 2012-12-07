@@ -21,7 +21,10 @@
 			<artifactId>iteach-utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- Model -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
 		<dependency>
 		    <groupId>org.projectlombok</groupId>
 		    <artifactId>lombok</artifactId>
