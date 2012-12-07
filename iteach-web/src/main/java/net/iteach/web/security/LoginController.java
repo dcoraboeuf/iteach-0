@@ -1,4 +1,4 @@
-package net.iteach.web.home;
+package net.iteach.web.security;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

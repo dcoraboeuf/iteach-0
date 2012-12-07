@@ -1,0 +1,20 @@
+<#include "/lib/layout.html">
+
+<@layout_basic pageId="registrationForm" showSecurity=false>
+	<form action="registration" method="POST">
+		<input id="mode" type="text" name="mode" value="${mode?html}" /> 
+		<table>
+			<tr>
+				<td><@lh key="registration.identifier" /></td>
+				<td>
+					<input id="identifier" name="identifier" type="text" value="${identifier?html}" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="submit" value="<@lh key='registration.submit' />" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</@layout_basic>
