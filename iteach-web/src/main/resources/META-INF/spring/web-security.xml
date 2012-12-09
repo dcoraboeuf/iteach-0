@@ -9,14 +9,14 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<http auto-config="true">
 		<intercept-url pattern="/gui/**" access="ROLE_TEACHER,ROLE_ADMIN"/>
-		<openid-login login-page="/login" authentication-failure-handler-ref="openIDAuthenticationFailureHandler" />
+		<openid-login login-page="/login" authentication-failure-handler-ref="openIDAuthenticationFailureHandler" user-service-ref="openIDUserService" />
 		<logout logout-url="/logout"/>
 	</http>
 	
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
-				<user name="http://openid-provider.appspot.com/damien.coraboeuf" authorities="ROLE_ADMIN"/>
+				<user name="admin" password="admin" authorities="ROLE_ADMIN"/>
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
