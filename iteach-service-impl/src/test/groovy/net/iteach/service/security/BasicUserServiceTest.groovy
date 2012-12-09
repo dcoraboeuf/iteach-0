@@ -9,24 +9,34 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import net.iteach.api.SchoolService;
 import net.iteach.test.AbstractIntegrationTest;
 
-class OpenIDUserServiceTest extends AbstractIntegrationTest {
+class BasicUserServiceTest extends AbstractIntegrationTest {
 	
 	@Autowired
-	private OpenIDUserService service
+	private BasicUserService service
 	
 	@Test
-	void ok() {
-		def details = service.loadUserByUsername("test.openid")
+	void admin() {
+		def details = service.loadUserByUsername("admin")
 		assert details != null
-		assert details.getPassword() == ""
-		assert details.getUsername() == "Mr John"
+		assert details.getPassword() == "admin"
+		assert details.getUsername() == "The Administrator"
+		assert details.getAuthorities() == AuthorityUtils.createAuthorityList("ROLE_TEACHER")
+		assert details.isEnabled()
+	}
+	
+	@Test
+	void user() {
+		def details = service.loadUserByUsername("user")
+		assert details != null
+		assert details.getPassword() == "user"
+		assert details.getUsername() == "A User"
 		assert details.getAuthorities() == AuthorityUtils.createAuthorityList("ROLE_TEACHER")
 		assert details.isEnabled()
 	}
 	
 	@Test(expected = UsernameNotFoundException.class)
 	void not_found() {
-		service.loadUserByUsername("test.notfound")
+		service.loadUserByUsername("password.notfound")
 	}
 
 }

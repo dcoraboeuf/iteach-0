@@ -14,11 +14,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	</http>
 	
 	<authentication-manager>
-		<authentication-provider>
-			<user-service>
-				<user name="admin" password="admin" authorities="ROLE_ADMIN"/>
-			</user-service>
-		</authentication-provider>
+		<authentication-provider user-service-ref="basicUserService" />
 	</authentication-manager>
 
 </beans:beans>

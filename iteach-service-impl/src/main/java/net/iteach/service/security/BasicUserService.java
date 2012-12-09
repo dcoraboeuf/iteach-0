@@ -12,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
-@Service("openIDUserService")
-public class OpenIDUserService extends AbstractUserService {
+@Service("basicUserService")
+public class BasicUserService extends AbstractUserService {
 
 	@Autowired
-	public OpenIDUserService(DataSource dataSource) {
-		super(dataSource, SQL.USER_BY_OPENID);
+	public BasicUserService(DataSource dataSource) {
+		super(dataSource,SQL.USER_BY_PASSWORD);
 	}
 	
 	@Override
@@ -26,9 +26,9 @@ public class OpenIDUserService extends AbstractUserService {
 			@Override
 			public UserAccount mapRow(ResultSet rs, int rowNum) throws SQLException {
 				return new UserAccount(
-						AuthenticationMode.openid,
+						AuthenticationMode.password,
 						identifier,
-						"",
+						rs.getString("password"),
 						rs.getString("email"),
 						rs.getString("firstName"),
 						rs.getString("lastName"));

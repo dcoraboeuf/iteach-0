@@ -2,23 +2,17 @@ package net.iteach.service.security;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.security.core.token.Sha512DigestUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import net.iteach.api.SecurityService;
 import net.iteach.api.model.AuthenticationMode;
 import net.iteach.service.db.SQL;
-import net.iteach.service.impl.AbstractServiceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class SecurityServiceImpl extends AbstractServiceImpl implements SecurityService {
-
-	protected static String digest(String input) {
-		return Sha512DigestUtils.shaHex(input);
-	}
+public class SecurityServiceImpl extends AbstractSecurityService implements SecurityService {
 
 	@Autowired
 	public SecurityServiceImpl(DataSource dataSource) {
