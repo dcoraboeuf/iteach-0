@@ -1,0 +1,47 @@
+<#include "/lib/layout.html">
+
+<@layout_basic pageId="login" showSecurity=false>
+	<h3>Login with Username and Password</h3>
+	<form name="f" action="j_spring_security_check" method="POST">
+		<table>
+			<tr>
+				<td>User:</td>
+				<td>
+					<input type="text" name="j_username" />
+				</td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td>
+					<input type="password" name="j_password" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input name="submit" type="submit" value="Login" />
+				</td>
+			</tr>
+		</table>
+	</form>
+	<h3>Login with Google</h3>
+	<form action="j_spring_openid_security_check" method="post">
+		<input name="openid_identifier" size="50" maxlength="100" type="hidden" value="https://www.google.com/accounts/o8/id"/>
+ 		<input type="submit" value="Sign in with Google"/>
+	</form>
+	<h3>Login with OpenID Identity</h3>
+	<form name="oidf" action="j_spring_openid_security_check" method="POST">
+		<table>
+			<tr>
+				<td>Identity:</td>
+				<td>
+					<input type="text" size="30" name="openid_identifier" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input name="submit" type="submit" value="Login" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</@layout_basic>

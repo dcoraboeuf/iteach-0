@@ -1,4 +1,5 @@
 <#include "/lib/common.html" >
+<#include "/lib/security.html" >
 
 <#macro layout_title pageId title="">
 	<#if title == "">
@@ -55,7 +56,9 @@
 			<section class="page-title">
 				<span class="page-title"><@lh key="app.title"/></span>
 				<div class="page-meta">
-					TODO Login
+					<#if showSecurity>
+						<@security />
+					</#if>
 					<#if showLanguage>
 						<@languages />
 					</#if>

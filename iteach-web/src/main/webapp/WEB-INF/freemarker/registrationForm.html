@@ -1,0 +1,45 @@
+<#include "/lib/layout.html">
+
+<@layout_basic pageId="registrationForm" script=true showSecurity=false>
+	<form action="registration" method="POST" onsubmit="return registration.control();">
+		<input id="mode" type="hidden" name="mode" value="${mode?html}" /> 
+		<input id="identifier" name="identifier" type="hidden" value="${identifier?html}" />
+		<table>
+			<tr>
+				<td><@lh key="user.firstName" /></td>
+				<td>
+					<input id="firstName" name="firstName" type="text" required="required" maxlength="40" />
+				</td>
+			</tr>
+			<tr>
+				<td><@lh key="user.lastName" /></td>
+				<td>
+					<input id="lastName" name="lastName" type="text" required="required" maxlength="40" />
+				</td>
+			</tr>
+			<tr>
+				<td><@lh key="user.email" /></td>
+				<td>
+					<input id="email" name="email" type="text" required="required" maxlength="100" />
+				</td>
+			</tr>
+			<tr id="password-line">
+				<td><@lh key="registration.password" /></td>
+				<td>
+					<input id="password" name="password" type="password" maxlength="20" />
+				</td>
+			</tr>
+			<tr id="password-confirm-line">
+				<td><@lh key="registration.password.confirm" /></td>
+				<td>
+					<input id="confirmPassword" type="password" maxlength="20" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="submit" value="<@lh key='registration.submit' />" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</@layout_basic>
