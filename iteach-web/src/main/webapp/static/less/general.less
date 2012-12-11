@@ -86,3 +86,28 @@ a.sec-login {
 form.button {
 	display: inline;
 }
+
+/* Panels */
+
+@panel-border-color: #BBBBBB;
+@panel-border-radius: 4px;
+@panel-color: white;
+
+.panel-title {
+	color: @content-title-color-fg;
+	margin: @panel-border-radius;
+	font-size: 100%;
+}
+
+section.panel {
+	border: solid 1px @panel-border-color;
+	border-radius: @panel-border-radius;
+	margin-bottom: @body-margin;
+	background-color: @panel-color;
+	> h3 {
+		.panel-title;
+	}
+	> section {
+		padding: @panel-border-radius * 2;
+	}
+}

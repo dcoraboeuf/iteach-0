@@ -74,8 +74,8 @@
 	</@layout_root>
 </#macro>
 
-<#macro layout_std pageId style=false script=false scripts=[] modules=[] title="" nav=true>
-	<@layout_basic pageId=pageId style=style script=script scripts=scripts modules=modules title=title>
+<#macro layout_std pageId style=false script=false scripts=[] modules=[] title="" nav=true showSecurity=true>
+	<@layout_basic pageId=pageId style=style script=script scripts=scripts modules=modules title=title showSecurity=showSecurity>
 		<#local content><#nested></#local>
 		<article class="content">
 			<header id="content-title"><@layout_title pageId=pageId title=title /></header>

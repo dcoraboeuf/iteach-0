@@ -1,47 +1,77 @@
 <#include "/lib/layout.html">
 
-<@layout_basic pageId="login" showSecurity=false>
-	<h3>Login with Username and Password</h3>
-	<form name="f" action="j_spring_security_check" method="POST">
-		<table>
+<@layout_std pageId="login" style=true showSecurity=false>
+	<table width="100%">
+		<tbody>
 			<tr>
-				<td>User:</td>
+				<td width="50em">
+					<@panel title = "Sign in with Google">
+						<form action="j_spring_openid_security_check" method="post">
+							<input name="openid_identifier" size="50" maxlength="100" type="hidden" value="https://www.google.com/accounts/o8/id"/>
+							<button type="submit" class="signin">
+								Sign in with
+								<img src="static/images/google.png" />
+							</button>
+						</form>
+					</@panel>
+				</td>
+				<td valign="top" rowspan="3">
+					<section class="login-help">
+						<h3 class="panel-title"><@lh key = "login.help.title" /></h3>
+					</section>
+				</td>
+			</tr><tr>
 				<td>
-					<input type="text" name="j_username" />
+					<@panel title = "Sign in with OpenID">
+						<form name="oidf" action="j_spring_openid_security_check" method="POST">
+							<table>
+								<tr>
+									<td>Identity:</td>
+									<td>
+										<input type="text" size="50" name="openid_identifier" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<button type="submit" class="signin">
+											Sign in with <img src="static/images/openid.png" />
+										</button>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</@panel>
 				</td>
-			</tr>
-			<tr>
-				<td>Password:</td>
+			</tr><tr>
 				<td>
-					<input type="password" name="j_password" />
+					<@panel title = "Sign in with username and password">
+						<form name="f" action="j_spring_security_check" method="POST">
+							<table>
+								<tr>
+									<td>User:</td>
+									<td>
+										<input type="text" name="j_username" />
+									</td>
+								</tr>
+								<tr>
+									<td>Password:</td>
+									<td>
+										<input type="password" name="j_password" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<button type="submit" class="signin">
+											Sign in
+										</button>
+										<a href="register" class="register">Register</a>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</@panel>
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2">
-					<input name="submit" type="submit" value="Login" />
-				</td>
-			</tr>
-		</table>
-	</form>
-	<h3>Login with Google</h3>
-	<form action="j_spring_openid_security_check" method="post">
-		<input name="openid_identifier" size="50" maxlength="100" type="hidden" value="https://www.google.com/accounts/o8/id"/>
- 		<input type="submit" value="Sign in with Google"/>
-	</form>
-	<h3>Login with OpenID Identity</h3>
-	<form name="oidf" action="j_spring_openid_security_check" method="POST">
-		<table>
-			<tr>
-				<td>Identity:</td>
-				<td>
-					<input type="text" size="30" name="openid_identifier" />
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<input name="submit" type="submit" value="Login" />
-				</td>
-			</tr>
-		</table>
-	</form>
-</@layout_basic>
+		</tbody>
+	</table>
+</@layout_std>
