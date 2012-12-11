@@ -60,6 +60,10 @@ article.content {
 		background-color: @content-title-color-bg;
 		font-weight: bold;
 		border-bottom: dashed 1px gray;
+		a {
+			text-decoration: none;
+			color: lighten(@content-title-color-fg, 10%);
+		}
 	}
 	> section.content {
 		margin: @body-margin;

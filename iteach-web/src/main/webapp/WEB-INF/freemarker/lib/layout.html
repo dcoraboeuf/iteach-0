@@ -74,11 +74,18 @@
 	</@layout_root>
 </#macro>
 
-<#macro layout_std pageId style=false script=false scripts=[] modules=[] title="" nav=true showSecurity=true>
+<#macro layout_std pageId style=false script=false scripts=[] modules=[] title="" nav=true showSecurity=true breadcrumbs = {}>
 	<@layout_basic pageId=pageId style=style script=script scripts=scripts modules=modules title=title showSecurity=showSecurity>
 		<#local content><#nested></#local>
 		<article class="content">
-			<header id="content-title"><@layout_title pageId=pageId title=title /></header>
+			<header id="content-title">
+				<#list breadcrumbs?keys as key>
+					<#assign link = breadcrumbs[key]>
+					<a href="${link?html}">${loc(key)?html}</a>
+					&gt;
+				</#list>
+				<@layout_title pageId=pageId title=title />
+			</header>
 			<section class="content">
 				${content}
 			</section>
