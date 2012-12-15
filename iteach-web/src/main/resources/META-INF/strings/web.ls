@@ -1,9 +1,14 @@
+[languages]
+# Not translated
+
 language.en
     en -> English
 language.fr
-    en -> Fran\u00E7ais
+    en -> Français
 language.de
     en -> Deutsch
+    
+[general]
 
 general.confirm.title
     en -> Confirmation
@@ -11,13 +16,17 @@ general.confirm.title
 general.error.title
     en -> Error
     fr -> Erreur
+    
+[application]
 
 app.login
     en -> Log in
     fr -> Connexion
 app.logout
     en -> Log out
-    fr -> D�connexion
+    fr -> Déconnexion
+    
+[registration]
 
 registration.password
     en -> Password
@@ -34,6 +43,7 @@ registration.submit
 page.index
     en -> Home page
     fr -> Page d'accueil
+    
 page.index.enter
     en -> Enter @[app.title]
     fr -> Entrer dans @[app.title]
