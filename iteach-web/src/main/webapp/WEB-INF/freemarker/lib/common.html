@@ -8,3 +8,14 @@
 		<option value="${value?html}">${text?html}</option>
 	</#if>
 </#macro>
+
+<#macro panel title = "" class = "">
+	<section class="panel ${class?html}">
+		<#if title != "">
+			<h3>${title?html}</h3>
+		</#if>
+		<section class="panel-content">
+			<#nested>
+		</section>
+	</section>
+</#macro>

@@ -54,9 +54,16 @@ section.page-title {
 article.content {
 	> header {
 		padding-left: @body-margin;
+		padding-top: @body-margin;
+		padding-bottom: @body-margin;
 		color: @content-title-color-fg;
 		background-color: @content-title-color-bg;
 		font-weight: bold;
+		border-bottom: dashed 1px gray;
+		a {
+			text-decoration: none;
+			color: lighten(@content-title-color-fg, 10%);
+		}
 	}
 	> section.content {
 		margin: @body-margin;
@@ -85,4 +92,29 @@ a.sec-login {
 
 form.button {
 	display: inline;
+}
+
+/* Panels */
+
+@panel-border-color: #BBBBBB;
+@panel-border-radius: 4px;
+@panel-color: white;
+
+.panel-title {
+	color: @content-title-color-fg;
+	margin: @panel-border-radius;
+	font-size: 100%;
+}
+
+section.panel {
+	border: solid 1px @panel-border-color;
+	border-radius: @panel-border-radius;
+	margin-bottom: @body-margin;
+	background-color: @panel-color;
+	> h3 {
+		.panel-title;
+	}
+	> section {
+		padding: @panel-border-radius * 2;
+	}
 }
