@@ -17,14 +17,31 @@ general.error.title
     en -> Error
     fr -> Erreur
     
+[help]
+
+help
+	en -> Help
+	fr -> Aide
+    
 [application]
 
 app.login
-    en -> Log in
-    fr -> Connexion
+    en,fr -> @[login]
 app.logout
     en -> Log out
     fr -> Déconnexion
+    
+[login]
+
+login
+	en -> Sign in
+	fr -> Connexion
+
+page.login
+	en,fr -> @[login]
+
+login.help.title
+	en,fr -> @[help]
     
 [registration]
 
