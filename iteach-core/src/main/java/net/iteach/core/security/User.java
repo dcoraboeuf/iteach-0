@@ -1,9 +1,11 @@
 package net.iteach.core.security;
 
-public interface User {
+import org.springframework.security.core.userdetails.UserDetails;
+
+public interface User extends UserDetails {
 	
 	boolean isAnonymous();
 	
-	String getDisplayName();
+	int getId();
 
 }

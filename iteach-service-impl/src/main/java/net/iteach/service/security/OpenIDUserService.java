@@ -26,6 +26,7 @@ public class OpenIDUserService extends AbstractUserService {
 			@Override
 			public UserAccount mapRow(ResultSet rs, int rowNum) throws SQLException {
 				return new UserAccount(
+						rs.getInt("id"),
 						AuthenticationMode.openid,
 						identifier,
 						"",

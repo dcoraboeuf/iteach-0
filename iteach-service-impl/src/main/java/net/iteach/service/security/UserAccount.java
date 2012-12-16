@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class UserAccount {
 
+	private final int id;
 	private final AuthenticationMode mode;
 	private final String identifier;
 	private final String password;

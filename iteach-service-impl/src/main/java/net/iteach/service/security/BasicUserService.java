@@ -26,6 +26,7 @@ public class BasicUserService extends AbstractUserService {
 			@Override
 			public UserAccount mapRow(ResultSet rs, int rowNum) throws SQLException {
 				return new UserAccount(
+						rs.getInt("id"),
 						AuthenticationMode.password,
 						identifier,
 						rs.getString("password"),

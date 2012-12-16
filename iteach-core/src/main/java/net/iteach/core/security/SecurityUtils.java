@@ -6,4 +6,6 @@ public interface SecurityUtils {
 
 	User getCurrentUser();
 
+	int getCurrentUserId();
+
 }

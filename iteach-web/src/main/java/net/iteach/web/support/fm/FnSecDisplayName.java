@@ -26,7 +26,7 @@ public class FnSecDisplayName implements TemplateMethodModel {
 		Validate.notNull(list, "List of arguments is required");
 		Validate.isTrue(list.size() == 0, "No argument is needed");
 		// Test
-		return securityUtils.getCurrentUser().getDisplayName();
+		return securityUtils.getCurrentUser().getUsername();
 	}
 
 }
