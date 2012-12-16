@@ -1,7 +1,7 @@
 <#include "/lib/common.html" >
 <div id="dialog-${formId}" class="dialog">
 	<div class="info"><@lh key="school.new.tip" /></div>
-	<form>
+	<form onsubmit="return Schools.doCreate('dialog-${formId}')">
 		<table width="100%">
 			<tbody>
 				<tr>

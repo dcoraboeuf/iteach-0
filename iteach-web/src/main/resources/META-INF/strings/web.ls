@@ -110,6 +110,10 @@ school.new.tip
 		modifiée ultérieurement.
 		...
 
+school.new.error
+	en -> Error while creating a school
+	fr -> Erreur lors de la création de l'école
+
 school.name
 	en -> School name
 	fr -> Nom de l'école
