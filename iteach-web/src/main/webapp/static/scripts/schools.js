@@ -3,11 +3,10 @@ var Schools = function () {
 	// Private members
 	
 	function create () {
-		var html = application.getDialog('school');
-		// $(html).dialog({
-		// 	modal: true,
-		//	title: loc('school.new')
-		// });
+		application.dialog('school', {
+			title: loc('school.new'),
+			width: 500
+		});
 	}
 	
 	// Public members

@@ -10,6 +10,14 @@ language.de
     
 [general]
 
+general.cancel
+	en -> Cancel
+	fr -> Annuler
+
+general.create
+	en -> Create
+	fr -> Créer
+
 general.confirm.title
     en -> Confirmation
     fr -> Confirmation
@@ -101,3 +109,12 @@ school.new.tip
 		également lui attribuer des coordonnées de contact. Toute donnée peut être
 		modifiée ultérieurement.
 		...
+
+school.name
+	en -> School name
+	fr -> Nom de l'école
+
+school.color
+	en -> Colour code
+	fr -> Code couleur
+	
