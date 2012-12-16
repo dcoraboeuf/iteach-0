@@ -12,7 +12,7 @@
 					</td>
 					<td class="data schools">
 						<@panel class="data schools" title = loc("home.schools")>
-							<table class="items schools">
+							<table class="items schools" width="100%">
 								<tbody>
 									<#list schools.summaries as school>
 										<@item color=school.color>
@@ -21,7 +21,7 @@
 									</#list>
 								</tbody>
 								<tfoot>
-									<tr colspan="2">
+									<tr>
 										<td>
 											<@button img="school_add" text=loc("school.new") action="javascript:Schools.create();" />
 										</td>

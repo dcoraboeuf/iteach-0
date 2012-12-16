@@ -1,0 +1,14 @@
+<link rel="stylesheet/less" type="text/css" href="static/less/items.less" />
+
+<#macro item color>
+	<tr>
+		<td class="item">
+			<div class="item-content item-color" style="background-color:${color?html}">
+				&nbsp;
+			</div>
+			<div class="item-content item-text">
+				<#nested/>
+			</div>
+		</td>
+	</tr>
+</#macro>
