@@ -43,13 +43,14 @@ function loc () {
 var application = function () {
 	
 	function dialog (name, config) {
-		getDialog (name, function (html) {
-			var content = '<div id="dialog" class="dialog">{0}</div>'.format(html);
-			$(content).dialog({
-			 	modal: true,
-				title: config.title,
-				width: config.width
-			});
+		getDialog (
+			name,
+			function (html) {
+				$(html).dialog({
+				 	modal: true,
+					title: config.title,
+					width: config.width
+				});
 		});
 	}
 	
