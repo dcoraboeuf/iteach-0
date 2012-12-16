@@ -1,6 +1,5 @@
 package net.iteach.service.impl
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,7 +12,6 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 	private SchoolService service
 	
 	@Test
-	@Ignore
 	void getSchools() {
 		def schools = service.getSchoolsForTeacher(1)
 		assert schools != null
