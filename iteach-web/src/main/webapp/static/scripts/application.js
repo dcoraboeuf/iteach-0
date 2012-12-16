@@ -42,6 +42,18 @@ function loc () {
 
 var application = function () {
 	
+	function getDialog (name, callbackFn) {
+		$.get('gui/form/{0}'.format(name),
+			function (data) {
+				alert(data);
+			}
+		)
+		.error(function (jqXHR, textStatus, errorThrown) {
+			var message = loc('general.ajax.error');
+			displayAjaxError(message, jqXHR, textStatus, errorThrown);
+		});
+	}
+	
 	function confirmAndCall (text, callback) {
 		$('<div>{0}</div>'.format(text)).dialog({
 			title: loc('general.confirm.title'),
@@ -133,7 +145,8 @@ var application = function () {
 			var value = $(source).val();
 			var confirmValue = $(confirmation).val();
 			return validate (confirmation, confirmValue == value);
-		}
+		},
+		getDialog: getDialog
 	};
 	
 } ();

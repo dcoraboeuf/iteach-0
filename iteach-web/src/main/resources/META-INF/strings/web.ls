@@ -17,6 +17,10 @@ general.error.title
     en -> Error
     fr -> Erreur
     
+general.ajax.error
+	en -> Communication problem with the server
+	fr -> Erreur de communication avec le serveur
+    
 [help]
 
 help
@@ -86,3 +90,14 @@ home.students
 school.new
 	en -> New school
 	fr -> Nouvelle école
+
+school.new.tip
+	en -> ...
+		Create a school by giving it a name and optionally a colour. You can also
+		associate coordinates to it. Any data can be updated later on.
+		...
+	fr -> ...
+		Créez une école en lui donnant un nom et une couleur (optionel). Vous pouvez
+		également lui attribuer des coordonnées de contact. Toute donnée peut être
+		modifiée ultérieurement.
+		...
