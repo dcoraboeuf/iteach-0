@@ -12,7 +12,7 @@ var Schools = function () {
 	function doCreate (formId) {
 		$.ajax({
 			type: 'POST',
-			url: 'ui/school',
+			url: 'ui/teacher/school',
 			contentType: 'application/json',
 			data: JSON.stringify({
 				name: $('#schoolName').val(),
@@ -20,8 +20,12 @@ var Schools = function () {
 			}),
 			dataType: 'json',
 			success: function (data) {
-				alert('Success!');
-				$('#' + formId).dialog('close');
+				if (data.success) {
+					alert('Success!');
+					$('#' + formId).dialog('close');
+				} else {
+					application.displayError(loc('school.new.error'));
+				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				application.displayAjaxError (loc('school.new.error'), jqXHR, textStatus, errorThrown);

@@ -6,12 +6,15 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import net.iteach.api.SchoolService;
+import net.iteach.core.model.ID;
+import net.iteach.core.model.SchoolForm;
 import net.iteach.core.model.SchoolSummaries;
 import net.iteach.core.model.SchoolSummary;
 import net.iteach.service.db.SQL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +39,19 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 								return new SchoolSummary(rs.getInt("id"), rs.getString("name"), rs.getString("color"));
 							}
 						}));
+	}
+	
+	@Override
+	@Transactional
+	public ID createSchoolForTeacher(int teacherId, SchoolForm form) {
+		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+		int count = getNamedParameterJdbcTemplate().update(
+				SQL.SCHOOL_CREATE,
+				params("teacher", teacherId)
+					.addValue("name", form.getName())
+					.addValue("color", form.getColor()),
+				keyHolder);
+		return ID.count(count).withId(keyHolder.getKey().intValue());
 	}
 
 }
