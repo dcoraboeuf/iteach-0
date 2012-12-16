@@ -1,6 +1,44 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="home" breadcrumbs = {"page.index": ""}>
-	TODO Home
-	<p>Coming soon: your planning!</p>
+<@layout_std pageId="home" modules = ["items"] style=true breadcrumbs = {"page.index": ""}>
+	<section class="home">
+		<table class="home">
+			<tbody>
+				<tr>
+					<td class="planning" rowspan="2">
+						<@panel class="planning" title = loc("home.planning")>
+							Coming soon - the planning!
+						</@panel>
+					</td>
+					<td class="data schools">
+						<@panel class="data schools" title = loc("home.schools")>
+							<table class="items schools">
+								<tbody>
+									<#list schools.summaries as school>
+										<@item color=school.color>
+											${school.name?html}
+										</@item>
+									</#list>
+								</tbody>
+								<tfoot>
+									<tr colspan="2">
+										<td>
+											<@button img="school_add" text=loc("school.new") action="javascript:Schools.create();" />
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</@panel>
+					</td>
+				</tr>
+				<tr>
+					<td class="data students">
+						<@panel class="data students" title = loc("home.students")>
+							Coming soon - your students!
+						</@panel>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
 </@layout_std>

@@ -68,3 +68,21 @@ page.index.enter
 page.home
     en -> Planning
     fr -> Planning
+
+home.schools
+	en -> My schools
+	fr -> Mes écoles
+
+home.planning
+	en -> My planning
+	fr -> Mon planning
+	
+home.students
+	en -> My students
+	fr -> Mes étudiants
+
+[schools]
+
+school.new
+	en -> New school
+	fr -> Nouvelle école

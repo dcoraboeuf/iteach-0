@@ -19,3 +19,10 @@
 		</section>
 	</section>
 </#macro>
+
+<#macro button img text action>
+	<div class="button">
+		<a href="${action?html}"><img src="static/images/${img?html}.png" /></a>
+		<a href="${action?html}">${text?html}</a>
+	</div>
+</#macro>
