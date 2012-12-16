@@ -15,9 +15,9 @@ public class ID {
 
 		public ID withId(int id) {
 			if (success) {
-				return ID.failure();
-			} else {
 				return ID.success(id);
+			} else {
+				return ID.failure();
 			}
 		}
 		
