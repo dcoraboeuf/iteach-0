@@ -13,6 +13,7 @@ import net.iteach.core.model.SchoolSummary;
 import net.iteach.service.db.SQL;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
@@ -44,14 +45,19 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional
 	public ID createSchoolForTeacher(int teacherId, SchoolForm form) {
-		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = getNamedParameterJdbcTemplate().update(
-				SQL.SCHOOL_CREATE,
-				params("teacher", teacherId)
-					.addValue("name", form.getName())
-					.addValue("color", form.getColor()),
-				keyHolder);
-		return ID.count(count).withId(keyHolder.getKey().intValue());
+		try {
+			GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+			int count = getNamedParameterJdbcTemplate().update(
+					SQL.SCHOOL_CREATE,
+					params("teacher", teacherId)
+						.addValue("name", form.getName())
+						.addValue("color", form.getColor()),
+					keyHolder);
+			return ID.count(count).withId(keyHolder.getKey().intValue());
+		} catch (DuplicateKeyException ex) {
+			// Duplicate school name
+			throw new SchoolNameAlreadyDefined (form.getName());
+		}
 	}
 
 }

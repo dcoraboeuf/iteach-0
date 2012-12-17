@@ -27,7 +27,12 @@ var Schools = function () {
 				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				application.displayAjaxError (loc('school.new.error'), jqXHR, textStatus, errorThrown);
+			  	if (jqXHR.responseText && jqXHR.responseText != '') {
+			  		$('#school-new-error').html(jqXHR.responseText.htmlWithLines());
+			  		$('#school-new-error').show();
+			  	} else {
+			  		application.displayAjaxError (loc('school.new.error'), jqXHR, textStatus, errorThrown);
+			  	}
 			}
 		});
 		return false;

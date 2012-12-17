@@ -1,5 +1,7 @@
 package net.iteach.utils;
 
+import net.sf.jstring.support.CoreException;
+
 public abstract class InputException extends CoreException {
 
 	private static final long serialVersionUID = 1L;

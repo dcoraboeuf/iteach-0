@@ -10,6 +10,20 @@ language.de
     
 [general]
 
+general.error
+	en -> ...
+		An error has occurred.\n
+		Please report the following message and identifier to your administrator.\n
+		{0}\n
+		Identifier: {1}
+		...
+	fr -> ...
+		Une erreur est survenur.\n
+		Veuillez signaler le message et l'identifiant qui suivent à votre administrateur.\n
+		{0}\n
+		Identifiant : {1}
+		...
+
 general.cancel
 	en -> Cancel
 	fr -> Annuler
