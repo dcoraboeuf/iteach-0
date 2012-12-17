@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import net.iteach.api.SchoolService;
+import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.SchoolForm;
 import net.iteach.core.model.SchoolSummaries;
@@ -58,6 +59,14 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 			// Duplicate school name
 			throw new SchoolNameAlreadyDefined (form.getName());
 		}
+	}
+	
+	@Override
+	@Transactional
+	public Ack deleteSchoolForTeacher(int teacherId, int id) {
+		// TODO Deletes coordinates
+		int count = getNamedParameterJdbcTemplate().update(SQL.SCHOOL_DELETE, params("teacher", teacherId).addValue("id", id));
+		return Ack.one(count);
 	}
 
 }

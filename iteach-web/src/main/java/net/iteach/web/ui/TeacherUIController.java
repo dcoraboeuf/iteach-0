@@ -5,6 +5,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import net.iteach.api.SchoolService;
+import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.SchoolForm;
 import net.iteach.core.model.SchoolSummaries;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,6 +84,16 @@ public class TeacherUIController implements TeacherUI {
 		int userId = securityUtils.getCurrentUserId();
 		// OK
 		return schoolService.createSchoolForTeacher(userId, form);
+	}
+
+	@Override
+	@RequestMapping(value = "/school/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody
+	Ack deleteSchool(@PathVariable int id) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return schoolService.deleteSchoolForTeacher(userId, id);
 	}
 
 }
