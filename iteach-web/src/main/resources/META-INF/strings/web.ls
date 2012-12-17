@@ -128,6 +128,14 @@ school.new.error
 	en -> Error while creating a school
 	fr -> Erreur lors de la création de l'école
 
+school.delete
+	en -> Delete school "{0}"
+	fr -> Supprimer l'école "{0}"
+	
+school.edit
+	en -> Edit school "{0}"
+	fr -> Editer l'école "{0}"
+
 school.name
 	en -> School name
 	fr -> Nom de l'école

@@ -17,6 +17,10 @@
 									<#list schools.summaries as school>
 										<@item color=school.color>
 											${school.name?html}
+											<div class="actions">
+												<img class="action action-delete" src="static/images/delete.png" title="${loc('school.delete',school.name)?html}" />
+												<img class="action action-edit" src="static/images/edit.png" title="${loc('school.edit',school.name)?html}" />
+											</div>
 										</@item>
 									</#list>
 								</tbody>
