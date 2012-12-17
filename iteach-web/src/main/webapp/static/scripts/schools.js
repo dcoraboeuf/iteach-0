@@ -38,10 +38,36 @@ var Schools = function () {
 		return false;
 	}
 	
+	function deleteSchool (id) {
+		var name = $('#school-name-{0}'.format(id)).val();
+		application.confirmAndCall(
+			loc('school.delete.prompt', name),
+			function () {
+				$.ajax({
+					type: 'DELETE',
+					url: 'ui/teacher/school/{0}'.format(id),
+					contentType: 'application/json',
+					dataType: 'json',
+					success: function (data) {
+						if (data.success) {
+							location.reload();
+						} else {
+							application.displayError(loc('school.delete.error'));
+						}
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+					  	application.displayAjaxError (loc('school.delete.error'), jqXHR, textStatus, errorThrown);
+					}
+				});
+			}
+		);
+	}
+	
 	// Public members
 	return {
 		create: create,
-		doCreate: doCreate
+		doCreate: doCreate,
+		deleteSchool: deleteSchool
 	};
 	
 } ();

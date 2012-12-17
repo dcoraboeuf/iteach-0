@@ -132,6 +132,14 @@ school.delete
 	en -> Delete school "{0}"
 	fr -> Supprimer l'école "{0}"
 	
+school.delete.prompt
+	en -> Do you really want to delete the "{0}" school?\nAll associated data (students, lessons) will deleted as well.
+	fr -> Voulez-vous vraiment supprimer l'application "{0}" ?\nToutes les données associées (étudiants, leçons) seront également supprimées.
+	
+school.delete.error
+	en -> Error while deleting the school
+	fr -> Erreur lors de la suppression de l'école
+	
 school.edit
 	en -> Edit school "{0}"
 	fr -> Editer l'école "{0}"
