@@ -21,8 +21,7 @@ var Schools = function () {
 			dataType: 'json',
 			success: function (data) {
 				if (data.success) {
-					alert('Success!');
-					$('#' + formId).dialog('close');
+					location.reload();
 				} else {
 					application.displayError(loc('school.new.error'));
 				}
