@@ -5,9 +5,27 @@ var Schools = function () {
 	function createSchool () {
 		$('#schoolName').val('');
 		$('#schoolColor').val('#FFFFFF');
+		$('#school-dialog-submit').attr('value', loc('general.create'));
+		$('#school-dialog-error').hide();
+		$('#school-dialog-form').submit(submitCreateSchool);
 		application.dialog({
 			id: 'school-dialog',
 			title: loc('school.new'),
+			width: 500
+		});
+	}
+	
+	function editSchool (id) {
+		var name = $('#school-name-{0}'.format(id)).val();
+		var color = $('#school-color-{0}'.format(id)).val();
+		$('#schoolName').val(name);
+		$('#schoolColor').val(color);
+		$('#school-dialog-submit').attr('value', loc('general.update'));
+		$('#school-dialog-error').hide();
+		$('#school-dialog-form').submit(submitEditSchool);
+		application.dialog({
+			id: 'school-dialog',
+			title: loc('school.edit', name),
 			width: 500
 		});
 	}
@@ -35,6 +53,35 @@ var Schools = function () {
 			  		$('#school-dialog-error').show();
 			  	} else {
 			  		application.displayAjaxError (loc('school.new.error'), jqXHR, textStatus, errorThrown);
+			  	}
+			}
+		});
+		return false;
+	}
+	
+	function submitEditSchool () {
+		$.ajax({
+			type: 'PUT',
+			url: 'ui/teacher/school',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				name: $('#schoolName').val(),
+				color: $('#schoolColor').val()
+			}),
+			dataType: 'json',
+			success: function (data) {
+				if (data.success) {
+					location.reload();
+				} else {
+					application.displayError(loc('school.edit.error'));
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+			  	if (jqXHR.responseText && jqXHR.responseText != '') {
+			  		$('#school-dialog-error').html(jqXHR.responseText.htmlWithLines());
+			  		$('#school-dialog-error').show();
+			  	} else {
+			  		application.displayAjaxError (loc('school.edit.error'), jqXHR, textStatus, errorThrown);
 			  	}
 			}
 		});
@@ -70,7 +117,8 @@ var Schools = function () {
 	return {
 		createSchool: createSchool,
 		submitCreateSchool: submitCreateSchool,
-		deleteSchool: deleteSchool
+		deleteSchool: deleteSchool,
+		editSchool: editSchool
 	};
 	
 } ();

@@ -31,6 +31,10 @@ general.cancel
 general.create
 	en -> Create
 	fr -> Créer
+	
+general.update
+	en -> Update
+	fr -> Modifier
 
 general.confirm.title
     en -> Confirmation
@@ -143,6 +147,10 @@ school.delete.error
 school.edit
 	en -> Edit school "{0}"
 	fr -> Editer l'école "{0}"
+	
+school.edit.error
+	en -> Error while updating the school
+	fr -> Erreur lors de la modification de l'école
 
 school.name
 	en -> School name
