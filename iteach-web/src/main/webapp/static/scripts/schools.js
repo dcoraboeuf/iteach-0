@@ -3,32 +3,38 @@ var Schools = function () {
 	// Private members
 	
 	function createSchool () {
-		$('#schoolName').val('');
-		$('#schoolColor').val('#FFFFFF');
-		$('#school-dialog-submit').attr('value', loc('general.create'));
-		$('#school-dialog-error').hide();
-		$('#school-dialog-form').submit(submitCreateSchool);
 		application.dialog({
 			id: 'school-dialog',
 			title: loc('school.new'),
-			width: 500
+			width: 500,
+			data: {
+				schoolName: '',
+				schoolColor: '#000000'
+			},
+			submit: {
+				name: loc('general.create'),
+				action: submitCreateSchool
+			}
 		});
 	}
 	
 	function editSchool (id) {
 		var name = $('#school-name-{0}'.format(id)).val();
 		var color = $('#school-color-{0}'.format(id)).val();
-		$('#schoolName').val(name);
-		$('#schoolColor').val(color);
-		$('#school-dialog-submit').attr('value', loc('general.update'));
-		$('#school-dialog-error').hide();
-		$('#school-dialog-form').submit(function () {
-			return submitEditSchool(id);
-		});
 		application.dialog({
 			id: 'school-dialog',
 			title: loc('school.edit', name),
-			width: 500
+			width: 500,
+			data: {
+				schoolName: name,
+				schoolColor: color
+			},
+			submit: {
+				name: loc('general.update'),
+				action: function () {
+					return submitEditSchool(id);
+				}
+			}
 		});
 	}
 	

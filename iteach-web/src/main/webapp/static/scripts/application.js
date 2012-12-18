@@ -38,12 +38,28 @@ function loc () {
 	}
 }
 
+function id (value) {
+	return '#' + value;
+}
+
 // Application singleton
 
 var application = function () {
 	
 	function dialog (config) {
-		$('#{0}'.format(config.id)).dialog({
+		if (config.data) {
+			for (var name in config.data) {
+				$(id(name)).val(config.data[name]);
+			}
+		}
+		if (config.submit) {
+			$(id(config.id + '-submit')).attr('value', config.submit.name);
+			$(id(config.id + '-form')).submit(function () {
+				return config.submit.action();
+			});
+		}
+		$(id(config.id + '-error')).hide();
+		$(id(config.id)).dialog({
 		 	modal: true,
 			title: config.title,
 			width: config.width
