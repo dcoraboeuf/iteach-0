@@ -13,4 +13,6 @@ public interface TeacherUI {
 
 	Ack deleteSchool(int id);
 
+	Ack editSchool(int id, SchoolForm form);
+
 }

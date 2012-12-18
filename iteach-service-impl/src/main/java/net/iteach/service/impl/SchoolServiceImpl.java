@@ -68,5 +68,18 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		int count = getNamedParameterJdbcTemplate().update(SQL.SCHOOL_DELETE, params("teacher", teacherId).addValue("id", id));
 		return Ack.one(count);
 	}
+	
+	@Override
+	@Transactional
+	public Ack editSchoolForTeacher(int userId, int id, SchoolForm form) {
+		int count = getNamedParameterJdbcTemplate().update(
+				SQL.SCHOOL_UPDATE,
+				params("teacher", userId)
+					.addValue("id", id)
+					.addValue("name", form.getName())
+					.addValue("color", form.getColor())
+				);
+		return Ack.one(count);
+	}
 
 }

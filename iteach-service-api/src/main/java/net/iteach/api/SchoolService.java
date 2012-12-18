@@ -13,4 +13,6 @@ public interface SchoolService {
 
 	Ack deleteSchoolForTeacher(int teacherId, int id);
 
+	Ack editSchoolForTeacher(int userId, int id, SchoolForm form);
+
 }

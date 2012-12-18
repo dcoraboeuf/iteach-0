@@ -96,4 +96,14 @@ public class TeacherUIController implements TeacherUI {
 		return schoolService.deleteSchoolForTeacher(userId, id);
 	}
 
+	@Override
+	@RequestMapping(value = "/school/{id}", method = RequestMethod.PUT)
+	public @ResponseBody
+	Ack editSchool(@PathVariable int id, @RequestBody SchoolForm form) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return schoolService.editSchoolForTeacher(userId, id, form);
+	}
+
 }

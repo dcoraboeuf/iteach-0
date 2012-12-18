@@ -22,7 +22,9 @@ var Schools = function () {
 		$('#schoolColor').val(color);
 		$('#school-dialog-submit').attr('value', loc('general.update'));
 		$('#school-dialog-error').hide();
-		$('#school-dialog-form').submit(submitEditSchool);
+		$('#school-dialog-form').submit(function () {
+			return submitEditSchool(id);
+		});
 		application.dialog({
 			id: 'school-dialog',
 			title: loc('school.edit', name),
@@ -59,10 +61,10 @@ var Schools = function () {
 		return false;
 	}
 	
-	function submitEditSchool () {
+	function submitEditSchool (id) {
 		$.ajax({
 			type: 'PUT',
-			url: 'ui/teacher/school',
+			url: 'ui/teacher/school/{0}'.format(id),
 			contentType: 'application/json',
 			data: JSON.stringify({
 				name: $('#schoolName').val(),
@@ -116,7 +118,6 @@ var Schools = function () {
 	// Public members
 	return {
 		createSchool: createSchool,
-		submitCreateSchool: submitCreateSchool,
 		deleteSchool: deleteSchool,
 		editSchool: editSchool
 	};
