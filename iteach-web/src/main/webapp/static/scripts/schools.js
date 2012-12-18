@@ -2,14 +2,17 @@ var Schools = function () {
 	
 	// Private members
 	
-	function create () {
-		application.dialog('school', {
+	function createSchool () {
+		$('#schoolName').val('');
+		$('#schoolColor').val('#FFFFFF');
+		application.dialog({
+			id: 'school-dialog',
 			title: loc('school.new'),
 			width: 500
 		});
 	}
 	
-	function doCreate (formId) {
+	function submitCreateSchool () {
 		$.ajax({
 			type: 'POST',
 			url: 'ui/teacher/school',
@@ -28,8 +31,8 @@ var Schools = function () {
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 			  	if (jqXHR.responseText && jqXHR.responseText != '') {
-			  		$('#school-new-error').html(jqXHR.responseText.htmlWithLines());
-			  		$('#school-new-error').show();
+			  		$('#school-dialog-error').html(jqXHR.responseText.htmlWithLines());
+			  		$('#school-dialog-error').show();
 			  	} else {
 			  		application.displayAjaxError (loc('school.new.error'), jqXHR, textStatus, errorThrown);
 			  	}
@@ -65,8 +68,8 @@ var Schools = function () {
 	
 	// Public members
 	return {
-		create: create,
-		doCreate: doCreate,
+		createSchool: createSchool,
+		submitCreateSchool: submitCreateSchool,
 		deleteSchool: deleteSchool
 	};
 	

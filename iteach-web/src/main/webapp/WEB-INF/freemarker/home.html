@@ -28,7 +28,7 @@
 								<tfoot>
 									<tr>
 										<td>
-											<@button img="school_add" text=loc("school.new") action="javascript:Schools.create();" />
+											<@button img="school_add" text=loc("school.new") action="javascript:Schools.createSchool();" />
 										</td>
 									</tr>
 								</tfoot>
@@ -46,4 +46,37 @@
 			</tbody>
 		</table>
 	</section>
+	
+	<#-- Dialogs -->
+	
+	<#-- School dialog -->
+	
+	<@dialog id="school-dialog">
+		<div class="info"><@lh key="school.new.tip" /></div>
+		<form onsubmit="return Schools.submitCreateSchool()">
+			<table width="100%">
+				<tbody>
+					<tr>
+						<td><@lh key="school.name" /></td>
+						<td>
+							<input id="schoolName" name="name" type="text" size="30" maxlength="80" required="required" />
+						</td>
+					</tr>
+					<tr>
+						<td><@lh key="school.color" /></td>
+						<td>
+							<input id="schoolColor" name="color" type="color" size="6" maxlength="6" required="required" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="right">
+							<input type="submit" value="<@lh key='general.create' />" />
+							<a href="javascript:$('#school-dialog').dialog('close')"><@lh key="general.cancel" /></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</@dialog>
+	
 </@layout_std>

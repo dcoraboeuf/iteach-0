@@ -42,27 +42,11 @@ function loc () {
 
 var application = function () {
 	
-	function dialog (name, config) {
-		getDialog (
-			name,
-			function (html) {
-				$(html).dialog({
-				 	modal: true,
-					title: config.title,
-					width: config.width
-				});
-		});
-	}
-	
-	function getDialog (name, callbackFn) {
-		$.get('gui/form/{0}'.format(name),
-			function (data) {
-				callbackFn(data);
-			}
-		)
-		.error(function (jqXHR, textStatus, errorThrown) {
-			var message = loc('general.ajax.error');
-			displayAjaxError(message, jqXHR, textStatus, errorThrown);
+	function dialog (config) {
+		$('#{0}'.format(config.id)).dialog({
+		 	modal: true,
+			title: config.title,
+			width: config.width
 		});
 	}
 	
@@ -158,7 +142,6 @@ var application = function () {
 			var confirmValue = $(confirmation).val();
 			return validate (confirmation, confirmValue == value);
 		},
-		getDialog: getDialog,
 		dialog: dialog
 	};
 	
