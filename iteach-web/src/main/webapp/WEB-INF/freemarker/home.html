@@ -1,82 +1,75 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="home" modules = ["items", "schools"] style=true breadcrumbs = {"page.index": ""}>
-	<section class="home">
-		<table class="home">
-			<tbody>
-				<tr>
-					<td class="planning" rowspan="2">
-						<@panel class="planning" title = loc("home.planning")>
-							Coming soon - the planning!
-						</@panel>
-					</td>
-					<td class="data schools">
-						<@panel class="data schools" title = loc("home.schools")>
-							<table class="items schools" width="100%">
-								<tbody>
-									<#list schools.summaries as school>
-										<@item color=school.color>
-											${school.name?html}
-											<div class="actions">
-												<input id="school-name-${school.id}" type="hidden" value="${school.name?html}" />
-												<input id="school-color-${school.id}" type="hidden" value="${school.color?html}" />
-												<img class="action action-delete" src="static/images/delete.png" title="${loc('school.delete',school.name)?html}" onclick="Schools.deleteSchool(${school.id});" />
-												<img class="action action-edit" src="static/images/edit.png" title="${loc('school.edit',school.name)?html}" onclick="Schools.editSchool(${school.id});" />
-											</div>
-										</@item>
-									</#list>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td>
-											<@button img="school_add" text=loc("school.new") action="javascript:Schools.createSchool();" />
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</@panel>
-					</td>
-				</tr>
-				<tr>
-					<td class="data students">
-						<@panel class="data students" title = loc("home.students")>
-							Coming soon - your students!
-						</@panel>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</section>
+<@layout_std pageId="home" modules = ["items", "schools"] breadcrumbs = {"page.index": ""}>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span9">
+				<!--Body content-->
+				<@panel class="planning" title = loc("home.planning")>
+					Coming soon - the planning!
+				</@panel>
+			</div>
+			<div class="span3">
+				<!-- Students -->
+				<@panel class="data students" title = loc("home.students")>
+					Coming soon - your students!
+				</@panel>
+				<!-- Schools -->
+				<@panel class="data schools" title = loc("home.schools")>
+					<table class="items schools" width="100%">
+						<tbody>
+							<#list schools.summaries as school>
+								<@item color=school.color>
+									${school.name?html}
+									<div class="actions">
+										<input id="school-name-${school.id}" type="hidden" value="${school.name?html}" />
+										<input id="school-color-${school.id}" type="hidden" value="${school.color?html}" />
+										<img class="action action-delete" src="static/images/delete.png" title="${loc('school.delete',school.name)?html}" onclick="Schools.deleteSchool(${school.id});" />
+										<img class="action action-edit" src="static/images/edit.png" title="${loc('school.edit',school.name)?html}" onclick="Schools.editSchool(${school.id});" />
+									</div>
+								</@item>
+							</#list>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td>
+									<@button img="school_add" text=loc("school.new") action="javascript:Schools.createSchool();" />
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</@panel>
+			</div>
+		</div>
+	</div>
 	
 	<#-- Dialogs -->
 	
 	<#-- School dialog -->
 	
 	<@dialog id="school-dialog">
-		<div class="info"><@lh key="school.new.tip" /></div>
-		<form id="school-dialog-form">
-			<table width="100%">
-				<tbody>
-					<tr>
-						<td><@lh key="school.name" /></td>
-						<td>
-							<input id="schoolName" name="name" type="text" size="30" maxlength="80" required="required" />
-						</td>
-					</tr>
-					<tr>
-						<td><@lh key="school.color" /></td>
-						<td>
-							<input id="schoolColor" name="color" type="color" size="6" maxlength="6" required="required" />
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2" align="right">
-							<input id="school-dialog-submit" type="submit" value="<@lh key='general.create' />" />
-							<a href="javascript:$('#school-dialog').dialog('close')"><@lh key="general.cancel" /></a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+		<form id="school-dialog-form" class="form-horizontal">
+			<div class="control-group">
+				<span class="help-block"><@lh key="school.new.tip" /></span>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="schoolName"><@lh key="school.name" /></label>
+				<div class="controls">
+					<input id="schoolName" name="name" type="text" size="30" maxlength="80" required="required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="schoolColor"><@lh key="school.color" /></label>
+				<div class="controls">
+					<input id="schoolColor" name="color" type="color" size="6" maxlength="6" required="required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<button class="btn btn-primary" id="school-dialog-submit" type="submit"><@lh key="general.create" /></button>
+					<a class="btn btn-link" href="javascript:$('#school-dialog').dialog('close')"><@lh key="general.cancel" /></a>
+				</div>
+			</div>
 		</form>
 	</@dialog>
 	

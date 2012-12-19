@@ -53,7 +53,7 @@ var application = function () {
 			}
 		}
 		if (config.submit) {
-			$(id(config.id + '-submit')).attr('value', config.submit.name);
+			$(id(config.id + '-submit')).text(config.submit.name);
 			$(id(config.id + '-form')).submit(function () {
 				return config.submit.action();
 			});
@@ -115,8 +115,7 @@ var application = function () {
 		displayError(text);
 	}
 	
-	function changeLanguage (input) {
-		var lang = input.value;
+	function changeLanguage (lang) {
 		if (location.search.indexOf("language") > -1) {
 	    	location.search = location.search.replace(/language=[a-z][a-z]/, "language=" + lang);
 		} else if (location.search == "") {

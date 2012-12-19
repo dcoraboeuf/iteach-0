@@ -1,156 +1,39 @@
-/* Common styles */
-
-@body-color-bg: #F0F0F0;
-@body-margin: 4px;
-
-@page-title-color-bg: black;
-@page-title-color-fg: white;
-
-@content-title-color-fg: #D24939;
-@content-title-color-bg: white;
-
-body {
-	font-family: sans-serif;
-	background-color: @body-color-bg;
-	margin: 0px;
-}
-
-.info {
-	font-style: italic;
-	color: gray;
-	font-size: 75%;
-}
-
-.error {
-	border-radius: 10px;
-	padding: 5px 10px 5px 10px;
-	color: white;
-	font-size: 80%;
-	background-color: red;
-}
-
-div.button {
-	* {
-		vertical-align: middle;
-	}
-	a {
-		font-size: 90%;
-		text-decoration: none;
-		&:hover {
-			text-decoration: underline;
-		}
-	}
-}
-
-
-/* layout_basic */
-
-section.page-title {
-	background-color: @page-title-color-bg;
-	color: @page-title-color-fg;
-	padding: @body-margin @body-margin * 2 @body-margin @body-margin *2;
-	span.page-title {
-		font-size: 200%;
-		font-weight: bold;
-		font-family: serif;
-	}
-	div.page-meta {
-		display: inline;
-		float: right;
-		position: relative;
-		top: 10px;
-		right: 15px;
-		.page-nav-item {
-			margin-right: 10px;
-		}
-		a {
-			.page-nav-item;
-			text-decoration: none;
-			color: @page-title-color-fg;
-			&.app-settings {
-				background-image: url('../images/cog.png');
-				background-repeat: no-repeat;
-				background-position: left center;
-				padding-left: 20px;
-			}
-		}
-	}
-}
-
-/* layout_std */
-article.content {
-	> header {
-		padding-left: @body-margin;
-		padding-top: @body-margin;
-		padding-bottom: @body-margin;
-		color: @content-title-color-fg;
-		background-color: @content-title-color-bg;
-		font-weight: bold;
-		border-bottom: dashed 1px gray;
-		a {
-			text-decoration: none;
-			color: lighten(@content-title-color-fg, 10%);
-		}
-	}
-	> section.content {
-		margin: @body-margin;
-	}
-}
-
-/* Security */
-
-.sec-login-logout {
-	background-repeat: no-repeat;
-	background-position: left center;
-	padding-left: 20px;
-}
-
-a.sec-logout {
-	.sec-login-logout;
-	background-image: url('../images/disconnect.png');
-}
-
-a.sec-login {
-	.sec-login-logout;
-	background-image: url('../images/connect.png');
-}
-
-/* Inline form */
-
-form.button {
-	display: inline;
-}
-
-/* Panels */
-
-@panel-border-color: #BBBBBB;
-@panel-border-radius: 4px;
-@panel-color: white;
-
-.panel-title {
-	color: @content-title-color-fg;
-	margin: @panel-border-radius;
-	font-size: 100%;
-}
-
-section.panel {
-	border: solid 1px @panel-border-color;
-	border-radius: @panel-border-radius;
-	margin-bottom: @body-margin;
-	background-color: @panel-color;
-	> h3 {
-		.panel-title;
-	}
-	> section {
-		padding: @panel-border-radius * 2;
-	}
-}
+/* General styles */
 
 /* Dialogs */
 
-div.dialog {
+.dialog {
 	display: none;
-	div.error {
-		display: none;
+}
+
+/* Items */
+
+.item-content {
+	display: inline;
+}
+
+.item-color {
+	margin: 1px;
+	width: 2em;
+	margin-right: 0.5em;
+	border: solid 1px gray;
+}
+
+table.items {
+	tr:hover {
+		cursor: pointer;
+		background-color: #EEEEFF;
+		.actions {
+			display: inline;
+		}
+	}
+}
+
+div.actions {
+	float: right;
+	display: none;
+	font-size: 60%;
+	* {
+		vertical-align: middle;
 	}
 }
