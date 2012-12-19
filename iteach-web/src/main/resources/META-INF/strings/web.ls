@@ -69,9 +69,6 @@ login
 
 page.login
 	en,fr -> @[login]
-
-login.help.title
-	en,fr -> @[help]
     
 [registration]
 

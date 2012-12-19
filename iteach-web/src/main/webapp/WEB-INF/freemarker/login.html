@@ -1,77 +1,62 @@
 <#include "/lib/layout.html">
 
 <@layout_std pageId="login" style=true showSecurity=false breadcrumbs = {"page.index": ""} >
-	<table width="100%">
-		<tbody>
-			<tr>
-				<td width="50em">
-					<@panel title = "Sign in with Google">
-						<form action="j_spring_openid_security_check" method="post">
-							<input name="openid_identifier" size="50" maxlength="100" type="hidden" value="https://www.google.com/accounts/o8/id"/>
-							<button type="submit" class="signin">
-								Sign in with
-								<img src="static/images/google.png" />
-							</button>
-						</form>
-					</@panel>
-				</td>
-				<td valign="top" rowspan="3">
-					<section class="login-help">
-						<h3 class="panel-title"><@lh key = "login.help.title" /></h3>
-					</section>
-				</td>
-			</tr><tr>
-				<td>
-					<@panel title = "Sign in with OpenID">
-						<form name="oidf" action="j_spring_openid_security_check" method="POST">
-							<table>
-								<tr>
-									<td>Identity:</td>
-									<td>
-										<input type="text" size="50" name="openid_identifier" />
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<button type="submit" class="signin">
-											Sign in with <img src="static/images/openid.png" />
-										</button>
-									</td>
-								</tr>
-							</table>
-						</form>
-					</@panel>
-				</td>
-			</tr><tr>
-				<td>
-					<@panel title = "Sign in with username and password">
-						<form name="f" action="j_spring_security_check" method="POST">
-							<table>
-								<tr>
-									<td>User:</td>
-									<td>
-										<input type="text" name="j_username" />
-									</td>
-								</tr>
-								<tr>
-									<td>Password:</td>
-									<td>
-										<input type="password" name="j_password" />
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<button type="submit" class="signin">
-											Sign in
-										</button>
-										<a href="register" class="register">Register</a>
-									</td>
-								</tr>
-							</table>
-						</form>
-					</@panel>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+
+	<@panel title = "Sign in with Google">
+		<form action="j_spring_openid_security_check" method="post" class="form-horizontal">
+			<div class="control-group">
+				<div class="controls">
+					<input name="openid_identifier" size="50" maxlength="100" type="hidden" value="https://www.google.com/accounts/o8/id"/>
+					<button type="submit" class="btn">
+						Sign in with
+						<img src="static/images/google.png" />
+					</button>
+				</div>
+			</div>
+		</form>
+	</@panel>
+	
+	<@panel title = "Sign in with OpenID">
+		<form name="oidf" action="j_spring_openid_security_check" method="POST" class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label" for="openid_identifier">Open ID:</label>
+				<div class="controls">
+					<input id="openid_identifier" type="text" size="50" name="openid_identifier" required="required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<button type="submit" class="btn">
+						Sign in with <img src="static/images/openid.png" />
+					</button>
+				</div>
+			</div>
+		</form>
+	</@panel>
+	
+	<@panel title = "Sign in with username and password">
+		<form name="f" action="j_spring_security_check" method="POST" class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label" for="j_username">User:</label>
+				<div class="controls">
+					<input id="j_username" type="text" size="50" name="j_username" required="required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="j_password">User:</label>
+				<div class="controls">
+					<input id="j_password" type="password" size="50" name="j_password" required="required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+						<button type="submit" class="btn">
+							Sign in
+						</button>
+						<a href="register" class="btn btn-link">Register</a>
+				</div>
+			</div>
+		</form>
+	</@panel>
+	
 </@layout_std>
