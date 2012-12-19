@@ -35,10 +35,10 @@ public class LocalisationController {
 
 	@RequestMapping(value = "/language/{language}", method = RequestMethod.POST)
 	public @ResponseBody Ack setLanguage(@PathVariable String language) {
-		// TODO Checks if the language is recognized
 		if (StringUtils.isNotBlank(language)) {
 			// Sets the locale
 			Locale locale = new Locale(language);
+			// FIXME Checks if the language is recognized (needs jstring 2.2)
 			// Changes the locale
 			LocaleContextHolder.setLocale(locale, true);
 			// OK
