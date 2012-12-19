@@ -1,52 +1,47 @@
 <#include "/lib/layout.html">
 
 <@layout_std pageId="home" modules = ["items", "schools"] style=true breadcrumbs = {"page.index": ""}>
-	<section class="home">
-		<table class="home">
-			<tbody>
-				<tr>
-					<td class="planning" rowspan="2">
-						<@panel class="planning" title = loc("home.planning")>
-							Coming soon - the planning!
-						</@panel>
-					</td>
-					<td class="data schools">
-						<@panel class="data schools" title = loc("home.schools")>
-							<table class="items schools" width="100%">
-								<tbody>
-									<#list schools.summaries as school>
-										<@item color=school.color>
-											${school.name?html}
-											<div class="actions">
-												<input id="school-name-${school.id}" type="hidden" value="${school.name?html}" />
-												<input id="school-color-${school.id}" type="hidden" value="${school.color?html}" />
-												<img class="action action-delete" src="static/images/delete.png" title="${loc('school.delete',school.name)?html}" onclick="Schools.deleteSchool(${school.id});" />
-												<img class="action action-edit" src="static/images/edit.png" title="${loc('school.edit',school.name)?html}" onclick="Schools.editSchool(${school.id});" />
-											</div>
-										</@item>
-									</#list>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td>
-											<@button img="school_add" text=loc("school.new") action="javascript:Schools.createSchool();" />
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</@panel>
-					</td>
-				</tr>
-				<tr>
-					<td class="data students">
-						<@panel class="data students" title = loc("home.students")>
-							Coming soon - your students!
-						</@panel>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</section>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span9">
+				<!--Body content-->
+				<@panel class="planning" title = loc("home.planning")>
+					Coming soon - the planning!
+				</@panel>
+			</div>
+			<div class="span3">
+				<!-- Students -->
+				<@panel class="data students" title = loc("home.students")>
+					Coming soon - your students!
+				</@panel>
+				<!-- Schools -->
+				<@panel class="data schools" title = loc("home.schools")>
+					<table class="items schools" width="100%">
+						<tbody>
+							<#list schools.summaries as school>
+								<@item color=school.color>
+									${school.name?html}
+									<div class="actions">
+										<input id="school-name-${school.id}" type="hidden" value="${school.name?html}" />
+										<input id="school-color-${school.id}" type="hidden" value="${school.color?html}" />
+										<img class="action action-delete" src="static/images/delete.png" title="${loc('school.delete',school.name)?html}" onclick="Schools.deleteSchool(${school.id});" />
+										<img class="action action-edit" src="static/images/edit.png" title="${loc('school.edit',school.name)?html}" onclick="Schools.editSchool(${school.id});" />
+									</div>
+								</@item>
+							</#list>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td>
+									<@button img="school_add" text=loc("school.new") action="javascript:Schools.createSchool();" />
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</@panel>
+			</div>
+		</div>
+	</div>
 	
 	<#-- Dialogs -->
 	
