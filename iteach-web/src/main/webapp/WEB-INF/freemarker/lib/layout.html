@@ -17,6 +17,11 @@
 			<base href="<@spring.url relativeUrl="/" />" />
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 			<link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+			<style>
+				body {
+					padding-top: 60px;
+				}
+			</style>
 			<#if style>
 				<link rel="stylesheet/less" type="text/css" href="static/less/${pageId}.less" />
 			</#if>
@@ -50,25 +55,27 @@
 
 <#macro layout_basic pageId style=false script=false scripts=[] modules=[] title="" showSecurity=true showLanguage=true showVersion=true>
 	<@layout_root pageId=pageId style=style script=script scripts=scripts modules=modules title=title>
-		<section class="page">
-			<section class="page-title">
-				<span class="page-title"><@lh key="app.title"/></span>
-				<div class="page-meta">
-					<#if showSecurity>
-						<@security />
-					</#if>
-					<#if showLanguage>
-						<@languages />
-					</#if>
-					<#if showVersion>
-						<span class="page-version"><@lh key="app.version" /></span>
-					</#if>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="#"><@lh key="app.title"/></a>
+					<div class="nav-collapse collapse">
+						<p class="navbar-text pull-right">
+							<#if showSecurity>
+								<@security />
+							</#if>
+							<#if showLanguage>
+								<@languages />
+							</#if>
+							<#if showVersion>
+								<span><@lh key="app.version" /></span>
+							</#if>
+						</p>
+					</div>
 				</div>
-			</section>
-			<section class="page-content">
-				<#nested>
-			</section>
-		</section>
+			</div>
+		</div>
+		<#nested>
 	</@layout_root>
 </#macro>
 
