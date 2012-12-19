@@ -3,11 +3,11 @@
 <#macro security>
 	<#if secLogged()>
 		<!-- Display name & menu -->
-		<span class="sec-name">${ secDisplayName()?html }</span>
+		<li><p class="navbar-text">${ secDisplayName()?html }</p></li>
 		<!-- Logout -->
-		<a class="sec-logout" href="logout"><@lh key="app.logout" /></a>
+		<li><a class="sec-logout" href="logout"><@lh key="app.logout" /></a></li>
 	<#else>
 		<!-- Login -->
-		<a class="sec-login" href="login"><@lh key="app.login" /></a>
+		<li><a class="sec-login" href="login"><@lh key="app.login" /></a></li>
 	</#if>
 </#macro>

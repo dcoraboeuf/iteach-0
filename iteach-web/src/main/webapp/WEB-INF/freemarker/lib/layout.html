@@ -58,20 +58,22 @@
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="#"><@lh key="app.title"/></a>
-					<div class="nav-collapse collapse">
-						<p class="navbar-text pull-right">
-							<#if showSecurity>
-								<@security />
-							</#if>
-							<#if showLanguage>
+					<a class="brand" name="app-title"><@lh key="app.title"/></a>
+					<ul class="nav pull-right">
+						<#if showSecurity>
+							<@security />
+						</#if>
+						<#if showLanguage>
+							<li>
 								<@languages />
-							</#if>
-							<#if showVersion>
-								<span><@lh key="app.version" /></span>
-							</#if>
-						</p>
-					</div>
+							</li>
+						</#if>
+						<#if showVersion>
+							<li>
+								<p class="navbar-text"><@lh key="app.version" /></p>
+							</li>
+						</#if>
+					</ul>
 				</div>
 			</div>
 		</div>
