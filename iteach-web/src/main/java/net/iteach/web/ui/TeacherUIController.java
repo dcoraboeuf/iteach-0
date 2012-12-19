@@ -18,6 +18,7 @@ import net.sf.jstring.Strings;
 import net.sf.jstring.support.CoreException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -52,8 +53,11 @@ public class TeacherUIController implements TeacherUI {
 	public ResponseEntity<String> onException (HttpServletRequest request, Locale locale, InputException ex) {
 		// Returns a message to display to the user
 		String message = ex.getLocalizedMessage(strings, locale);
+		// Header
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/plain; charset=utf-8");
 		// OK
-		return new ResponseEntity<String>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<String>(message, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(CoreException.class)
