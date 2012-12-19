@@ -1,7 +1,9 @@
 <#include "/lib/layout.html">
 
 <@layout_std pageId="index">
-	<form class="button" action="gui/home" method="GET">
-		<input type="submit" value="<@lh key='page.index.enter'/>" />
-	</form>
+	<div class="container">
+		<a class="btn btn-primary btn-large" href="gui/home">
+			<@lh key="page.index.enter"/>
+		</a>
+	</div>
 </@layout_std>
