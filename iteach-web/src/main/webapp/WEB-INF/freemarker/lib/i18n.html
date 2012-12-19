@@ -3,13 +3,15 @@
 <#macro lh key>${loc("${key}")?html}</#macro>
 
 <#macro languages>
-	<a class="dropdown-toggle">Language</a>
-	<#--
-	<select id="language" onchange="application.changeLanguage(this)">
-		<#assign selectedLanguage = locSelected() />
-		<@select_option value="en" text=loc("language.en") selection=selectedLanguage />
-		<@select_option value="fr" text=loc("language.fr") selection=selectedLanguage />
-		<@select_option value="de" text=loc("language.de") selection=selectedLanguage />
-	</select>
-	-->
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+			${ loc("language." + locSelected() ) }
+			<b class="caret"></b>
+			</a>
+			<ul class="dropdown-menu">
+				<li><a href="javascript:application.changeLanguage('en');"><@lh key="language.en" /></a></li>
+				<li><a href="javascript:application.changeLanguage('fr');"><@lh key="language.fr" /></a></li>
+				<li><a href="javascript:application.changeLanguage('de');"><@lh key="language.de" /></a></li>
+			</ul>
+	</li>
 </#macro>
