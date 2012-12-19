@@ -1,9 +1,14 @@
 <#include "/lib/layout.html">
 
 <@layout_std pageId="index">
-	<div class="container">
-		<a class="btn btn-primary btn-large" href="gui/home">
-			<@lh key="page.index.enter"/>
-		</a>
+	<div class="hero-unit">
+		<h1><@lh key="app.title"/></h1>
+		<p><@lh key="page.index.message" /></p>
+		<p>
+			<a class="btn btn-primary btn-large" href="gui/home">
+				<@lh key="page.index.enter"/>
+				&raquo;
+			</a>
+		</p>
 	</div>
 </@layout_std>

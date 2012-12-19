@@ -91,6 +91,16 @@ page.index
     en -> Home page
     fr -> Page d'accueil
     
+page.index.message
+	en -> ...
+		iTeach is the application that will help you organise your courses and your
+		planning.
+		...
+	fr -> ...
+		iTeach est l'application pour vous aider à organiser vos leçons et
+		votre agenda.
+		...
+    
 page.index.enter
     en -> Enter @[app.title]
     fr -> Entrer dans @[app.title]
