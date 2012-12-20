@@ -26,5 +26,37 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 		assert id != null
 		assert id.isSuccess()
 	}
+	
+	@Test
+	void editSchool_name() {
+		def ack = service.editSchoolForTeacher(1, 1, new SchoolForm("My school 11", "#FF0000"));
+		assert ack != null
+		assert ack.isSuccess()
+		def schools = service.getSchoolsForTeacher(1)
+		def school = schools.getSummaries().find { it.getId() == 1 }
+		assert "My school 11" == school.getName()
+		assert "#FF0000" == school.getColor()
+	}
+	
+	@Test
+	void editSchool_color() {
+		def ack = service.editSchoolForTeacher(1, 3, new SchoolForm("My school 3", "#FFFF00"));
+		assert ack != null
+		assert ack.isSuccess()
+		def schools = service.getSchoolsForTeacher(1)
+		def school = schools.getSummaries().find { it.getId() == 3 }
+		assert "My school 3" == school.getName()
+		assert "#FFFF00" == school.getColor()
+	}
+	
+	@Test(expected = SchoolNameAlreadyDefined.class)
+	void editSchool_name_already_defined() {
+		service.editSchoolForTeacher(1, 1, new SchoolForm("My school 3", "#FF0000"));
+	}
+	
+	@Test(expected = SchoolNameAlreadyDefined.class)
+	void createSchool_name_already_defined() {
+		service.createSchoolForTeacher(1, new SchoolForm("My school 3", "#CCCCCC"));
+	}
 
 }
