@@ -72,6 +72,10 @@ page.login
     
 [registration]
 
+page.registrationForm
+    en -> Registration
+    fr -> Inscription
+
 registration.password
     en -> Password
     fr -> Mot de passe
