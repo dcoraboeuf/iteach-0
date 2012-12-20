@@ -43,10 +43,10 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 										rs.getString("SCHOOL_NAME"),
 										rs.getString("SCHOOL_COLOR"));
 								return new StudentSummary(
-										rs.getInt("STUDENTS.ID"),
-										rs.getString("STUDENTS.SUBJECT"),
-										rs.getString("STUDENTS.FIRSTNAME"),
-										rs.getString("STUDENTS.LASTNAME"),
+										rs.getInt("ID"),
+										rs.getString("SUBJECT"),
+										rs.getString("FIRSTNAME"),
+										rs.getString("LASTNAME"),
 										school);
 							}
 						}));
