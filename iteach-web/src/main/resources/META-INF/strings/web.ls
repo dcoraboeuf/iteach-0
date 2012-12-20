@@ -181,7 +181,7 @@ school.delete
 	
 school.delete.prompt
 	en -> Do you really want to delete the "{0}" school?\nAll associated data (students, lessons) will deleted as well.
-	fr -> Voulez-vous vraiment supprimer l'application "{0}" ?\nToutes les données associées (étudiants, leçons) seront également supprimées.
+	fr -> Voulez-vous vraiment supprimer l'école "{0}" ?\nToutes les données associées (étudiants, leçons) seront également supprimées.
 	
 school.delete.error
 	en -> Error while deleting the school
@@ -224,6 +224,26 @@ student.new.error
 	en -> Error while creating the student
 	fr -> Erreur lors de la création de l'étudiant
 
+student.delete
+	en -> Delete student "{0} {1}"
+	fr -> Supprimer l'étudiant "{0} {1}"
+	
+student.delete.prompt
+	en -> Do you really want to delete the "{0}" student?\nAll associated lessons will deleted as well.
+	fr -> Voulez-vous vraiment supprimer l'étudiant "{0}" ?\nToutes les leçons associées seront également supprimées.
+	
+student.delete.error
+	en -> Error while deleting the student
+	fr -> Erreur lors de la suppression de l'étudiant
+	
+student.edit
+	en -> Edit student "{0} {1}"
+	fr -> Editer l'étudiant "{0} {1}"
+	
+student.edit.error
+	en -> Error while updating the student
+	fr -> Erreur lors de la modification de l'étudiant
+	
 student.firstName
 	en -> First name
 	fr -> Prénom
