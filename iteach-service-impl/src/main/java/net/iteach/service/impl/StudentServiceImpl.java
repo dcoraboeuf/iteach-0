@@ -83,7 +83,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		int count = getNamedParameterJdbcTemplate().update(
 				SQL.STUDENT_UPDATE,
 				params("id", id)
-					.addValue("school", id)
+					.addValue("school", form.getSchool())
 					.addValue("subject", form.getSubject())
 					.addValue("firstname", form.getFirstName())
 					.addValue("lastname", form.getLastName())

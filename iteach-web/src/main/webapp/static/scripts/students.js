@@ -21,15 +21,19 @@ var Students = function () {
 	}
 	
 	function editStudent (id) {
-		var name = $('#Student-name-{0}'.format(id)).val();
-		var color = $('#Student-color-{0}'.format(id)).val();
+		var firstName = $('#student-firstName-{0}'.format(id)).val();
+		var lastName = $('#student-lastName-{0}'.format(id)).val();
+		var school = $('#student-school-{0}'.format(id)).val();
+		var subject = $('#student-subject-{0}'.format(id)).val();
 		application.dialog({
-			id: 'Student-dialog',
-			title: loc('Student.edit', name),
+			id: 'student-dialog',
+			title: loc('student.edit', name),
 			width: 500,
 			data: {
-				StudentName: name,
-				StudentColor: color
+				studentFirstName: firstName,
+				studentLastName: lastName,
+				studentSchool: school,
+				studentSubject: subject
 			},
 			submit: {
 				name: loc('general.update'),
@@ -74,26 +78,28 @@ var Students = function () {
 	function submitEditStudent (id) {
 		$.ajax({
 			type: 'PUT',
-			url: 'ui/teacher/Student/{0}'.format(id),
+			url: 'ui/teacher/student/{0}'.format(id),
 			contentType: 'application/json',
 			data: JSON.stringify({
-				name: $('#StudentName').val(),
-				color: $('#StudentColor').val()
+				firstName: $('#studentFirstName').val(),
+				lastName: $('#studentLastName').val(),
+				school: $('#studentSchool').val(),
+				subject: $('#studentSubject').val()
 			}),
 			dataType: 'json',
 			success: function (data) {
 				if (data.success) {
 					location.reload();
 				} else {
-					application.displayError(loc('Student.edit.error'));
+					application.displayError(loc('student.edit.error'));
 				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 			  	if (jqXHR.responseText && jqXHR.responseText != '') {
-			  		$('#Student-dialog-error').html(jqXHR.responseText.htmlWithLines());
-			  		$('#Student-dialog-error').show();
+			  		$('#student-dialog-error').html(jqXHR.responseText.htmlWithLines());
+			  		$('#student-dialog-error').show();
 			  	} else {
-			  		application.displayAjaxError (loc('Student.edit.error'), jqXHR, textStatus, errorThrown);
+			  		application.displayAjaxError (loc('student.edit.error'), jqXHR, textStatus, errorThrown);
 			  	}
 			}
 		});

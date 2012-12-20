@@ -237,8 +237,8 @@ student.delete.error
 	fr -> Erreur lors de la suppression de l'étudiant
 	
 student.edit
-	en -> Edit student "{0} {1}"
-	fr -> Editer l'étudiant "{0} {1}"
+	en -> Edit student "{0}"
+	fr -> Editer l'étudiant "{0}"
 	
 student.edit.error
 	en -> Error while updating the student
