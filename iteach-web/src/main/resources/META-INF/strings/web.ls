@@ -66,15 +66,35 @@ app.logout
 login
 	en -> Sign in
 	fr -> Connexion
+	
+signInWith
+	en -> Sign in with
+	fr -> Se connecter avec
+	
+signInWithUsernameAndPassword
+	en -> Sign in with user name and password
+	fr -> Se connecter avec un nom d'utilisateur et un mot de passe
 
 page.login
 	en,fr -> @[login]
+
+login.user
+	en,fr -> @[user.email]
+
+login.password
+	en -> Password
+	fr -> Mot de passe
+
+login.
     
 [registration]
 
 page.registrationForm
     en -> Registration
     fr -> Inscription
+    
+register
+	en,fr -> @[registration.submit]
 
 registration.password
     en -> Password

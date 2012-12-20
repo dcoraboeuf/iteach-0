@@ -2,13 +2,13 @@
 
 <@layout_std pageId="login" style=true showSecurity=false breadcrumbs = {"page.index": ""} >
 
-	<@panel title = "Sign in with Google">
+	<@panel title = loc('signInWith') + " Google">
 		<form action="j_spring_openid_security_check" method="post" class="form-horizontal">
 			<div class="control-group">
 				<div class="controls">
 					<input name="openid_identifier" size="50" maxlength="100" type="hidden" value="https://www.google.com/accounts/o8/id"/>
 					<button type="submit" class="btn">
-						Sign in with
+						<@lh key="signInWith" />
 						<img src="static/images/google.png" />
 					</button>
 				</div>
@@ -16,7 +16,7 @@
 		</form>
 	</@panel>
 	
-	<@panel title = "Sign in with OpenID">
+	<@panel title = loc('signInWith') + " OpenID">
 		<form name="oidf" action="j_spring_openid_security_check" method="POST" class="form-horizontal">
 			<div class="control-group">
 				<label class="control-label" for="openid_identifier">Open ID:</label>
@@ -27,23 +27,24 @@
 			<div class="control-group">
 				<div class="controls">
 					<button type="submit" class="btn">
-						Sign in with <img src="static/images/openid.png" />
+						<@lh key="signInWith" />
+						<img src="static/images/openid.png" />
 					</button>
 				</div>
 			</div>
 		</form>
 	</@panel>
 	
-	<@panel title = "Sign in with username and password">
+	<@panel title = loc('signInWithUsernameAndPassword')>
 		<form name="f" action="j_spring_security_check" method="POST" class="form-horizontal">
 			<div class="control-group">
-				<label class="control-label" for="j_username">User:</label>
+				<label class="control-label" for="j_username"><@lh key="login.user" /></label>
 				<div class="controls">
 					<input id="j_username" type="text" size="50" name="j_username" required="required" />
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="j_password">User:</label>
+				<label class="control-label" for="j_password"><@lh key="login.password" /></label>
 				<div class="controls">
 					<input id="j_password" type="password" size="50" name="j_password" required="required" />
 				</div>
@@ -51,9 +52,9 @@
 			<div class="control-group">
 				<div class="controls">
 						<button type="submit" class="btn">
-							Sign in
+							<@lh key="login" />
 						</button>
-						<a href="register" class="btn btn-link">Register</a>
+						<a href="register" class="btn btn-link"><@lh key="register" /></a>
 				</div>
 			</div>
 		</form>
