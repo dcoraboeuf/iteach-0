@@ -76,6 +76,7 @@ fi
 # 1. the WAR
 # 2. all the deployment files
 echo Creating the archive...
+mkdir target
 tar --create --file=target/iteach-${RELEASE}.tar --directory=iteach-web/target iteach-web-${RELEASE}.war
 tar --update --file=target/iteach-${RELEASE}.tar pipeline/*.*
 if [ $? -ne 0 ]
