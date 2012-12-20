@@ -30,6 +30,12 @@ then
         exit 1
 fi
 
+# Listing environment
+echo "BUILD_NUMBER = ${BUILD_NUMBER}"
+echo "MVN          = ${MVN}"
+echo "NEXUS_URL    = ${NEXUS_URL}"
+echo "NEXUS_ID     = ${NEXUS_ID}"
+
 ##########################
 # General MVN options
 ##########################
