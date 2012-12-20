@@ -19,6 +19,16 @@
 				</div>
 			</div>
 			<div class="control-group">
+				<label class="control-label" for="studentSchool"><@lh key="student.school" /></label>
+				<div class="controls">
+					<select id="studentSchool" name="school" required="required" placeholder="<@lh key='student.school' />">
+						<#list schools.summaries as school>
+							<option value="${school.id}">${school.name?html}</option>
+						</#list>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
 				<label class="control-label" for="studentSubject"><@lh key="student.subject" /></label>
 				<div class="controls">
 					<input id="studentSubject" name="subject" type="text" size="30" maxlength="80" required="required" />

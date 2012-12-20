@@ -10,6 +10,7 @@ var Students = function () {
 			data: {
 				studentFirstName: '',
 				studentLastName: '',
+				studentSchool: '',
 				studentSubject: ''
 			},
 			submit: {
@@ -47,6 +48,7 @@ var Students = function () {
 			data: JSON.stringify({
 				firstName: $('#studentFirstName').val(),
 				lastName: $('#studentLastName').val(),
+				school: $('#studentSchool').val(),
 				subject: $('#studentSubject').val()
 			}),
 			dataType: 'json',

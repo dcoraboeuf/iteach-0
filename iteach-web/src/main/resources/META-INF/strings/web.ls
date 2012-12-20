@@ -235,3 +235,7 @@ student.lastName
 student.subject
 	en -> Subject
 	fr -> Matière
+
+student.school
+	en -> Student's school
+	fr -> Ecole de l'étudiant
