@@ -1,6 +1,6 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="home" modules = ["items", "schools", "students"] breadcrumbs = {"page.index": ""}>
+<@layout_std pageId="home" modules = ["items", "schools", "students"] style=true breadcrumbs = {"page.index": ""}>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span9">
@@ -16,9 +16,8 @@
 						<tbody>
 							<#list students.summaries as student>
 								<@item color=student.school.color>
-									<div>${student.firstName?html} ${student.lastName?html}</div>
-									<div>${student.school.name?html}</div>
-									<div>${student.subject?html}</div>
+									<div class="student-name">${student.firstName?html} ${student.lastName?html}</div>
+									<div class="student-description">${student.subject?html} @ ${student.school.name?html}</div>
 								</@item>
 							</#list>
 						</tbody>
