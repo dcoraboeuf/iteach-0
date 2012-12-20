@@ -6,7 +6,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import net.iteach.core.security.SecurityUtils;
-import net.sf.jstring.LocalizableException;
 import net.sf.jstring.Strings;
 import net.sf.jstring.support.CoreException;
 
@@ -43,10 +42,10 @@ public class DefaultErrorHandler implements ErrorHandler {
 		String displayMessage;
 		String loggedMessage;
 		boolean stackTrace;
-		if (ex instanceof LocalizableException) {
-			loggedMessage = ((LocalizableException)ex).getLocalizedMessage(strings, Locale.ENGLISH);
+		if (ex instanceof CoreException) {
+			loggedMessage = ((CoreException)ex).getLocalizedMessage(strings, Locale.ENGLISH);
 			stackTrace = false;
-			displayMessage = ((LocalizableException)ex).getLocalizedMessage(strings, locale);
+			displayMessage = ((CoreException)ex).getLocalizedMessage(strings, locale);
 		} else {
 			loggedMessage = ex.getMessage();
 			stackTrace = true;

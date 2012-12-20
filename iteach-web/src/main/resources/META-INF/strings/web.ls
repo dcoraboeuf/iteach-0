@@ -10,6 +10,18 @@ language.de
     
 [general]
 
+general.failure
+	en -> ...
+		A general error has occurred..\n
+		Please report the following identifier to your administrator.\n
+		{0}
+		...
+	fr -> ...
+		Une erreur générale est survenue.\n
+		Veuillez signaler l'identifiant qui suit à votre administrateur.\n
+		{0}
+		...
+
 general.error
 	en -> ...
 		An error has occurred.\n
@@ -18,7 +30,7 @@ general.error
 		Identifier: {1}
 		...
 	fr -> ...
-		Une erreur est survenur.\n
+		Une erreur est survenue.\n
 		Veuillez signaler le message et l'identifiant qui suivent à votre administrateur.\n
 		{0}\n
 		Identifiant : {1}

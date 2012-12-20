@@ -55,10 +55,7 @@ public class TeacherUIController implements TeacherUI {
 		this.strings = strings;
 	}
 
-	@ExceptionHandler(InputException.class)
-	public ResponseEntity<String> onException (HttpServletRequest request, Locale locale, InputException ex) {
-		// Returns a message to display to the user
-		String message = ex.getLocalizedMessage(strings, locale);
+	protected ResponseEntity<String> getMessageResponse(String message) {
 		// Header
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/plain; charset=utf-8");
@@ -66,14 +63,32 @@ public class TeacherUIController implements TeacherUI {
 		return new ResponseEntity<String>(message, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@ExceptionHandler(InputException.class)
+	public ResponseEntity<String> onInputException (HttpServletRequest request, Locale locale, InputException ex) {
+		// Returns a message to display to the user
+		String message = ex.getLocalizedMessage(strings, locale);
+		// OK
+		return getMessageResponse(message);
+	}
+
 	@ExceptionHandler(CoreException.class)
-	public ResponseEntity<String> onException (HttpServletRequest request, Locale locale, CoreException ex) {
+	public ResponseEntity<String> onCoreException (HttpServletRequest request, Locale locale, CoreException ex) {
 		// Error message
 		ErrorMessage error = errorHandler.handleError (request, locale, ex);
 		// Returns a message to display to the user
 		String message = strings.get(locale, "general.error", error.getMessage(), error.getUuid());
 		// Ok
-		return new ResponseEntity<String>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+		return getMessageResponse(message);
+	}
+
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> onException (HttpServletRequest request, Locale locale, Exception ex) {
+		// Error message
+		ErrorMessage error = errorHandler.handleError (request, locale, ex);
+		// Returns a message to display to the user
+		String message = strings.get(locale, "general.failure", error.getUuid());
+		// Ok
+		return getMessageResponse(message);
 	}
 
 	@Override
