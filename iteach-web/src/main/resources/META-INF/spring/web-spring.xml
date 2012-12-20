@@ -2,10 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:task="http://www.springframework.org/schema/task" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<context:component-scan base-package="net.iteach" />
@@ -23,7 +25,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	</mvc:annotation-driven>
 	
 	<!-- Static resources -->
-	<mvc:resources mapping="/static/**" location="/static/" />
+	<util:properties id="applicationProps" location="classpath:META-INF/strings/core.properties"/>
+	<mvc:resources mapping="/resources/v#{applicationProps['app.version']}/**" location="/static/" />
 	
 	<!-- Default page -->
 	<mvc:default-servlet-handler/>
@@ -44,16 +47,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 				<entry key="locSelected" value-ref="fnLocSelected" />
 				<entry key="secLogged" value-ref="fnSecLogged" />
 				<entry key="secDisplayName" value-ref="fnSecDisplayName" />
-				<!--
-				<entry key="loclink" value-ref="fnLocLink" />
-				<entry key="ellipsis" value-ref="fnEllipsis" />
-				<entry key="chk_user_fn" value-ref="fnSecChkUserFn" />
-				<entry key="chk_app_fn" value-ref="fnSecChkAppFn" />
-				<entry key="chk_env_fn" value-ref="fnSecChkEnvFn" />
-				<entry key="secAllowLogin" value-ref="fnSecAllowLogin" />
-				<entry key="secIsAdmin" value-ref="fnSecIsAdmin" />
-				<entry key="settingsAppName" value-ref="fnSettingsAppName" />
-				-->
 			</map>
 		</property>
 	</bean>
@@ -62,16 +55,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<bean id="fnLocSelected" class="net.iteach.web.support.fm.FnLocSelected" />
 	<bean id="fnSecLogged" class="net.iteach.web.support.fm.FnSecLogged" />
 	<bean id="fnSecDisplayName" class="net.iteach.web.support.fm.FnSecDisplayName" />
-	<!--
-	<bean id="fnLocLink" class="net.myconfig.web.support.fm.FnLocLink" />
-	<bean id="fnEllipsis" class="net.myconfig.web.support.fm.FnEllipsis" />
-	<bean id="fnSecChkUserFn" class="net.myconfig.web.support.fm.security.FnSecChkUserFn" />
-	<bean id="fnSecChkAppFn" class="net.myconfig.web.support.fm.security.FnSecChkAppFn" />
-	<bean id="fnSecChkEnvFn" class="net.myconfig.web.support.fm.security.FnSecChkEnvFn" />
-	<bean id="fnSecAllowLogin" class="net.myconfig.web.support.fm.security.FnSecAllowLogin" />
-	<bean id="fnSecIsAdmin" class="net.myconfig.web.support.fm.security.FnSecIsAdmin" />
-	<bean id="fnSettingsAppName" class="net.myconfig.web.support.fm.FnSettingsAppName" />
-	-->
 
 	<!-- Freemarker views -->
 	<!-- FIXME Uses profiles for caching -->
