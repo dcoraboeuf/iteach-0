@@ -101,24 +101,25 @@ var Students = function () {
 	}
 	
 	function deleteStudent (id) {
-		var name = $('#Student-name-{0}'.format(id)).val();
+		var firstName = $('#student-firstName-{0}'.format(id)).val();
+		var lastName = $('#student-lastName-{0}'.format(id)).val();
 		application.confirmAndCall(
-			loc('Student.delete.prompt', name),
+			loc('student.delete.prompt', firstName + ' ' + lastName),
 			function () {
 				$.ajax({
 					type: 'DELETE',
-					url: 'ui/teacher/Student/{0}'.format(id),
+					url: 'ui/teacher/student/{0}'.format(id),
 					contentType: 'application/json',
 					dataType: 'json',
 					success: function (data) {
 						if (data.success) {
 							location.reload();
 						} else {
-							application.displayError(loc('Student.delete.error'));
+							application.displayError(loc('student.delete.error'));
 						}
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-					  	application.displayAjaxError (loc('Student.delete.error'), jqXHR, textStatus, errorThrown);
+					  	application.displayAjaxError (loc('student.delete.error'), jqXHR, textStatus, errorThrown);
 					}
 				});
 			}
