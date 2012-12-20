@@ -39,9 +39,9 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 							public StudentSummary mapRow(ResultSet rs, int rowNum)
 									throws SQLException {
 								SchoolSummary school = new SchoolSummary(
-										rs.getInt("SCHOOLS.ID"),
-										rs.getString("SCHOOLS.NAME"),
-										rs.getString("SCHOOLS.COLOR"));
+										rs.getInt("SCHOOL_ID"),
+										rs.getString("SCHOOL_NAME"),
+										rs.getString("SCHOOL_COLOR"));
 								return new StudentSummary(
 										rs.getInt("STUDENTS.ID"),
 										rs.getString("STUDENTS.SUBJECT"),
