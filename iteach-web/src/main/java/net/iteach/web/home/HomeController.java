@@ -24,6 +24,8 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String home(Model model) {
+		// List of students
+		model.addAttribute("students", ui.getStudents());
 		// List of schools
 		model.addAttribute("schools", ui.getSchools());
 		// OK

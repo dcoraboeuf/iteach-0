@@ -190,4 +190,36 @@ school.name
 school.color
 	en -> Colour code
 	fr -> Code couleur
-	
+
+[students]
+
+student.new
+	en -> New student
+	fr -> Nouvel étudiant
+
+student.new.tip
+	en -> ...
+		Create a student by giving it a name and a lesson subject. You can also
+		associate coordinates to it. Any data can be updated later on.
+		...
+	fr -> ...
+		Créez un étudiant en lui donnant un nom et un sujet de leçon. Vous pouvez
+		également lui attribuer des coordonnées de contact. Toute donnée peut être
+		modifiée ultérieurement.
+		...
+
+student.new.error
+	en -> Error while creating the student
+	fr -> Erreur lors de la création de l'étudiant
+
+student.firstName
+	en -> First name
+	fr -> Prénom
+
+student.lastName
+	en -> Last name
+	fr -> Nom
+
+student.subject
+	en -> Subject
+	fr -> Matière

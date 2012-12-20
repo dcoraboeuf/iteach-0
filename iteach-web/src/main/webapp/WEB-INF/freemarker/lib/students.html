@@ -1,0 +1,35 @@
+<script type="text/javascript" src="${base}/scripts/students.js"></script>
+
+<#macro student_dialog>
+	<@dialog id="student-dialog">
+		<form id="student-dialog-form" class="form-horizontal">
+			<div class="control-group">
+				<span class="help-block"><@lh key="student.new.tip" /></span>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="studentFirstName"><@lh key="student.firstName" /></label>
+				<div class="controls">
+					<input id="studentFirstName" name="firstName" type="text" size="30" maxlength="40" required="required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="studentLastName"><@lh key="student.lastName" /></label>
+				<div class="controls">
+					<input id="studentLastName" name="lastName" type="text" size="30" maxlength="40" required="required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="studentSubject"><@lh key="student.subject" /></label>
+				<div class="controls">
+					<input id="studentSubject" name="subject" type="text" size="30" maxlength="80" required="required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<button class="btn btn-primary" id="student-dialog-submit" type="submit"><@lh key="general.create" /></button>
+					<a class="btn btn-link" href="javascript:$('#student-dialog').dialog('close')"><@lh key="general.cancel" /></a>
+				</div>
+			</div>
+		</form>
+	</@dialog>
+</#macro>

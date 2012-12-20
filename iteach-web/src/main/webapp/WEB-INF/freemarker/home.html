@@ -1,6 +1,6 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="home" modules = ["items", "schools"] breadcrumbs = {"page.index": ""}>
+<@layout_std pageId="home" modules = ["items", "schools", "students"] breadcrumbs = {"page.index": ""}>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span9">
@@ -12,7 +12,17 @@
 			<div class="span3">
 				<!-- Students -->
 				<@panel class="data students" title = loc("home.students")>
-					Coming soon - your students!
+					<table class="items students" width="100%">
+						<tbody>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td>
+									<@button img="student_add" text=loc("student.new") action="javascript:Students.createStudent();" />
+								</td>
+							</tr>
+						</tfoot>
+					</table>
 				</@panel>
 				<!-- Schools -->
 				<@panel class="data schools" title = loc("home.schools")>
@@ -44,6 +54,8 @@
 	</div>
 	
 	<#-- Dialogs -->
+	
+	<@student_dialog />
 	
 	<#-- School dialog -->
 	
