@@ -72,14 +72,19 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional
 	public Ack editSchoolForTeacher(int userId, int id, SchoolForm form) {
-		int count = getNamedParameterJdbcTemplate().update(
-				SQL.SCHOOL_UPDATE,
-				params("teacher", userId)
-					.addValue("id", id)
-					.addValue("name", form.getName())
-					.addValue("color", form.getColor())
-				);
-		return Ack.one(count);
+		try {
+			int count = getNamedParameterJdbcTemplate().update(
+					SQL.SCHOOL_UPDATE,
+					params("teacher", userId)
+						.addValue("id", id)
+						.addValue("name", form.getName())
+						.addValue("color", form.getColor())
+					);
+			return Ack.one(count);
+		} catch (DuplicateKeyException ex) {
+			// Duplicate school name
+			throw new SchoolNameAlreadyDefined (form.getName());
+		}
 	}
 
 }
