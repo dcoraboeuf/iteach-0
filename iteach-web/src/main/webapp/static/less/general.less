@@ -14,13 +14,16 @@
 /* Items */
 
 .item-content {
-	display: inline;
+	padding-left: 1em;
+	height: 24px;
+	* {
+		vertical-align: middle;
+	}
 }
 
 .item-color {
-	margin: 1px;
-	width: 2em;
-	margin-right: 0.5em;
+	margin-right: 1em;
+	width: 1em;
 	border: solid 1px gray;
 }
 
@@ -28,17 +31,13 @@ table.items {
 	tr:hover {
 		cursor: pointer;
 		background-color: #EEEEFF;
-		.actions {
+		.item-actions {
 			display: inline;
 		}
 	}
 }
 
-div.actions {
-	float: right;
+.item-actions {
 	display: none;
 	font-size: 60%;
-	* {
-		vertical-align: middle;
-	}
 }
