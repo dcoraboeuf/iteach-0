@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Pre-requisites:
-
 #############################
 # Check environment variables
 #############################
