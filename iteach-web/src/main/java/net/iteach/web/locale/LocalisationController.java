@@ -1,27 +1,20 @@
 package net.iteach.web.locale;
 
-import static org.apache.commons.lang3.StringEscapeUtils.escapeEcmaScript;
-import static org.apache.commons.lang3.StringUtils.replace;
+import net.sf.jstring.Strings;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
-import net.iteach.core.model.Ack;
-import net.sf.jstring.Strings;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import static org.apache.commons.lang3.StringEscapeUtils.escapeEcmaScript;
+import static org.apache.commons.lang3.StringUtils.replace;
 
 @Controller
 public class LocalisationController {
@@ -31,21 +24,6 @@ public class LocalisationController {
 	@Autowired
 	public LocalisationController(Strings strings) {
 		this.strings = strings;
-	}
-
-	@RequestMapping(value = "/language/{language}", method = RequestMethod.POST)
-	public @ResponseBody Ack setLanguage(@PathVariable String language) {
-		if (StringUtils.isNotBlank(language)) {
-			// Sets the locale
-			Locale locale = new Locale(language);
-			// FIXME Checks if the language is recognized (needs jstring 2.2)
-			// Changes the locale
-			LocaleContextHolder.setLocale(locale, true);
-			// OK
-			return Ack.OK;
-		} else {
-			return Ack.NOK;
-		}
 	}
 
 	@RequestMapping(value = "/localization", method = RequestMethod.GET)
