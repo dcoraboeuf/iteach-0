@@ -41,7 +41,7 @@ export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=128m -Djava.net.preferIPv4Stack=tru
 ##########################
 
 # Gets the version number from the POM
-VERSION=`mvn help:evaluate -Dexpression=project.version $MVN_OPTIONS | grep -E "^[A-Za-z\.0-9]+-SNAPSHOT$" | sed -e 's/\-SNAPSHOT//'`
+VERSION=`${MVN} help:evaluate -Dexpression=project.version $MVN_OPTIONS | grep -E "^[A-Za-z\.0-9]+-SNAPSHOT$" | sed -e 's/\-SNAPSHOT//'`
 
 # Release number is made of the version and the build number
 RELEASE=${VERSION}-${BUILD_NUMBER}
@@ -56,10 +56,10 @@ echo Building release ${RELEASE}...
 git checkout -- .
 
 # Changing the versions
-mvn versions:set -DnewVersion=${RELEASE} -DgenerateBackupPoms=false
+${MVN} versions:set -DnewVersion=${RELEASE} -DgenerateBackupPoms=false
 
 # Maven build
-mvn clean install
+${MVN} clean install
 if [ $? -ne 0 ]
 then
 	echo Build failed.
@@ -83,7 +83,7 @@ fi
 ###############################
 
 echo Uploading to Nexus @ ${NEXUS_URL} with id = ${NEXUS_ID}
-mvn deploy:deploy-file -Dfile=target/iteach-${RELEASE}.tar -DrepositoryId=${NEXUS_ID} -Durl=${NEXUS_URL} -DgroupId=net.iteach -DartifactId=iteach -Dversion=${RELEASE} -DgeneratePom=true -Dpackaging=tar
+${MVN} deploy:deploy-file -Dfile=target/iteach-${RELEASE}.tar -DrepositoryId=${NEXUS_ID} -Durl=${NEXUS_URL} -DgroupId=net.iteach -DartifactId=iteach -Dversion=${RELEASE} -DgeneratePom=true -Dpackaging=tar
 if [ $? -ne 0 ]
 then
 	echo Deployment failed.
