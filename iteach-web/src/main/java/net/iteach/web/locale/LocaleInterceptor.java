@@ -39,14 +39,9 @@ public class LocaleInterceptor extends LocaleChangeInterceptor {
 			if (localeResolver == null) {
 				throw new IllegalStateException("No LocaleResolver found: not in a DispatcherServlet request?");
 			}
-			// Gets the selected locale
-			Locale locale = localeResolver.resolveLocale(request);
-			if (locale == null) {
-				locale = Locale.ENGLISH;
-			}
-            // Filters on known languages
-            locale = strings.getSupportedLocales().filterForLookup(locale);
-			// Sets the locale in the model
+            // Gets the locale
+            Locale locale = getLocale(request, localeResolver);
+            // Sets the locale in the model
 			modelAndView.addObject("locale", locale.toString());
 			// Sets the locale in the context
 			LocaleContextHolder.setLocale(locale, true);
@@ -55,5 +50,16 @@ public class LocaleInterceptor extends LocaleChangeInterceptor {
 		// Default
 		super.postHandle(request, response, handler, modelAndView);
 	}
+
+    protected Locale getLocale(HttpServletRequest request, LocaleResolver localeResolver) {
+        // Gets the selected locale
+        Locale locale = localeResolver.resolveLocale(request);
+        if (locale == null) {
+            locale = Locale.ENGLISH;
+        }
+        // Filters on known languages
+        locale = strings.getSupportedLocales().filterForLookup(locale);
+        return locale;
+    }
 
 }
