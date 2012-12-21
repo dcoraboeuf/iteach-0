@@ -1,6 +1,7 @@
 package net.iteach.service.security;
 
 import javax.sql.DataSource;
+import javax.validation.Validator;
 
 import net.iteach.api.SecurityService;
 import net.iteach.api.model.AuthenticationMode;
@@ -15,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class SecurityServiceImpl extends AbstractSecurityService implements SecurityService {
 
 	@Autowired
-	public SecurityServiceImpl(DataSource dataSource) {
-		super(dataSource);
+	public SecurityServiceImpl(DataSource dataSource, Validator validator) {
+		super(dataSource, validator);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
+import javax.validation.Validator;
 
 import net.iteach.api.model.AuthenticationMode;
 import net.iteach.service.db.SQL;
@@ -16,8 +17,8 @@ import org.springframework.stereotype.Service;
 public class OpenIDUserService extends AbstractUserService {
 
 	@Autowired
-	public OpenIDUserService(DataSource dataSource) {
-		super(dataSource, SQL.USER_BY_OPENID);
+	public OpenIDUserService(DataSource dataSource, Validator validator) {
+		super(dataSource, validator, SQL.USER_BY_OPENID);
 	}
 	
 	@Override

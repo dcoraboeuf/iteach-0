@@ -1,18 +1,8 @@
 package net.iteach.service.impl;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
 import net.iteach.api.SchoolService;
-import net.iteach.core.model.Ack;
-import net.iteach.core.model.ID;
-import net.iteach.core.model.SchoolForm;
-import net.iteach.core.model.SchoolSummaries;
-import net.iteach.core.model.SchoolSummary;
+import net.iteach.core.model.*;
 import net.iteach.service.db.SQL;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,13 +10,18 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
+import javax.validation.Validator;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 @Service
 public class SchoolServiceImpl extends AbstractServiceImpl implements
 		SchoolService {
 
 	@Autowired
-	public SchoolServiceImpl(DataSource dataSource) {
-		super(dataSource);
+	public SchoolServiceImpl(DataSource dataSource, Validator validator) {
+		super(dataSource, validator);
 	}
 
 	@Override
@@ -60,8 +55,8 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 			throw new SchoolNameAlreadyDefined (form.getName());
 		}
 	}
-	
-	@Override
+
+    @Override
 	@Transactional
 	public Ack deleteSchoolForTeacher(int teacherId, int id) {
 		// TODO Deletes coordinates
