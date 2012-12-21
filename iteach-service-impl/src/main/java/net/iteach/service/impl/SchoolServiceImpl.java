@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
+import javax.validation.Validator;
 
 import net.iteach.api.SchoolService;
 import net.iteach.core.model.Ack;
@@ -25,8 +26,8 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		SchoolService {
 
 	@Autowired
-	public SchoolServiceImpl(DataSource dataSource) {
-		super(dataSource);
+	public SchoolServiceImpl(DataSource dataSource, Validator validator) {
+		super(dataSource, validator);
 	}
 
 	@Override
@@ -72,6 +73,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional
 	public Ack editSchoolForTeacher(int userId, int id, SchoolForm form) {
+        // TODO validate(form);
 		try {
 			int count = getNamedParameterJdbcTemplate().update(
 					SQL.SCHOOL_UPDATE,

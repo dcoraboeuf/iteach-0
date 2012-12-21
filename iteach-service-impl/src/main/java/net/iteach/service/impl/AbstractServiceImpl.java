@@ -3,14 +3,18 @@ package net.iteach.service.impl;
 import java.util.List;
 
 import javax.sql.DataSource;
+import javax.validation.Validator;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 
 public abstract class AbstractServiceImpl extends NamedParameterJdbcDaoSupport {
+
+    private final Validator validator;
 	
-	public AbstractServiceImpl(DataSource dataSource) {
+	public AbstractServiceImpl(DataSource dataSource, Validator validator) {
 		setDataSource(dataSource);
+        this.validator = validator;
 	}
 	
 	protected <T> T getFirstItem (String sql, MapSqlParameterSource criteria, Class<T> type) {

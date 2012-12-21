@@ -1,5 +1,6 @@
 package net.iteach.service.impl
 
+import net.iteach.core.validation.ValidationException
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,6 +27,36 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 		assert id != null
 		assert id.isSuccess()
 	}
+
+    @Test(expected = ValidationException.class)
+    void school_no_name () {
+        service.createSchoolForTeacher(2, new SchoolForm(null, "#CCCCCC"));
+    }
+
+    @Test(expected = ValidationException.class)
+    void school_tooshort_name () {
+        service.createSchoolForTeacher(2, new SchoolForm("x", "#CCCCCC"));
+    }
+
+    @Test(expected = ValidationException.class)
+    void school_toolong_name () {
+        service.createSchoolForTeacher(2, new SchoolForm("x" * 81, "#CCCCCC"));
+    }
+
+    @Test(expected = ValidationException.class)
+    void school_no_color () {
+        service.createSchoolForTeacher(2, new SchoolForm("Test", null));
+    }
+
+    @Test(expected = ValidationException.class)
+    void school_tooshort_color () {
+        service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCC"));
+    }
+
+    @Test(expected = ValidationException.class)
+    void school_toolong_color () {
+        service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCCCCCC"));
+    }
 	
 	@Test
 	void editSchool_name() {
