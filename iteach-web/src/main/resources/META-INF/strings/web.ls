@@ -58,7 +58,7 @@ general.error.title
 general.ajax.error
 	en -> Communication problem with the server
 	fr -> Erreur de communication avec le serveur
-    
+
 [help]
 
 help

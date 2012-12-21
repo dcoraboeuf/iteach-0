@@ -1,6 +1,8 @@
 package net.iteach.service.impl
 
 import net.iteach.core.validation.ValidationException
+import net.sf.jstring.Strings
+import net.sf.jstring.support.StringsLoader
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -9,6 +11,8 @@ import net.iteach.core.model.SchoolForm;
 import net.iteach.test.AbstractIntegrationTest;
 
 class SchoolServiceImplTest extends AbstractIntegrationTest {
+
+    private static Strings strings = StringsLoader.auto(Locale.ENGLISH, Locale.FRENCH, Locale.GERMAN);
 	
 	@Autowired
 	private SchoolService service
@@ -28,34 +32,62 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 		assert id.isSuccess()
 	}
 
-    @Test(expected = ValidationException.class)
+    def validation (Closure<Void> closure, String expectedMessage) {
+        try {
+            closure.run();
+            assert false: "Expected validation error"
+        } catch (ValidationException ex) {
+            def message = ex.getLocalizedMessage(strings, Locale.ENGLISH)
+            assert expectedMessage == message
+        }
+    }
+
+    @Test
     void school_no_name () {
-        service.createSchoolForTeacher(2, new SchoolForm(null, "#CCCCCC"));
+        validation( { service.createSchoolForTeacher(2, new SchoolForm(null, "#CCCCCC")) },
+                """Validation errors:
+ - School name: may not be null
+""")
     }
 
-    @Test(expected = ValidationException.class)
+    @Test
     void school_tooshort_name () {
-        service.createSchoolForTeacher(2, new SchoolForm("x", "#CCCCCC"));
+        validation( { service.createSchoolForTeacher(2, new SchoolForm("", "#CCCCCC")) },
+                """Validation errors:
+ - School name: size must be between 1 and 80
+""")
     }
 
-    @Test(expected = ValidationException.class)
+    @Test
     void school_toolong_name () {
-        service.createSchoolForTeacher(2, new SchoolForm("x" * 81, "#CCCCCC"));
+        validation ( { service.createSchoolForTeacher(2, new SchoolForm("x" * 81, "#CCCCCC")) },
+                """Validation errors:
+ - School name: size must be between 1 and 80
+""")
     }
 
-    @Test(expected = ValidationException.class)
+    @Test
     void school_no_color () {
-        service.createSchoolForTeacher(2, new SchoolForm("Test", null));
+        validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", null)) },
+                """Validation errors:
+ - Colour code for the school: may not be null
+""")
     }
 
-    @Test(expected = ValidationException.class)
+    @Test
     void school_tooshort_color () {
-        service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCC"));
+        validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCC")) },
+                """Validation errors:
+ - Colour code for the school: size must be between 7 and 7
+""")
     }
 
-    @Test(expected = ValidationException.class)
+    @Test
     void school_toolong_color () {
-        service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCCCCCC"));
+        validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCCCCCC")) },
+                """Validation errors:
+ - Colour code for the school: size must be between 7 and 7
+""")
     }
 	
 	@Test
