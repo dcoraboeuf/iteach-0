@@ -68,24 +68,30 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
     @Test
     void school_tooshort_color () {
         validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCC")) },
-                " - Colour code for the school: size must be between 7 and 7\n")
+                " - Colour code for the school: must match \"#[0-9A-Fa-f]{6}\"\n")
     }
 
     @Test
     void school_toolong_color () {
         validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCCCCCC")) },
-                " - Colour code for the school: size must be between 7 and 7\n")
+                " - Colour code for the school: must match \"#[0-9A-Fa-f]{6}\"\n")
+    }
+
+    @Test
+    void school_wrong_color () {
+        validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#55CCMM")) },
+                " - Colour code for the school: must match \"#[0-9A-Fa-f]{6}\"\n")
     }
 	
 	@Test
 	void editSchool_name() {
-		def ack = service.editSchoolForTeacher(1, 1, new SchoolForm("My school 11", "#FF0000"));
+		def ack = service.editSchoolForTeacher(1, 1, new SchoolForm("My school 11", "#ff0000"));
 		assert ack != null
 		assert ack.isSuccess()
 		def schools = service.getSchoolsForTeacher(1)
 		def school = schools.getSummaries().find { it.getId() == 1 }
 		assert "My school 11" == school.getName()
-		assert "#FF0000" == school.getColor()
+		assert "#ff0000" == school.getColor()
 	}
 	
 	@Test

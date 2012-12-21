@@ -1,6 +1,7 @@
 package net.iteach.core.validation;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public interface SchoolValidation {
@@ -10,7 +11,7 @@ public interface SchoolValidation {
     String getName();
 
     @NotNull
-    @Size(min=7, max=7)
+    @Pattern(regexp = "#[0-9A-Fa-f]{6}")
     String getColor();
 
 }
