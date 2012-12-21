@@ -20,13 +20,6 @@
 	</section>
 </#macro>
 
-<#macro button img text action>
-	<div class="button">
-		<a href="${action?html}"><img src="static/images/${img?html}.png" /></a>
-		<a href="${action?html}">${text?html}</a>
-	</div>
-</#macro>
-
 <#macro dialog id>
 	<div id="${id?html}" class="dialog">
 		<#nested />

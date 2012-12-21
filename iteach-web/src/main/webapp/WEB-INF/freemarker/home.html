@@ -32,7 +32,10 @@
 						<tfoot>
 							<tr>
 								<td>
-									<@button img="student_add" text=loc("student.new") action="javascript:Students.createStudent();" />
+                                       <button class="btn" onclick="Students.createStudent();">
+                                           <img src="${base}/images/student_add.png" />
+                                           <@lh key="student.new" />
+                                       </button>
 								</td>
 							</tr>
 						</tfoot>
@@ -57,7 +60,10 @@
 						<tfoot>
 							<tr>
 								<td>
-									<@button img="school_add" text=loc("school.new") action="javascript:Schools.createSchool();" />
+                                    <button class="btn" onclick="Schools.createSchool();">
+                                        <img src="${base}/images/school_add.png" />
+                                        <@lh key="school.new" />
+                                    </button>
 								</td>
 							</tr>
 						</tfoot>
