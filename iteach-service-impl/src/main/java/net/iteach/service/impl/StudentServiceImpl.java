@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
-import javax.validation.Validator;
 
 import net.iteach.api.StudentService;
 import net.iteach.core.model.Ack;
@@ -26,8 +25,8 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		StudentService {
 
 	@Autowired
-	public StudentServiceImpl(DataSource dataSource, Validator validator) {
-		super(dataSource, validator);
+	public StudentServiceImpl(DataSource dataSource) {
+		super(dataSource);
 	}
 	
 	@Override

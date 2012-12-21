@@ -3,7 +3,6 @@ package net.iteach.service.security;
 import java.util.List;
 
 import javax.sql.DataSource;
-import javax.validation.Validator;
 
 import net.iteach.core.security.User;
 
@@ -17,8 +16,8 @@ public abstract class AbstractUserService extends AbstractSecurityService implem
 	private final String query;
 
 	@Autowired
-	public AbstractUserService(DataSource dataSource, Validator validator, String query) {
-		super(dataSource, validator);
+	public AbstractUserService(DataSource dataSource, String query) {
+		super(dataSource);
 		this.query = query;
 	}
 
