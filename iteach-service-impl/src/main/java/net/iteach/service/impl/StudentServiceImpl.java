@@ -13,6 +13,7 @@ import net.iteach.core.model.SchoolSummary;
 import net.iteach.core.model.StudentForm;
 import net.iteach.core.model.StudentSummaries;
 import net.iteach.core.model.StudentSummary;
+import net.iteach.core.validation.StudentFormValidation;
 import net.iteach.service.db.SQL;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,8 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional
 	public ID createStudentForTeacher(int teacherId, StudentForm form) {
+        // Validation
+        validate(form, StudentFormValidation.class);
 		// FIXME Check for the associated teacher
 		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 		int count = getNamedParameterJdbcTemplate().update(
@@ -80,6 +83,8 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional
 	public Ack editStudentForTeacher(int userId, int id, StudentForm form) {
+        // Validation
+        validate(form, StudentFormValidation.class);
 		// FIXME Check for the associated teacher
 		int count = getNamedParameterJdbcTemplate().update(
 				SQL.STUDENT_UPDATE,
