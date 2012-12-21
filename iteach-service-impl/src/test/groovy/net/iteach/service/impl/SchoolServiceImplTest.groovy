@@ -1,14 +1,13 @@
 package net.iteach.service.impl
 
+import net.iteach.api.SchoolService
+import net.iteach.core.model.SchoolForm
 import net.iteach.core.validation.ValidationException
+import net.iteach.test.AbstractIntegrationTest
 import net.sf.jstring.Strings
 import net.sf.jstring.support.StringsLoader
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import net.iteach.api.SchoolService;
-import net.iteach.core.model.SchoolForm;
-import net.iteach.test.AbstractIntegrationTest;
+import org.junit.Test
+import org.springframework.beans.factory.annotation.Autowired
 
 class SchoolServiceImplTest extends AbstractIntegrationTest {
 
@@ -45,49 +44,37 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
     @Test
     void school_no_name () {
         validation( { service.createSchoolForTeacher(2, new SchoolForm(null, "#CCCCCC")) },
-                """Validation errors:
- - School name: may not be null
-""")
+                " - School name: may not be null\n")
     }
 
     @Test
     void school_tooshort_name () {
         validation( { service.createSchoolForTeacher(2, new SchoolForm("", "#CCCCCC")) },
-                """Validation errors:
- - School name: size must be between 1 and 80
-""")
+                " - School name: size must be between 1 and 80\n")
     }
 
     @Test
     void school_toolong_name () {
         validation ( { service.createSchoolForTeacher(2, new SchoolForm("x" * 81, "#CCCCCC")) },
-                """Validation errors:
- - School name: size must be between 1 and 80
-""")
+                " - School name: size must be between 1 and 80\n")
     }
 
     @Test
     void school_no_color () {
         validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", null)) },
-                """Validation errors:
- - Colour code for the school: may not be null
-""")
+                " - Colour code for the school: may not be null\n")
     }
 
     @Test
     void school_tooshort_color () {
         validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCC")) },
-                """Validation errors:
- - Colour code for the school: size must be between 7 and 7
-""")
+                " - Colour code for the school: size must be between 7 and 7\n")
     }
 
     @Test
     void school_toolong_color () {
         validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCCCCCC")) },
-                """Validation errors:
- - Colour code for the school: size must be between 7 and 7
-""")
+                " - Colour code for the school: size must be between 7 and 7\n")
     }
 	
 	@Test

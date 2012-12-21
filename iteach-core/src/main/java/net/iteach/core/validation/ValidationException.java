@@ -1,9 +1,9 @@
 package net.iteach.core.validation;
 
+import net.iteach.utils.InputException;
 import net.sf.jstring.MultiLocalizable;
-import net.sf.jstring.support.CoreException;
 
-public class ValidationException extends CoreException {
+public class ValidationException extends InputException {
 
     public ValidationException(MultiLocalizable multiLocalizable) {
         super(multiLocalizable);
