@@ -9,12 +9,20 @@
 	</#if>
 </#macro>
 
-<#macro panel title = "" class = "">
-	<section class="panel ${class?html}">
+<#macro panel id = "" title = "" class = "">
+	<#assign idSection = "" />
+	<#assign idTitle = "" />
+	<#assign idContent = "" />
+	<#if id != "" >
+		<#assign idSection = 'id="' + id + '"' />
+		<#assign idTitle = 'id="' + id + '-title"' />
+		<#assign idContent = 'id="' + id + '-content"' />
+	</#if>
+	<section class="panel ${class?html}" ${idSection}>
 		<#if title != "">
-			<h3>${title?html}</h3>
+			<h3 ${idTitle}>${title?html}</h3>
 		</#if>
-		<section class="panel-content">
+		<section ${idContent} class="panel-content">
 			<#nested>
 		</section>
 	</section>
