@@ -5,7 +5,7 @@ var Planning = function () {
 		var DATA_FEED_URL = "php/datafeed.php";
 		var op = {
 			view: view,
-			theme:3,
+			theme: 3,
 			showday: new Date(),
 			//EditCmdhandler:Edit,
 			//DeleteCmdhandler:Delete,
@@ -16,7 +16,7 @@ var Planning = function () {
 			//onRequestDataError: cal_onerror, 
 			autoload:true,
 			//url: DATA_FEED_URL + "?method=list",  
-			//quickAddUrl: DATA_FEED_URL + "?method=add", 
+			quickAddUrl: DATA_FEED_URL + "?method=add", 
 			//quickUpdateUrl: DATA_FEED_URL + "?method=update",
 			//quickDeleteUrl: DATA_FEED_URL + "?method=remove"        
 		};
