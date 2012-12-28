@@ -1,34 +1,42 @@
 var Planning = function () {
 	
-	function onSelect (start, end, allDay) {
-		alert('onSelect');
-		$("#planning-calendar").fullCalendar('unselect');
+	function formatTimePart (n) {
+		return n < 10 ? '0' + n : '' + n;
+	}
+
+	function formatTime (d) {
+		var hours = formatTimePart(d.getHours());
+		var minutes = formatTimePart(d.getMinutes());
+		return hours + ':' + minutes;
 	}
 	
-	function create (config) {
-		if (config.isallday) {
-			return false;
+	function onSelect (start, end, allDay) {
+		if (allDay) {
+			$("#planning-calendar").fullCalendar('unselect');
+		} else {
+			var date = '{0}-{1}-{2}'.format(start.getFullYear(), formatTimePart(start.getMonth() + 1), formatTimePart(start.getDate()));
+			var startTime = formatTime(start);
+			var endTime = formatTime(end);
+			application.dialog({
+				id: 'lesson-dialog',
+				title: loc('lesson.new'),
+				width: 500,
+				data: {
+					lessonDate: date,
+					lessonFrom: startTime,
+					lessonTo: endTime,
+					lessonStudent: '',
+					lessonLocation: ''
+				},
+				submit: {
+					name: loc('general.create'),
+					action: submitCreateLesson
+				},
+				cancel: function () {
+					$("#planning-calendar").fullCalendar('unselect');
+				}
+			});			
 		}
-		var date = '{0}-{1}-{2}'.format(config.start.getFullYear(), config.start.getMonth() + 1, config.start.getDate());
-		var startTime = formatTime(config.start);
-		var endTime = formatTime(config.end);
-		application.dialog({
-			id: 'lesson-dialog',
-			title: loc('lesson.new'),
-			width: 500,
-			data: {
-				lessonDate: date,
-				lessonFrom: startTime,
-				lessonTo: endTime,
-				lessonStudent: '',
-				lessonLocation: ''
-			},
-			submit: {
-				name: loc('general.create'),
-				action: submitCreateLesson
-			},
-			cancel: config.onCancel
-		});
 	}
 	
 	function submitCreateLesson () {
