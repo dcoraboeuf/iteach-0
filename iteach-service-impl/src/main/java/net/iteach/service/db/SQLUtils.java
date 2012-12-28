@@ -6,10 +6,20 @@ import java.sql.Timestamp;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 public final class SQLUtils {
 
 	private SQLUtils() {
+	}
+	
+	public static String dateToDB (LocalDate date) {
+		return date.toString();
+	}
+	
+	public static String timeToDB (LocalTime time) {
+		return time.toString("HH:mm");
 	}
 
 	public static Timestamp now() {

@@ -103,7 +103,16 @@ public class TeacherUIController extends AbstractUIController {
 		// OK
 		return studentService.editStudentForTeacher(userId, id, form);
 	}
-	
+
+
+	@Override
+	@RequestMapping(value = "/lesson", method = RequestMethod.POST)
+	public @ResponseBody ID createLesson(@RequestBody LessonForm form) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return studentService.createLessonForTeacher(userId, form);
+	}
 	
 
 }
