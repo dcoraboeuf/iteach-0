@@ -9,5 +9,22 @@ var i18n = {
 			month: 'Mois',
 			week: 'Semaine',
 			day: 'Jour'
-		}
+		},
+		timeFormat: {
+		    // for agendaWeek and agendaDay
+		    agenda: 'H:mm{ - H:mm}',
+		    // for all other views
+		    '': 'H(:mm)'
+		},
+		columnFormat: {
+		    month: 'ddd',
+		    week: 'ddd dd/MM',
+		    day: 'dddd dd/MM'
+		},
+		titleFormat: {
+			month: 'MMMM yyyy',
+			week: "dd MMM[ yyyy]{ '&#8212;' dd MMM yyyy}",
+			day: 'dddd dd MMM yyyy'
+		},
+		axisFormat: 'HH(:mm)'
 };

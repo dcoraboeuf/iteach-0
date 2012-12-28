@@ -115,6 +115,10 @@ var Planning = function () {
 			monthNames: i18n.monthNames,
 			monthNamesShort: i18n.monthNamesShort,
 			buttonText: i18n.buttonText,
+			timeFormat: i18n.timeFormat,
+			columnFormat: i18n.columnFormat,
+			titleFormat: i18n.titleFormat,
+			axisFormat: i18n.axisFormat,
 			// General appearance
 			allDaySlot: false,
 			minTime: 6,
