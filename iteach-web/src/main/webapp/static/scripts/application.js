@@ -47,6 +47,7 @@ function id (value) {
 var application = function () {
 	
 	function dialog (config) {
+		// Values
 		if (config.data) {
 			for (var name in config.data) {
 				$(id(name)).val(config.data[name]);
@@ -59,20 +60,33 @@ var application = function () {
 				return config.submit.action();
 			});
 		}
-		var onCancel;
-		if (config.cancel) {
-			onCancel = function () {
-				config.cancel();
+		// Open event
+		var onOpen;
+		if (config.open) {
+			onOpen = function () {
+				config.open();
 			};
 		} else {
-			onCancel = function () {};
+			onOpen = function () {};
 		}
+		// Closing event
+		var onClose;
+		if (config.close) {
+			onClose = function () {
+				config.close();
+			};
+		} else {
+			onClose = function () {};
+		}
+		// Error section
 		$(id(config.id + '-error')).hide();
+		// Shows the dialog
 		$(id(config.id)).dialog({
 		 	modal: true,
 			title: config.title,
 			width: config.width,
-			close: onCancel
+			close: onClose,
+			open: onOpen
 		});
 	}
 	

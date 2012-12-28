@@ -311,3 +311,11 @@ lesson.edit
 lesson.edit.error
 	en -> Error while modifying the lesson
 	fr -> Erreur lors de la modification de la leçon
+
+lesson.delete.prompt
+	en -> Do you really want to delete this lesson?
+	fr -> Voulez-vous vraiment supprimer cette leçon ?
+
+lesson.delete.error
+	en -> Error while deleting this lesson
+	fr -> Erreur lors de la suppression de cette leçon

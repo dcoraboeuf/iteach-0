@@ -37,6 +37,30 @@ var Planning = function () {
 		});
 	}
 	
+	function onDelete (id) {
+		application.confirmAndCall(
+			loc('lesson.delete.prompt'),
+			function () {
+				$.ajax({
+					type: 'DELETE',
+					url: 'ui/teacher/lesson/{0}'.format(id),
+					contentType: 'application/json',
+					dataType: 'json',
+					success: function (data) {
+						if (data.success) {
+							$("#planning-calendar").fullCalendar('refetchEvents');
+						} else {
+							application.displayError(loc('lesson.delete.error'));
+						}
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+					  	application.displayAjaxError (loc('lesson.delete.error'), jqXHR, textStatus, errorThrown);
+					}
+				});
+			}
+		);
+	}
+	
 	function onEdit (calEvent, jsEvent, view) {
 		var date = calEvent.lesson.date;
 		var startTime = calEvent.lesson.from;
@@ -58,7 +82,14 @@ var Planning = function () {
 					return submitEditLesson (calEvent.id);
 				}
 			},
-			cancel: function () {
+			open: function () {
+				$('#lesson-dialog-delete').unbind('click');
+				$('#lesson-dialog-delete').click(function () {
+					onDelete(calEvent.id);
+				});
+				$('#lesson-dialog-delete').show();
+			},
+			close: function () {
 				$("#planning-calendar").fullCalendar('unselect');
 			}
 		});		
@@ -85,6 +116,9 @@ var Planning = function () {
 				submit: {
 					name: loc('general.create'),
 					action: submitCreateLesson
+				},
+				open: function () {
+					$('#lesson-dialog-delete').hide();
 				},
 				cancel: function () {
 					$("#planning-calendar").fullCalendar('unselect');
