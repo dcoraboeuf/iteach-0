@@ -81,7 +81,8 @@ var Planning = function () {
 			dataType: 'json',
 			success: function (data) {
 				if (data.success) {
-					location.reload();
+					$("#planning-calendar").fullCalendar('refetchEvents');
+					$('#lesson-dialog').dialog('close');
 				} else {
 					application.displayError(loc('lesson.new.error'));
 				}
