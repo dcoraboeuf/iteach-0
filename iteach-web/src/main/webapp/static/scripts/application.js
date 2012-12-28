@@ -54,6 +54,7 @@ var application = function () {
 		}
 		if (config.submit) {
 			$(id(config.id + '-submit')).text(config.submit.name);
+			$(id(config.id + '-form')).unbind('submit');
 			$(id(config.id + '-form')).submit(function () {
 				return config.submit.action();
 			});
