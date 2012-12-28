@@ -7,8 +7,7 @@ public class StudentSummary {
 	
 	private final int id;
 	private final String subject;
-	private final String firstName;
-	private final String lastName;
+	private final String name;
 	private final SchoolSummary school;
 
 }

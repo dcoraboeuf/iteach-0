@@ -244,12 +244,8 @@ student.edit.error
 	en -> Error while updating the student
 	fr -> Erreur lors de la modification de l'étudiant
 	
-student.firstName
-	en -> First name
-	fr -> Prénom
-
-student.lastName
-	en -> Last name
+student.name
+	en -> Name
 	fr -> Nom
 
 student.subject

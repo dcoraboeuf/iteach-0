@@ -16,15 +16,14 @@
 						<tbody>
 							<#list students.summaries as student>
 								<@item color=student.school.color>
-									<div class="student-name">${student.firstName?html} ${student.lastName?html}</div>
+									<div class="student-name">${student.name?html}</div>
 									<div class="student-description">${student.subject?html} @ ${student.school.name?html}</div>									
 									<@item_actions>			
-										<input id="student-firstName-${student.id}" type="hidden" value="${student.firstName?html}" />
-										<input id="student-lastName-${student.id}" type="hidden" value="${student.lastName?html}" />
+										<input id="student-name-${student.id}" type="hidden" value="${student.name?html}" />
 										<input id="student-subject-${student.id}" type="hidden" value="${student.subject?html}" />
 										<input id="student-school-${student.id}" type="hidden" value="${student.school.id?html}" />
-										<img class="action action-delete" src="static/images/delete.png" title="${loc('student.delete',student.firstName+' '+student.lastName)?html}" onclick="Students.deleteStudent(${student.id});" />
-										<img class="action action-edit" src="static/images/edit.png" title="${loc('student.edit',student.firstName+' '+student.lastName)?html}" onclick="Students.editStudent(${student.id});" />						
+										<img class="action action-delete" src="static/images/delete.png" title="${loc('student.delete',student.name)?html}" onclick="Students.deleteStudent(${student.id});" />
+										<img class="action action-edit" src="static/images/edit.png" title="${loc('student.edit',student.name)?html}" onclick="Students.editStudent(${student.id});" />						
 									</@item_actions>
 								</@item>
 							</#list>
