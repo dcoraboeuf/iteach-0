@@ -1,4 +1,14 @@
 var Planning = function () {
+	
+	function create (start, end, isallday, pos) {
+		alert(JSON.stringify({
+			start: start,
+			end: end,
+			isallday: isallday,
+			pos: pos
+		}));
+		return false;
+	}
 
 	function init () {
 		var view = "week";           
@@ -7,6 +17,7 @@ var Planning = function () {
 			view: view,
 			theme: 3,
 			showday: new Date(),
+			addHandler: create,
 			//EditCmdhandler:Edit,
 			//DeleteCmdhandler:Delete,
 			//ViewCmdhandler:View,    
@@ -16,7 +27,7 @@ var Planning = function () {
 			//onRequestDataError: cal_onerror, 
 			autoload:true,
 			//url: DATA_FEED_URL + "?method=list",  
-			quickAddUrl: DATA_FEED_URL + "?method=add", 
+			//quickAddUrl: DATA_FEED_URL + "?method=add", 
 			//quickUpdateUrl: DATA_FEED_URL + "?method=update",
 			//quickDeleteUrl: DATA_FEED_URL + "?method=remove"        
 		};

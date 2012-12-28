@@ -196,6 +196,15 @@
             
             onWeekOrMonthToDay: false, 
             /**
+             * @description {Event} addHandler: function(start, end, isallday, pos)
+             * This event handler supercedes any other management of the add event
+             * @param {} start. Start of the event
+             * @param {} end. End of the event
+             * @param {} isallday.
+             * @param {} pos.
+             */
+            addHandler: false,
+            /**
 	 	         * @description {Event} quickAddHandler:function(calendar, param )
 	 	         * Fired when user quick adds an item. If this function is set, ajax request to quickAddUrl will abort. 
 	 	         * @param {Object} calendar Calendar object.
@@ -1737,8 +1746,14 @@
             }
         }
         function quickadd(start, end, isallday, pos) {
-            if ((!option.quickAddHandler && option.quickAddUrl == "") || option.readonly) {
-                return;
+            if ((!option.quickAddHandler && !option.addHandler && option.quickAddUrl == "") || option.readonly) {
+                return false;
+            } else if (option.addHandler) {
+            	var result = option.addHandler(start,end,isallday,pos);
+            	if (!result) {
+            		realsedragevent();
+            	}
+            	return;
             }
             var buddle = $("#bbit-cal-buddle");
             if (buddle.length == 0) {
