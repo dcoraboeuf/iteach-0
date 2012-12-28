@@ -108,14 +108,24 @@ var Planning = function () {
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
+			// i18n
+			firstDay: i18n.firstDay,
+			dayNames: i18n.dayNames,
+			dayNamesShort: i18n.dayNamesShort,
+			monthNames: i18n.monthNames,
+			monthNamesShort: i18n.monthNamesShort,
+			// General appearance
 			allDaySlot: false,
 			minTime: 6,
 			maxTime: 22,
 			weekends: true,
+			// Default view
 			defaultView: 'agendaWeek',
+			// Allowing selection (-> creation)
 			selectable: true,
 			selectHelper: true,
 			select: onSelect,
+			// Loading of events
 			events: fetchEvents
 		});
 	}
