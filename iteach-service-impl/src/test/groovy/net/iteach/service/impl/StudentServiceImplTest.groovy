@@ -19,26 +19,25 @@ class StudentServiceImplTest extends AbstractIntegrationTest {
 		assert students != null
 		assert [1, 2, 3] == students.getSummaries()*.getId()
 		assert ["English", "German", "German"] == students.getSummaries()*.getSubject()
-		assert ["A.", "B.", "C."] == students.getSummaries()*.getFirstName()
-		assert ["Albert", "Bernard", "Charles"] == students.getSummaries()*.getLastName()
+		assert ["A. Albert", "B. Bernard", "C. Charles"] == students.getSummaries()*.getName()
 		assert [1, 1, 3] == students.getSummaries()*.getSchool()*.getId()
 	}
 	
 	@Test
 	void createStudent() {
-		def id = service.createStudentForTeacher(1, new StudentForm(3, "English", "D.", "Dilbert"))
+		def id = service.createStudentForTeacher(1, new StudentForm(3, "English", "D. Dilbert"))
 		assert id != null
 		assert id.isSuccess()
 	}
 	
 	@Test
 	void editStudent_name() {
-		def ack = service.editStudentForTeacher(1, 1, new StudentForm(1, "German", "A.", "Alfred"))
+		def ack = service.editStudentForTeacher(1, 1, new StudentForm(1, "German", "A. Alfred"))
 		assert ack != null
 		assert ack.isSuccess()
 		def students = service.getStudentsForTeacher(1)
 		def student = students.getSummaries().find { it.getId() == 1 }
-		assert "Alfred" == student.getLastName()
+		assert "A. Alfred" == student.getName()
 	}
 	
 	// TODO Test deletion

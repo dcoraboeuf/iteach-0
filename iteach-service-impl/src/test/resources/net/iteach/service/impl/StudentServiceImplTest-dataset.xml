@@ -7,8 +7,8 @@
 	<SCHOOLS id="2" teacher="2" name="My school 2" color="#00FF00" />
 	<SCHOOLS id="3" teacher="1" name="My school 3" color="#0000FF" />
 	
-	<STUDENTS id="1" school="1" subject="English" firstname="A." lastname="Albert" />
-	<STUDENTS id="2" school="1" subject="German" firstname="B." lastname="Bernard" />
-	<STUDENTS id="3" school="3" subject="German" firstname="C." lastname="Charles" />
+	<STUDENTS id="1" school="1" subject="English" name="A. Albert" />
+	<STUDENTS id="2" school="1" subject="German" name="B. Bernard" />
+	<STUDENTS id="3" school="3" subject="German" name="C. Charles" />
 
 </dataset>

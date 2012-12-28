@@ -47,8 +47,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 								return new StudentSummary(
 										rs.getInt("ID"),
 										rs.getString("SUBJECT"),
-										rs.getString("FIRSTNAME"),
-										rs.getString("LASTNAME"),
+										rs.getString("NAME"),
 										school);
 							}
 						}));
@@ -65,8 +64,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 				SQL.STUDENT_CREATE,
 				params("school", form.getSchool())
 					.addValue("subject", form.getSubject())
-					.addValue("firstname", form.getFirstName())
-					.addValue("lastname", form.getLastName()),
+					.addValue("name", form.getName()),
 				keyHolder);
 		return ID.count(count).withId(keyHolder.getKey().intValue());
 	}
@@ -91,8 +89,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 				params("id", id)
 					.addValue("school", form.getSchool())
 					.addValue("subject", form.getSubject())
-					.addValue("firstname", form.getFirstName())
-					.addValue("lastname", form.getLastName())
+					.addValue("name", form.getName())
 				);
 		return Ack.one(count);
 	}

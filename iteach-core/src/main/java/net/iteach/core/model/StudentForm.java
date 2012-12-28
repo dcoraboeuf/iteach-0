@@ -8,7 +8,6 @@ public class StudentForm implements StudentFormValidation {
 
 	private final int school;
 	private final String subject;
-	private final String firstName;
-	private final String lastName;
+	private final String name;
 
 }

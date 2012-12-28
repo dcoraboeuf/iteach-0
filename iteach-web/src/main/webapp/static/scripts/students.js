@@ -8,8 +8,7 @@ var Students = function () {
 			title: loc('student.new'),
 			width: 500,
 			data: {
-				studentFirstName: '',
-				studentLastName: '',
+				studentName: '',
 				studentSchool: '',
 				studentSubject: ''
 			},
@@ -21,8 +20,7 @@ var Students = function () {
 	}
 	
 	function editStudent (id) {
-		var firstName = $('#student-firstName-{0}'.format(id)).val();
-		var lastName = $('#student-lastName-{0}'.format(id)).val();
+		var name = $('#student-name-{0}'.format(id)).val();
 		var school = $('#student-school-{0}'.format(id)).val();
 		var subject = $('#student-subject-{0}'.format(id)).val();
 		application.dialog({
@@ -30,8 +28,7 @@ var Students = function () {
 			title: loc('student.edit', name),
 			width: 500,
 			data: {
-				studentFirstName: firstName,
-				studentLastName: lastName,
+				studentName: name,
 				studentSchool: school,
 				studentSubject: subject
 			},
@@ -50,8 +47,7 @@ var Students = function () {
 			url: 'ui/teacher/student',
 			contentType: 'application/json',
 			data: JSON.stringify({
-				firstName: $('#studentFirstName').val(),
-				lastName: $('#studentLastName').val(),
+				name: $('#studentName').val(),
 				school: $('#studentSchool').val(),
 				subject: $('#studentSubject').val()
 			}),
@@ -81,8 +77,7 @@ var Students = function () {
 			url: 'ui/teacher/student/{0}'.format(id),
 			contentType: 'application/json',
 			data: JSON.stringify({
-				firstName: $('#studentFirstName').val(),
-				lastName: $('#studentLastName').val(),
+				name: $('#studentName').val(),
 				school: $('#studentSchool').val(),
 				subject: $('#studentSubject').val()
 			}),
@@ -107,10 +102,9 @@ var Students = function () {
 	}
 	
 	function deleteStudent (id) {
-		var firstName = $('#student-firstName-{0}'.format(id)).val();
-		var lastName = $('#student-lastName-{0}'.format(id)).val();
+		var name = $('#student-name-{0}'.format(id)).val();
 		application.confirmAndCall(
-			loc('student.delete.prompt', firstName + ' ' + lastName),
+			loc('student.delete.prompt', name),
 			function () {
 				$.ajax({
 					type: 'DELETE',
