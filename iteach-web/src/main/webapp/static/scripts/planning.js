@@ -1,13 +1,22 @@
 var Planning = function () {
 	
 	function create (start, end, isallday, pos) {
-		alert(JSON.stringify({
-			start: start,
-			end: end,
-			isallday: isallday,
-			pos: pos
-		}));
+		application.dialog({
+			id: 'lesson-dialog',
+			title: loc('lesson.new'),
+			width: 500,
+			data: {
+			},
+			submit: {
+				name: loc('general.create'),
+				action: submitCreateLesson
+			}
+		});
 		return false;
+	}
+	
+	function submitCreateLesson () {
+		
 	}
 
 	function init () {

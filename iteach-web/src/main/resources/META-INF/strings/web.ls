@@ -255,3 +255,35 @@ student.subject
 student.school
 	en -> Student's school
 	fr -> Ecole de l'étudiant
+
+[lessons]
+
+lesson.new
+	en -> New lesson
+	fr -> Nouvelle leçon
+
+lesson.tip
+	en -> ...
+		Create a new lesson by selection a date, a period of time, a student
+		and an optional location.
+		...
+	fr -> ...
+		Créez une nouvelle leçon en fournissant une date, une période, un étudiant
+		et éventuellement un emplacement.
+		...
+
+lesson.date
+	en -> Date
+	fr -> Date
+
+lesson.from
+	en -> From
+	fr -> De
+
+lesson.to
+	en -> to
+	fr -> à
+
+lesson.student
+	en -> Student
+	fr -> Etudiant

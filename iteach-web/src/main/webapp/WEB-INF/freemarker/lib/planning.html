@@ -12,3 +12,45 @@
 <script type="text/javascript" src="${base}/calendar/wdCalendar_lang_US.js"></script>
 <script type="text/javascript" src="${base}/calendar/jquery.calendar.js"></script>
 <script type="text/javascript" src="${base}/scripts/planning.js"></script>
+
+
+<#macro lesson_dialog>
+	<@dialog id="lesson-dialog">
+		<form id="lesson-dialog-form" class="form-horizontal">
+			<div class="control-group">
+				<span class="help-block"><@lh key="lesson.tip" /></span>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="lessonDate"><@lh key="lesson.date" /></label>
+				<div class="controls">
+					<input class="input-medium" id="lessonDate" name="date" type="date" size="10" maxlength="10" required="required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label"><@lh key="lesson.from" /></label>
+				<div class="controls">
+					<input class="input-small" id="lessonFrom" name="from" type="time" size="5" maxlength="5" required="required" />
+					<@lh key="lesson.to" />
+					<input class="input-small" id="lessonTo" name="to" type="time" size="5" maxlength="5" required="required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="lessonStudent"><@lh key="lesson.student" /></label>
+				<div class="controls">
+					<select id="lessonStudent" name="student" required="required" placeholder="<@lh key='lesson.student' />">
+						<option value=""></option>
+						<#list students.summaries as student>
+							<option value="${student.id}">${student.name?html}</option>
+						</#list>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<button class="btn btn-primary" id="lesson-dialog-submit" type="submit"><@lh key="general.create" /></button>
+					<a class="btn btn-link" href="javascript:$('#lesson-dialog').dialog('close')"><@lh key="general.cancel" /></a>
+				</div>
+			</div>
+		</form>
+	</@dialog>
+</#macro>
