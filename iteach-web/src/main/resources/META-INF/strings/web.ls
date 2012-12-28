@@ -299,3 +299,11 @@ lesson.new.error
 lesson.fetch.error
 	en -> Error while fecthing the lessons for this period
 	fr -> Erreur lors de la requête pour les leçons de cette période
+
+lesson.edit
+	en -> Edit lesson
+	fr -> Modifier la leçon
+
+lesson.edit.error
+	en -> Error while modifying the lesson
+	fr -> Erreur lors de la modification de la leçon
