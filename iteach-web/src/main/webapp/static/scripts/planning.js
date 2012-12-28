@@ -69,14 +69,13 @@ var Planning = function () {
 	}
 
 	function init () {
-		var view = "week";           
-		var DATA_FEED_URL = "php/datafeed.php";
+		var view = "week";
 		var op = {
 			view: view,
 			theme: 3,
 			showday: new Date(),
 			addHandler: create,
-			autoload:true 
+			autoload:true
 		};
 		
 		op.height = $('body').height() - 150;
