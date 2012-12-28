@@ -48,6 +48,10 @@ general.update
 	en -> Update
 	fr -> Modifier
 
+general.delete
+	en -> Delete
+	fr -> Supprimer
+
 general.confirm.title
     en -> Confirmation
     fr -> Confirmation
