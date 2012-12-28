@@ -1,22 +1,23 @@
 package net.iteach.web.ui;
 
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
 import net.iteach.core.security.SecurityUtils;
-import net.iteach.core.ui.TeacherUI;
 import net.iteach.utils.InputException;
 import net.iteach.web.support.ErrorHandler;
 import net.iteach.web.support.ErrorMessage;
 import net.sf.jstring.Strings;
 import net.sf.jstring.support.CoreException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
-
-public abstract class AbstractUIController implements TeacherUI {
+public abstract class AbstractUIController {
 
 	protected final SecurityUtils securityUtils;
 	private final ErrorHandler errorHandler;

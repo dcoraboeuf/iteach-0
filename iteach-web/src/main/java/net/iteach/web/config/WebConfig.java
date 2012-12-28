@@ -6,6 +6,8 @@ import java.util.Locale;
 
 import net.iteach.web.support.json.LocalDateDeserializer;
 import net.iteach.web.support.json.LocalDateSerializer;
+import net.iteach.web.support.json.LocalDateTimeDeserializer;
+import net.iteach.web.support.json.LocalDateTimeSerializer;
 import net.iteach.web.support.json.LocalTimeDeserializer;
 import net.iteach.web.support.json.LocalTimeSerializer;
 import net.sf.jstring.Strings;
@@ -15,6 +17,7 @@ import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,9 +51,15 @@ public class WebConfig {
 
 	protected void jsonJoda(ObjectMapper mapper) {
 		SimpleModule jodaModule = new SimpleModule("JodaTimeModule", new Version(1, 0, 0, null));
+		jsonLocalDateTime(jodaModule);
 		jsonLocalDate(jodaModule);
 		jsonLocalTime(jodaModule);
 		mapper.registerModule(jodaModule);
+	}
+
+	protected void jsonLocalDateTime(SimpleModule jodaModule) {
+		jodaModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
+		jodaModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
 	}
 
 	protected void jsonLocalTime(SimpleModule jodaModule) {

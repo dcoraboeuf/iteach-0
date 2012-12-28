@@ -14,15 +14,18 @@ var Planning = function () {
 		return '{0}-{1}-{2}'.format(d.getFullYear(), formatTimePart(d.getMonth() + 1), formatTimePart(d.getDate()));
 	}
 	
+	function formatDateTime (d) {
+		return '{0}T{1}'.format(formatDate(d), formatTime(d));
+	}
+	
 	function fetchEvents (start, end, callback) {
 		$.ajax({
 			type: 'POST',
-			url: 'ui/teacher/lessons',
+			url: 'ui/calendar/lessons',
 			contentType: 'application/json',
 			data: JSON.stringify({
-				date: formatDate(start),
-				from: formatTime(start),
-				to: formatTime(end)
+				from: formatDateTime(start),
+				to: formatDateTime(end)
 			}),
 			dataType: 'json',
 			success: function (data) {

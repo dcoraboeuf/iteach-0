@@ -3,6 +3,8 @@ package net.iteach.core.ui;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.LessonForm;
+import net.iteach.core.model.LessonRange;
+import net.iteach.core.model.Lessons;
 import net.iteach.core.model.SchoolForm;
 import net.iteach.core.model.SchoolSummaries;
 import net.iteach.core.model.StudentForm;
@@ -27,5 +29,7 @@ public interface TeacherUI {
 	Ack editStudent(int id, StudentForm form);
 
 	ID createLesson(LessonForm form);
+
+	Lessons getLessons(LessonRange range);
 
 }

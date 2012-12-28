@@ -17,9 +17,17 @@ public final class SQLUtils {
 	public static String dateToDB (LocalDate date) {
 		return date.toString();
 	}
+
+	public static LocalDate dateFromDB(String str) {
+		return LocalDate.parse(str);
+	}
 	
 	public static String timeToDB (LocalTime time) {
 		return time.toString("HH:mm");
+	}
+
+	public static LocalTime timeFromDB(String str) {
+		return LocalTime.parse(str);
 	}
 
 	public static Timestamp now() {

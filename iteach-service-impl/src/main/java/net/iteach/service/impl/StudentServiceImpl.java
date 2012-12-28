@@ -1,8 +1,5 @@
 package net.iteach.service.impl;
 
-import static net.iteach.service.db.SQLUtils.dateToDB;
-import static net.iteach.service.db.SQLUtils.timeToDB;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -12,12 +9,10 @@ import javax.validation.Validator;
 import net.iteach.api.StudentService;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
-import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.SchoolSummary;
 import net.iteach.core.model.StudentForm;
 import net.iteach.core.model.StudentSummaries;
 import net.iteach.core.model.StudentSummary;
-import net.iteach.core.validation.LessonFormValidation;
 import net.iteach.core.validation.StudentFormValidation;
 import net.iteach.service.db.SQL;
 
@@ -97,24 +92,6 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 					.addValue("name", form.getName())
 				);
 		return Ack.one(count);
-	}
-	
-	@Override
-	@Transactional
-	public ID createLessonForTeacher(int userId, LessonForm form) {
-        // Validation
-        validate(form, LessonFormValidation.class);
-		// FIXME Check for the associated teacher
-		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = getNamedParameterJdbcTemplate().update(
-				SQL.LESSON_CREATE,
-				params("student", form.getStudent())
-					.addValue("date", dateToDB(form.getDate()))
-					.addValue("from", timeToDB(form.getFrom()))
-					.addValue("to", timeToDB(form.getTo()))
-					.addValue("location", form.getLocation()),
-				keyHolder);
-		return ID.count(count).withId(keyHolder.getKey().intValue());
 	}
 
 }
