@@ -287,3 +287,7 @@ lesson.to
 lesson.student
 	en -> Student
 	fr -> Etudiant
+
+lesson.location
+	en -> Location
+	fr -> Emplacement
