@@ -79,7 +79,7 @@ var Planning = function () {
 			autoload:true 
 		};
 		
-		op.height = $('#home-row').height() - $('planning-panel-title').height() - 50;
+		op.height = $('body').height() - 150;
 		
 		var p = $("#planning-calendar").bcalendar(op).BcalGetOp();
 	}
