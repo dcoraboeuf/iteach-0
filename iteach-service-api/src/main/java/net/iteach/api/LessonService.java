@@ -14,4 +14,6 @@ public interface LessonService {
 
 	Ack editLessonForTeacher(int userId, int id, LessonForm form);
 
+	Ack deleteLessonForTeacher(int userId, int id);
+
 }

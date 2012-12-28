@@ -34,4 +34,6 @@ public interface TeacherUI {
 
 	Ack editLesson(int id, LessonForm form);
 
+	Ack deleteLesson(int id);
+
 }

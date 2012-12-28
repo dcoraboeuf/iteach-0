@@ -38,4 +38,6 @@ public interface SQL {
 	
 	String LESSON_UPDATE = "UPDATE LESSONS SET STUDENT = :student, PDATE = :date, PFROM = :from, PTO = :to, LOCATION = :location WHERE ID = :id";
 
+	String LESSON_DELETE = "DELETE FROM LESSONS WHERE ID = :id";
+
 }

@@ -106,5 +106,13 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 				);
 		return Ack.one(count);
 	}
+	
+	@Override
+	@Transactional
+	public Ack deleteLessonForTeacher(int teacherId, int id) {
+		// FIXME Check for the associated teacher
+		int count = getNamedParameterJdbcTemplate().update(SQL.LESSON_DELETE, params("id", id));
+		return Ack.one(count);
+	}
 
 }
