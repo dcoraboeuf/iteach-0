@@ -7,9 +7,12 @@ import java.util.Locale;
 import net.sf.jstring.Strings;
 import net.sf.jstring.support.StringsLoader;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jmx.export.MBeanExporter;
+
+import com.netbeetle.jackson.ObjectMapperFactory;
 
 @Configuration
 public class WebConfig {
@@ -24,6 +27,11 @@ public class WebConfig {
 		MBeanExporter exporter = new MBeanExporter();
 		exporter.setBeans(Collections.<String,Object>singletonMap("bean:name=strings", strings()));
 		return exporter;
+	}
+	
+	@Bean
+	public ObjectMapper jacksonObjectMapper() {
+		return ObjectMapperFactory.createObjectMapper();
 	}
 	
 }
