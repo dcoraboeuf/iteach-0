@@ -114,6 +114,7 @@ var Planning = function () {
 			dayNamesShort: i18n.dayNamesShort,
 			monthNames: i18n.monthNames,
 			monthNamesShort: i18n.monthNamesShort,
+			buttonText: i18n.buttonText,
 			// General appearance
 			allDaySlot: false,
 			minTime: 6,

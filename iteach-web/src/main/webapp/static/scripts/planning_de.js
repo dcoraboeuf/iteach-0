@@ -1,7 +1,13 @@
 var i18n = {
 		firstDay: 0,
-		dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-		dayNamesShort: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
-		monthNames: ['January','February','March','April','May','June','July','August','September','October','November','December'],
-		monthNamesShort: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+		dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+		dayNamesShort: ['Son','Mon','Die','Mit','Don','Fre','Sam'],
+		monthNames: ['Januar','Februar','M\u00E4rz','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+		monthNamesShort: ['Jan','Feb','M\u00E4r','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
+		buttonText: {
+			today: 'Heute',
+			month: 'Monat',
+			week: 'Woche',
+			day: 'Tag'
+		}
 };
