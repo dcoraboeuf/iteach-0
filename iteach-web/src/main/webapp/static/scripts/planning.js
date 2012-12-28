@@ -1,13 +1,8 @@
 var Planning = function () {
 	
-	function formatTimePart (n) {
-		return n < 10 ? '0' + n : '' + n;
-	}
-	
-	function formatTime (d) {
-		var hours = formatTimePart(d.getHours());
-		var minutes = formatTimePart(d.getMinutes());
-		return hours + ':' + minutes;
+	function onSelect (start, end, allDay) {
+		alert('onSelect');
+		$("#planning-calendar").fullCalendar('unselect');
 	}
 	
 	function create (config) {
@@ -69,18 +64,20 @@ var Planning = function () {
 	}
 
 	function init () {
-		var view = "week";
-		var op = {
-			view: view,
-			theme: 3,
-			showday: new Date(),
-			addHandler: create,
-			autoload:true
-		};
-		
-		op.height = $('body').height() - 150;
-		
-		var p = $("#planning-calendar").bcalendar(op).BcalGetOp();
+		// TODO Week-end enabled or not
+		// TODO Basic or agenda mode
+		var p = $("#planning-calendar").fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			weekends: true,
+			defaultView: 'agendaWeek',
+			selectable: true,
+			selectHelper: true,
+			select: onSelect
+		});
 	}
 
 	return {
