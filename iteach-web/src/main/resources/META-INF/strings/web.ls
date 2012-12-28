@@ -291,3 +291,7 @@ lesson.student
 lesson.location
 	en -> Location
 	fr -> Emplacement
+
+lesson.new.error
+	en -> Error while creating the lesson
+	fr -> Erreur lors de la création de la leçon

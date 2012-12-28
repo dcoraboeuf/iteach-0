@@ -37,7 +37,35 @@ var Planning = function () {
 	}
 	
 	function submitCreateLesson () {
-		
+		$.ajax({
+			type: 'POST',
+			url: 'ui/teacher/lesson',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				date: $('#lessonDate').val(),
+				from: $('#lessonFrom').val(),
+				to: $('#lessonTo').val(),
+				student: $('#lessonStudent').val(),
+				location: $('#lessonLocation').val()
+			}),
+			dataType: 'json',
+			success: function (data) {
+				if (data.success) {
+					location.reload();
+				} else {
+					application.displayError(loc('lesson.new.error'));
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+			  	if (jqXHR.responseText && jqXHR.responseText != '') {
+			  		$('#lesson-dialog-error').html(jqXHR.responseText.htmlWithLines());
+			  		$('#lesson-dialog-error').show();
+			  	} else {
+			  		application.displayAjaxError (loc('lesson.new.error'), jqXHR, textStatus, errorThrown);
+			  	}
+			}
+		});
+		return false;
 	}
 
 	function init () {
@@ -48,18 +76,7 @@ var Planning = function () {
 			theme: 3,
 			showday: new Date(),
 			addHandler: create,
-			//EditCmdhandler:Edit,
-			//DeleteCmdhandler:Delete,
-			//ViewCmdhandler:View,    
-			//onWeekOrMonthToDay:wtd,
-			//onBeforeRequestData: cal_beforerequest,
-			//onAfterRequestData: cal_afterrequest,
-			//onRequestDataError: cal_onerror, 
-			autoload:true,
-			//url: DATA_FEED_URL + "?method=list",  
-			//quickAddUrl: DATA_FEED_URL + "?method=add", 
-			//quickUpdateUrl: DATA_FEED_URL + "?method=update",
-			//quickDeleteUrl: DATA_FEED_URL + "?method=remove"        
+			autoload:true 
 		};
 		
 		op.height = $('#home-row').height() - $('planning-panel-title').height() - 50;
