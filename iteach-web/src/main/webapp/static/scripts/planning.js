@@ -10,13 +10,13 @@ var Planning = function () {
 		return hours + ':' + minutes;
 	}
 	
-	function create (start, end, isallday, pos) {
-		if (isallday) {
+	function create (config) {
+		if (config.isallday) {
 			return false;
 		}
-		var date = '{0}-{1}-{2}'.format(start.getFullYear(), start.getMonth() + 1, start.getDate());
-		var startTime = formatTime(start);
-		var endTime = formatTime(end);
+		var date = '{0}-{1}-{2}'.format(config.start.getFullYear(), config.start.getMonth() + 1, config.start.getDate());
+		var startTime = formatTime(config.start);
+		var endTime = formatTime(config.end);
 		application.dialog({
 			id: 'lesson-dialog',
 			title: loc('lesson.new'),
@@ -31,9 +31,9 @@ var Planning = function () {
 			submit: {
 				name: loc('general.create'),
 				action: submitCreateLesson
-			}
+			},
+			cancel: config.onCancel
 		});
-		return false;
 	}
 	
 	function submitCreateLesson () {

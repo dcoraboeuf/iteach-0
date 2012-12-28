@@ -1749,10 +1749,13 @@
             if ((!option.quickAddHandler && !option.addHandler && option.quickAddUrl == "") || option.readonly) {
                 return false;
             } else if (option.addHandler) {
-            	var result = option.addHandler(start,end,isallday,pos);
-            	if (!result) {
-            		realsedragevent();
-            	}
+            	option.addHandler({
+            		start: start,
+            		end: end,
+            		isallday: isallday,
+            		pos: pos,
+            		onCancel: realsedragevent
+            	});
             	return;
             }
             var buddle = $("#bbit-cal-buddle");

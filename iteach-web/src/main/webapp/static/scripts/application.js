@@ -58,11 +58,20 @@ var application = function () {
 				return config.submit.action();
 			});
 		}
+		var onCancel;
+		if (config.cancel) {
+			onCancel = function () {
+				config.cancel();
+			};
+		} else {
+			onCancel = function () {};
+		}
 		$(id(config.id + '-error')).hide();
 		$(id(config.id)).dialog({
 		 	modal: true,
 			title: config.title,
-			width: config.width
+			width: config.width,
+			close: onCancel
 		});
 	}
 	
