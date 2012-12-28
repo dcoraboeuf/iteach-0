@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import javax.validation.Validator;
 
 import net.iteach.api.LessonService;
+import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.Lesson;
 import net.iteach.core.model.LessonForm;
@@ -86,6 +87,24 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 					.addValue("location", form.getLocation()),
 				keyHolder);
 		return ID.count(count).withId(keyHolder.getKey().intValue());
+	}
+	
+	@Override
+	@Transactional
+	public Ack editLessonForTeacher(int userId, int id, LessonForm form) {
+        // Validation
+        validate(form, LessonFormValidation.class);
+		// FIXME Check for the associated teacher
+		int count = getNamedParameterJdbcTemplate().update(
+				SQL.LESSON_UPDATE,
+				params("id", id)
+					.addValue("student", form.getStudent())
+					.addValue("date", dateToDB(form.getDate()))
+					.addValue("from", timeToDB(form.getFrom()))
+					.addValue("to", timeToDB(form.getTo()))
+					.addValue("location", form.getLocation())
+				);
+		return Ack.one(count);
 	}
 
 }

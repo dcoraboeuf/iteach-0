@@ -126,6 +126,15 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// OK
 		return lessonService.createLessonForTeacher(userId, form);
 	}
+
+	@Override
+	@RequestMapping(value = "/lesson/{id}", method = RequestMethod.PUT)
+	public @ResponseBody Ack editLesson(@PathVariable int id, @RequestBody LessonForm form) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return lessonService.editLessonForTeacher(userId, id, form);
+	}
 	
 
 }

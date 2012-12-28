@@ -96,7 +96,7 @@ var Planning = function () {
 	function submitEditLesson (id) {
 		$.ajax({
 			type: 'PUT',
-			url: 'ui/calendar/lesson/{0}'.format(),
+			url: 'ui/teacher/lesson/{0}'.format(id),
 			contentType: 'application/json',
 			data: JSON.stringify({
 				date: $('#lessonDate').val(),

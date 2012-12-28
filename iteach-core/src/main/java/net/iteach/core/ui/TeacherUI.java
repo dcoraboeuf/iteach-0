@@ -32,4 +32,6 @@ public interface TeacherUI {
 
 	Lessons getLessons(LessonRange range);
 
+	Ack editLesson(int id, LessonForm form);
+
 }
