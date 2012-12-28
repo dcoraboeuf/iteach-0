@@ -1,11 +1,32 @@
 var Planning = function () {
 	
+	function formatTimePart (n) {
+		return n < 10 ? '0' + n : '' + n;
+	}
+	
+	function formatTime (d) {
+		var hours = formatTimePart(d.getHours());
+		var minutes = formatTimePart(d.getMinutes());
+		return hours + ':' + minutes;
+	}
+	
 	function create (start, end, isallday, pos) {
+		if (isallday) {
+			return false;
+		}
+		var date = '{0}-{1}-{2}'.format(start.getFullYear(), start.getMonth() + 1, start.getDate());
+		var startTime = formatTime(start);
+		var endTime = formatTime(end);
 		application.dialog({
 			id: 'lesson-dialog',
 			title: loc('lesson.new'),
 			width: 500,
 			data: {
+				lessonDate: date,
+				lessonFrom: startTime,
+				lessonTo: endTime,
+				lessonStudent: '',
+				lessonLocation: ''
 			},
 			submit: {
 				name: loc('general.create'),
