@@ -10,11 +10,35 @@ var Planning = function () {
 		return hours + ':' + minutes;
 	}
 	
+	function formatDate (d) {
+		return '{0}-{1}-{2}'.format(d.getFullYear(), formatTimePart(d.getMonth() + 1), formatTimePart(d.getDate()));
+	}
+	
+	function fetchEvents (start, end, callback) {
+		$.ajax({
+			type: 'POST',
+			url: 'ui/teacher/lessons',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				date: formatDate(start),
+				from: formatTime(start),
+				to: formatTime(end)
+			}),
+			dataType: 'json',
+			success: function (data) {
+				callback(data.events);
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+			  	application.displayAjaxError (loc('lesson.fetch.error'), jqXHR, textStatus, errorThrown);
+			}
+		});
+	}
+	
 	function onSelect (start, end, allDay) {
 		if (allDay) {
 			$("#planning-calendar").fullCalendar('unselect');
 		} else {
-			var date = '{0}-{1}-{2}'.format(start.getFullYear(), formatTimePart(start.getMonth() + 1), formatTimePart(start.getDate()));
+			var date = formatDate(start);
 			var startTime = formatTime(start);
 			var endTime = formatTime(end);
 			application.dialog({
@@ -84,7 +108,8 @@ var Planning = function () {
 			defaultView: 'agendaWeek',
 			selectable: true,
 			selectHelper: true,
-			select: onSelect
+			select: onSelect,
+			events: fetchEvents
 		});
 	}
 

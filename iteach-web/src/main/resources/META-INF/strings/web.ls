@@ -295,3 +295,7 @@ lesson.location
 lesson.new.error
 	en -> Error while creating the lesson
 	fr -> Erreur lors de la création de la leçon
+
+lesson.fetch.error
+	en -> Error while fecthing the lessons for this period
+	fr -> Erreur lors de la requête pour les leçons de cette période
