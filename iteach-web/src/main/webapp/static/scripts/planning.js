@@ -108,6 +108,9 @@ var Planning = function () {
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
+			allDaySlot: false,
+			minTime: 6,
+			maxTime: 22,
 			weekends: true,
 			defaultView: 'agendaWeek',
 			selectable: true,
