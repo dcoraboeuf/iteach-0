@@ -49,6 +49,7 @@ var Planning = function () {
 					success: function (data) {
 						if (data.success) {
 							$("#planning-calendar").fullCalendar('refetchEvents');
+							$('#lesson-dialog').dialog('close');
 						} else {
 							application.displayError(loc('lesson.delete.error'));
 						}
