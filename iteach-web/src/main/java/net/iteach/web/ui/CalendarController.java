@@ -10,6 +10,7 @@ import net.iteach.core.ui.TeacherUI;
 import net.iteach.web.support.ErrorHandler;
 import net.sf.jstring.Strings;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,7 +62,13 @@ public class CalendarController extends AbstractUIController {
 	}
 
 	protected String getLessonTitle(Lesson lesson) {
-		return String.format("%s @ %s", lesson.getStudent().getName(), lesson.getLocation());
+		String location = lesson.getLocation();
+		String studentName = lesson.getStudent().getName();
+		if (StringUtils.isBlank(location)) {
+			return studentName;
+		} else {
+			return String.format("%s @ %s", studentName, location);
+		}
 	}
 
 }
