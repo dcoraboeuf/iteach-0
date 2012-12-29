@@ -32,10 +32,16 @@
 						<tfoot>
 							<tr>
 								<td>
-                                       <button class="btn" onclick="Students.createStudent();">
-                                           <img src="${base}/images/student_add.png" />
-                                           <@lh key="student.new" />
-                                       </button>
+									<#if schools.summaries?size == 0>
+		                                <p class="alert">
+		                                	<@lh key="student.new.noschool" />
+		                                </p>
+									<#else>
+		                                <button class="btn" onclick="Students.createStudent();">
+		                                    <img src="${base}/images/student_add.png" />
+		                                    <@lh key="student.new" />
+		                                </button>
+									</#if>
 								</td>
 							</tr>
 						</tfoot>

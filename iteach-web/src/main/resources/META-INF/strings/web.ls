@@ -213,6 +213,10 @@ student.new
 	en -> New student
 	fr -> Nouvel étudiant
 
+student.new.noschool
+	en -> You have to create a school before to create a student.
+	fr -> Vous devez créer une école avant de créer un étudiant.
+
 student.new.tip
 	en -> ...
 		Create a student by giving it a name and a lesson subject. You can also
