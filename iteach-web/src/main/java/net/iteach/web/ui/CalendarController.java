@@ -50,13 +50,18 @@ public class CalendarController extends AbstractUIController {
 	protected LessonEvent toEvent(Lesson lesson) {
 		String start = lesson.getDate().toLocalDateTime(lesson.getFrom()).toString();
 		String end = lesson.getDate().toLocalDateTime(lesson.getTo()).toString();
+		String title = getLessonTitle(lesson);
 		return new LessonEvent(
 				lesson.getId(),
-				lesson.getStudent().getName(),
+				title,
 				start,
 				end,
 				lesson.getStudent().getSchool().getColor(),
 				lesson);
+	}
+
+	protected String getLessonTitle(Lesson lesson) {
+		return String.format("%s @ %s", lesson.getStudent().getName(), lesson.getLocation());
 	}
 
 }
