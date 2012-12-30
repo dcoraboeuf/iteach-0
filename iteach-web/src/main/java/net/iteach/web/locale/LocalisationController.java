@@ -46,13 +46,17 @@ public class LocalisationController {
 		// Restricts the locale
 		locale = strings.getSupportedLocales().filterForLookup(locale);
 		
+		// TODO Cache management
+		
 		// Last generation time for this locale
-		long lastGenerationTime = localisationUtils.getLastGenerationTime(locale);
+		// long lastGenerationTime = localisationUtils.getLastGenerationTime(locale);
+		// long lastUpdateTime = strings.getLastUpdateTime();
+		// logger.debug("[localization] Locale = {}, Generation = {}, Updated = {}", new Object[] {locale, lastGenerationTime, lastUpdateTime});
 	
-		if (lastGenerationTime >= strings.getLastUpdateTime()) {
-			logger.debug("[localization] No need for regeneration (not modified)");
-			response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
-		} else {
+		// if (lastGenerationTime >= lastUpdateTime) {
+		// logger.debug("[localization] No need for regeneration (not modified)");
+		// response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
+		// } else {
 			logger.debug("[localization] Regeneration needed");
 			// Gets the list of key/values
 			Map<String, String> map = strings.getKeyValues(locale);
@@ -82,7 +86,7 @@ public class LocalisationController {
 			outputStream.flush();
 			// Regenerated
 			localisationUtils.regenerated(locale);
-		}
+		// }
 	}
 
 	protected String escape(String value) {
