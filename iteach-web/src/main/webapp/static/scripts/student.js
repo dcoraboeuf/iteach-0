@@ -23,7 +23,11 @@ var Student = function () {
 	}
 	
 	function init () {
+		// No errors
 		$('#lessons-error').hide();
+		// Initial value
+		application.setCurrentMonth('lessons-month');
+		// Loadings
 		loadLessons();
 	}
 	

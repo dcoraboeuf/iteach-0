@@ -46,6 +46,22 @@ function id (value) {
 
 var application = function () {
 	
+	function setCurrentMonth (id) {
+		$('#' + id).text (getCurrentMonth());
+	}
+	
+	function getCurrentMonth () {
+		return getMonth(getCurrentDate());
+	}
+	
+	function getCurrentDate () {
+		return new Date($('#current_date').val());
+	}
+	
+	function getMonth (d) {
+		return i18n.monthNames[d.getMonth()];
+	}
+	
 	function dialog (config) {
 		// Values
 		if (config.data) {
@@ -199,7 +215,11 @@ var application = function () {
 			return validate (confirmation, confirmValue == value);
 		},
 		dialog: dialog,
-		loading: loading
+		loading: loading,
+		setCurrentMonth: setCurrentMonth,
+		getCurrentMonth: getCurrentMonth,
+		getCurrentDate: getCurrentDate,
+		getMonth: getMonth
 	};
 	
 } ();

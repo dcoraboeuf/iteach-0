@@ -5,6 +5,10 @@
 	font-size: 80%;
 }
 
+.action {
+	cursor: pointer;
+}
+
 /* Loading indicator */
 .loading {
 	padding-left: 24px;

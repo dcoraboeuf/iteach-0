@@ -1,6 +1,7 @@
 <#include "/lib/layout.html">
 
 <@layout_std pageId="student" title=student.name script=true modules=["data"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home", student.school.name: "gui/school"}>
+	<@current_date />
 	<div class="container-fluid">
 		<div id="home-row" class="row-fluid">
 			<!-- Left column -->
@@ -53,9 +54,9 @@
 					<div>&nbsp;</div>
 					<section>
 						<header style="text-align: center;">
-							<span id="lessons-month">TODO Month</span>
-							<div class="pull-left">&#9668;</div>
-							<div class="pull-right">&#9658;</div>
+							<span id="lessons-month">...</span>
+							<div class="action pull-left">&#9668;</div>
+							<div class="action pull-right">&#9658;</div>
 						</header>
 						<div id="lessons-list"></div>
 						<div id="lessons-error" class="alert alert-error"></div>

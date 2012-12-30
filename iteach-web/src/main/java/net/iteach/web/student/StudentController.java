@@ -3,6 +3,7 @@ package net.iteach.web.student;
 import javax.servlet.http.HttpSession;
 
 import net.iteach.core.ui.TeacherUI;
+import net.iteach.web.support.UserSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,16 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StudentController {
 
 	private final TeacherUI ui;
+	private final UserSession userSession;
 	
 	@Autowired
-	public StudentController(TeacherUI ui) {
+	public StudentController(TeacherUI ui, UserSession userSession) {
 		this.ui = ui;
+		this.userSession = userSession;
 	}
 
 	@RequestMapping("/{id:\\d+}")
 	public String details (@PathVariable int id, Model model, HttpSession session) {
 		// Loads the student details
 		model.addAttribute("student", ui.getStudent(id));
+		// Current date
+		model.addAttribute("currentDate", userSession.getCurrentDate(session).toString());
 		// View
 		return "student";
 	}
