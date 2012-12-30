@@ -3,8 +3,10 @@ package net.iteach.service.impl;
 import static net.iteach.service.db.SQLUtils.dateToDB;
 import static net.iteach.service.db.SQLUtils.timeToDB;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 import javax.validation.Validator;
@@ -17,6 +19,7 @@ import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.LessonRange;
 import net.iteach.core.model.Lessons;
 import net.iteach.core.model.SchoolSummary;
+import net.iteach.core.model.Span;
 import net.iteach.core.model.StudentLesson;
 import net.iteach.core.model.StudentLessons;
 import net.iteach.core.model.StudentSummary;
@@ -25,6 +28,7 @@ import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 
 import org.joda.time.LocalDate;
+import org.joda.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -33,6 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LessonServiceImpl extends AbstractServiceImpl implements LessonService {
+
+	private static final BigDecimal MINUTES_IN_HOUR = BigDecimal.valueOf(60);
 
 	@Autowired
 	public LessonServiceImpl(DataSource dataSource, Validator validator) {
@@ -47,29 +53,43 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 		String from = date.withDayOfMonth(1).toString();
 		// To: last day of the month
 		String to = date.withDayOfMonth(date.dayOfMonth().getMaximumValue()).toString();
-		// Query
+		// All lessons
+		List<StudentLesson> lessons = getNamedParameterJdbcTemplate().query(
+			SQL.LESSONS_FOR_STUDENT,
+			params("id", id).addValue("from", from).addValue("to", to),
+			new RowMapper<StudentLesson> () {
+				@Override
+				public StudentLesson mapRow(ResultSet rs, int rowNum)
+						throws SQLException {
+					return new StudentLesson(
+							rs.getInt("id"),
+							SQLUtils.dateFromDB(rs.getString("pdate")),
+							SQLUtils.timeFromDB(rs.getString("pfrom")),
+							SQLUtils.timeFromDB(rs.getString("pto")),
+							rs.getString("location")
+							);
+				}
+			}
+		);
+		// Total hours
+		BigDecimal hours = BigDecimal.ZERO;
+		for (StudentLesson lesson : lessons) {
+			hours = hours.add(getHours(lesson));
+		}
+		// OK
 		return new StudentLessons(
 			date,
-			getNamedParameterJdbcTemplate().query(
-				SQL.LESSONS_FOR_STUDENT,
-				params("id", id).addValue("from", from).addValue("to", to),
-				new RowMapper<StudentLesson> () {
-					@Override
-					public StudentLesson mapRow(ResultSet rs, int rowNum)
-							throws SQLException {
-						return new StudentLesson(
-								rs.getInt("id"),
-								SQLUtils.dateFromDB(rs.getString("pdate")),
-								SQLUtils.timeFromDB(rs.getString("pfrom")),
-								SQLUtils.timeFromDB(rs.getString("pto")),
-								rs.getString("location")
-								);
-					}
-				}
-			)
+			lessons,
+			hours
 		);
 	}
 	
+	protected BigDecimal getHours(Span span) {
+		Period duration = new Period(span.getFrom(), span.getTo());
+		BigDecimal minutes = new BigDecimal(duration.toStandardMinutes().getMinutes());
+		return minutes.divide(MINUTES_IN_HOUR);
+	}
+
 	@Override
 	@Transactional(readOnly = true)
 	public Lessons getLessonsForTeacher(int userId, LessonRange range) {
