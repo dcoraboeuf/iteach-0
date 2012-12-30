@@ -26,5 +26,7 @@ var i18n = {
 			week: "dd. MMM[ yyyy]{ '&#8212;' dd. MMM yyyy}",
 			day: 'dddd dd. MMM yyyy'
 		},
-		axisFormat: 'HH(:mm)'
+		axisFormat: 'HH(:mm)',
+		dayOfMonthFormat: 'dddd dd.',
+		simpleTimeFormat: 'HH:mm'
 };

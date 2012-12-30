@@ -291,7 +291,7 @@ student.lessons.hours.total
 student.lessons.hours.month
 	en -> Hours for the month
 	fr -> Heures pour le mois
-	
+
 student.details.lessons.error
 	en -> Cannot load lessons
 	fr -> Impossible de charger les leçons
