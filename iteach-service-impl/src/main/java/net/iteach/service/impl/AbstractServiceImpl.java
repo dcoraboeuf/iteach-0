@@ -7,23 +7,35 @@ import net.sf.jstring.Localizable;
 import net.sf.jstring.LocalizableMessage;
 import net.sf.jstring.MultiLocalizable;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalTime;
+import org.joda.time.Period;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 
 import javax.sql.DataSource;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 public abstract class AbstractServiceImpl extends NamedParameterJdbcDaoSupport {
 
+	private static final BigDecimal MINUTES_IN_HOUR = BigDecimal.valueOf(60);
+
     private final Validator validator;
 	
 	public AbstractServiceImpl(DataSource dataSource, Validator validator) {
 		setDataSource(dataSource);
         this.validator = validator;
+	}
+	
+	protected BigDecimal getHours(LocalTime from, LocalTime to) {
+		Period duration = new Period(from, to);
+		BigDecimal minutes = new BigDecimal(duration.toStandardMinutes().getMinutes());
+		return minutes.divide(MINUTES_IN_HOUR);
 	}
 	
 	protected <T> T getFirstItem (String sql, MapSqlParameterSource criteria, Class<T> type) {

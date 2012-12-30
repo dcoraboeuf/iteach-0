@@ -19,7 +19,6 @@ import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.LessonRange;
 import net.iteach.core.model.Lessons;
 import net.iteach.core.model.SchoolSummary;
-import net.iteach.core.model.Span;
 import net.iteach.core.model.StudentLesson;
 import net.iteach.core.model.StudentLessons;
 import net.iteach.core.model.StudentSummary;
@@ -28,7 +27,6 @@ import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 
 import org.joda.time.LocalDate;
-import org.joda.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -37,8 +35,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LessonServiceImpl extends AbstractServiceImpl implements LessonService {
-
-	private static final BigDecimal MINUTES_IN_HOUR = BigDecimal.valueOf(60);
 
 	@Autowired
 	public LessonServiceImpl(DataSource dataSource, Validator validator) {
@@ -74,7 +70,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 		// Total hours
 		BigDecimal hours = BigDecimal.ZERO;
 		for (StudentLesson lesson : lessons) {
-			hours = hours.add(getHours(lesson));
+			hours = hours.add(getHours(lesson.getFrom(), lesson.getTo()));
 		}
 		// OK
 		return new StudentLessons(
@@ -82,12 +78,6 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 			lessons,
 			hours
 		);
-	}
-	
-	protected BigDecimal getHours(Span span) {
-		Period duration = new Period(span.getFrom(), span.getTo());
-		BigDecimal minutes = new BigDecimal(duration.toStandardMinutes().getMinutes());
-		return minutes.divide(MINUTES_IN_HOUR);
 	}
 
 	@Override

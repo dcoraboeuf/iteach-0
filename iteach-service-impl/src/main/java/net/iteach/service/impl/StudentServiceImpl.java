@@ -1,7 +1,9 @@
 package net.iteach.service.impl;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.sql.DataSource;
 import javax.validation.Validator;
@@ -16,8 +18,10 @@ import net.iteach.core.model.StudentSummaries;
 import net.iteach.core.model.StudentSummary;
 import net.iteach.core.validation.StudentFormValidation;
 import net.iteach.service.db.SQL;
+import net.iteach.service.db.SQLUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
@@ -58,6 +62,23 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 	@Transactional(readOnly = true)
 	public StudentDetails getStudentForTeacher(int userId, int id) {
 		// FIXME Check for the associated teacher
+		// Total hours
+		final AtomicReference<BigDecimal> hours = new AtomicReference<>(BigDecimal.ZERO);
+		getNamedParameterJdbcTemplate().query(
+			SQL.STUDENT_TOTAL_HOURS,
+			params("id", id),
+			new RowCallbackHandler() {
+				
+				@Override
+				public void processRow(ResultSet rs) throws SQLException {
+					hours.set(hours.get().add(getHours(
+						SQLUtils.timeFromDB(rs.getString("pfrom")),
+						SQLUtils.timeFromDB(rs.getString("pto"))
+					)));
+				}
+			}
+		);
+		// Details
 		return getNamedParameterJdbcTemplate().queryForObject(
 				SQL.STUDENT_DETAILS,
 				params("id", id),
@@ -74,7 +95,8 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 								rs.getInt("ID"),
 								rs.getString("SUBJECT"),
 								rs.getString("NAME"),
-								school);
+								school,
+								hours.get());
 					}
 					
 				});

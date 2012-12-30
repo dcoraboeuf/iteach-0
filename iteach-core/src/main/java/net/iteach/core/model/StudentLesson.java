@@ -6,7 +6,7 @@ import org.joda.time.LocalTime;
 import lombok.Data;
 
 @Data
-public class StudentLesson implements Span {
+public class StudentLesson {
 	
 	private final int id;
 	private final LocalDate date;
