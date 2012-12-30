@@ -21,5 +21,10 @@ public class DefaultUserSession implements UserSession {
 			return date;
 		}
 	}
+	
+	@Override
+	public void setCurrentDate(HttpSession session, LocalDate date) {
+		session.setAttribute(CURRENT_DATE, date);
+	}
 
 }

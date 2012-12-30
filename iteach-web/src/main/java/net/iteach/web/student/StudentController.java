@@ -45,5 +45,25 @@ public class StudentController {
 		// Gets the list of lessons for this month
 		return ui.getStudentLessons (id, date);
 	}
+	
+	@RequestMapping(value = "/{id:\\d+}/lessons/nextMonth", method = RequestMethod.GET)
+	public @ResponseBody StudentLessons getStudentLessonsForNextMonth (@PathVariable int id, HttpSession session) {
+		// Gets the current date
+		LocalDate date = userSession.getCurrentDate(session);
+		// Adds one month
+		userSession.setCurrentDate(session, date.plusMonths(1));
+		// Gets the list of lessons for this month
+		return getStudentLessons(id, session);
+	}
+	
+	@RequestMapping(value = "/{id:\\d+}/lessons/previousMonth", method = RequestMethod.GET)
+	public @ResponseBody StudentLessons getStudentLessonsForPreviousMonth (@PathVariable int id, HttpSession session) {
+		// Gets the current date
+		LocalDate date = userSession.getCurrentDate(session);
+		// Adds one month
+		userSession.setCurrentDate(session, date.minusMonths(1));
+		// Gets the list of lessons for this month
+		return getStudentLessons(id, session);
+	}
 
 }

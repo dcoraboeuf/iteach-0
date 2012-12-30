@@ -20,6 +20,10 @@ var Student = function () {
 	}
 	
 	function loadLessons () {
+		loadLessonsWith('gui/student/{0}/lessons');
+	}
+	
+	function loadLessonsWith (url) {
 		// Marks the lessons as being loading...
 		application.loading('#lessons-list', true);
 		// Student ID
@@ -27,7 +31,7 @@ var Student = function () {
 		// Loads the lessons
 		$.ajax({
 			type: 'GET',
-			url: 'gui/student/{0}/lessons'.format(id),
+			url: url.format(id),
 			contentType: 'application/json',
 			dataType: 'json',
 			success: function (data) {
@@ -56,6 +60,14 @@ var Student = function () {
 		});
 	}
 	
+	function previousMonth () {
+		loadLessonsWith('gui/student/{0}/lessons/previousMonth');
+	}
+	
+	function nextMonth () {
+		loadLessonsWith('gui/student/{0}/lessons/nextMonth');
+	}
+	
 	function init () {
 		// No errors
 		$('#lessons-error').hide();
@@ -66,7 +78,9 @@ var Student = function () {
 	}
 	
 	return {
-		init: init
+		init: init,
+		previousMonth: previousMonth,
+		nextMonth: nextMonth
 	};
 	
 } ();

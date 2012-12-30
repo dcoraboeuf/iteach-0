@@ -8,4 +8,6 @@ public interface UserSession {
 
 	LocalDate getCurrentDate(HttpSession session);
 
+	void setCurrentDate(HttpSession session, LocalDate date);
+
 }
