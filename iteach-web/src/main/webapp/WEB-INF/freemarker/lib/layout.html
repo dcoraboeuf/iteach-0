@@ -11,8 +11,7 @@
 
 <#macro layout_root pageId style=false script=false scripts=[] modules=[] title="">
 	<!DOCTYPE html>
-	<#-- TODO Language -->
-	<html lang="en">
+	<html lang="${locSelected()}">
 		<head>
 			<base href="<@spring.url relativeUrl="/" />" />
 			<#assign base = "resources/v" + loc('app.version') />
