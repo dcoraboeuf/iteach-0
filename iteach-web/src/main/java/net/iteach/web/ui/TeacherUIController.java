@@ -8,6 +8,8 @@ import net.iteach.core.security.SecurityUtils;
 import net.iteach.core.ui.TeacherUI;
 import net.iteach.web.support.ErrorHandler;
 import net.sf.jstring.Strings;
+
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -111,16 +113,25 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 	
 	@Override
 	@RequestMapping(value = "/student/{id}", method = RequestMethod.GET)
-	public StudentDetails getStudent(int id) {
+	public @ResponseBody StudentDetails getStudent(@PathVariable int id) {
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
 		return studentService.getStudentForTeacher (userId, id);
 	}
+	
+	@Override
+	@RequestMapping(value = "/student/{id}/lessons/{date}", method = RequestMethod.GET)
+	public @ResponseBody StudentLessons getStudentLessons(@PathVariable int id, @PathVariable LocalDate date) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return lessonService.getLessonsForStudent (userId, id, date);
+	}
 
 	@Override
 	@RequestMapping(value = "/lesson", method = RequestMethod.GET)
-	public Lessons getLessons(LessonRange range) {
+	public @ResponseBody Lessons getLessons(@RequestBody LessonRange range) {
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK

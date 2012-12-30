@@ -1,5 +1,7 @@
 package net.iteach.core.ui;
 
+import org.joda.time.LocalDate;
+
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.LessonForm;
@@ -9,6 +11,7 @@ import net.iteach.core.model.SchoolForm;
 import net.iteach.core.model.SchoolSummaries;
 import net.iteach.core.model.StudentDetails;
 import net.iteach.core.model.StudentForm;
+import net.iteach.core.model.StudentLessons;
 import net.iteach.core.model.StudentSummaries;
 
 public interface TeacherUI {
@@ -38,5 +41,7 @@ public interface TeacherUI {
 	Ack deleteLesson(int id);
 	
 	StudentDetails getStudent (int id);
+
+	StudentLessons getStudentLessons(int id, LocalDate date);
 
 }

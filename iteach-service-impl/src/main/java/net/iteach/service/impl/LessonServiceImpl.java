@@ -17,11 +17,14 @@ import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.LessonRange;
 import net.iteach.core.model.Lessons;
 import net.iteach.core.model.SchoolSummary;
+import net.iteach.core.model.StudentLesson;
+import net.iteach.core.model.StudentLessons;
 import net.iteach.core.model.StudentSummary;
 import net.iteach.core.validation.LessonFormValidation;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -34,6 +37,37 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 	@Autowired
 	public LessonServiceImpl(DataSource dataSource, Validator validator) {
 		super(dataSource, validator);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public StudentLessons getLessonsForStudent(int userId, int id, LocalDate date) {
+		// FIXME Check for the associated teacher
+		// From: first day of the month
+		String from = date.withDayOfMonth(1).toString();
+		// To: last day of the month
+		String to = date.withDayOfMonth(date.dayOfMonth().getMaximumValue()).toString();
+		// Query
+		return new StudentLessons(
+			date,
+			getNamedParameterJdbcTemplate().query(
+				SQL.LESSONS_FOR_STUDENT,
+				params("id", id).addValue("from", from).addValue("to", to),
+				new RowMapper<StudentLesson> () {
+					@Override
+					public StudentLesson mapRow(ResultSet rs, int rowNum)
+							throws SQLException {
+						return new StudentLesson(
+								rs.getInt("id"),
+								SQLUtils.dateFromDB(rs.getString("pdate")),
+								SQLUtils.timeFromDB(rs.getString("pfrom")),
+								SQLUtils.timeFromDB(rs.getString("pto")),
+								rs.getString("location")
+								);
+					}
+				}
+			)
+		);
 	}
 	
 	@Override

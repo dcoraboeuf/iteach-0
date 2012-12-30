@@ -8,7 +8,7 @@ var Student = function () {
 		// Loads the lessons
 		$.ajax({
 			type: 'GET',
-			url: 'ui/teacher/student/{0}/lessons'.format(id),
+			url: 'gui/student/{0}/lessons'.format(id),
 			contentType: 'application/json',
 			dataType: 'json',
 			success: function (data) {
