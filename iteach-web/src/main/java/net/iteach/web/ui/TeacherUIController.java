@@ -108,6 +108,15 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// OK
 		return studentService.editStudentForTeacher(userId, id, form);
 	}
+	
+	@Override
+	@RequestMapping(value = "/student/{id}", method = RequestMethod.GET)
+	public StudentDetails getStudent(int id) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return studentService.getStudentForTeacher (userId, id);
+	}
 
 	@Override
 	@RequestMapping(value = "/lesson", method = RequestMethod.GET)

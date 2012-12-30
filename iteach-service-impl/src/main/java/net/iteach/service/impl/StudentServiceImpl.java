@@ -10,6 +10,7 @@ import net.iteach.api.StudentService;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.SchoolSummary;
+import net.iteach.core.model.StudentDetails;
 import net.iteach.core.model.StudentForm;
 import net.iteach.core.model.StudentSummaries;
 import net.iteach.core.model.StudentSummary;
@@ -51,6 +52,32 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 										school);
 							}
 						}));
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public StudentDetails getStudentForTeacher(int userId, int id) {
+		// FIXME Check for the associated teacher
+		return getNamedParameterJdbcTemplate().queryForObject(
+				SQL.STUDENT_DETAILS,
+				params("id", id),
+				new RowMapper<StudentDetails> () {
+
+					@Override
+					public StudentDetails mapRow(ResultSet rs, int rowNum)
+							throws SQLException {
+						SchoolSummary school = new SchoolSummary(
+								rs.getInt("SCHOOL_ID"),
+								rs.getString("SCHOOL_NAME"),
+								rs.getString("SCHOOL_COLOR"));
+						return new StudentDetails(
+								rs.getInt("ID"),
+								rs.getString("SUBJECT"),
+								rs.getString("NAME"),
+								school);
+					}
+					
+				});
 	}
 	
 	@Override

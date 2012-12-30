@@ -7,6 +7,7 @@ import net.iteach.core.model.LessonRange;
 import net.iteach.core.model.Lessons;
 import net.iteach.core.model.SchoolForm;
 import net.iteach.core.model.SchoolSummaries;
+import net.iteach.core.model.StudentDetails;
 import net.iteach.core.model.StudentForm;
 import net.iteach.core.model.StudentSummaries;
 
@@ -35,5 +36,7 @@ public interface TeacherUI {
 	Ack editLesson(int id, LessonForm form);
 
 	Ack deleteLesson(int id);
+	
+	StudentDetails getStudent (int id);
 
 }

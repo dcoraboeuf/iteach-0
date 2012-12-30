@@ -23,7 +23,8 @@ public class StudentController {
 
 	@RequestMapping("/{id:\\d+}")
 	public String details (@PathVariable int id, Model model, HttpSession session) {
-		// FIXME Loads the student details
+		// Loads the student details
+		model.addAttribute("student", ui.getStudent(id));
 		// View
 		return "student";
 	}
