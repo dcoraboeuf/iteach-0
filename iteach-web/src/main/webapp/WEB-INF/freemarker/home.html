@@ -17,7 +17,7 @@
 						<tbody>
 							<#list students.summaries as student>
 								<@item color=student.school.color>
-									<div class="student-name">${student.name?html}</div>
+									<div class="student-name"><a href="gui/student/${student.id}" title="<@lh key='student.link' />">${student.name?html}</a></div>
 									<div class="student-description">${student.subject?html} @ ${student.school.name?html}</div>									
 									<@item_actions>			
 										<input id="student-name-${student.id}" type="hidden" value="${student.name?html}" />

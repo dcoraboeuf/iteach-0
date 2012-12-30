@@ -251,7 +251,11 @@ student.edit
 student.edit.error
 	en -> Error while updating the student
 	fr -> Erreur lors de la modification de l'étudiant
-	
+
+student.link
+	en -> Displays details for the student
+	fr -> Affiche les détails pour cet étudiant	
+
 student.name
 	en -> Name
 	fr -> Nom
