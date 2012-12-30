@@ -6,25 +6,34 @@
 			<!-- Left column -->
 			<div class="span4">
 				<@panel title=loc("student.details.data")>
-					<input id="student-id" type="hidden" name="id" value="${student.id}" />
-					<table class="data">
-						<tbody>
-							<tr>
-								<td class="data-label"><@lh key="student.name" /></td>
-								<td class="data-value">${student.name?html}</td>
-							</tr>
-							<tr>
-								<td class="data-label"><@lh key="student.subject" /></td>
-								<td class="data-value">${student.subject?html}</td>
-							</tr>
-							<tr>
-								<td class="data-label"><@lh key="student.school" /></td>
-								<td class="data-value">
-									<a href="gui/school/${student.school.id}">${student.school.name?html}</a>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					<form>
+						<input id="student-id" type="hidden" name="id" value="${student.id}" />
+						<table class="data">
+							<tbody>
+								<tr>
+									<td class="data-label"><@lh key="student.name" /></td>
+									<td class="data-value">${student.name?html}</td>
+								</tr>
+								<tr>
+									<td class="data-label"><@lh key="student.subject" /></td>
+									<td class="data-value">${student.subject?html}</td>
+								</tr>
+								<tr>
+									<td class="data-label"><@lh key="student.school" /></td>
+									<td class="data-value">
+										<a href="gui/school/${student.school.id}">${student.school.name?html}</a>
+									</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="2" align="right">
+										<button id="data-update" class="btn" type="button" onclick="alert('NYI');"><@lh key="general.update" /></button>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</form>
 				</@panel>
 				<@panel title=loc("student.details.coordinates")>
 					Coming soon!
