@@ -46,14 +46,6 @@ function id (value) {
 
 var application = function () {
 	
-	function setCurrentMonth (id) {
-		$('#' + id).text (getCurrentMonth());
-	}
-	
-	function getCurrentMonth () {
-		return getMonth(getCurrentDate());
-	}
-	
 	function getCurrentDate () {
 		return new Date($('#current_date').val());
 	}
@@ -216,8 +208,6 @@ var application = function () {
 		},
 		dialog: dialog,
 		loading: loading,
-		setCurrentMonth: setCurrentMonth,
-		getCurrentMonth: getCurrentMonth,
 		getCurrentDate: getCurrentDate,
 		getMonth: getMonth
 	};

@@ -23,6 +23,13 @@ var Student = function () {
 		loadLessonsWith('gui/student/{0}/lessons');
 	}
 	
+	function displayMonth (d) {
+		$('#lessons-month').text ('{0} {1}'.format(
+			application.getMonth(d),
+			d.getFullYear()
+		));
+	}
+	
 	function loadLessonsWith (url) {
 		// Marks the lessons as being loading...
 		application.loading('#lessons-list', true);
@@ -37,7 +44,7 @@ var Student = function () {
 			success: function (data) {
 		  		application.loading('#lessons-list', false);
 		  		// Month
-		  		$('#lessons-month').text(application.getMonth(new Date(data.date)));
+		  		displayMonth(new Date(data.date));
 		  		// For each lesson
 		  		for (var i in data.lessons) {
 		  			var lesson = data.lessons[i];
@@ -72,7 +79,7 @@ var Student = function () {
 		// No errors
 		$('#lessons-error').hide();
 		// Initial value
-		application.setCurrentMonth('lessons-month');
+		displayMonth (application.getCurrentDate());
 		// Loadings
 		loadLessons();
 	}
