@@ -52,6 +52,10 @@ general.delete
 	en -> Delete
 	fr -> Supprimer
 
+general.loading
+	en -> Loading...
+	fr -> En cours de chargement...
+
 general.confirm.title
     en -> Confirmation
     fr -> Confirmation

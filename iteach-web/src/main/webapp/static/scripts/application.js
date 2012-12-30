@@ -164,6 +164,11 @@ var application = function () {
 		}
 	}
 	
+	function loading (selector, loading) {
+		$(selector).empty();
+		$(selector).append('<div class="loading">{0}</div>'.format(loc('general.loading')));
+	}
+	
 	return {
 		confirmAndCall: confirmAndCall,
 		confirmIDAndCall: confirmIDAndCall,
@@ -186,7 +191,8 @@ var application = function () {
 			var confirmValue = $(confirmation).val();
 			return validate (confirmation, confirmValue == value);
 		},
-		dialog: dialog
+		dialog: dialog,
+		loading: loading
 	};
 	
 } ();

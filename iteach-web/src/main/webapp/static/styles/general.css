@@ -5,6 +5,13 @@
 	font-size: 80%;
 }
 
+/* Loading indicator */
+.loading {
+	padding-left: 24px;
+	background-image: url('../images/ajax-loader.gif');
+	background-repeat: no-repeat;
+}
+
 /* Dialogs */
 
 .dialog {
