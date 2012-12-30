@@ -88,7 +88,7 @@
 		<ul class="breadcrumb">
 			<#list breadcrumbs?keys as key>
 				<#assign link = breadcrumbs[key]>
-				<li><a href="${link?html}">${loc(key)?html}</a> <span class="divider">/</span></li>
+				<li><a href="${link?html}">${key?html}</a> <span class="divider">/</span></li>
 			</#list>
 			<li class="active"><@layout_title pageId=pageId title=title /></li>
 		</ul>
