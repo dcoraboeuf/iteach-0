@@ -42,8 +42,34 @@
 			<!-- Middle column -->
 			<div class="span4">
 				<@panel id="lessons" title=loc("student.details.lessons")>
-					<div id="lessons-list"></div>
-					<div id="lessons-error" class="alert alert-error"></div>
+					<table class="data">
+						<tbody>
+							<tr>
+								<td class="data-label"><@lh key="student.lessons.hours.total" /></td>
+								<td class="data-value" id="lessons-total-hours">TODO</td>
+							</tr>
+						</tbody>
+					</table>
+					<div>&nbsp;</div>
+					<section>
+						<header style="text-align: center;">
+							<span id="lessons-month">TODO Month</span>
+							<div class="pull-left">&#9668;</div>
+							<div class="pull-right">&#9658;</div>
+						</header>
+						<div id="lessons-list"></div>
+						<div id="lessons-error" class="alert alert-error"></div>
+						<footer>
+							<table class="data">
+								<tbody>
+									<tr>
+										<td class="data-label"><@lh key="student.lessons.hours.month" /></td>
+										<td class="data-value" id="lessons-month-hours">TODO</td>
+									</tr>
+								</tbody>
+							</table>
+						</footer>
+					</section>
 				</@panel>
 			</div>
 			<!-- Right column -->

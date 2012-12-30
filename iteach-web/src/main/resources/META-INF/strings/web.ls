@@ -283,6 +283,14 @@ student.details.coordinates
 student.details.lessons
 	en -> His lessons
 	fr -> Ses leçons
+
+student.lessons.hours.total
+	en -> Total hours
+	fr -> Total d'heures
+
+student.lessons.hours.month
+	en -> Hours for the month
+	fr -> Heures pour le mois
 	
 student.details.lessons.error
 	en -> Cannot load lessons
