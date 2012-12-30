@@ -16,9 +16,10 @@
 .item-content {
 	padding-left: 1em;
 	height: 24px;
-	* {
-		vertical-align: middle;
-	}
+}
+
+.item-content * {
+	vertical-align: middle;
 }
 
 .item-color {
@@ -27,17 +28,17 @@
 	border: solid 1px gray;
 }
 
-table.items {
-	tbody tr:hover {
-		cursor: pointer;
-		background-color: #EEEEFF;
-		.item-actions {
-			display: inline;
-		}
-	}
-	tfoot td {
-	    padding-top: 0.5em;
-	}
+table.items tbody tr:hover {
+	cursor: pointer;
+	background-color: #EEEEFF;
+}
+
+table.items tbody tr:hover .item-actions {
+	display: inline;
+}
+
+table.items tfoot td {
+	padding-top: 0.5em;
 }
 
 .item-actions {
