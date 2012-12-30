@@ -1,0 +1,11 @@
+table.data {
+}
+
+table.data td.data-label {
+	padding-right: 1em;
+	font-style: italic;
+}
+
+table.data td.data-value {
+	font-weight: bolder;
+}

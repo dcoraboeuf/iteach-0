@@ -1,25 +1,42 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="student" title="TODO Student name" modules = [] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home", "TODO School name": "gui/school"}>
+<@layout_std pageId="student" title=student.name modules = ["data"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home", student.school.name: "gui/school"}>
 	<div class="container-fluid">
 		<div id="home-row" class="row-fluid">
 			<!-- Left column -->
 			<div class="span4">
 				<@panel title=loc("student.details.data")>
-					Coming soon!
+					<table class="data">
+						<tbody>
+							<tr>
+								<td class="data-label"><@lh key="student.name" /></td>
+								<td class="data-value">${student.name?html}</td>
+							</tr>
+							<tr>
+								<td class="data-label"><@lh key="student.subject" /></td>
+								<td class="data-value">${student.subject?html}</td>
+							</tr>
+							<tr>
+								<td class="data-label"><@lh key="student.school" /></td>
+								<td class="data-value">
+									<a href="gui/school/${student.school.id}">${student.school.name?html}</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</@panel>
 				<@panel title=loc("student.details.coordinates")>
 					Coming soon!
 				</@panel>
 			</div>
 			<!-- Middle column -->
-			<div class="span5">
+			<div class="span4">
 				<@panel title=loc("student.details.lessons")>
 					Coming soon!
 				</@panel>
 			</div>
 			<!-- Right column -->
-			<div class="span3">
+			<div class="span4">
 				<@panel title=loc("student.details.comments")>
 					Coming soon!
 				</@panel>
