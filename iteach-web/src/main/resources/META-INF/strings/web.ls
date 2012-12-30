@@ -267,6 +267,22 @@ student.subject
 student.school
 	en -> Student's school
 	fr -> Ecole de l'étudiant
+	
+student.details.data
+	en -> His data
+	fr -> Ses données
+
+student.details.coordinates
+	en -> His coordinates
+	fr -> Ses coordonnées
+
+student.details.lessons
+	en -> His lessons
+	fr -> Ses leçons
+
+student.details.comments
+	en -> Your comments
+	fr -> Vos commentaires
 
 [lessons]
 
