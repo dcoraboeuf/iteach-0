@@ -1,0 +1,10 @@
+.student-lesson {
+	background-color: whiteSmoke;
+	border-radius: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.student-lesson-time {
+	background-color: lightGray;
+}

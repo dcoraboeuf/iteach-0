@@ -37,10 +37,13 @@ var Student = function () {
 		  		// For each lesson
 		  		for (var i in data.lessons) {
 		  			var lesson = data.lessons[i];
-		  			$('#lessons-list').append('<div class="student-lesson" id="lesson-{0}"><div class="student-lesson-schedule">{1}</div><div class="student-lesson-location">{2}</div></div>'.format(
-		  					lesson.id,
-		  					getLessonSchedule(lesson),
-		  					lesson.location));
+		  			var html = '';
+		  			html += '<div class="student-lesson" id="{0}">'.format(id);
+		  				html += '<div class="student-lesson-time"><a href="gui/lesson/{0}">{1}</a></div>'.format(lesson.id, getLessonSchedule(lesson));
+		  				html += '<div class="student-lesson-location">@ {0}</div>'.format(lesson.location);
+		  			html += '</div>';
+		  			
+		  			$('#lessons-list').append(html);
 		  		}
 		  		// Hours for the month
 		  		$('#lessons-month-hours').text(data.hours);
