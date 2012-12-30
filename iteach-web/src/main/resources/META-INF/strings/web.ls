@@ -283,6 +283,10 @@ student.details.coordinates
 student.details.lessons
 	en -> His lessons
 	fr -> Ses leçons
+	
+student.details.lessons.error
+	en -> Cannot load lessons
+	fr -> Impossible de charger les leçons
 
 student.details.comments
 	en -> Your comments

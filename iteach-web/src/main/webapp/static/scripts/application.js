@@ -122,7 +122,7 @@ var application = function () {
 	}
 	
 	function displayError (text) {
-		$('<div>{0}</div>'.format(text)).dialog({
+		$('<div>{0}</div>'.format(text.htmlWithLines())).dialog({
 			title: loc('general.error.title'),
 			dialogClass: 'error-dialog',
 			modal: true,
@@ -134,8 +134,12 @@ var application = function () {
 		});
 	}
 	
+	function getAjaxError (message, jqXHR, textStatus, errorThrown) {
+		return '{0}\n[{1}] {2}'.format(message, jqXHR.status, jqXHR.statusText);
+	}
+	
 	function displayAjaxError (message, jqXHR, textStatus, errorThrown) {
-		var text = '{0}\n[{1}] {2}'.format(message, jqXHR.status, jqXHR.statusText);
+		var text = getAjaxError(message, jqXHR, textStatus, errorThrown);
 		displayError(text);
 	}
 	
@@ -166,7 +170,9 @@ var application = function () {
 	
 	function loading (selector, loading) {
 		$(selector).empty();
-		$(selector).append('<div class="loading">{0}</div>'.format(loc('general.loading')));
+		if (loading) {
+			$(selector).append('<div class="loading">{0}</div>'.format(loc('general.loading')));
+		}
 	}
 	
 	return {
@@ -174,6 +180,7 @@ var application = function () {
 		confirmIDAndCall: confirmIDAndCall,
 		displayError: displayError,
 		displayAjaxError: displayAjaxError,
+		getAjaxError: getAjaxError,
 		onConfirmedAction: onConfirmedAction,
 		changeLanguage: changeLanguage,
 		validateTextAsName: function (selector) {

@@ -6,6 +6,7 @@
 			<!-- Left column -->
 			<div class="span4">
 				<@panel title=loc("student.details.data")>
+					<input id="student-id" type="hidden" name="id" value="${student.id}" />
 					<table class="data">
 						<tbody>
 							<tr>
@@ -32,7 +33,8 @@
 			<!-- Middle column -->
 			<div class="span4">
 				<@panel id="lessons" title=loc("student.details.lessons")>
-					Coming soon!
+					<div id="lessons-list"></div>
+					<div id="lessons-error" class="alert alert-error"></div>
 				</@panel>
 			</div>
 			<!-- Right column -->
