@@ -16,8 +16,11 @@ import net.sf.jstring.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Function;
@@ -36,7 +39,7 @@ public class PlanningController extends AbstractUIController {
 		this.teacherUI = teacherUI;
 	}
 
-	@RequestMapping("/list")
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public @ResponseBody LessonEvents lessons(@RequestBody LessonRange range) {
 		// Gets the regular lessons from the model
 		Lessons lessons = teacherUI.getLessons(range);
@@ -49,6 +52,14 @@ public class PlanningController extends AbstractUIController {
 		});
 		// OK
 		return new LessonEvents(events);
+	}
+
+	@RequestMapping(value = "/{id:\\d+}", method = RequestMethod.GET)
+	public String lesson (@PathVariable int id, Model model) {
+		// Loads the lesson
+		model.addAttribute("lesson", teacherUI.getLesson(id));
+		// OK
+		return "lesson";
 	}
 
 	protected LessonEvent toEvent(Lesson lesson) {

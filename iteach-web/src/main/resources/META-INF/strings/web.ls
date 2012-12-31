@@ -375,3 +375,19 @@ lesson.delete.prompt
 lesson.delete.error
 	en -> Error while deleting this lesson
 	fr -> Erreur lors de la suppression de cette leçon
+
+lesson.details.data
+	en -> Schedule
+	fr -> Planning
+
+lesson.details.student
+	en -> The student
+	fr -> L'étudiant
+
+lesson.details.school
+	en -> The school
+	fr -> L'école
+
+lesson.details.comments
+	en -> Your comments
+	fr -> Vos commentaires

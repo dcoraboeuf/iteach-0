@@ -146,6 +146,15 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// OK
 		return lessonService.getLessonsForTeacher(userId, range);
 	}
+	
+	@Override
+	@RequestMapping(value = "/lesson/{id:\\d+}", method = RequestMethod.GET)
+	public @ResponseBody LessonDetails getLesson(@PathVariable int id) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return lessonService.getLessonDetails(userId, id);
+	}
 
 	@Override
 	@RequestMapping(value = "/lesson", method = RequestMethod.POST)

@@ -4,6 +4,7 @@ import org.joda.time.LocalDate;
 
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
+import net.iteach.core.model.LessonDetails;
 import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.LessonRange;
 import net.iteach.core.model.Lessons;
@@ -20,5 +21,7 @@ public interface LessonService {
 	Ack deleteLessonForTeacher(int userId, int id);
 
 	StudentLessons getLessonsForStudent(int userId, int id, LocalDate date);
+
+	LessonDetails getLessonDetails(int userId, int id);
 
 }

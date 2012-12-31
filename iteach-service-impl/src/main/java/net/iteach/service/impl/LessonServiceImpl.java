@@ -15,6 +15,7 @@ import net.iteach.api.LessonService;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.Lesson;
+import net.iteach.core.model.LessonDetails;
 import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.LessonRange;
 import net.iteach.core.model.Lessons;
@@ -113,6 +114,38 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 										);
 							}
 						}));
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public LessonDetails getLessonDetails(int userId, int id) {
+		// FIXME Check for the associated teacher
+		return getNamedParameterJdbcTemplate().queryForObject(
+			SQL.LESSON_DETAILS,
+			params("id", id),
+			new RowMapper<LessonDetails>() {
+				@Override
+				public LessonDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
+					SchoolSummary school = new SchoolSummary(
+							rs.getInt("SCHOOL_ID"),
+							rs.getString("SCHOOL_NAME"),
+							rs.getString("SCHOOL_COLOR"));
+					StudentSummary student = new StudentSummary(
+							rs.getInt("STUDENT_ID"),
+							rs.getString("STUDENT_SUBJECT"),
+							rs.getString("STUDENT_NAME"),
+							school);
+					return new LessonDetails(
+							rs.getInt("id"),
+							student,
+							SQLUtils.dateFromDB(rs.getString("pdate")),
+							SQLUtils.timeFromDB(rs.getString("pfrom")),
+							SQLUtils.timeFromDB(rs.getString("pto")),
+							rs.getString("location")
+							);
+				}
+			}
+		);
 	}
 	
 	@Override

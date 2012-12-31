@@ -4,6 +4,7 @@ import org.joda.time.LocalDate;
 
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
+import net.iteach.core.model.LessonDetails;
 import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.LessonRange;
 import net.iteach.core.model.Lessons;
@@ -46,5 +47,7 @@ public interface TeacherUI {
 	StudentLessons getStudentLessons(int id, LocalDate date);
 
 	SchoolDetails getSchool(int id);
+
+	LessonDetails getLesson(int id);
 
 }

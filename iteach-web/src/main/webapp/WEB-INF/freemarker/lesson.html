@@ -1,0 +1,80 @@
+<#include "/lib/layout.html">
+
+<@layout_std pageId="lesson" title="TODO Lesson name" modules=["data","planning"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home", lesson.student.school.name: "gui/school/${lesson.student.school.id}", lesson.student.name: "gui/student/${lesson.student.id}"}>
+	<div class="container-fluid">
+		<div id="home-row" class="row-fluid">
+			<!-- Left column -->
+			<div class="span4">
+				<@panel title=loc("lesson.details.data")>
+					<form>
+						<input id="lesson-id" type="hidden" name="id" value="${lesson.id}" />
+						<table class="data">
+							<tbody>
+								<tr>
+									<td class="data-label"><@lh key="lesson.date" /></td>
+									<td class="data-value">TODO</td>
+								</tr>
+								<tr>
+									<td class="data-label"><@lh key="lesson.from" /></td>
+									<td class="data-value">TODO</td>
+								</tr>
+								<tr>
+									<td class="data-label"><@lh key="lesson.to" /></td>
+									<td class="data-value">TODO</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+					TODO Update/Delete
+				</@panel>
+			</div>
+			<!-- Middle column -->
+			<div class="span4">
+				<@panel title=loc("lesson.details.student")>
+					<form>
+						<input id="student-id" type="hidden" name="id" value="${lesson.student.id}" />
+						<table class="data">
+							<tbody>
+								<tr>
+									<td class="data-label"><@lh key="student.name" /></td>
+									<td class="data-value"><a href="gui/student/${lesson.student.id}">${lesson.student.name?html}</a></td>
+								</tr>
+								<tr>
+									<td class="data-label"><@lh key="student.subject" /></td>
+									<td class="data-value">${lesson.student.subject?html}</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+					TODO Coordinates
+				</@panel>
+				<@panel title=loc("lesson.details.school")>
+					<form>
+						<input id="school-id" type="hidden" name="id" value="${lesson.student.school.id}" />
+						<table class="data">
+							<tbody>
+								<tr>
+									<td class="data-label"><@lh key="school.name" /></td>
+									<td class="data-value"><a href="gui/school/${lesson.student.school.id}">${lesson.student.school.name?html}</a></td>
+								</tr>
+								<tr>
+									<td class="data-label"><@lh key="school.color" /></td>
+									<td class="data-value school-color" style="background-color: ${lesson.student.school.color};">
+										&nbsp;
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+					TODO Coordinates
+				</@panel>
+			</div>
+			<!-- Right column -->
+			<div class="span4">
+				<@panel title=loc("lesson.details.comments")>
+					Coming soon!
+				</@panel>
+			</div>
+		</div>
+	</div>
+</@layout_std>
