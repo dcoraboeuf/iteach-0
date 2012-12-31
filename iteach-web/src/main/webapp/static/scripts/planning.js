@@ -18,6 +18,12 @@ var Planning = function () {
 		return '{0}T{1}'.format(formatDate(d), formatTime(d));
 	}
 	
+	function completeEvents (events) {
+		$.each (events, function (index, event) {
+			event.url = 'gui/lesson/{0}'.format(event.id);
+		});
+	}
+	
 	function fetchEvents (start, end, callback) {
 		$.ajax({
 			type: 'POST',
@@ -29,6 +35,9 @@ var Planning = function () {
 			}),
 			dataType: 'json',
 			success: function (data) {
+				// Complete the events data
+				completeEvents(data.events);
+				// Displays the events
 				callback(data.events);
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
@@ -225,8 +234,6 @@ var Planning = function () {
 			selectable: true,
 			selectHelper: true,
 			select: onSelect,
-			// Opening the lesson
-			eventClick: onEdit,
 			// Loading of events
 			events: fetchEvents
 		});
