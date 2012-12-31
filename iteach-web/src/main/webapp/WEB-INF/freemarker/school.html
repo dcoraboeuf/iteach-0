@@ -31,7 +31,18 @@
 			<!-- Middle column -->
 			<div class="span4">
 				<@panel title=loc("school.details.students")>
-					Coming soon!
+					<table>
+						<tbody>
+							<#list school.students as student>
+								<tr>
+									<td>
+										<a href="gui/student/${student.id}">${student.name?html}</a>
+										<span class="label">${student.subject?html}</span>
+									</td>
+								</tr>
+							</#list>
+						</tbody>
+					</table>
 				</@panel>
 			</div>
 			<!-- Right column -->

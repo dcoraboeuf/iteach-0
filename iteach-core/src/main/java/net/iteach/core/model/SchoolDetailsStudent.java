@@ -6,7 +6,7 @@ import lombok.Data;
 public class SchoolDetailsStudent {
 
 	private final int id;
-	private final String subject;
 	private final String name;
+	private final String subject;
 	
 }
