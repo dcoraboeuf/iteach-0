@@ -27,7 +27,7 @@ var Planning = function () {
 	function fetchEvents (start, end, callback) {
 		$.ajax({
 			type: 'POST',
-			url: 'ui/calendar/lessons',
+			url: 'gui/lesson/list',
 			contentType: 'application/json',
 			data: JSON.stringify({
 				from: formatDateTime(start),

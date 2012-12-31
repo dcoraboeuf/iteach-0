@@ -1,4 +1,4 @@
-package net.iteach.web.ui;
+package net.iteach.web.planning;
 
 import java.util.List;
 
@@ -8,6 +8,9 @@ import net.iteach.core.model.Lessons;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.core.ui.TeacherUI;
 import net.iteach.web.support.ErrorHandler;
+import net.iteach.web.ui.AbstractUIController;
+import net.iteach.web.ui.LessonEvent;
+import net.iteach.web.ui.LessonEvents;
 import net.sf.jstring.Strings;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,19 +24,19 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
 @Controller
-@RequestMapping("/ui/calendar")
-public class CalendarController extends AbstractUIController {
+@RequestMapping("/gui/lesson")
+public class PlanningController extends AbstractUIController {
 
 	private final TeacherUI teacherUI;
 
 	@Autowired
-	public CalendarController(SecurityUtils securityUtils,
+	public PlanningController(SecurityUtils securityUtils,
 			ErrorHandler errorHandler, Strings strings, TeacherUI teacherUI) {
 		super(securityUtils, errorHandler, strings);
 		this.teacherUI = teacherUI;
 	}
 
-	@RequestMapping("/lessons")
+	@RequestMapping("/list")
 	public @ResponseBody LessonEvents lessons(@RequestBody LessonRange range) {
 		// Gets the regular lessons from the model
 		Lessons lessons = teacherUI.getLessons(range);
