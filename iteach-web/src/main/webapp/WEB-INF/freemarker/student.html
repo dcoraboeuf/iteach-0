@@ -1,6 +1,6 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="student" title=student.name style=true script=true modules=["data","planning"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home", student.school.name: "gui/school"}>
+<@layout_std pageId="student" title=student.name style=true script=true modules=["data","planning"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home", student.school.name: "gui/school/${student.school.id}"}>
 	<@current_date />
 	<div class="container-fluid">
 		<div id="home-row" class="row-fluid">

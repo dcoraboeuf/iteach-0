@@ -53,7 +53,7 @@
 						<tbody>
 							<#list schools.summaries as school>
 								<@item color=school.color>
-									${school.name?html}
+									<a href="gui/school/${school.id}">${school.name?html}</a>
 									<@item_actions>
 										<input id="school-name-${school.id}" type="hidden" value="${school.name?html}" />
 										<input id="school-color-${school.id}" type="hidden" value="${school.color?html}" />
