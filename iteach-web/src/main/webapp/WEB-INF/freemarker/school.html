@@ -1,0 +1,46 @@
+<#include "/lib/layout.html">
+
+<@layout_std pageId="school" title=school.name style=true modules=["data"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home"}>
+	<div class="container-fluid">
+		<div id="home-row" class="row-fluid">
+			<!-- Left column -->
+			<div class="span4">
+				<@panel title=loc("school.details.data")>
+					<form>
+						<input id="school-id" type="hidden" name="id" value="${school.id}" />
+						<table class="data">
+							<tbody>
+								<tr>
+									<td class="data-label"><@lh key="school.name" /></td>
+									<td class="data-value">${school.name?html}</td>
+								</tr>
+								<tr>
+									<td class="data-label"><@lh key="school.color" /></td>
+									<td class="data-value school-color" style="background-color: ${school.color};">
+										&nbsp;
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</@panel>
+				<@panel title=loc("school.details.coordinates")>
+					Coming soon!
+				</@panel>
+			</div>
+			<!-- Middle column -->
+			<div class="span4">
+				<@panel title=loc("school.details.students")>
+					Coming soon!
+				</@panel>
+			</div>
+			<!-- Right column -->
+			<div class="span4">
+				<@panel title=loc("school.details.comments")>
+					Coming soon!
+				</@panel>
+			</div>
+		</div>
+	</div>
+	
+</@layout_std>

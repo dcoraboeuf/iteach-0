@@ -7,6 +7,7 @@ import net.iteach.core.model.ID;
 import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.LessonRange;
 import net.iteach.core.model.Lessons;
+import net.iteach.core.model.SchoolDetails;
 import net.iteach.core.model.SchoolForm;
 import net.iteach.core.model.SchoolSummaries;
 import net.iteach.core.model.StudentDetails;
@@ -43,5 +44,7 @@ public interface TeacherUI {
 	StudentDetails getStudent (int id);
 
 	StudentLessons getStudentLessons(int id, LocalDate date);
+
+	SchoolDetails getSchool(int id);
 
 }

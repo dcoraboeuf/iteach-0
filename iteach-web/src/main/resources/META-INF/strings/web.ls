@@ -211,6 +211,22 @@ school.color
 	en -> Colour code
 	fr -> Code couleur
 
+school.details.data
+	en -> Its data
+	fr -> Ses données
+
+school.details.coordinates
+	en -> Its coordinates
+	fr -> Ses coordonnées
+
+school.details.students
+	en -> Its students
+	fr -> Ses étudiants
+
+school.details.comments
+	en -> Your comments
+	fr -> Vos commentaires
+
 [students]
 
 student.new

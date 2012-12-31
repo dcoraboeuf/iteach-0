@@ -2,6 +2,7 @@ package net.iteach.service.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 import javax.validation.Validator;
@@ -9,6 +10,8 @@ import javax.validation.Validator;
 import net.iteach.api.SchoolService;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
+import net.iteach.core.model.SchoolDetails;
+import net.iteach.core.model.SchoolDetailsStudent;
 import net.iteach.core.model.SchoolForm;
 import net.iteach.core.model.SchoolSummaries;
 import net.iteach.core.model.SchoolSummary;
@@ -46,6 +49,42 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
+	public SchoolDetails getSchoolForTeacher(int userId, int id) {
+		// FIXME Check for the associated teacher
+		// Student summaries
+		final List<SchoolDetailsStudent> students = getNamedParameterJdbcTemplate().query(
+			SQL.STUDENTS_FOR_SCHOOL,
+			params("id", id),
+			new RowMapper<SchoolDetailsStudent> () {
+
+				@Override
+				public SchoolDetailsStudent mapRow(ResultSet rs, int rowNum) throws SQLException {
+					return new SchoolDetailsStudent(
+						rs.getInt("id"),
+						rs.getString("name"),
+						rs.getString("subject"));
+				}
+				
+			}
+		);
+		// Details
+		return getNamedParameterJdbcTemplate().queryForObject(
+			SQL.SCHOOL_DETAILS,
+			params("id", id),
+			new RowMapper<SchoolDetails>() {
+
+				@Override
+				public SchoolDetails mapRow(ResultSet rs, int rowNum)
+						throws SQLException {
+					return new SchoolDetails(rs.getInt("id"), rs.getString("name"), rs.getString("color"), students);
+				}
+				
+			}
+		);
+	}
+	
+	@Override
 	@Transactional
 	public ID createSchoolForTeacher(int teacherId, SchoolForm form) {
         validate(form, SchoolFormValidation.class);
@@ -67,6 +106,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional
 	public Ack deleteSchoolForTeacher(int teacherId, int id) {
+		// FIXME Check for the associated teacher
 		// TODO Deletes coordinates
 		int count = getNamedParameterJdbcTemplate().update(SQL.SCHOOL_DELETE, params("teacher", teacherId).addValue("id", id));
 		return Ack.one(count);
@@ -75,6 +115,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional
 	public Ack editSchoolForTeacher(int userId, int id, SchoolForm form) {
+		// FIXME Check for the associated teacher
         validate(form, SchoolFormValidation.class);
 		try {
 			int count = getNamedParameterJdbcTemplate().update(
