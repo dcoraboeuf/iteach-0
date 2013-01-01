@@ -71,10 +71,13 @@ var Planning = function () {
 		);
 	}
 	
-	function onEdit (calEvent, jsEvent, view) {
-		var date = calEvent.lesson.date;
-		var startTime = calEvent.lesson.from;
-		var endTime = calEvent.lesson.to;
+	function editLesson () {
+		var id = $('#lesson-id').val();
+		var student = $('#lesson-student').val();
+		var date = $('#lesson-date').val();
+		var startTime = $('#lesson-from').val();
+		var endTime = $('#lesson-to').val();
+		var location = $('#lesson-location').val();
 		application.dialog({
 			id: 'lesson-dialog',
 			title: loc('lesson.edit'),
@@ -83,17 +86,14 @@ var Planning = function () {
 				lessonDate: date,
 				lessonFrom: startTime,
 				lessonTo: endTime,
-				lessonStudent: calEvent.lesson.student.id,
-				lessonLocation: calEvent.lesson.location
+				lessonStudent: student,
+				lessonLocation: location
 			},
 			submit: {
 				name: loc('general.update'),
 				action: function () {
-					return submitEditLesson (calEvent.id);
+					return submitEditLesson (id);
 				}
-			},
-			close: function () {
-				$("#planning-calendar").fullCalendar('unselect');
 			}
 		});		
 	}
@@ -142,8 +142,7 @@ var Planning = function () {
 			dataType: 'json',
 			success: function (data) {
 				if (data.success) {
-					$("#planning-calendar").fullCalendar('refetchEvents');
-					$('#lesson-dialog').dialog('close');
+					location.reload();
 				} else {
 					application.displayError(loc('lesson.edit.error'));
 				}
@@ -231,7 +230,8 @@ var Planning = function () {
 
 	return {
 		init: init,
-		deleteLesson: deleteLesson
+		deleteLesson: deleteLesson,
+		editLesson: editLesson
 	};
 
 } ();

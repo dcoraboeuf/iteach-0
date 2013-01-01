@@ -4,7 +4,7 @@
 <script type="text/javascript" src="${base}/scripts/planning.js"></script>
 
 
-<#macro lesson_dialog>
+<#macro lesson_dialog withStudentSelection = true>
 	<@dialog id="lesson-dialog">
 		<form id="lesson-dialog-form" class="form-horizontal">
 			<div class="control-group">
@@ -24,17 +24,21 @@
 					<input class="input-small" id="lessonTo" name="to" type="time" size="5" maxlength="5" required="required" />
 				</div>
 			</div>
-			<div class="control-group">
-				<label class="control-label" for="lessonStudent"><@lh key="lesson.student" /></label>
-				<div class="controls">
-					<select id="lessonStudent" name="student" required="required" placeholder="<@lh key='lesson.student' />">
-						<option value=""></option>
-						<#list students.summaries as student>
-							<option value="${student.id}">${student.name?html}</option>
-						</#list>
-					</select>
+			<#if withStudentSelection>
+				<div class="control-group">
+					<label class="control-label" for="lessonStudent"><@lh key="lesson.student" /></label>
+					<div class="controls">
+						<select id="lessonStudent" name="student" required="required" placeholder="<@lh key='lesson.student' />">
+							<option value=""></option>
+							<#list students.summaries as student>
+								<option value="${student.id}">${student.name?html}</option>
+							</#list>
+						</select>
+					</div>
 				</div>
-			</div>
+			<#else>
+				<input id="lessonStudent" name="student" type="hidden" />
+			</#if>
 			<div class="control-group">
 				<label class="control-label" for="lessonLocation"><@lh key="lesson.location" /></label>
 				<div class="controls">
