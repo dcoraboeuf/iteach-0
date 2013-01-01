@@ -42,6 +42,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 			<map>
 				<entry key="loc" value-ref="fnLoc" />
 				<entry key="locSelected" value-ref="fnLocSelected" />
+				<entry key="locFormatDate" value-ref="fnLocFormatDate" />
+				<entry key="locFormatTime" value-ref="fnLocFormatTime" />
 				<entry key="secLogged" value-ref="fnSecLogged" />
 				<entry key="secDisplayName" value-ref="fnSecDisplayName" />
 			</map>
@@ -50,6 +52,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	
 	<bean id="fnLoc" class="net.iteach.web.support.fm.FnLoc" />
 	<bean id="fnLocSelected" class="net.iteach.web.support.fm.FnLocSelected" />
+	<bean id="fnLocFormatDate" class="net.iteach.web.support.fm.FnLocFormatDate" />
+	<bean id="fnLocFormatTime" class="net.iteach.web.support.fm.FnLocFormatTime" />
 	<bean id="fnSecLogged" class="net.iteach.web.support.fm.FnSecLogged" />
 	<bean id="fnSecDisplayName" class="net.iteach.web.support.fm.FnSecDisplayName" />
 
