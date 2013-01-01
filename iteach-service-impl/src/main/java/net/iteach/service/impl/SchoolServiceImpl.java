@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import javax.validation.Validator;
 
 import net.iteach.api.SchoolService;
+import net.iteach.api.StudentService;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.SchoolDetails;
@@ -28,10 +29,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SchoolServiceImpl extends AbstractServiceImpl implements
 		SchoolService {
+	
+	private final StudentService studentService;
 
 	@Autowired
-	public SchoolServiceImpl(DataSource dataSource, Validator validator) {
+	public SchoolServiceImpl(DataSource dataSource, Validator validator, StudentService studentService) {
 		super(dataSource, validator);
+		this.studentService = studentService;
 	}
 
 	@Override
@@ -60,10 +64,12 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 
 				@Override
 				public SchoolDetailsStudent mapRow(ResultSet rs, int rowNum) throws SQLException {
+					int studentId = rs.getInt("id");
 					return new SchoolDetailsStudent(
-						rs.getInt("id"),
+						studentId,
 						rs.getString("name"),
-						rs.getString("subject"));
+						rs.getString("subject"),
+						studentService.getStudentHours(studentId));
 				}
 				
 			}

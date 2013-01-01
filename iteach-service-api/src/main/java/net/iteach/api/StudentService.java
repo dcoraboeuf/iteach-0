@@ -1,5 +1,7 @@
 package net.iteach.api;
 
+import java.math.BigDecimal;
+
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.StudentDetails;
@@ -17,5 +19,7 @@ public interface StudentService {
 	Ack editStudentForTeacher(int userId, int id, StudentForm form);
 
 	StudentDetails getStudentForTeacher(int userId, int id);
+
+	BigDecimal getStudentHours(int id);
 
 }

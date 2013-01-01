@@ -63,21 +63,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 	public StudentDetails getStudentForTeacher(int userId, int id) {
 		// FIXME Check for the associated teacher
 		// Total hours
-		final AtomicReference<BigDecimal> hours = new AtomicReference<>(BigDecimal.ZERO);
-		getNamedParameterJdbcTemplate().query(
-			SQL.STUDENT_TOTAL_HOURS,
-			params("id", id),
-			new RowCallbackHandler() {
-				
-				@Override
-				public void processRow(ResultSet rs) throws SQLException {
-					hours.set(hours.get().add(getHours(
-						SQLUtils.timeFromDB(rs.getString("pfrom")),
-						SQLUtils.timeFromDB(rs.getString("pto"))
-					)));
-				}
-			}
-		);
+		final BigDecimal studentHours = getStudentHours(id);
 		// Details
 		return getNamedParameterJdbcTemplate().queryForObject(
 				SQL.STUDENT_DETAILS,
@@ -96,10 +82,32 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 								rs.getString("SUBJECT"),
 								rs.getString("NAME"),
 								school,
-								hours.get());
+								studentHours);
 					}
 					
 				});
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public BigDecimal getStudentHours(int id) {
+		final AtomicReference<BigDecimal> hours = new AtomicReference<>(BigDecimal.ZERO);
+		getNamedParameterJdbcTemplate().query(
+			SQL.STUDENT_TOTAL_HOURS,
+			params("id", id),
+			new RowCallbackHandler() {
+				
+				@Override
+				public void processRow(ResultSet rs) throws SQLException {
+					hours.set(hours.get().add(getHours(
+						SQLUtils.timeFromDB(rs.getString("pfrom")),
+						SQLUtils.timeFromDB(rs.getString("pto"))
+					)));
+				}
+			}
+		);
+		final BigDecimal studentHours = hours.get();
+		return studentHours;
 	}
 	
 	@Override

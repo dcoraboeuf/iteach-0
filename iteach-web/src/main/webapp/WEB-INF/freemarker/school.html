@@ -39,6 +39,9 @@
 										<a href="gui/student/${student.id}">${student.name?html}</a>
 										<span class="label">${student.subject?html}</span>
 									</td>
+									<td class="hours">
+										${ loc('school.student.hours', student.hours)?html }
+									</td>
 								</tr>
 							</#list>
 						</tbody>

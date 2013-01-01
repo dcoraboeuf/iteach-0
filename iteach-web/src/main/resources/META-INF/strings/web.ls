@@ -227,6 +227,11 @@ school.details.comments
 	en -> Your comments
 	fr -> Vos commentaires
 
+school.student.hours
+	en -> {0}h
+	fr -> {0}h
+	de -> {0}h
+
 [students]
 
 student.new
