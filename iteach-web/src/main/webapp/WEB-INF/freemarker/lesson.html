@@ -1,6 +1,10 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="lesson" title="TODO Lesson name" modules=["data","planning"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home", lesson.student.school.name: "gui/school/${lesson.student.school.id}", lesson.student.name: "gui/student/${lesson.student.id}"}>
+<#assign lessonName>
+	${locFormatDate(lesson.date)} - ${locFormatTime(lesson.from)}
+</#assign>
+
+<@layout_std pageId="lesson" title=lessonName modules=["data","planning"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home", lesson.student.school.name: "gui/school/${lesson.student.school.id}", lesson.student.name: "gui/student/${lesson.student.id}"}>
 	<div class="container-fluid">
 		<div id="home-row" class="row-fluid">
 			<!-- Left column -->
