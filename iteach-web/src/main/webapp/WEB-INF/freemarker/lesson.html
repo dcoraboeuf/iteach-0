@@ -26,10 +26,15 @@
 									<td class="data-label"><@lh key="lesson.to" /></td>
 									<td class="data-value">${locFormatTime(lesson.to)}</td>
 								</tr>
+								<tr>
+									<td class="data-label"><@lh key="lesson.location" /></td>
+									<td class="data-value">${lesson.location?html}</td>
+								</tr>
 							</tbody>
 							<tfooter>
 								<tr>
 									<td colspan="2">
+										<div>&nbsp;</div>
 										<button class="btn btn-danger" type="button" onclick="Planning.deleteLesson(${lesson.id})"><@lh key="general.delete" /></button>
 									</td>
 								</tr>
