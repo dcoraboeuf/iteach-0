@@ -46,7 +46,7 @@ var Planning = function () {
 		});
 	}
 	
-	function onDelete (id) {
+	function deleteLesson (id) {
 		application.confirmAndCall(
 			loc('lesson.delete.prompt'),
 			function () {
@@ -57,8 +57,8 @@ var Planning = function () {
 					dataType: 'json',
 					success: function (data) {
 						if (data.success) {
-							$("#planning-calendar").fullCalendar('refetchEvents');
-							$('#lesson-dialog').dialog('close');
+							// Going back to the planning
+							location = "gui/home";
 						} else {
 							application.displayError(loc('lesson.delete.error'));
 						}
@@ -92,13 +92,6 @@ var Planning = function () {
 					return submitEditLesson (calEvent.id);
 				}
 			},
-			open: function () {
-				$('#lesson-dialog-delete').unbind('click');
-				$('#lesson-dialog-delete').click(function () {
-					onDelete(calEvent.id);
-				});
-				$('#lesson-dialog-delete').show();
-			},
 			close: function () {
 				$("#planning-calendar").fullCalendar('unselect');
 			}
@@ -126,9 +119,6 @@ var Planning = function () {
 				submit: {
 					name: loc('general.create'),
 					action: submitCreateLesson
-				},
-				open: function () {
-					$('#lesson-dialog-delete').hide();
 				},
 				cancel: function () {
 					$("#planning-calendar").fullCalendar('unselect');
@@ -240,7 +230,8 @@ var Planning = function () {
 	}
 
 	return {
-		init: init
+		init: init,
+		deleteLesson: deleteLesson
 	};
 
 } ();

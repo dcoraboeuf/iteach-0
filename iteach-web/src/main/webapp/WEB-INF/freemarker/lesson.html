@@ -23,9 +23,16 @@
 									<td class="data-value">${locFormatTime(lesson.to)}</td>
 								</tr>
 							</tbody>
+							<tfooter>
+								<tr>
+									<td colspan="2">
+										<button class="btn btn-danger" type="button" onclick="Planning.deleteLesson(${lesson.id})"><@lh key="general.delete" /></button>
+									</td>
+								</tr>
+							</tfooter>
 						</table>
 					</form>
-					TODO Update/Delete
+					TODO Update
 				</@panel>
 			</div>
 			<!-- Middle column -->
