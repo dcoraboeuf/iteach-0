@@ -2,12 +2,16 @@ package net.iteach.web.planning;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import net.iteach.core.model.Lesson;
+import net.iteach.core.model.LessonDetails;
 import net.iteach.core.model.LessonRange;
 import net.iteach.core.model.Lessons;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.core.ui.TeacherUI;
 import net.iteach.web.support.ErrorHandler;
+import net.iteach.web.support.UserSession;
 import net.iteach.web.ui.AbstractUIController;
 import net.iteach.web.ui.LessonEvent;
 import net.iteach.web.ui.LessonEvents;
@@ -31,12 +35,14 @@ import com.google.common.collect.Lists;
 public class PlanningController extends AbstractUIController {
 
 	private final TeacherUI teacherUI;
+	private final UserSession userSession;
 
 	@Autowired
 	public PlanningController(SecurityUtils securityUtils,
-			ErrorHandler errorHandler, Strings strings, TeacherUI teacherUI) {
+			ErrorHandler errorHandler, Strings strings, TeacherUI teacherUI, UserSession userSession) {
 		super(securityUtils, errorHandler, strings);
 		this.teacherUI = teacherUI;
+		this.userSession = userSession;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -55,9 +61,13 @@ public class PlanningController extends AbstractUIController {
 	}
 
 	@RequestMapping(value = "/{id:\\d+}", method = RequestMethod.GET)
-	public String lesson (@PathVariable int id, Model model) {
+	public String lesson (@PathVariable int id, Model model, HttpSession session) {
 		// Loads the lesson
-		model.addAttribute("lesson", teacherUI.getLesson(id));
+		LessonDetails lesson = teacherUI.getLesson(id);
+		// Sets the lesson for the page
+		model.addAttribute("lesson", lesson);
+		// Adjust the current date
+		userSession.setCurrentDate(session, lesson.getDate());
 		// OK
 		return "lesson";
 	}
