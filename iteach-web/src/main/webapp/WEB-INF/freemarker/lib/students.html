@@ -17,6 +17,7 @@
 				<label class="control-label" for="studentSchool"><@lh key="student.school" /></label>
 				<div class="controls">
 					<select id="studentSchool" name="school" required="required" placeholder="<@lh key='student.school' />">
+						<option value=""></option>
 						<#list schools.summaries as school>
 							<option value="${school.id}">${school.name?html}</option>
 						</#list>
