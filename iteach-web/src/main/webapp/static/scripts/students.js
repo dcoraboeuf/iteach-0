@@ -12,6 +12,9 @@ var Students = function () {
 				studentSchool: '',
 				studentSubject: ''
 			},
+			open: function () {
+				Coordinates.clear();
+			},
 			submit: {
 				name: loc('general.create'),
 				action: submitCreateStudent
@@ -49,7 +52,8 @@ var Students = function () {
 			data: JSON.stringify({
 				name: $('#studentName').val(),
 				school: $('#studentSchool').val(),
-				subject: $('#studentSubject').val()
+				subject: $('#studentSubject').val(),
+				coordinates: Coordinates.getValues()
 			}),
 			dataType: 'json',
 			success: function (data) {
@@ -79,7 +83,8 @@ var Students = function () {
 			data: JSON.stringify({
 				name: $('#studentName').val(),
 				school: $('#studentSchool').val(),
-				subject: $('#studentSubject').val()
+				subject: $('#studentSubject').val(),
+				coordinates: Coordinates.getValues()
 			}),
 			dataType: 'json',
 			success: function (data) {
