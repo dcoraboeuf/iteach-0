@@ -1,0 +1,22 @@
+<#macro coordinates>
+    <#list coordList() as coord>
+        <div class="input-prepend">
+            <span class="add-on"><label for="coord_${coord}"><@coordinate_icon coord=coord/></label></span>
+            <@coordinate_input coord=coord />
+        </div>
+    </#list>
+</#macro>
+
+<#macro coordinate_input coord>
+    <#if coord == "EMAIL">
+        <input id="coord_EMAIL" name="EMAIL" type="email" maxlength="120" size="40" />
+    <#elseif coord == "ADDRESS">
+        <textarea id="coord_ADDRESS" name="ADDRESS" maxlength="120" rows="3"></textarea>
+    <#else>
+        <input id="coord_${coord}" name="${coord}" type="text" maxlength="120" size="40" />
+    </#if>
+</#macro>
+
+<#macro coordinate_icon coord>
+    <img src="${base}/images/coordinates/${coord}.png" title="<@lh key='coordinate.' + coord + '.name' />" />
+</#macro>

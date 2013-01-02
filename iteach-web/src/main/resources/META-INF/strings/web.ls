@@ -211,6 +211,10 @@ school.color
 	en -> Colour code
 	fr -> Code couleur
 
+school.coordinates
+    en -> Coordinates
+    fr -> Coordonnées
+
 school.details.data
 	en -> Its data
 	fr -> Ses données
@@ -292,6 +296,10 @@ student.subject
 student.school
 	en -> Student's school
 	fr -> Ecole de l'étudiant
+
+student.coordinates
+    en -> Coordinates
+    fr -> Coordonnées
 	
 student.details.data
 	en -> His data

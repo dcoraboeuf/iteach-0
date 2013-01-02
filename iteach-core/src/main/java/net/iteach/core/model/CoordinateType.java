@@ -7,9 +7,7 @@ public enum CoordinateType {
 
     ADDRESS,
 
-    HOME_PHONE,
-
-    WORK_PHONE,
+    PHONE,
 
     MOBILE_PHONE,
 
