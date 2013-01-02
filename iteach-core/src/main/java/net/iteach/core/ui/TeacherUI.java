@@ -3,6 +3,7 @@ package net.iteach.core.ui;
 import org.joda.time.LocalDate;
 
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.LessonDetails;
 import net.iteach.core.model.LessonForm;
@@ -49,5 +50,7 @@ public interface TeacherUI {
 	SchoolDetails getSchool(int id);
 
 	LessonDetails getLesson(int id);
+
+	Coordinates getStudentCoordinates(int id);
 
 }

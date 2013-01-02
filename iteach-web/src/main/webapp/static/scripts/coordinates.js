@@ -4,10 +4,10 @@ var Coordinates = function () {
 		$('input[id^="coord_"]').val('');
 	}
 	
-	function fetchCoordinates (entityType, entityId, callbackFn) {
+	function fetchCoordinates (url, callbackFn) {
 		$.ajax({
 			type: 'GET',
-			url: 'ui/teacher/coordinates/{0}/{1}'.format(entityType, entityId),
+			url: url,
 			contentType: 'application/json',
 			dataType: 'json',
 			success: function (data) {
@@ -21,9 +21,9 @@ var Coordinates = function () {
 	
 	return {
 		clear: clear,
-		setValues: function (entityType, entityId) {
+		setValues: function (url) {
 			clear();
-			fetchCoordinates(entityType, entityId, function (map) {
+			fetchCoordinates(url, function (map) {
 				for (var name in map) {
 					var id = 'coord_' + name;
 					$('#' + id).val(map[name]);

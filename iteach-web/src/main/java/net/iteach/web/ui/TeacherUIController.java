@@ -3,7 +3,20 @@ package net.iteach.web.ui;
 import net.iteach.api.LessonService;
 import net.iteach.api.SchoolService;
 import net.iteach.api.StudentService;
-import net.iteach.core.model.*;
+import net.iteach.core.model.Ack;
+import net.iteach.core.model.Coordinates;
+import net.iteach.core.model.ID;
+import net.iteach.core.model.LessonDetails;
+import net.iteach.core.model.LessonForm;
+import net.iteach.core.model.LessonRange;
+import net.iteach.core.model.Lessons;
+import net.iteach.core.model.SchoolDetails;
+import net.iteach.core.model.SchoolForm;
+import net.iteach.core.model.SchoolSummaries;
+import net.iteach.core.model.StudentDetails;
+import net.iteach.core.model.StudentForm;
+import net.iteach.core.model.StudentLessons;
+import net.iteach.core.model.StudentSummaries;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.core.ui.TeacherUI;
 import net.iteach.web.support.ErrorHandler;
@@ -12,7 +25,11 @@ import net.sf.jstring.Strings;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/ui/teacher")
@@ -181,6 +198,16 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
 		return lessonService.deleteLessonForTeacher(userId, id);
+	}
+
+	@Override
+	@RequestMapping(value = "/student/{id:\\d+}/coordinates", method = RequestMethod.GET)
+	public @ResponseBody Coordinates getStudentCoordinates (@PathVariable int id) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return studentService.getStudentCoordinates (userId, id);
+		
 	}
 	
 

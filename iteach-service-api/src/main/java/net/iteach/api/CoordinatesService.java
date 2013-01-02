@@ -9,4 +9,6 @@ public interface CoordinatesService {
 
 	void removeCoordinates(CoordinatesEntity entity, int id);
 
+	Coordinates getCoordinates(CoordinatesEntity entity, int id);
+
 }

@@ -12,6 +12,7 @@ import net.iteach.api.CoordinatesService;
 import net.iteach.api.StudentService;
 import net.iteach.api.model.CoordinatesEntity;
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.SchoolSummary;
 import net.iteach.core.model.StudentDetails;
@@ -168,6 +169,13 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		}
 		// OK
 		return ack;
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Coordinates getStudentCoordinates(int userId, int id) {
+		// FIXME Check for the associated teacher
+		return coordinatesService.getCoordinates (CoordinatesEntity.STUDENTS, id);
 	}
 
 }

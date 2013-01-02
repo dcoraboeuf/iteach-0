@@ -3,6 +3,7 @@ package net.iteach.api;
 import java.math.BigDecimal;
 
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.StudentDetails;
 import net.iteach.core.model.StudentForm;
@@ -21,5 +22,7 @@ public interface StudentService {
 	StudentDetails getStudentForTeacher(int userId, int id);
 
 	BigDecimal getStudentHours(int id);
+
+	Coordinates getStudentCoordinates(int userId, int id);
 
 }
