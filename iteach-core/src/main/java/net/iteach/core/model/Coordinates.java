@@ -1,11 +1,12 @@
 package net.iteach.core.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import java.util.Collections;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /**
  * Container for a list of coordinates.
@@ -29,4 +30,8 @@ public class Coordinates {
         newMap.put(type, value);
         return new Coordinates(newMap);
     }
+
+	public Iterable<Entry<CoordinateType, String>> entries() {
+		return map.entrySet();
+	}
 }

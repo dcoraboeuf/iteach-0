@@ -9,6 +9,9 @@ var Coordinates = function () {
 			$('input[id^="coord_"]').each(function (index, field) {
 				map[field.getAttribute('name')] = field.value; 
 			});
+			$('textarea[id^="coord_"]').each(function (index, field) {
+				map[field.getAttribute('name')] = field.value; 
+			});
 			return {map: map};
 		}
 	};

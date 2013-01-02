@@ -8,7 +8,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
+import net.iteach.api.CoordinatesService;
 import net.iteach.api.StudentService;
+import net.iteach.api.model.CoordinatesEntity;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.SchoolSummary;
@@ -30,10 +32,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class StudentServiceImpl extends AbstractServiceImpl implements
 		StudentService {
+	
+	private final CoordinatesService coordinatesService;
 
 	@Autowired
-	public StudentServiceImpl(DataSource dataSource, Validator validator) {
+	public StudentServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService) {
 		super(dataSource, validator);
+		this.coordinatesService = coordinatesService;
 	}
 	
 	@Override
@@ -123,13 +128,21 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 					.addValue("subject", form.getSubject())
 					.addValue("name", form.getName()),
 				keyHolder);
-		return ID.count(count).withId(keyHolder.getKey().intValue());
+		// Gets the ID
+		ID id = ID.count(count).withId(keyHolder.getKey().intValue());
+		// Coordinates
+		if (id.isSuccess()) {
+			coordinatesService.setCoordinates (CoordinatesEntity.STUDENTS, id.getValue(), form.getCoordinates());
+		}
+		// OK
+		return id;
 	}
 	
 	@Override
 	@Transactional
 	public Ack deleteStudentForTeacher(int teacherId, int id) {
-		// TODO Deletes coordinates
+		// Deletes the coordinates
+		coordinatesService.removeCoordinates (CoordinatesEntity.STUDENTS, id);
 		// FIXME Check for the associated teacher
 		int count = getNamedParameterJdbcTemplate().update(SQL.STUDENT_DELETE, params("id", id));
 		return Ack.one(count);
@@ -148,7 +161,13 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 					.addValue("subject", form.getSubject())
 					.addValue("name", form.getName())
 				);
-		return Ack.one(count);
+		Ack ack = Ack.one(count);
+		// Coordinates
+		if (ack.isSuccess()) {
+			coordinatesService.setCoordinates (CoordinatesEntity.STUDENTS, id, form.getCoordinates());
+		}
+		// OK
+		return ack;
 	}
 
 }
