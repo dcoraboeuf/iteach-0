@@ -5,6 +5,8 @@ package net.iteach.core.model;
  */
 public enum CoordinateType {
 
+    ADDRESS,
+
     HOME_PHONE,
 
     WORK_PHONE,
