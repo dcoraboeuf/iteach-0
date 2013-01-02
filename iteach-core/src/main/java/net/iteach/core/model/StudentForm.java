@@ -9,5 +9,6 @@ public class StudentForm implements StudentFormValidation {
 	private final int school;
 	private final String subject;
 	private final String name;
+    private final Coordinates coordinates;
 
 }
