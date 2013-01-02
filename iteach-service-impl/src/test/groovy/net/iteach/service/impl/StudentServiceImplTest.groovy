@@ -1,10 +1,9 @@
 package net.iteach.service.impl
 
 import net.iteach.api.StudentService
-import net.iteach.core.model.SchoolForm
-import net.iteach.core.model.StudentForm;
+import net.iteach.core.model.Coordinates
+import net.iteach.core.model.StudentForm
 import net.iteach.test.AbstractIntegrationTest
-
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -25,14 +24,14 @@ class StudentServiceImplTest extends AbstractIntegrationTest {
 	
 	@Test
 	void createStudent() {
-		def id = service.createStudentForTeacher(1, new StudentForm(3, "English", "D. Dilbert"))
+		def id = service.createStudentForTeacher(1, new StudentForm(3, "English", "D. Dilbert", Coordinates.create()))
 		assert id != null
 		assert id.isSuccess()
 	}
 	
 	@Test
 	void editStudent_name() {
-		def ack = service.editStudentForTeacher(1, 1, new StudentForm(1, "German", "A. Alfred"))
+		def ack = service.editStudentForTeacher(1, 1, new StudentForm(1, "German", "A. Alfred", Coordinates.create()))
 		assert ack != null
 		assert ack.isSuccess()
 		def students = service.getStudentsForTeacher(1)
