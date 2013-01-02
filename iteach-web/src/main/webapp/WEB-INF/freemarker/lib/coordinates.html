@@ -1,16 +1,31 @@
+<link rel="stylesheet" type="text/css" href="${base}/styles/coordinates.css" />
 <script type="text/javascript" src="${base}/scripts/coordinates.js"></script>
 
+<#setting url_escaping_charset="UTF-8">
+
 <#macro coordinates values>
-	<table class="data">
+	<table>
 		<tbody>
 			<#list values.list as entry>
 				<tr>
-					<td class="data-label"><@coordinate_icon coord=entry.type /> <@coordinate_name coord=entry.type /></td>
-					<td class="data-value">${entry.value?html}</td>
+					<td class="coord-type" valign="top"><@coordinate_icon coord=entry.type /></td>
+					<td class="coord-value"><@coordinate coord=entry.type value=entry.value /></td>
 				</tr>
 			</#list>
 		</tbody>
 	</table>
+</#macro>
+
+<#macro coordinate coord value>
+    <#if coord == "EMAIL">
+    	<a href="mailto:${value?html}">${value?html}</a>
+    <#elseif coord == "WEB">
+    	<a href="${value?html}">${value?html}</a>
+    <#elseif coord == "ADDRESS">
+    	<a href="https://maps.google.be/maps?q=${value?url}">${value?html?replace("\n", "<br/>")}</a>
+    <#else>
+		${value?html}
+	</#if>
 </#macro>
 
 <#macro coordinates_fields>
@@ -25,7 +40,7 @@
 </#macro>
 
 <#macro coordinate_icon coord>
-	<img src="${base}/images/coordinates/${coord}.png" />
+	<img src="${base}/images/coordinates/${coord}.png" title="<@coordinate_name coord=coord />" />
 </#macro>
 
 <#macro coordinate_name coord>
