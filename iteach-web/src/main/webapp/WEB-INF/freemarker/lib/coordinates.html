@@ -1,14 +1,35 @@
 <script type="text/javascript" src="${base}/scripts/coordinates.js"></script>
 
-<#macro coordinates>
+<#macro coordinates values>
+	<table class="data">
+		<tbody>
+			<#list values.list as entry>
+				<tr>
+					<td class="data-label"><@coordinate_icon coord=entry.type /> <@coordinate_name coord=entry.type /></td>
+					<td class="data-value">${entry.value?html}</td>
+				</tr>
+			</#list>
+		</tbody>
+	</table>
+</#macro>
+
+<#macro coordinates_fields>
     <#list coordList() as coord>
 	    <div class="control-group">
-	        <label class="control-label"><img src="${base}/images/coordinates/${coord}.png" /> <@lh key="coordinate." + coord + ".name" /></label>
+	        <label class="control-label"><@coordinate_icon coord=coord /> <@coordinate_name coord=coord /></label>
 	        <div class="controls">
             	<@coordinate_input coord=coord />
 	        </div>
 	    </div>
     </#list>
+</#macro>
+
+<#macro coordinate_icon coord>
+	<img src="${base}/images/coordinates/${coord}.png" />
+</#macro>
+
+<#macro coordinate_name coord>
+	<@lh key="coordinate." + coord + ".name" />
 </#macro>
 
 <#macro coordinate_input coord>

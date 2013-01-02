@@ -10,6 +10,7 @@ public class StudentDetails {
 	private final int id;
 	private final String subject;
 	private final String name;
+	private final Coordinates coordinates;
 	private final SchoolSummary school;
 	private final BigDecimal totalHours;
 

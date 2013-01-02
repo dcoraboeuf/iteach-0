@@ -66,7 +66,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 	
 	@Override
 	@Transactional(readOnly = true)
-	public StudentDetails getStudentForTeacher(int userId, int id) {
+	public StudentDetails getStudentForTeacher(int userId, final int id) {
 		// FIXME Check for the associated teacher
 		// Total hours
 		final BigDecimal studentHours = getStudentHours(id);
@@ -87,6 +87,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 								rs.getInt("ID"),
 								rs.getString("SUBJECT"),
 								rs.getString("NAME"),
+								coordinatesService.getCoordinates(CoordinatesEntity.STUDENTS, id),
 								school,
 								studentHours);
 					}

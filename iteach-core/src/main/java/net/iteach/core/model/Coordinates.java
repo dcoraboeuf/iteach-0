@@ -1,9 +1,13 @@
 package net.iteach.core.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,5 +37,14 @@ public class Coordinates {
 
 	public Iterable<Entry<CoordinateType, String>> entries() {
 		return map.entrySet();
+	}
+	
+	@JsonIgnore
+	public List<Coordinate> getList() {
+		List<Coordinate> result = new ArrayList<>();
+		for (Entry<CoordinateType, String> entry: entries()) {
+			result.add(new Coordinate(entry.getKey(), entry.getValue()));
+		}
+		return result;
 	}
 }
