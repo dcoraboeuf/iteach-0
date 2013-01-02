@@ -10,7 +10,7 @@ import java.util.List;
 public class FnCoordList implements TemplateMethodModel {
 
     @Override
-    public Object exec(List list) throws TemplateModelException {
+    public Object exec(@SuppressWarnings("rawtypes") List list) throws TemplateModelException {
         // Checks
         Validate.notNull(list, "List of arguments is required");
         Validate.isTrue(list.isEmpty(), "List of arguments must be empty");
