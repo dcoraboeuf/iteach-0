@@ -1,9 +1,11 @@
 <#macro coordinates>
     <#list coordList() as coord>
-        <div class="input-prepend">
-            <span class="add-on"><label for="coord_${coord}"><@coordinate_icon coord=coord/></label></span>
-            <@coordinate_input coord=coord />
-        </div>
+	    <div class="control-group">
+	        <label class="control-label"><img src="${base}/images/coordinates/${coord}.png" /> <@lh key="coordinate." + coord + ".name" /></label>
+	        <div class="controls">
+            	<@coordinate_input coord=coord />
+	        </div>
+	    </div>
     </#list>
 </#macro>
 
@@ -15,8 +17,4 @@
     <#else>
         <input id="coord_${coord}" name="${coord}" type="text" maxlength="120" size="40" />
     </#if>
-</#macro>
-
-<#macro coordinate_icon coord>
-    <img src="${base}/images/coordinates/${coord}.png" title="<@lh key='coordinate.' + coord + '.name' />" />
 </#macro>
