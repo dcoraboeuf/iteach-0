@@ -35,6 +35,9 @@ var Students = function () {
 				studentSchool: school,
 				studentSubject: subject
 			},
+			open: function () {
+				Coordinates.setValues('STUDENTS', id);
+			},
 			submit: {
 				name: loc('general.update'),
 				action: function () {

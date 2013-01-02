@@ -404,3 +404,9 @@ lesson.details.school
 lesson.details.comments
 	en -> Your comments
 	fr -> Vos commentaires
+	
+[coordinates]
+
+coordinates.get.error
+	en -> Error while getting the coordinates
+	fr -> Erreur lors de l'accès aux coordonnées
