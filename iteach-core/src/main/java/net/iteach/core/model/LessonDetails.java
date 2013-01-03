@@ -9,7 +9,7 @@ import lombok.Data;
 public class LessonDetails {
 	
 	private final int id;
-	private final StudentSummary student;
+	private final StudentSummaryWithCoordinates student;
 	private final LocalDate date;
 	private final LocalTime from;
 	private final LocalTime to;

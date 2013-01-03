@@ -11,7 +11,9 @@ import java.util.List;
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
+import net.iteach.api.CoordinatesService;
 import net.iteach.api.LessonService;
+import net.iteach.api.model.CoordinatesEntity;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.Lesson;
@@ -23,6 +25,7 @@ import net.iteach.core.model.SchoolSummary;
 import net.iteach.core.model.StudentLesson;
 import net.iteach.core.model.StudentLessons;
 import net.iteach.core.model.StudentSummary;
+import net.iteach.core.model.StudentSummaryWithCoordinates;
 import net.iteach.core.validation.LessonFormValidation;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
@@ -36,10 +39,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LessonServiceImpl extends AbstractServiceImpl implements LessonService {
+	
+	private final CoordinatesService coordinatesService;
 
 	@Autowired
-	public LessonServiceImpl(DataSource dataSource, Validator validator) {
+	public LessonServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService) {
 		super(dataSource, validator);
+		this.coordinatesService = coordinatesService;
 	}
 	
 	@Override
@@ -126,15 +132,17 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 			new RowMapper<LessonDetails>() {
 				@Override
 				public LessonDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
+					int studentId = rs.getInt("STUDENT_ID");
 					SchoolSummary school = new SchoolSummary(
 							rs.getInt("SCHOOL_ID"),
 							rs.getString("SCHOOL_NAME"),
 							rs.getString("SCHOOL_COLOR"));
-					StudentSummary student = new StudentSummary(
-							rs.getInt("STUDENT_ID"),
+					StudentSummaryWithCoordinates student = new StudentSummaryWithCoordinates(
+							studentId,
 							rs.getString("STUDENT_SUBJECT"),
 							rs.getString("STUDENT_NAME"),
-							school);
+							school,
+							coordinatesService.getCoordinates(CoordinatesEntity.STUDENTS, studentId));
 					return new LessonDetails(
 							rs.getInt("id"),
 							student,
