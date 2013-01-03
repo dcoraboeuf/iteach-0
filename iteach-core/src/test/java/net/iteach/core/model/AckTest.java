@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
-
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -64,6 +63,22 @@ public class AckTest {
 		ObjectMapper mapper = ObjectMapperFactory.createObjectMapper();
 		Ack ack = mapper.readValue("{\"success\":true}", Ack.class);
 		assertTrue(ack.isSuccess());
+	}
+	
+	@Test
+	public void and () {
+		assertFalse(Ack.NOK.and(Ack.NOK).isSuccess());
+		assertFalse(Ack.NOK.and(Ack.OK).isSuccess());
+		assertFalse(Ack.OK.and(Ack.NOK).isSuccess());
+		assertTrue(Ack.OK.and(Ack.OK).isSuccess());
+	}
+	
+	@Test
+	public void or () {
+		assertFalse(Ack.NOK.or(Ack.NOK).isSuccess());
+		assertTrue(Ack.NOK.or(Ack.OK).isSuccess());
+		assertTrue(Ack.OK.or(Ack.NOK).isSuccess());
+		assertTrue(Ack.OK.or(Ack.OK).isSuccess());
 	}
 
 }

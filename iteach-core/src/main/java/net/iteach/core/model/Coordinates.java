@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * Container for a list of coordinates.
