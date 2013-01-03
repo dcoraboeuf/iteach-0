@@ -11,6 +11,9 @@ var Schools = function () {
 				schoolName: '',
 				schoolColor: '#000000'
 			},
+			open: function () {
+				Coordinates.clear();
+			},
 			submit: {
 				name: loc('general.create'),
 				action: submitCreateSchool
@@ -29,6 +32,9 @@ var Schools = function () {
 				schoolName: name,
 				schoolColor: color
 			},
+			open: function () {
+				Coordinates.setValues('ui/teacher/school/{0}/coordinates'.format(id));
+			},
 			submit: {
 				name: loc('general.update'),
 				action: function () {
@@ -45,7 +51,8 @@ var Schools = function () {
 			contentType: 'application/json',
 			data: JSON.stringify({
 				name: $('#schoolName').val(),
-				color: $('#schoolColor').val()
+				color: $('#schoolColor').val(),
+				coordinates: Coordinates.getValues()
 			}),
 			dataType: 'json',
 			success: function (data) {
@@ -74,7 +81,8 @@ var Schools = function () {
 			contentType: 'application/json',
 			data: JSON.stringify({
 				name: $('#schoolName').val(),
-				color: $('#schoolColor').val()
+				color: $('#schoolColor').val(),
+				coordinates: Coordinates.getValues()
 			}),
 			dataType: 'json',
 			success: function (data) {

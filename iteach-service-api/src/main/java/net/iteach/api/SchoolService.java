@@ -1,6 +1,7 @@
 package net.iteach.api;
 
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.SchoolDetails;
 import net.iteach.core.model.SchoolForm;
@@ -17,5 +18,7 @@ public interface SchoolService {
 	Ack editSchoolForTeacher(int userId, int id, SchoolForm form);
 
 	SchoolDetails getSchoolForTeacher(int userId, int id);
+
+	Coordinates getSchoolCoordinates(int userId, int id);
 
 }

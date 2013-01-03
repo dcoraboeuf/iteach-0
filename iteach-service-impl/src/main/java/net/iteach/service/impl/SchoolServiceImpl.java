@@ -7,9 +7,12 @@ import java.util.List;
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
+import net.iteach.api.CoordinatesService;
 import net.iteach.api.SchoolService;
 import net.iteach.api.StudentService;
+import net.iteach.api.model.CoordinatesEntity;
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.SchoolDetails;
 import net.iteach.core.model.SchoolDetailsStudent;
@@ -30,12 +33,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class SchoolServiceImpl extends AbstractServiceImpl implements
 		SchoolService {
 	
-	private final StudentService studentService;
+	private final StudentService studentService;	
+	private final CoordinatesService coordinatesService;
 
 	@Autowired
-	public SchoolServiceImpl(DataSource dataSource, Validator validator, StudentService studentService) {
+	public SchoolServiceImpl(DataSource dataSource, Validator validator, StudentService studentService, CoordinatesService coordinatesService) {
 		super(dataSource, validator);
 		this.studentService = studentService;
+		this.coordinatesService = coordinatesService;
 	}
 
 	@Override
@@ -102,7 +107,13 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 						.addValue("name", form.getName())
 						.addValue("color", form.getColor()),
 					keyHolder);
-			return ID.count(count).withId(keyHolder.getKey().intValue());
+			ID id = ID.count(count).withId(keyHolder.getKey().intValue());
+			// Coordinates
+			if (id.isSuccess()) {
+				coordinatesService.setCoordinates (CoordinatesEntity.SCHOOLS, id.getValue(), form.getCoordinates());
+			}
+			// OK
+			return id;
 		} catch (DuplicateKeyException ex) {
 			// Duplicate school name
 			throw new SchoolNameAlreadyDefined (form.getName());
@@ -113,8 +124,11 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	@Transactional
 	public Ack deleteSchoolForTeacher(int teacherId, int id) {
 		// FIXME Check for the associated teacher
-		// TODO Deletes coordinates
+		// Deletes the coordinates
+		coordinatesService.removeCoordinates (CoordinatesEntity.SCHOOLS, id);
+		// Update
 		int count = getNamedParameterJdbcTemplate().update(SQL.SCHOOL_DELETE, params("teacher", teacherId).addValue("id", id));
+		// OK
 		return Ack.one(count);
 	}
 	
@@ -131,11 +145,24 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 						.addValue("name", form.getName())
 						.addValue("color", form.getColor())
 					);
-			return Ack.one(count);
+			Ack ack = Ack.one(count);
+			// Coordinates
+			if (ack.isSuccess()) {
+				coordinatesService.setCoordinates (CoordinatesEntity.SCHOOLS, id, form.getCoordinates());
+			}
+			// OK
+			return ack;
 		} catch (DuplicateKeyException ex) {
 			// Duplicate school name
 			throw new SchoolNameAlreadyDefined (form.getName());
 		}
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Coordinates getSchoolCoordinates(int userId, int id) {
+		// FIXME Check for the associated teacher
+		return coordinatesService.getCoordinates (CoordinatesEntity.SCHOOLS, id);
 	}
 
 }

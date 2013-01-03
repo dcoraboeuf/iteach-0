@@ -22,6 +22,7 @@ import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.LessonRange;
 import net.iteach.core.model.Lessons;
 import net.iteach.core.model.SchoolSummary;
+import net.iteach.core.model.SchoolSummaryWithCoordinates;
 import net.iteach.core.model.StudentLesson;
 import net.iteach.core.model.StudentLessons;
 import net.iteach.core.model.StudentSummary;
@@ -133,10 +134,12 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 				@Override
 				public LessonDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
 					int studentId = rs.getInt("STUDENT_ID");
-					SchoolSummary school = new SchoolSummary(
-							rs.getInt("SCHOOL_ID"),
+					int schoolId = rs.getInt("SCHOOL_ID");
+					SchoolSummaryWithCoordinates school = new SchoolSummaryWithCoordinates(
+							schoolId,
 							rs.getString("SCHOOL_NAME"),
-							rs.getString("SCHOOL_COLOR"));
+							rs.getString("SCHOOL_COLOR"),
+							coordinatesService.getCoordinates(CoordinatesEntity.SCHOOLS, schoolId));
 					StudentSummaryWithCoordinates student = new StudentSummaryWithCoordinates(
 							studentId,
 							rs.getString("STUDENT_SUBJECT"),

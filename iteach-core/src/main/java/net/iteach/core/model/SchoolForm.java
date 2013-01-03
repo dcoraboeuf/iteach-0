@@ -8,5 +8,6 @@ public class SchoolForm implements SchoolFormValidation {
 
 	private final String name;
 	private final String color;
+    private final Coordinates coordinates;
 
 }

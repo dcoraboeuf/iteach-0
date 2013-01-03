@@ -1,2 +1,30 @@
 <script type="text/javascript" src="${base}/scripts/schools.js"></script>
 
+<#macro school_dialog>
+	<@dialog id="school-dialog">
+		<form id="school-dialog-form" class="form-horizontal">
+			<div class="control-group">
+				<span class="help-block"><@lh key="school.new.tip" /></span>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="schoolName"><@lh key="school.name" /></label>
+				<div class="controls">
+					<input id="schoolName" name="name" type="text" size="30" maxlength="80" required="required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="schoolColor"><@lh key="school.color" /></label>
+				<div class="controls">
+					<input id="schoolColor" name="color" type="color" size="6" maxlength="6" required="required" />
+				</div>
+			</div>
+            <@coordinates_fields />
+			<div class="control-group">
+				<div class="controls">
+					<button class="btn btn-primary" id="school-dialog-submit" type="submit"><@lh key="general.create" /></button>
+					<a class="btn btn-link" href="javascript:$('#school-dialog').dialog('close')"><@lh key="general.cancel" /></a>
+				</div>
+			</div>
+		</form>
+	</@dialog>
+</#macro>
