@@ -59,7 +59,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	
 	@Override
 	@Transactional(readOnly = true)
-	public SchoolDetails getSchoolForTeacher(int userId, int id) {
+	public SchoolDetails getSchoolForTeacher(int userId, final int id) {
 		// FIXME Check for the associated teacher
 		// Student summaries
 		final List<SchoolDetailsStudent> students = getNamedParameterJdbcTemplate().query(
@@ -88,7 +88,12 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 				@Override
 				public SchoolDetails mapRow(ResultSet rs, int rowNum)
 						throws SQLException {
-					return new SchoolDetails(rs.getInt("id"), rs.getString("name"), rs.getString("color"), students);
+					return new SchoolDetails(
+						rs.getInt("id"),
+						rs.getString("name"),
+						rs.getString("color"),
+						coordinatesService.getCoordinates(CoordinatesEntity.SCHOOLS, id),
+						students);
 				}
 				
 			}

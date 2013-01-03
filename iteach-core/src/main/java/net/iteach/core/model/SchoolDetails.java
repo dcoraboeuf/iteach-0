@@ -10,6 +10,7 @@ public class SchoolDetails {
 	private final int id;
 	private final String name;
 	private final String color;
+	private final Coordinates coordinates;
 	private final List<SchoolDetailsStudent> students;
 
 }
