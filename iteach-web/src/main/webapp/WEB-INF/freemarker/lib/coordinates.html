@@ -28,12 +28,12 @@
 	</#if>
 </#macro>
 
-<#macro coordinates_fields>
+<#macro coordinates_fields prefix>
     <#list coordList() as coord>
 	    <div class="control-group">
 	        <label class="control-label"><@coordinate_icon coord=coord /> <@coordinate_name coord=coord /></label>
 	        <div class="controls">
-            	<@coordinate_input coord=coord />
+            	<@coordinate_input prefix=prefix coord=coord />
 	        </div>
 	    </div>
     </#list>
@@ -47,12 +47,12 @@
 	<@lh key="coordinate." + coord + ".name" />
 </#macro>
 
-<#macro coordinate_input coord>
+<#macro coordinate_input coord prefix>
     <#if coord == "EMAIL">
-        <input id="coord_EMAIL" name="EMAIL" type="email" maxlength="120" size="40" />
+        <input id="${prefix}_coord_EMAIL" name="EMAIL" type="email" maxlength="120" size="40" />
     <#elseif coord == "ADDRESS">
-        <textarea id="coord_ADDRESS" name="ADDRESS" maxlength="120" rows="3"></textarea>
+        <textarea id="${prefix}_coord_ADDRESS" name="ADDRESS" maxlength="120" rows="3"></textarea>
     <#else>
-        <input id="coord_${coord}" name="${coord}" type="text" maxlength="120" size="40" />
+        <input id="${prefix}_coord_${coord}" name="${coord}" type="text" maxlength="120" size="40" />
     </#if>
 </#macro>

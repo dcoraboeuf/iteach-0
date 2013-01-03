@@ -1,7 +1,7 @@
 var Coordinates = function () {
 	
-	function clear () {
-		$('input[id^="coord_"]').val('');
+	function clear (prefix) {
+		$('input[id^="{0}_coord_"]'.format(prefix)).val('');
 	}
 	
 	function fetchCoordinates (url, callbackFn) {
@@ -21,21 +21,21 @@ var Coordinates = function () {
 	
 	return {
 		clear: clear,
-		setValues: function (url) {
-			clear();
+		setValues: function (prefix, url) {
+			clear(prefix);
 			fetchCoordinates(url, function (map) {
 				for (var name in map) {
-					var id = 'coord_' + name;
+					var id = prefix + '_coord_' + name;
 					$('#' + id).val(map[name]);
 				}
 			});
 		},
-		getValues: function () {
+		getValues: function (prefix) {
 			var map = {};
-			$('input[id^="coord_"]').each(function (index, field) {
+			$('input[id^="{0}_coord_"]'.format(prefix)).each(function (index, field) {
 				map[field.getAttribute('name')] = field.value; 
 			});
-			$('textarea[id^="coord_"]').each(function (index, field) {
+			$('textarea[id^="{0}_coord_"]'.format(prefix)).each(function (index, field) {
 				map[field.getAttribute('name')] = field.value; 
 			});
 			return {map: map};

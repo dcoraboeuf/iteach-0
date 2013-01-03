@@ -53,4 +53,6 @@ public interface TeacherUI {
 
 	Coordinates getStudentCoordinates(int id);
 
+	Coordinates getSchoolCoordinates(int id);
+
 }

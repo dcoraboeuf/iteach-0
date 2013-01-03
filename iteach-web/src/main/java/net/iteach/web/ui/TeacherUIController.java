@@ -209,6 +209,16 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		return studentService.getStudentCoordinates (userId, id);
 		
 	}
+
+	@Override
+	@RequestMapping(value = "/school/{id:\\d+}/coordinates", method = RequestMethod.GET)
+	public @ResponseBody Coordinates getSchoolCoordinates (@PathVariable int id) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return schoolService.getSchoolCoordinates (userId, id);
+		
+	}
 	
 
 }

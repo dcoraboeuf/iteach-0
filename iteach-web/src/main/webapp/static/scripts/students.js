@@ -13,7 +13,7 @@ var Students = function () {
 				studentSubject: ''
 			},
 			open: function () {
-				Coordinates.clear();
+				Coordinates.clear('student');
 			},
 			submit: {
 				name: loc('general.create'),
@@ -36,7 +36,7 @@ var Students = function () {
 				studentSubject: subject
 			},
 			open: function () {
-				Coordinates.setValues('ui/teacher/student/{0}/coordinates'.format(id));
+				Coordinates.setValues('student', 'ui/teacher/student/{0}/coordinates'.format(id));
 			},
 			submit: {
 				name: loc('general.update'),
@@ -56,7 +56,7 @@ var Students = function () {
 				name: $('#studentName').val(),
 				school: $('#studentSchool').val(),
 				subject: $('#studentSubject').val(),
-				coordinates: Coordinates.getValues()
+				coordinates: Coordinates.getValues('student')
 			}),
 			dataType: 'json',
 			success: function (data) {
@@ -87,7 +87,7 @@ var Students = function () {
 				name: $('#studentName').val(),
 				school: $('#studentSchool').val(),
 				subject: $('#studentSubject').val(),
-				coordinates: Coordinates.getValues()
+				coordinates: Coordinates.getValues('student')
 			}),
 			dataType: 'json',
 			success: function (data) {
