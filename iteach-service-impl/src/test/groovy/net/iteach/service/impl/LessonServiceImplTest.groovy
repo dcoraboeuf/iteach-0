@@ -1,13 +1,17 @@
 package net.iteach.service.impl
 
-import java.lang.invoke.MethodHandleImpl.BindCaller.T
-
 import net.iteach.api.LessonService
+import net.iteach.core.model.CoordinateType
+import net.iteach.core.model.Coordinates
 import net.iteach.core.model.Lesson
+import net.iteach.core.model.LessonDetails
+import net.iteach.core.model.LessonForm
 import net.iteach.core.model.LessonRange
 import net.iteach.core.model.SchoolSummary
+import net.iteach.core.model.SchoolSummaryWithCoordinates
 import net.iteach.core.model.StudentLesson
 import net.iteach.core.model.StudentSummary
+import net.iteach.core.model.StudentSummaryWithCoordinates
 import net.iteach.test.AbstractIntegrationTest
 
 import org.joda.time.LocalDate
@@ -89,4 +93,116 @@ class LessonServiceImplTest extends AbstractIntegrationTest {
 			new Lesson(7, student3, new LocalDate(2013,2,16), new LocalTime(9,0), new LocalTime(10,45), "Factory")
 			] == result.lessons
 	}
+	
+	@Test(expected = AccessDeniedException)
+	void getLessonDetails_access_denied() {
+		service.getLessonDetails(2, 1)
+	}
+	
+	@Test
+	void getLessonDetails() {
+		def details = service.getLessonDetails(1, 1)
+		assert new LessonDetails(
+			1,
+			new StudentSummaryWithCoordinates(
+				1,
+				"English",
+				"A. Albert",
+				new SchoolSummaryWithCoordinates(
+					1,
+					"My school 1",
+					"#FF0000",
+					Coordinates.create()
+						.add(CoordinateType.ADDRESS, "At my school 1")
+						.add(CoordinateType.WEB, "http://school/1")),
+				Coordinates.create()
+					.add(CoordinateType.MOBILE_PHONE, "0123456789")
+					.add(CoordinateType.EMAIL, "albert@test.com")
+				),
+			new LocalDate(2012,12,21),
+			new LocalTime(12,0),
+			new LocalTime(13,0),
+			"At school") == details
+	}
+	
+	@Test(expected = AccessDeniedException)
+	void createLessonForTeacher_access_denied() {
+		service.createLessonForTeacher(
+			2,
+			new LessonForm(
+				new LocalDate(2013,1,4),
+				new LocalTime(11,0),
+				new LocalTime(12,0),
+				1,
+				"Any location")
+			) 
+	}
+	
+	@Test
+	void createLessonForTeacher() {
+		def id = service.createLessonForTeacher(
+			1,
+			new LessonForm(
+				new LocalDate(2013,1,4),
+				new LocalTime(11,0),
+				new LocalTime(12,0),
+				1,
+				"Any location")
+			)
+		assert id != null
+		assert id.isSuccess()
+	}
+	
+	@Test(expected = AccessDeniedException)
+	void editLessonForTeacher_access_denied() {
+		service.editLessonForTeacher(2, 1, 
+			new LessonForm(
+				new LocalDate(2013,1,4),
+				new LocalTime(11,0),
+				new LocalTime(12,0),
+				1,
+				"Any location")
+			)
+	}
+	
+	@Test
+	void create_edit_delete() {
+		// Creation
+		def id = service.createLessonForTeacher(
+			1,
+			new LessonForm(
+				new LocalDate(2013,4,1),
+				new LocalTime(11,0),
+				new LocalTime(12,0),
+				1,
+				"April's fool")
+			)
+		assert id != null
+		assert id.isSuccess()
+		// Edition
+		def ack = service.editLessonForTeacher(1, id.getValue(), 
+			new LessonForm(
+				new LocalDate(2013,1,4),
+				new LocalTime(11,0),
+				new LocalTime(16,0),
+				1,
+				"At school")
+			)
+		assert ack != null
+		assert ack.isSuccess()
+		// Gets the details
+		def details = service.getLessonDetails(1, id.getValue())
+		assert "At school" == details.getLocation()
+		assert new LocalTime(16,0) == details.getTo()
+		// Deletes
+		ack = service.deleteLessonForTeacher(1, id.getValue())
+		assert ack != null
+		assert ack.isSuccess()
+	}
+	
+	@Test(expected = AccessDeniedException)
+	void deleteLessonForTeacher_access_denied() {
+		service.deleteLessonForTeacher(2, 1)
+	}
+	
 }
