@@ -1,3 +1,9 @@
 #commentsContent {
 	width: 100%;
 }
+
+.comment {
+	margin-top: 5px;
+	margin-bottom: 0px;
+	padding: 5px;
+}

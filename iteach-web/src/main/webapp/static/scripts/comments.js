@@ -17,7 +17,7 @@ var Comments = function () {
 		  		for (var i in data.list) {
 		  			var comment = data.list[i];
 		  			var html = '';
-		  			html += '<div class="comment" id="{0}">'.format(comment.id);
+		  			html += '<div class="comment well" id="{0}">'.format(comment.id);
 		  				// FIXME Escape and format the message
 		  				html += '<div class="comment-content">{0}</div>'.format(comment.content.htmlWithLines());
 		  			html += '</div>';
