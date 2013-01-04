@@ -62,15 +62,13 @@ var Comments = function () {
 			url: url,
 			contentType: 'application/json',
 			data: JSON.stringify({
+				id: 0,
 				content: $('#commentsContent').val()
 			}),
 			dataType: 'json',
 			success: function (data) {
-				if (data.success) {
-					location.reload();
-				} else {
-					application.displayError(loc('comment.new.error'));
-				}
+				// FIXME Adds the comment to the list
+				location.reload();
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 			  	if (jqXHR.responseText && jqXHR.responseText != '') {

@@ -4,7 +4,9 @@ import net.iteach.api.LessonService;
 import net.iteach.api.SchoolService;
 import net.iteach.api.StudentService;
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Comment;
 import net.iteach.core.model.Comments;
+import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.LessonDetails;
@@ -226,6 +228,15 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
 		return studentService.getStudentComments(userId, id, offset, count);
+	}
+	
+	@Override
+	@RequestMapping(value = "/student/{id:\\d+}/comments", method = RequestMethod.POST)
+	public @ResponseBody Comment editStudentComment(@PathVariable int id, @RequestBody CommentsForm form) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return studentService.editStudentComment(userId, id, form);
 	}
 
 }

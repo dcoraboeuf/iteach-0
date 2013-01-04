@@ -30,8 +30,8 @@ public final class SQLUtils {
 		return LocalTime.parse(str);
 	}
 
-	public static Timestamp now() {
-		return toTimestamp(DateTime.now(DateTimeZone.UTC));
+	public static DateTime now() {
+		return DateTime.now(DateTimeZone.UTC);
 	}
 
 	public static Timestamp toTimestamp(DateTime dateTime) {

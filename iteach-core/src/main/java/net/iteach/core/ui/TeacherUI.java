@@ -1,7 +1,9 @@
 package net.iteach.core.ui;
 
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Comment;
 import net.iteach.core.model.Comments;
+import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.LessonDetails;
@@ -59,5 +61,7 @@ public interface TeacherUI {
 	// Comments
 	
 	Comments getStudentComments (int id, int offset, int count);
+
+	Comment editStudentComment(int id, CommentsForm form);
 
 }

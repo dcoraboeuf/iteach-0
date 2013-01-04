@@ -13,7 +13,9 @@ import net.iteach.api.CoordinatesService;
 import net.iteach.api.StudentService;
 import net.iteach.api.model.Entity;
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Comment;
 import net.iteach.core.model.Comments;
+import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.SchoolSummary;
@@ -200,6 +202,15 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		checkTeacherForStudent(userId, id);
 		// Gets the comments
 		return commentsService.getComments (Entity.STUDENTS, id, offset, count);
+	}
+	
+	@Override
+	@Transactional
+	public Comment editStudentComment(int userId, int id, CommentsForm form) {
+		// Check for the associated teacher
+		checkTeacherForStudent(userId, id);
+		// Creates the comment
+		return commentsService.editComment (Entity.STUDENTS, id, form);
 	}
 
 }
