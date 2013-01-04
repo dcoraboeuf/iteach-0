@@ -420,3 +420,7 @@ comments.loading.error
 comment.new
 	en -> Add a comment
 	fr -> Ajouter un commentaire
+
+comment.new.error
+	en -> Error while creating the comment
+	fr -> Erreur lors de la création du commentaire

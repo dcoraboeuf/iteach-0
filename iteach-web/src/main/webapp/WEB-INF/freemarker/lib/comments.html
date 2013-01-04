@@ -3,7 +3,22 @@
 
 <#macro comments url>
 	<input id="comments-url" type="hidden" value="${url?html}" />
-	<button type="button" class="btn"><@lh key="comment.new" /></button>
+	<button id="comments-new" type="button" class="btn"><@lh key="comment.new" /></button>
 	<div id="comments-list"></div>
 	<div id="comments-error" class="alert alert-error"></div>
+	<@dialog id="comments-dialog">
+		<form id="comments-dialog-form">
+			<div class="control-group">
+				<div class="controls">
+					<textarea id="commentsContent" name="content" maxlength="3000" rows="10" required="required"></textarea>
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<button class="btn btn-primary" id="comments-dialog-submit" type="submit"><@lh key="general.create" /></button>
+					<a class="btn btn-link" href="javascript:$('#comments-dialog').dialog('close')"><@lh key="general.cancel" /></a>
+				</div>
+			</div>
+		</form>
+	</@dialog>
 </#macro>

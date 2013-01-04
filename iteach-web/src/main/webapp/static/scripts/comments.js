@@ -38,9 +38,56 @@ var Comments = function () {
 		loadCommentsWith (0, 10);
 	}
 	
+	function createComment () {
+		application.dialog({
+			id: 'comments-dialog',
+			title: loc('comment.new'),
+			width: 500,
+			data: {
+				commentContent: ''
+			},
+			submit: {
+				name: loc('general.create'),
+				action: submitCreateComment
+			}
+		});
+	}
+	
+	function submitCreateComment () {
+		// URL
+		var url = $('#comments-url').val();
+		// POST
+		$.ajax({
+			type: 'POST',
+			url: url,
+			contentType: 'application/json',
+			data: JSON.stringify({
+				content: $('#commentsContent').val()
+			}),
+			dataType: 'json',
+			success: function (data) {
+				if (data.success) {
+					location.reload();
+				} else {
+					application.displayError(loc('comment.new.error'));
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+			  	if (jqXHR.responseText && jqXHR.responseText != '') {
+			  		$('#comments-dialog-error').html(jqXHR.responseText.htmlWithLines());
+			  		$('#comments-dialog-error').show();
+			  	} else {
+			  		application.displayAjaxError (loc('comment.new.error'), jqXHR, textStatus, errorThrown);
+			  	}
+			}
+		});
+		return false;
+	}
+	
 	function init () {
 		$('#comments-error').hide();
 		loadComments();
+		$('#comments-new').click(createComment)
 	}
 	
 	return {
