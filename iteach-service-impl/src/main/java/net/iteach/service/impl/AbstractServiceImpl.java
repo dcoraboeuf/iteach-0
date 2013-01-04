@@ -49,6 +49,13 @@ public abstract class AbstractServiceImpl extends NamedParameterJdbcDaoSupport {
 			throw new AccessDeniedException(String.format("User %d cannot access student %d", userId, id));
 		}
 	}
+
+	protected void checkTeacherForLesson(int userId, int id) {
+		Integer teacher = getFirstItem(SQL.TEACHER_FOR_LESSON, params("lesson", id).addValue("teacher", userId), Integer.class);
+		if (teacher == null) {
+			throw new AccessDeniedException(String.format("User %d cannot access lesson %d", userId, id));
+		}
+	}
 	
 	protected BigDecimal getHours(LocalTime from, LocalTime to) {
 		Period duration = new Period(from, to);

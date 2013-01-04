@@ -1,0 +1,25 @@
+<dataset>
+	
+	<USERS id="1" mode="openid" identifier="test:1" password="" email="1@test.com" firstname="Test" lastname="1" />
+	<USERS id="2" mode="openid" identifier="test:2" password="" email="2@test.com" firstname="Test" lastname="2" />
+	
+	<SCHOOLS id="1" teacher="1" name="My school 1" color="#FF0000" />
+	<SCHOOLS id="2" teacher="2" name="My school 2" color="#00FF00" />
+	<SCHOOLS id="3" teacher="1" name="My school 3" color="#0000FF" />
+	
+	<STUDENTS id="1" school="1" subject="English" name="A. Albert" />
+	<STUDENTS id="2" school="1" subject="German" name="B. Bernard" />
+	<STUDENTS id="3" school="3" subject="German" name="C. Charles" />
+	
+	<COORDINATES id="1" entity_type="SCHOOLS" entity_id="1" coord_type="ADDRESS" coord_value="At my school 1" />
+	<COORDINATES id="2" entity_type="SCHOOLS" entity_id="1" coord_type="WEB" coord_value="http://school/1" />
+	<COORDINATES id="3" entity_type="STUDENTS" entity_id="1" coord_type="MOBILE_PHONE" coord_value="0123456789" />
+	<COORDINATES id="4" entity_type="STUDENTS" entity_id="1" coord_type="EMAIL" coord_value="albert@test.com" />
+	
+	<LESSONS id="1" student="1" pdate="2012-12-21" pfrom="12:00" pto="13:00" location="At school" />
+	<LESSONS id="2" student="1" pdate="2013-01-07" pfrom="18:00" pto="20:30" location="Home" />
+	<LESSONS id="3" student="1" pdate="2013-01-09" pfrom="18:00" pto="20:30" location="Home" />
+	<LESSONS id="4" student="1" pdate="2013-02-01" pfrom="18:00" pto="20:30" location="Home" />
+	<LESSONS id="5" student="1" pdate="2013-02-13" pfrom="18:00" pto="20:30" location="Home" />
+
+</dataset>

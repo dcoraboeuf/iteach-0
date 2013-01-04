@@ -52,7 +52,8 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 	@Override
 	@Transactional(readOnly = true)
 	public StudentLessons getLessonsForStudent(int userId, int id, LocalDate date) {
-		// FIXME Check for the associated teacher
+		// Check for the associated teacher
+		checkTeacherForStudent(userId, id);
 		// From: first day of the month
 		String from = date.withDayOfMonth(1).toString();
 		// To: last day of the month
@@ -126,7 +127,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 	@Override
 	@Transactional(readOnly = true)
 	public LessonDetails getLessonDetails(int userId, int id) {
-		// FIXME Check for the associated teacher
+		checkTeacherForLesson(userId, id);
 		return getNamedParameterJdbcTemplate().queryForObject(
 			SQL.LESSON_DETAILS,
 			params("id", id),
@@ -164,7 +165,8 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 	public ID createLessonForTeacher(int userId, LessonForm form) {
         // Validation
         validate(form, LessonFormValidation.class);
-		// FIXME Check for the associated teacher
+        checkTeacherForStudent(userId, form.getStudent());
+        
 		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 		int count = getNamedParameterJdbcTemplate().update(
 				SQL.LESSON_CREATE,
@@ -182,7 +184,8 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 	public Ack editLessonForTeacher(int userId, int id, LessonForm form) {
         // Validation
         validate(form, LessonFormValidation.class);
-		// FIXME Check for the associated teacher
+		checkTeacherForLesson(userId, id);
+		
 		int count = getNamedParameterJdbcTemplate().update(
 				SQL.LESSON_UPDATE,
 				params("id", id)
@@ -198,7 +201,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 	@Override
 	@Transactional
 	public Ack deleteLessonForTeacher(int teacherId, int id) {
-		// FIXME Check for the associated teacher
+		checkTeacherForLesson(teacherId, id);
 		int count = getNamedParameterJdbcTemplate().update(SQL.LESSON_DELETE, params("id", id));
 		return Ack.one(count);
 	}
