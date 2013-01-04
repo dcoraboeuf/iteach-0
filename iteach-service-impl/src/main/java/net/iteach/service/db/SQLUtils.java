@@ -44,7 +44,7 @@ public final class SQLUtils {
 	}
 
 	public static DateTime getDateTime(Timestamp timestamp) {
-		return new DateTime(timestamp.getTime(), DateTimeZone.UTC);
+		return timestamp != null ? new DateTime(timestamp.getTime(), DateTimeZone.UTC) : null;
 	}
 
 	public static <E extends Enum<E>> E getEnum(Class<E> enumClass, ResultSet rs, String columnName) throws SQLException {

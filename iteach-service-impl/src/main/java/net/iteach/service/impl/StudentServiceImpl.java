@@ -8,10 +8,12 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
+import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.StudentService;
-import net.iteach.api.model.CoordinatesEntity;
+import net.iteach.api.model.Entity;
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Comments;
 import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.SchoolSummary;
@@ -35,11 +37,13 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		StudentService {
 	
 	private final CoordinatesService coordinatesService;
+	private final CommentsService commentsService;
 
 	@Autowired
-	public StudentServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService) {
+	public StudentServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService, CommentsService commentsService) {
 		super(dataSource, validator);
 		this.coordinatesService = coordinatesService;
+		this.commentsService = commentsService;
 	}
 	
 	@Override
@@ -88,7 +92,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 								rs.getInt("ID"),
 								rs.getString("SUBJECT"),
 								rs.getString("NAME"),
-								coordinatesService.getCoordinates(CoordinatesEntity.STUDENTS, id),
+								coordinatesService.getCoordinates(Entity.STUDENTS, id),
 								school,
 								studentHours);
 					}
@@ -138,7 +142,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		ID id = ID.count(count).withId(keyHolder.getKey().intValue());
 		// Coordinates
 		if (id.isSuccess()) {
-			coordinatesService.setCoordinates (CoordinatesEntity.STUDENTS, id.getValue(), form.getCoordinates());
+			coordinatesService.setCoordinates (Entity.STUDENTS, id.getValue(), form.getCoordinates());
 		}
 		// OK
 		return id;
@@ -150,7 +154,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(teacherId, id);
 		// Deletes the coordinates
-		coordinatesService.removeCoordinates (CoordinatesEntity.STUDENTS, id);
+		coordinatesService.removeCoordinates (Entity.STUDENTS, id);
 		// Deletion
 		int count = getNamedParameterJdbcTemplate().update(SQL.STUDENT_DELETE, params("id", id));
 		return Ack.one(count);
@@ -174,7 +178,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		Ack ack = Ack.one(count);
 		// Coordinates
 		if (ack.isSuccess()) {
-			coordinatesService.setCoordinates (CoordinatesEntity.STUDENTS, id, form.getCoordinates());
+			coordinatesService.setCoordinates (Entity.STUDENTS, id, form.getCoordinates());
 		}
 		// OK
 		return ack;
@@ -186,7 +190,16 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(userId, id);
 		// Gets the coordinates
-		return coordinatesService.getCoordinates (CoordinatesEntity.STUDENTS, id);
+		return coordinatesService.getCoordinates (Entity.STUDENTS, id);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Comments getStudentComments(int userId, int id, int offset, int count) {
+		// Check for the associated teacher
+		checkTeacherForStudent(userId, id);
+		// Gets the comments
+		return commentsService.getComments (Entity.STUDENTS, id, offset, count);
 	}
 
 }

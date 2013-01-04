@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 import javax.validation.Validator;
 
 import net.iteach.api.CoordinatesService;
-import net.iteach.api.model.CoordinatesEntity;
+import net.iteach.api.model.Entity;
 import net.iteach.core.model.CoordinateType;
 import net.iteach.core.model.Coordinates;
 
@@ -42,7 +42,7 @@ public class CoordinatesServiceImpl extends AbstractServiceImpl implements Coord
 
 	@Override
 	@Transactional
-	public void setCoordinates(CoordinatesEntity entity, int id, Coordinates coordinates) {
+	public void setCoordinates(Entity entity, int id, Coordinates coordinates) {
 		for (Map.Entry<CoordinateType, String> entry: coordinates.entries()) {
 			CoordinateType type = entry.getKey();
 			String value = entry.getValue();
@@ -67,7 +67,7 @@ public class CoordinatesServiceImpl extends AbstractServiceImpl implements Coord
 
 	@Override
 	@Transactional
-	public void removeCoordinates(CoordinatesEntity entity, int id) {
+	public void removeCoordinates(Entity entity, int id) {
 		String sql = format(SQL_DELETE, entity);
 		getNamedParameterJdbcTemplate().update(
 			sql,
@@ -76,7 +76,7 @@ public class CoordinatesServiceImpl extends AbstractServiceImpl implements Coord
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Coordinates getCoordinates(CoordinatesEntity entity, int id) {
+	public Coordinates getCoordinates(Entity entity, int id) {
 		final AtomicReference<Coordinates> coordinates = new AtomicReference<>(Coordinates.create());
 		getNamedParameterJdbcTemplate().query(
 			format(SQL_SELECT_FOR_ENTITY, entity),

@@ -13,7 +13,7 @@ import javax.validation.Validator;
 
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.LessonService;
-import net.iteach.api.model.CoordinatesEntity;
+import net.iteach.api.model.Entity;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.Lesson;
@@ -140,13 +140,13 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 							schoolId,
 							rs.getString("SCHOOL_NAME"),
 							rs.getString("SCHOOL_COLOR"),
-							coordinatesService.getCoordinates(CoordinatesEntity.SCHOOLS, schoolId));
+							coordinatesService.getCoordinates(Entity.SCHOOLS, schoolId));
 					StudentSummaryWithCoordinates student = new StudentSummaryWithCoordinates(
 							studentId,
 							rs.getString("STUDENT_SUBJECT"),
 							rs.getString("STUDENT_NAME"),
 							school,
-							coordinatesService.getCoordinates(CoordinatesEntity.STUDENTS, studentId));
+							coordinatesService.getCoordinates(Entity.STUDENTS, studentId));
 					return new LessonDetails(
 							rs.getInt("id"),
 							student,

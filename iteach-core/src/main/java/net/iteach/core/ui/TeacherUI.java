@@ -1,8 +1,7 @@
 package net.iteach.core.ui;
 
-import org.joda.time.LocalDate;
-
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Comments;
 import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.LessonDetails;
@@ -16,6 +15,8 @@ import net.iteach.core.model.StudentDetails;
 import net.iteach.core.model.StudentForm;
 import net.iteach.core.model.StudentLessons;
 import net.iteach.core.model.StudentSummaries;
+
+import org.joda.time.LocalDate;
 
 public interface TeacherUI {
 
@@ -54,5 +55,9 @@ public interface TeacherUI {
 	Coordinates getStudentCoordinates(int id);
 
 	Coordinates getSchoolCoordinates(int id);
+	
+	// Comments
+	
+	Comments getStudentComments (int id, int offset, int count);
 
 }

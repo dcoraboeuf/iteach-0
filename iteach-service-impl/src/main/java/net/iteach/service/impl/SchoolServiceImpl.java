@@ -10,7 +10,7 @@ import javax.validation.Validator;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.SchoolService;
 import net.iteach.api.StudentService;
-import net.iteach.api.model.CoordinatesEntity;
+import net.iteach.api.model.Entity;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
@@ -93,7 +93,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 						rs.getInt("id"),
 						rs.getString("name"),
 						rs.getString("color"),
-						coordinatesService.getCoordinates(CoordinatesEntity.SCHOOLS, id),
+						coordinatesService.getCoordinates(Entity.SCHOOLS, id),
 						students);
 				}
 				
@@ -116,7 +116,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 			ID id = ID.count(count).withId(keyHolder.getKey().intValue());
 			// Coordinates
 			if (id.isSuccess()) {
-				coordinatesService.setCoordinates (CoordinatesEntity.SCHOOLS, id.getValue(), form.getCoordinates());
+				coordinatesService.setCoordinates (Entity.SCHOOLS, id.getValue(), form.getCoordinates());
 			}
 			// OK
 			return id;
@@ -132,7 +132,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool (teacherId, id);
 		// Deletes the coordinates
-		coordinatesService.removeCoordinates (CoordinatesEntity.SCHOOLS, id);
+		coordinatesService.removeCoordinates (Entity.SCHOOLS, id);
 		// Update
 		int count = getNamedParameterJdbcTemplate().update(SQL.SCHOOL_DELETE, params("teacher", teacherId).addValue("id", id));
 		// OK
@@ -158,7 +158,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 			Ack ack = Ack.one(count);
 			// Coordinates
 			if (ack.isSuccess()) {
-				coordinatesService.setCoordinates (CoordinatesEntity.SCHOOLS, id, form.getCoordinates());
+				coordinatesService.setCoordinates (Entity.SCHOOLS, id, form.getCoordinates());
 			}
 			// OK
 			return ack;
@@ -174,7 +174,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool (userId, id);
 		// OK
-		return coordinatesService.getCoordinates (CoordinatesEntity.SCHOOLS, id);
+		return coordinatesService.getCoordinates (Entity.SCHOOLS, id);
 	}
 
 }

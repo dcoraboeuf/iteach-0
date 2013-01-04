@@ -4,6 +4,7 @@ import net.iteach.api.LessonService;
 import net.iteach.api.SchoolService;
 import net.iteach.api.StudentService;
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Comments;
 import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.LessonDetails;
@@ -207,7 +208,6 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
 		return studentService.getStudentCoordinates (userId, id);
-		
 	}
 
 	@Override
@@ -217,8 +217,15 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
 		return schoolService.getSchoolCoordinates (userId, id);
-		
 	}
 	
+	@Override
+	@RequestMapping(value = "/student/{id:\\d+}/comments/{offset:\\d+}/{count:\\d+}", method = RequestMethod.GET)
+	public @ResponseBody Comments getStudentComments(@PathVariable int id, @PathVariable int offset, @PathVariable int count) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return studentService.getStudentComments(userId, id, offset, count);
+	}
 
 }
