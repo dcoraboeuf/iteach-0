@@ -26,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -100,13 +99,6 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 				
 			}
 		);
-	}
-	
-	protected void checkTeacherForSchool(int userId, int id) {
-		Integer teacher = getFirstItem(SQL.TEACHER_FOR_SCHOOL, params("school", id).addValue("teacher", userId), Integer.class);
-		if (teacher == null) {
-			throw new AccessDeniedException(String.format("User %d cannot access school %d", userId, id));
-		}
 	}
 
 	@Override

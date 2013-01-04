@@ -1,25 +1,29 @@
 package net.iteach.service.impl;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-import net.iteach.core.validation.ValidationException;
-import net.sf.jstring.Localizable;
-import net.sf.jstring.LocalizableMessage;
-import net.sf.jstring.MultiLocalizable;
-import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalTime;
-import org.joda.time.Period;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import javax.sql.DataSource;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
-import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import net.iteach.core.validation.ValidationException;
+import net.iteach.service.db.SQL;
+import net.sf.jstring.Localizable;
+import net.sf.jstring.LocalizableMessage;
+import net.sf.jstring.MultiLocalizable;
+
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalTime;
+import org.joda.time.Period;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.security.access.AccessDeniedException;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 
 public abstract class AbstractServiceImpl extends NamedParameterJdbcDaoSupport {
 
@@ -30,6 +34,20 @@ public abstract class AbstractServiceImpl extends NamedParameterJdbcDaoSupport {
 	public AbstractServiceImpl(DataSource dataSource, Validator validator) {
 		setDataSource(dataSource);
         this.validator = validator;
+	}
+	
+	protected void checkTeacherForSchool(int userId, int id) {
+		Integer teacher = getFirstItem(SQL.TEACHER_FOR_SCHOOL, params("school", id).addValue("teacher", userId), Integer.class);
+		if (teacher == null) {
+			throw new AccessDeniedException(String.format("User %d cannot access school %d", userId, id));
+		}
+	}
+
+	protected void checkTeacherForStudent(int userId, int id) {
+		Integer teacher = getFirstItem(SQL.TEACHER_FOR_STUDENT, params("student", id).addValue("teacher", userId), Integer.class);
+		if (teacher == null) {
+			throw new AccessDeniedException(String.format("User %d cannot access student %d", userId, id));
+		}
 	}
 	
 	protected BigDecimal getHours(LocalTime from, LocalTime to) {

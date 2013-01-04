@@ -67,7 +67,8 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional(readOnly = true)
 	public StudentDetails getStudentForTeacher(int userId, final int id) {
-		// FIXME Check for the associated teacher
+		// Check for the associated teacher
+		checkTeacherForStudent(userId, id);
 		// Total hours
 		final BigDecimal studentHours = getStudentHours(id);
 		// Details
@@ -122,7 +123,9 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 	public ID createStudentForTeacher(int teacherId, StudentForm form) {
         // Validation
         validate(form, StudentFormValidation.class);
-		// FIXME Check for the associated teacher
+		// Check for the associated teacher
+		checkTeacherForSchool(teacherId, form.getSchool());
+		// Creation
 		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 		int count = getNamedParameterJdbcTemplate().update(
 				SQL.STUDENT_CREATE,
@@ -143,9 +146,11 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional
 	public Ack deleteStudentForTeacher(int teacherId, int id) {
+		// Check for the associated teacher
+		checkTeacherForStudent(teacherId, id);
 		// Deletes the coordinates
 		coordinatesService.removeCoordinates (CoordinatesEntity.STUDENTS, id);
-		// FIXME Check for the associated teacher
+		// Deletion
 		int count = getNamedParameterJdbcTemplate().update(SQL.STUDENT_DELETE, params("id", id));
 		return Ack.one(count);
 	}
@@ -153,9 +158,11 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional
 	public Ack editStudentForTeacher(int userId, int id, StudentForm form) {
+		// Check for the associated teacher
+		checkTeacherForStudent(userId, id);
         // Validation
         validate(form, StudentFormValidation.class);
-		// FIXME Check for the associated teacher
+        // Update
 		int count = getNamedParameterJdbcTemplate().update(
 				SQL.STUDENT_UPDATE,
 				params("id", id)
@@ -175,7 +182,9 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional(readOnly = true)
 	public Coordinates getStudentCoordinates(int userId, int id) {
-		// FIXME Check for the associated teacher
+		// Check for the associated teacher
+		checkTeacherForStudent(userId, id);
+		// Gets the coordinates
 		return coordinatesService.getCoordinates (CoordinatesEntity.STUDENTS, id);
 	}
 
