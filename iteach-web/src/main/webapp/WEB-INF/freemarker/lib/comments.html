@@ -1,0 +1,9 @@
+<link rel="stylesheet" type="text/css" href="${base}/styles/comments.css" />
+<script type="text/javascript" src="${base}/scripts/comments.js"></script>
+
+<#macro comments url>
+	<input id="comments-url" type="hidden" value="${url?html}" />
+	<button type="button" class="btn"><@lh key="comment.new" /></button>
+	<div id="comments-list"></div>
+	<div id="comments-error" class="alert alert-error"></div>
+</#macro>

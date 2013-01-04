@@ -416,3 +416,7 @@ coordinates.get.error
 comments.loading.error
 	en -> Error while loading the comments
 	fr -> Erreur lors du chargement des commentaires
+
+comment.new
+	en -> Add a comment
+	fr -> Ajouter un commentaire
