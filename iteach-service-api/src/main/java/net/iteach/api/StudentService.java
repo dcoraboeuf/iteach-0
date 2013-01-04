@@ -21,7 +21,7 @@ public interface StudentService {
 
 	StudentDetails getStudentForTeacher(int userId, int id);
 
-	BigDecimal getStudentHours(int id);
+	BigDecimal getStudentHours(int userId, int id);
 
 	Coordinates getStudentCoordinates(int userId, int id);
 

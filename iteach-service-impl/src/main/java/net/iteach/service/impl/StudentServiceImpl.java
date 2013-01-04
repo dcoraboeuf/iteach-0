@@ -70,7 +70,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(userId, id);
 		// Total hours
-		final BigDecimal studentHours = getStudentHours(id);
+		final BigDecimal studentHours = getStudentHours(userId, id);
 		// Details
 		return getNamedParameterJdbcTemplate().queryForObject(
 				SQL.STUDENT_DETAILS,
@@ -98,7 +98,8 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 
 	@Override
 	@Transactional(readOnly = true)
-	public BigDecimal getStudentHours(int id) {
+	public BigDecimal getStudentHours(int userId, int id) {
+		checkTeacherForStudent(userId, id);
 		final AtomicReference<BigDecimal> hours = new AtomicReference<>(BigDecimal.ZERO);
 		getNamedParameterJdbcTemplate().query(
 			SQL.STUDENT_TOTAL_HOURS,

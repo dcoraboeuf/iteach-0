@@ -59,7 +59,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	
 	@Override
 	@Transactional(readOnly = true)
-	public SchoolDetails getSchoolForTeacher(int userId, final int id) {
+	public SchoolDetails getSchoolForTeacher(final int userId, final int id) {
 		// Check for the associated teacher
 		checkTeacherForSchool (userId, id);
 		// Student summaries
@@ -75,7 +75,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 						studentId,
 						rs.getString("name"),
 						rs.getString("subject"),
-						studentService.getStudentHours(studentId));
+						studentService.getStudentHours(userId, studentId));
 				}
 				
 			}

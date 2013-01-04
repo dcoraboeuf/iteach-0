@@ -103,5 +103,15 @@ class StudentServiceImplTest extends AbstractIntegrationTest {
 			new SchoolSummary(1, "My school 1", "#FF0000"),
 			3.5) == student
 	}
+	
+	@Test(expected = AccessDeniedException)
+	void getStudentHours_access_denied() {
+		service.getStudentHours(2, 1)
+	}
+	
+	@Test
+	void getStudentHours() {
+		assert 3.5 == service.getStudentHours(1, 1)
+	}
 
 }
