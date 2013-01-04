@@ -21,5 +21,7 @@
 	<LESSONS id="3" student="1" pdate="2013-01-09" pfrom="18:00" pto="20:30" location="Home" />
 	<LESSONS id="4" student="1" pdate="2013-02-01" pfrom="18:00" pto="20:30" location="Home" />
 	<LESSONS id="5" student="1" pdate="2013-02-13" pfrom="18:00" pto="20:30" location="Home" />
+	<LESSONS id="6" student="3" pdate="2013-01-15" pfrom="09:00" pto="10:45" location="Factory" />
+	<LESSONS id="7" student="3" pdate="2013-02-16" pfrom="09:00" pto="10:45" location="Factory" />
 
 </dataset>
