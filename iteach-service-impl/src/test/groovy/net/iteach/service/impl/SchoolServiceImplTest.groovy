@@ -1,14 +1,19 @@
 package net.iteach.service.impl
 
 import net.iteach.api.SchoolService
-import net.iteach.core.model.Coordinates;
+import net.iteach.core.model.CoordinateType
+import net.iteach.core.model.Coordinates
+import net.iteach.core.model.SchoolDetails
+import net.iteach.core.model.SchoolDetailsStudent
 import net.iteach.core.model.SchoolForm
 import net.iteach.core.validation.ValidationException
 import net.iteach.test.AbstractIntegrationTest
 import net.sf.jstring.Strings
 import net.sf.jstring.support.StringsLoader
+
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.AccessDeniedException
 
 class SchoolServiceImplTest extends AbstractIntegrationTest {
 
@@ -30,6 +35,23 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 		def id = service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCCCCC", Coordinates.create()));
 		assert id != null
 		assert id.isSuccess()
+	}
+	
+	@Test
+	void deleteSchool() {
+		def id = service.createSchoolForTeacher(2, new SchoolForm("Test for delete", "#CCCCCC", Coordinates.create()));
+		assert id != null
+		assert id.isSuccess()
+		def ack = service.deleteSchoolForTeacher(2, id.getValue())
+		assert ack.isSuccess()
+	}
+	
+	@Test(expected = AccessDeniedException.class)
+	void deleteSchool_access_denied() {
+		def id = service.createSchoolForTeacher(2, new SchoolForm("Test for delete and access denied", "#CCCCCC", Coordinates.create()));
+		assert id != null
+		assert id.isSuccess()
+		service.deleteSchoolForTeacher(1, id.getValue())
 	}
 
     def validation (Closure<Void> closure, String expectedMessage) {
@@ -84,6 +106,11 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
                 " - Colour code for the school: must match \"#[0-9A-Fa-f]{6}\"\n")
     }
 	
+	@Test(expected = AccessDeniedException.class)
+	void editSchool_access_denied() {
+		service.editSchoolForTeacher(2, 1, new SchoolForm("My school 11", "#ff0000", Coordinates.create()));
+	}
+	
 	@Test
 	void editSchool_name() {
 		def ack = service.editSchoolForTeacher(1, 1, new SchoolForm("My school 11", "#ff0000", Coordinates.create()));
@@ -114,6 +141,39 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 	@Test(expected = SchoolNameAlreadyDefined.class)
 	void createSchool_name_already_defined() {
 		service.createSchoolForTeacher(1, new SchoolForm("My school 3", "#CCCCCC", Coordinates.create()));
+	}
+	
+	@Test(expected = AccessDeniedException.class)
+	void getSchoolCoordinates_access_denied () {
+		service.getSchoolCoordinates(2, 1)
+	}
+	
+	@Test
+	void getSchoolCoordinates () {
+		def coordinates = service.getSchoolCoordinates(1, 1)
+		assert coordinates != null
+		assert 2 == coordinates.getList().size()
+		assert "At my school 1" == coordinates.getCoordinateValue(CoordinateType.ADDRESS)
+		assert "http://school/1" == coordinates.getCoordinateValue(CoordinateType.WEB)
+	}
+	
+	@Test(expected = AccessDeniedException)
+	void getSchoolForTeacher_access_denied() {
+		service.getSchoolForTeacher(2, 1)
+	}
+	
+	@Test
+	void getSchoolForTeacher() {
+		def school = service.getSchoolForTeacher(1, 1)
+		assert new SchoolDetails(
+			1,
+			"My school 1",
+			"#FF0000",
+			Coordinates.create().add(CoordinateType.ADDRESS, "At my school 1").add(CoordinateType.WEB, "http://school/1"),
+			[
+				new SchoolDetailsStudent(1, "Student 1", "Subject 1", 0),
+				new SchoolDetailsStudent(2, "Student 2", "Subject 2", 0)
+			]) == school
 	}
 
 }

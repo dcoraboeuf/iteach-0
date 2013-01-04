@@ -39,6 +39,10 @@ public class Coordinates {
 		return map.entrySet();
 	}
 	
+	public String getCoordinateValue (CoordinateType type) {
+		return map.get(type);
+	}
+	
 	@JsonIgnore
 	public List<Coordinate> getList() {
 		List<Coordinate> result = new ArrayList<>();

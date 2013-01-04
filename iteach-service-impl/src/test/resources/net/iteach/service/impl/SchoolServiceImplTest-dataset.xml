@@ -6,5 +6,11 @@
 	<SCHOOLS id="1" teacher="1" name="My school 1" color="#FF0000" />
 	<SCHOOLS id="2" teacher="2" name="My school 2" color="#00FF00" />
 	<SCHOOLS id="3" teacher="1" name="My school 3" color="#0000FF" />
+	
+	<STUDENTS id="1" school="1" name="Student 1" subject="Subject 1" />
+	<STUDENTS id="2" school="1" name="Student 2" subject="Subject 2" />
+	
+	<COORDINATES id="1" entity_type="SCHOOLS" entity_id="1" coord_type="ADDRESS" coord_value="At my school 1" />
+	<COORDINATES id="2" entity_type="SCHOOLS" entity_id="1" coord_type="WEB" coord_value="http://school/1" />
 
 </dataset>

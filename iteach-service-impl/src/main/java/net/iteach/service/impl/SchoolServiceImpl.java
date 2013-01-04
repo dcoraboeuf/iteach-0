@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,7 +61,8 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional(readOnly = true)
 	public SchoolDetails getSchoolForTeacher(int userId, final int id) {
-		// FIXME Check for the associated teacher
+		// Check for the associated teacher
+		checkTeacherForSchool (userId, id);
 		// Student summaries
 		final List<SchoolDetailsStudent> students = getNamedParameterJdbcTemplate().query(
 			SQL.STUDENTS_FOR_SCHOOL,
@@ -100,6 +102,13 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		);
 	}
 	
+	protected void checkTeacherForSchool(int userId, int id) {
+		Integer teacher = getFirstItem(SQL.TEACHER_FOR_SCHOOL, params("school", id).addValue("teacher", userId), Integer.class);
+		if (teacher == null) {
+			throw new AccessDeniedException(String.format("User %d cannot access school %d", userId, id));
+		}
+	}
+
 	@Override
 	@Transactional
 	public ID createSchoolForTeacher(int teacherId, SchoolForm form) {
@@ -128,7 +137,8 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional
 	public Ack deleteSchoolForTeacher(int teacherId, int id) {
-		// FIXME Check for the associated teacher
+		// Check for the associated teacher
+		checkTeacherForSchool (teacherId, id);
 		// Deletes the coordinates
 		coordinatesService.removeCoordinates (CoordinatesEntity.SCHOOLS, id);
 		// Update
@@ -140,8 +150,11 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional
 	public Ack editSchoolForTeacher(int userId, int id, SchoolForm form) {
-		// FIXME Check for the associated teacher
+		// Check for the associated teacher
+		checkTeacherForSchool (userId, id);
+		// Form validation
         validate(form, SchoolFormValidation.class);
+        // Query
 		try {
 			int count = getNamedParameterJdbcTemplate().update(
 					SQL.SCHOOL_UPDATE,
@@ -166,7 +179,9 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	@Override
 	@Transactional(readOnly = true)
 	public Coordinates getSchoolCoordinates(int userId, int id) {
-		// FIXME Check for the associated teacher
+		// Check for the associated teacher
+		checkTeacherForSchool (userId, id);
+		// OK
 		return coordinatesService.getCoordinates (CoordinatesEntity.SCHOOLS, id);
 	}
 
