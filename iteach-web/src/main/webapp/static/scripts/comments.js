@@ -16,15 +16,13 @@ var Comments = function () {
 		  		// For each comment
 		  		for (var i in data.list) {
 		  			var comment = data.list[i];
-//		  			var html = '';
-//		  			html += '<div class="student-lesson" id="{0}">'.format(id);
-//		  				html += '<div class="student-lesson-time"><a href="gui/lesson/{0}">{1}</a></div>'.format(lesson.id, getLessonSchedule(lesson));
-//		  				html += '<div class="student-lesson-location">@ {0}</div>'.format(lesson.location);
-//		  			html += '</div>';
-//		  			
-//		  			$('#comments-list').append(html);
+		  			var html = '';
+		  			html += '<div class="comment" id="{0}">'.format(comment.id);
+		  				html += '<div class="comment-content">{0}</div>'.format(comment.content);
+		  			html += '</div>';
+		  			
+		  			$('#comments-list').append(html);
 		  		}
-		  		$('#comments-list').append("TODO Loaded comments.");
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 		  		$('#comments-error').html(application.getAjaxError(loc('comments.loading.error'), jqXHR, textStatus, errorThrown).htmlWithLines());
