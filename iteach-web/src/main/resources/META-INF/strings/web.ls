@@ -410,3 +410,9 @@ lesson.details.comments
 coordinates.get.error
 	en -> Error while getting the coordinates
 	fr -> Erreur lors de l'accès aux coordonnées
+
+[comments]
+
+comments.loading.error
+	en -> Error while loading the comments
+	fr -> Erreur lors du chargement des commentaires
