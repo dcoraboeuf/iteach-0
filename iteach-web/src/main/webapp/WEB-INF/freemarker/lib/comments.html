@@ -8,16 +8,23 @@
 	<div id="comments-error" class="alert alert-error"></div>
 	<@dialog id="comments-dialog">
 		<form id="comments-dialog-form">
-			<div class="control-group">
-				<div class="controls">
-					<textarea id="commentsContent" name="content" maxlength="3000" rows="10" required="required"></textarea>
+			<div id="comments-dialog-area">
+				<ul class="nav nav-tabs" id="comments-dialog-tabs">
+					<li class="active"><a id="comment-tab-content" href="#comment-tab-content-content" data-toggle="tab"><@lh key="comment.content" /></a></li>
+					<li><a id="comment-tab-preview" href="#comment-tab-content-preview" data-toggle="tab"><@lh key="comment.preview" /></a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="comment-tab-content-content">
+						<textarea class="comment-area" id="commentsContent" name="content" maxlength="3000" rows="10" required="required"></textarea>
+					</div>
+					<div class="tab-pane" id="comment-tab-content-preview">
+						<div class="comment-area" id="commentsPreview"></div>
+					</div>
 				</div>
 			</div>
-			<div class="control-group">
-				<div class="controls">
-					<button class="btn btn-primary" id="comments-dialog-submit" type="submit"><@lh key="general.create" /></button>
-					<a class="btn btn-link" href="javascript:$('#comments-dialog').dialog('close')"><@lh key="general.cancel" /></a>
-				</div>
+			<div class="comments-dialog-controls">
+				<button class="btn btn-primary" id="comments-dialog-submit" type="submit"><@lh key="general.create" /></button>
+				<a class="btn btn-link" id="comments-dialog-cancel" href="javascript:$('#comments-dialog').dialog('close')"><@lh key="general.cancel" /></a>
 			</div>
 		</form>
 	</@dialog>

@@ -1,6 +1,18 @@
-#commentsContent {
-	width: 100%;
+/* Dialog */
+
+.comments-dialog-controls {
+	text-align: right;
 }
+
+#comments-dialog-tabs {
+	margin-bottom: 4px;
+}
+
+#commentsContent {
+	width: 95%;
+}
+
+/* List */
 
 .comment {
 	margin-top: 5px;

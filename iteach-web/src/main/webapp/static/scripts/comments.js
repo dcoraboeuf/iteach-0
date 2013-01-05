@@ -9,6 +9,10 @@ var Comments = function () {
 		return html;
 	}
 	
+	function preview () {
+		
+	}
+	
 	function appendComment (comment) {
 		$('#comments-list').append(commentToHTML (comment));
 	}
@@ -56,6 +60,9 @@ var Comments = function () {
 			data: {
 				commentsContent: ''
 			},
+			open: function () {
+				$('#comment-tab-content').tab('show');
+			},
 			submit: {
 				name: loc('general.create'),
 				action: submitCreateComment
@@ -100,7 +107,8 @@ var Comments = function () {
 	}
 	
 	return {
-		init: init
+		init: init,
+		preview: preview
 	};
 	
 } ();

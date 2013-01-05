@@ -424,3 +424,11 @@ comment.new
 comment.new.error
 	en -> Error while creating the comment
 	fr -> Erreur lors de la création du commentaire
+
+comment.content
+	en -> Content
+	fr -> Contenu
+
+comment.preview
+	en -> Preview
+	fr -> Prévisualisation
