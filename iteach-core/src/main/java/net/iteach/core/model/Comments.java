@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class Comments {
 	
-	private final List<Comment> list;
+	private final List<CommentSummary> list;
 
 }

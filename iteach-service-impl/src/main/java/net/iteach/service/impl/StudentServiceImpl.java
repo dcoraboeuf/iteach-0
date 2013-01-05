@@ -14,6 +14,7 @@ import net.iteach.api.StudentService;
 import net.iteach.api.model.Entity;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.Comment;
+import net.iteach.core.model.CommentFormat;
 import net.iteach.core.model.Comments;
 import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.Coordinates;
@@ -197,20 +198,29 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Comments getStudentComments(int userId, int id, int offset, int count) {
+	public Comments getStudentComments(int userId, int studentId, int offset, int count, int maxlength, CommentFormat format) {
 		// Check for the associated teacher
-		checkTeacherForStudent(userId, id);
+		checkTeacherForStudent(userId, studentId);
 		// Gets the comments
-		return commentsService.getComments (Entity.STUDENTS, id, offset, count);
+		return commentsService.getComments (Entity.STUDENTS, studentId, offset, count, maxlength, format);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Comment getStudentComment(int userId, int studentId, int commentId, CommentFormat format) {
+		// Check for the associated teacher
+		checkTeacherForStudent(userId, studentId);
+		// Gets the comment
+		return commentsService.getComment (Entity.STUDENTS, studentId, commentId, format);
 	}
 	
 	@Override
 	@Transactional
-	public Comment editStudentComment(int userId, int id, CommentsForm form) {
+	public Comment editStudentComment(int userId, int studentId, CommentFormat format, CommentsForm form) {
 		// Check for the associated teacher
-		checkTeacherForStudent(userId, id);
+		checkTeacherForStudent(userId, studentId);
 		// Creates the comment
-		return commentsService.editComment (Entity.STUDENTS, id, form);
+		return commentsService.editComment (Entity.STUDENTS, studentId, format, form);
 	}
 
 }

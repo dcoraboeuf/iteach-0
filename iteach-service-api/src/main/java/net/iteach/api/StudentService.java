@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.Comment;
+import net.iteach.core.model.CommentFormat;
 import net.iteach.core.model.Comments;
 import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.Coordinates;
@@ -28,8 +29,10 @@ public interface StudentService {
 
 	Coordinates getStudentCoordinates(int userId, int id);
 
-	Comments getStudentComments(int userId, int id, int offset, int count);
+	Comments getStudentComments(int userId, int studentId, int offset, int count, int maxlength, CommentFormat format);
 
-	Comment editStudentComment(int userId, int id, CommentsForm form);
+	Comment editStudentComment(int userId, int studentId, CommentFormat format, CommentsForm form);
+
+	Comment getStudentComment(int userId, int studentId, int commentId, CommentFormat format);
 
 }

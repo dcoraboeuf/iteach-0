@@ -5,6 +5,7 @@ import net.iteach.api.SchoolService;
 import net.iteach.api.StudentService;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.Comment;
+import net.iteach.core.model.CommentFormat;
 import net.iteach.core.model.Comments;
 import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.Coordinates;
@@ -222,21 +223,31 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 	}
 	
 	@Override
-	@RequestMapping(value = "/student/{id:\\d+}/comments/{offset:\\d+}/{count:\\d+}", method = RequestMethod.GET)
-	public @ResponseBody Comments getStudentComments(@PathVariable int id, @PathVariable int offset, @PathVariable int count) {
+	@RequestMapping(value = "/student/{studentId:\\d+}/comment/list/{format}/{offset:\\d+}/{count:\\d+}", method = RequestMethod.GET)
+	public @ResponseBody Comments getStudentComments(@PathVariable int studentId, @PathVariable int offset, @PathVariable int count, @PathVariable CommentFormat format) {
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return studentService.getStudentComments(userId, id, offset, count);
+		// FIXME Uses an object to define the comments query
+		return studentService.getStudentComments(userId, studentId, offset, count, 150, format);
 	}
 	
 	@Override
-	@RequestMapping(value = "/student/{id:\\d+}/comments", method = RequestMethod.POST)
-	public @ResponseBody Comment editStudentComment(@PathVariable int id, @RequestBody CommentsForm form) {
+	@RequestMapping(value = "/student/{studentId:\\d+}/comment/{commentId:\\d+}/{format:.*}", method = RequestMethod.POST)
+	public Comment getStudentComment(@PathVariable int studentId, @PathVariable int commentId, @PathVariable CommentFormat format) {
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return studentService.editStudentComment(userId, id, form);
+		return studentService.getStudentComment(userId, studentId, commentId, format);
+	}
+	
+	@Override
+	@RequestMapping(value = "/student/{studentId:\\d+}/comment/{format:.*}", method = RequestMethod.POST)
+	public @ResponseBody Comment editStudentComment(@PathVariable int studentId, @PathVariable CommentFormat format, @RequestBody CommentsForm form) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return studentService.editStudentComment(userId, studentId, format, form);
 	}
 
 }

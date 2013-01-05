@@ -8,7 +8,7 @@ var Comments = function () {
 		// Loads the lessons
 		$.ajax({
 			type: 'GET',
-			url: '{0}/{1}/{2}'.format(url, offset, count),
+			url: '{0}/list/HTML/{1}/{2}'.format(url, offset, count),
 			contentType: 'application/json',
 			dataType: 'json',
 			success: function (data) {
@@ -58,7 +58,7 @@ var Comments = function () {
 		// POST
 		$.ajax({
 			type: 'POST',
-			url: url,
+			url: '{0}/HTML'.format(url),
 			contentType: 'application/json',
 			data: JSON.stringify({
 				id: 0,
