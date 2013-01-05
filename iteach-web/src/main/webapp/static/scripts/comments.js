@@ -12,13 +12,17 @@ var Comments = function () {
 	function preview () {
   		application.loading('#commentsPreview', true);
 		$.ajax({
-			type: 'GET',
-			url: 'ui/comment/preview/HTML',
+			type: 'POST',
+			url: 'ui/comment/preview',
 			contentType: 'application/json',
+			data: JSON.stringify({
+				format: 'HTML',
+				content: $('#commentsContent').val()
+			}),
 			dataType: 'json',
 			success: function (data) {
 		  		application.loading('#commentsPreview', false);
-		  		// TODO Preview
+		  		$('#commentsPreview').html(data.content);
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 		  		application.loading('#commentsPreview', false);

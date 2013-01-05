@@ -13,6 +13,7 @@ import net.iteach.api.CommentsService;
 import net.iteach.api.model.Entity;
 import net.iteach.core.model.Comment;
 import net.iteach.core.model.CommentFormat;
+import net.iteach.core.model.CommentPreview;
 import net.iteach.core.model.CommentSummary;
 import net.iteach.core.model.Comments;
 import net.iteach.core.model.CommentsForm;
@@ -40,6 +41,17 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 	@Autowired
 	public CommentsServiceImpl(DataSource dataSource, Validator validator) {
 		super(dataSource, validator);
+	}
+
+	protected String getPreview(String content, CommentFormat format) {
+		// FIXME Implement CommentsServiceImpl.getPreview
+		return content;
+	}
+	
+	@Override
+	public CommentPreview getPreview(CommentPreview request) {
+		String content = getPreview (request.getContent(), request.getFormat());
+		return request.withContent(content);
 	}
 
 	@Override

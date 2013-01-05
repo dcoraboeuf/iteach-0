@@ -3,6 +3,7 @@ package net.iteach.api;
 import net.iteach.api.model.Entity;
 import net.iteach.core.model.Comment;
 import net.iteach.core.model.CommentFormat;
+import net.iteach.core.model.CommentPreview;
 import net.iteach.core.model.Comments;
 import net.iteach.core.model.CommentsForm;
 
@@ -13,5 +14,7 @@ public interface CommentsService {
 	Comment editComment(Entity entity, int id, CommentFormat format, CommentsForm form);
 
 	Comment getComment(Entity entity, int id, int commentId, CommentFormat format);
+
+	CommentPreview getPreview(CommentPreview request);
 
 }
