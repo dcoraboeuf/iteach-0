@@ -54,7 +54,7 @@ var Comments = function () {
 			title: loc('comment.new'),
 			width: 500,
 			data: {
-				commentContent: ''
+				commentsContent: ''
 			},
 			submit: {
 				name: loc('general.create'),
