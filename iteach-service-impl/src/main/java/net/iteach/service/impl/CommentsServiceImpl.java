@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentsServiceImpl extends AbstractServiceImpl implements CommentsService {
 
 	private static final String SQL_SELECT_FOR_ENTITY_WITH_ID = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :entityId AND ID = :commentId";
-	private static final String SQL_SELECT_FOR_ENTITY_WITH_OFFSET = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :id";
+	private static final String SQL_SELECT_FOR_ENTITY_WITH_OFFSET = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :id ORDER BY CREATION DESC";
 	
 	private static final String SQL_CREATION_TIME = "SELECT CREATION FROM COMMENTS WHERE ID = :id";
 
