@@ -5,6 +5,9 @@ import static java.lang.String.format;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.sql.DataSource;
 import javax.validation.Validator;
@@ -17,6 +20,9 @@ import net.iteach.core.model.CommentPreview;
 import net.iteach.core.model.CommentSummary;
 import net.iteach.core.model.Comments;
 import net.iteach.core.model.CommentsForm;
+import net.iteach.service.comment.CommentFormatter;
+import net.iteach.service.comment.CommentHTMLFormatter;
+import net.iteach.service.comment.CommentRawFormatter;
 import net.iteach.service.db.SQLUtils;
 
 import org.joda.time.DateTime;
@@ -37,15 +43,25 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 	private static final String SQL_INSERT = "INSERT INTO COMMENTS (ENTITY_TYPE, ENTITY_ID, CREATION, EDITION, CONTENT) VALUES ('%s', :entityId, :creation, NULL, :content)";
 
 	private static final String SQL_UPDATE = "UPDATE COMMENTS SET EDITION = :edition, CONTENT = :content WHERE ID = :id AND ENTITY_TYPE = '%s' AND ENTITY_ID = :entityId";
+	
+	private final EnumMap<CommentFormat, CommentFormatter> commentFormatters;
 
 	@Autowired
 	public CommentsServiceImpl(DataSource dataSource, Validator validator) {
 		super(dataSource, validator);
+		Map<CommentFormat, CommentFormatter> map = new HashMap<>();
+		map.put(CommentFormat.RAW, new CommentRawFormatter());
+		map.put(CommentFormat.HTML, new CommentHTMLFormatter());
+		commentFormatters = new EnumMap<>(map);
 	}
 
 	protected String getPreview(String content, CommentFormat format) {
-		// FIXME Implement CommentsServiceImpl.getPreview
-		return content;
+		CommentFormatter formatter = commentFormatters.get(format);
+		if (formatter == null) {
+			throw new CommentFormatterNotFoundException (format);
+		} else {
+			return formatter.format (content);
+		}
 	}
 	
 	@Override
