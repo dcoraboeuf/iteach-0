@@ -12,10 +12,14 @@
 	width: 95%;
 }
 
+#commentsPreview {
+}
+
 /* List */
 
 .comment {
 	margin-top: 5px;
 	margin-bottom: 0px;
 	padding: 5px;
+	margin-bottom: 10px;
 }
