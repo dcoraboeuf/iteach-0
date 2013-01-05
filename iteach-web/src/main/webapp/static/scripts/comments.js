@@ -1,5 +1,22 @@
 var Comments = function () {
 	
+	function commentToHTML (comment) {
+		var html = '';
+		html += '<div class="comment well" id="{0}">'.format(comment.id);
+			// FIXME Escape and format the message
+			html += '<div class="comment-content">{0}</div>'.format(comment.content.htmlWithLines());
+		html += '</div>';
+		return html;
+	}
+	
+	function appendComment (comment) {
+		$('#comments-list').append(commentToHTML (comment));
+	}
+	
+	function prependComment (comment) {
+		$('#comments-list').prepend(commentToHTML (comment));
+	}
+	
 	function loadCommentsWith (offset, count) {
 		// Marks the lessons as being loading...
 		application.loading('#comments-list', true);
@@ -16,13 +33,7 @@ var Comments = function () {
 		  		// For each comment
 		  		for (var i in data.list) {
 		  			var comment = data.list[i];
-		  			var html = '';
-		  			html += '<div class="comment well" id="{0}">'.format(comment.id);
-		  				// FIXME Escape and format the message
-		  				html += '<div class="comment-content">{0}</div>'.format(comment.content.htmlWithLines());
-		  			html += '</div>';
-		  			
-		  			$('#comments-list').append(html);
+		  			appendComment(comment);
 		  		}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
@@ -66,8 +77,9 @@ var Comments = function () {
 			}),
 			dataType: 'json',
 			success: function (data) {
-				// FIXME Adds the comment to the list
-				location.reload();
+				// Adds the comment to the list at the beginning
+	  			prependComment(data);
+	  			$('#comments-dialog').dialog('close');
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 			  	if (jqXHR.responseText && jqXHR.responseText != '') {
