@@ -55,7 +55,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 		commentFormatters = new EnumMap<>(map);
 	}
 
-	protected String getPreview(String content, CommentFormat format) {
+	protected String formatComment(String content, CommentFormat format) {
 		CommentFormatter formatter = commentFormatters.get(format);
 		if (formatter == null) {
 			throw new CommentFormatterNotFoundException (format);
@@ -66,7 +66,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 	
 	@Override
 	public CommentPreview getPreview(CommentPreview request) {
-		String content = getPreview (request.getContent(), request.getFormat());
+		String content = formatComment (request.getContent(), request.getFormat());
 		return request.withContent(content);
 	}
 
@@ -82,8 +82,9 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 					@Override
 					public CommentSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
 						String content = rs.getString("content");
-						// FIXME Format of the summary
 						// FIXME Truncate the comment if needed
+						// Format of the summary
+						content = formatComment(content, format);
 						boolean summary = false;
 						return new CommentSummary(
 							rs.getInt("id"),
@@ -109,7 +110,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 				@Override
 				public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {
 					String content = rs.getString("content");
-					// FIXME Formats the content
+					content = formatComment(content, format);
 					return new Comment(
 						commentId,
 						SQLUtils.getDateTime(rs.getTimestamp("creation")),
@@ -144,8 +145,9 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 				// TODO Throw another exception
 				throw new RuntimeException("Could not update the comment");
 			} else {
-				// FIXME Manages the format
-				return new Comment(commentId, creation, edition, format, form.getContent());
+				// Manages the format
+				String content = formatComment(form.getContent(), format);
+				return new Comment(commentId, creation, edition, format, content);
 			}
 		}
 		// Creation

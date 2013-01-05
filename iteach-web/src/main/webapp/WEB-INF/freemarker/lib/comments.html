@@ -4,8 +4,9 @@
 <#macro comments url>
 	<input id="comments-url" type="hidden" value="${url?html}" />
 	<button id="comments-new" type="button" class="btn"><@lh key="comment.new" /></button>
-	<div id="comments-list"></div>
+	<div id="comments-list-loading"></div>
 	<div id="comments-error" class="alert alert-error"></div>
+	<div id="comments-list"></div>
 	<@dialog id="comments-dialog">
 		<form id="comments-dialog-form">
 			<div id="comments-dialog-area">

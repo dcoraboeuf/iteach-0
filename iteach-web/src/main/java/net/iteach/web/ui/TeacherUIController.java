@@ -232,8 +232,8 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 	}
 	
 	@Override
-	@RequestMapping(value = "/student/{studentId:\\d+}/comment/{commentId:\\d+}/{format:.*}", method = RequestMethod.POST)
-	public Comment getStudentComment(@PathVariable int studentId, @PathVariable int commentId, @PathVariable CommentFormat format) {
+	@RequestMapping(value = "/student/{studentId:\\d+}/comment/{commentId:\\d+}/{format:.*}", method = RequestMethod.GET)
+	public @ResponseBody Comment getStudentComment(@PathVariable int studentId, @PathVariable int commentId, @PathVariable CommentFormat format) {
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
