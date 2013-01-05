@@ -61,7 +61,7 @@ public interface TeacherUI {
 	
 	// Comments
 	
-	Comments getStudentComments (int studentId, int offset, int count, CommentFormat format);
+	Comments getStudentComments (int studentId, int offset, int count, int maxlength, CommentFormat format);
 	
 	Comment getStudentComment(int studentId, int commentId, CommentFormat format);
 

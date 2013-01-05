@@ -223,13 +223,12 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 	}
 	
 	@Override
-	@RequestMapping(value = "/student/{studentId:\\d+}/comment/list/{format}/{offset:\\d+}/{count:\\d+}", method = RequestMethod.GET)
-	public @ResponseBody Comments getStudentComments(@PathVariable int studentId, @PathVariable int offset, @PathVariable int count, @PathVariable CommentFormat format) {
+	@RequestMapping(value = "/student/{studentId:\\d+}/comment/list/{maxlength:\\d+}/{format}/{offset:\\d+}/{count:\\d+}", method = RequestMethod.GET)
+	public @ResponseBody Comments getStudentComments(@PathVariable int studentId, @PathVariable int offset, @PathVariable int count, @PathVariable int maxlength, @PathVariable CommentFormat format) {
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		// FIXME Uses an object to define the comments query
-		return studentService.getStudentComments(userId, studentId, offset, count, 150, format);
+		return studentService.getStudentComments(userId, studentId, offset, count, maxlength, format);
 	}
 	
 	@Override

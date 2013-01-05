@@ -8,7 +8,7 @@ var Comments = function () {
 		// Loads the lessons
 		$.ajax({
 			type: 'GET',
-			url: '{0}/list/HTML/{1}/{2}'.format(url, offset, count),
+			url: '{0}/list/150/HTML/{1}/{2}'.format(url, offset, count), // 150 is the maximum length for the summary text
 			contentType: 'application/json',
 			dataType: 'json',
 			success: function (data) {
