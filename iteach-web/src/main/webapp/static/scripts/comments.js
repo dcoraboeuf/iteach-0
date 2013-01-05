@@ -10,7 +10,22 @@ var Comments = function () {
 	}
 	
 	function preview () {
-		
+  		application.loading('#commentsPreview', true);
+		$.ajax({
+			type: 'GET',
+			url: 'ui/comment/preview/HTML',
+			contentType: 'application/json',
+			dataType: 'json',
+			success: function (data) {
+		  		application.loading('#commentsPreview', false);
+		  		// TODO Preview
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+		  		application.loading('#commentsPreview', false);
+		  		$('#comments-preview-error').html(application.getAjaxError(loc('comments.preview.error'), jqXHR, textStatus, errorThrown).htmlWithLines());
+		  		$('#comments-preview-error').show();
+			}
+		});
 	}
 	
 	function appendComment (comment) {
@@ -62,6 +77,7 @@ var Comments = function () {
 			},
 			open: function () {
 				$('#comment-tab-content').tab('show');
+		  		$('#comments-preview-error').hide();
 			},
 			submit: {
 				name: loc('general.create'),
@@ -103,12 +119,15 @@ var Comments = function () {
 	function init () {
 		$('#comments-error').hide();
 		loadComments();
-		$('#comments-new').click(createComment)
+		$('#comments-new').click(createComment);
+		// Dialog -> preview
+		$('#comment-tab-preview').on('show', function (e) {
+			preview();
+		})
 	}
 	
 	return {
-		init: init,
-		preview: preview
+		init: init
 	};
 	
 } ();

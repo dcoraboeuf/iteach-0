@@ -432,3 +432,7 @@ comment.content
 comment.preview
 	en -> Preview
 	fr -> Prévisualisation
+
+comments.preview.error
+	en -> Cannot get preview
+	fr -> Impossible d'avoir la prévisualisation
