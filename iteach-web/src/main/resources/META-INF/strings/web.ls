@@ -436,3 +436,11 @@ comment.preview
 comments.preview.error
 	en -> Cannot get preview
 	fr -> Impossible d'avoir la prévisualisation
+
+comment.delete.prompt
+	en -> Do you want to delete this comment?
+	fr -> Voulez-vous supprimer ce commentaire?
+
+comment.delete.error
+	en -> Error while deleting the comment
+	fr -> Erreur lors de la suppression du commentaire

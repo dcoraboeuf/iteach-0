@@ -6,12 +6,12 @@ var Comments = function () {
 	
 	function commentToHTML (comment) {
 		var html = '';
-		html += '<div class="comment well" id="{0}">'.format(comment.id);
+		html += '<div class="comment well" id="comment-{0}">'.format(comment.id);
 			html += '<div class="comment-header">';
 				html += '<small class="comment-creation">{0}</small>'.format(formatTimestamp(comment.creation));
 				html += '<span class="comment-actions pull-right">';
-					html += '<i class="icon-edit"></i>';
-					html += '<i class="icon-trash"></i>';
+					html += '<i id="comment-edit-{0}" class="icon-edit"></i>'.format(comment.id);
+					html += '<i id="comment-delete-{0}" class="icon-trash"></i>'.format(comment.id);
 				html += '</span>';
 			html += '</div>';
 			html += '<div class="comment-content">{0}</div>'.format(comment.content);
@@ -61,8 +61,32 @@ var Comments = function () {
 		});
 	}
 	
+	function deleteComment (id) {
+		var url = $('#comments-url').val();
+		application.confirmAndCall (loc('comment.delete.prompt'), function () {
+			$.ajax({
+				type: 'DELETE',
+				url: '{0}/{1}'.format(url, id),
+				dataType: 'json',
+				success: function (data) {
+					$('#comment-{0}'.format(id)).remove();
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					application.displayAjaxError(loc('comment.delete.error'), jqXHR, textStatus, errorThrown);
+				}
+			});
+		});
+	}
+	
+	function setCommentActions (comment) {
+		$("#comment-delete-{0}".format(comment.id)).click(function () {
+			deleteComment(comment.id);
+		});
+	}
+	
 	function appendComment (comment) {
 		$('#comments-list').append(commentToHTML (comment));
+		setCommentActions (comment);
 	}
 	
 	/**
@@ -72,6 +96,7 @@ var Comments = function () {
 		loadComment(comment.id, function (c) {
 			$('#comments-list').prepend(commentToHTML (c));
 		});
+		setCommentActions (comment);
 	}
 	
 	function loadCommentsWith (offset, count) {

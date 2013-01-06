@@ -251,7 +251,7 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 	
 	@Override
 	@RequestMapping(value = "/student/{studentId:\\d+}/comment/{commentId:\\d+}", method = RequestMethod.DELETE)
-	public Ack deleteStudentComment(@PathVariable int studentId, @PathVariable int commentId) {
+	public @ResponseBody Ack deleteStudentComment(@PathVariable int studentId, @PathVariable int commentId) {
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
