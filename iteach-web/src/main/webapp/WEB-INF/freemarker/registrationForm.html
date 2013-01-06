@@ -3,7 +3,7 @@
 <@layout_std pageId="registrationForm" script=true showSecurity=false>
     <form action="registration" method="POST" onsubmit="return registration.control();" class="form-horizontal">
         <input id="mode" type="hidden" name="mode" value="${mode?html}" />
-        <input id="identifier" name="identifier" type="hidden" value="${identifier?html}" />
+        <input id="identifier" name="identifier" type="hidden" value="${identifier!''?html}" />
         <div class="control-group">
             <label class="control-label" for="firstName"><@lh key="user.firstName" /></label>
             <div class="controls">
@@ -25,13 +25,13 @@
         <div id="password-line" class="control-group">
             <label class="control-label" for="password"><@lh key="registration.password" /></label>
             <div class="controls">
-                <input id="password" name="password" type="password" maxlength="20" />
+                <input id="password" name="password" type="password" maxlength="20" required="required" />
             </div>
         </div>
         <div id="password-confirm-line" class="control-group">
             <label class="control-label" for="password"><@lh key="registration.password.confirm" /></label>
             <div class="controls">
-                <input id="confirmPassword" type="password" maxlength="20" />
+                <input id="confirmPassword" name="confirmPassword" type="password" maxlength="20" required="required" />
             </div>
         </div>
         <div class="control-group">

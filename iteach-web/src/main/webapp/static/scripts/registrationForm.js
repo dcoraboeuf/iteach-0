@@ -4,7 +4,9 @@ var registration = function () {
 		init: function () {
 			var mode = document.getElementById('mode').value;
 			if (mode == 'openid') {
+				$('#password').removeAttr('required');
 				$('#password-line').hide();
+				$('#confirmPassword').removeAttr('required');
 				$('#password-confirm-line').hide();
 			}
 		},
@@ -18,7 +20,12 @@ var registration = function () {
 				if (mode == 'openid') {
 					return true;
 				} else {
-					return application.validateConfirmation('#password', '#confirmPassword');
+					if (application.validateConfirmation('#password', '#confirmPassword')) {
+						return true;
+					} else {
+						$('#password-confirm-line').addClass('error');
+						return false;
+					}
 				}
 			} else {
 				return false;

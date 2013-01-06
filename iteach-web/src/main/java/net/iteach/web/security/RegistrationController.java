@@ -18,7 +18,6 @@ public class RegistrationController {
 
 	@Autowired
 	public RegistrationController(SecurityService securityService) {
-		super();
 		this.securityService = securityService;
 	}
 
@@ -30,6 +29,15 @@ public class RegistrationController {
 		String identifier = (String) session.getAttribute("USER_OPENID_CREDENTIAL");
 		model.addAttribute("identifier", identifier);
 		model.addAttribute("mode", "openid");
+		return "registrationForm";
+	}
+
+	/**
+	 * Used to register as a simple user
+	 */
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String register(Model model) {
+		model.addAttribute("mode", "basic");
 		return "registrationForm";
 	}
 
