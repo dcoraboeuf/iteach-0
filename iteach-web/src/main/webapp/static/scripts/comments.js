@@ -1,5 +1,6 @@
 var Comments = function () {
 	
+	var commentsSpan = 5;
 	var totalComments = 0;
 
 	function formatTimestamp (timestamp) {
@@ -96,6 +97,7 @@ var Comments = function () {
 				dataType: 'json',
 				success: function (data) {
 					$('#comment-{0}'.format(id)).remove();
+					totalComments--;
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					application.displayAjaxError(loc('comment.delete.error'), jqXHR, textStatus, errorThrown);
@@ -200,11 +202,11 @@ var Comments = function () {
 	}
 	
 	function loadComments () {
-		loadCommentsWith (0, 10);
+		loadCommentsWith (0, commentsSpan);
 	}
 	
 	function loadMore () {
-		loadCommentsWith (totalComments, 10);
+		loadCommentsWith (totalComments, commentsSpan);
 	}
 	
 	function createComment () {
