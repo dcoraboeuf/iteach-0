@@ -9,6 +9,11 @@ var Comments = function () {
 		html += '<div class="comment well" id="comment-{0}">'.format(comment.id);
 			html += '<div class="comment-header">';
 				html += '<small class="comment-creation">{0}</small>'.format(formatTimestamp(comment.creation));
+				if (comment.edition) {
+					html += ' <small class="comment-edition">({0})</small>'.format(
+						loc('comment.edition', formatTimestamp(comment.edition))
+						);
+				}
 				html += '<span class="comment-actions pull-right">';
 					html += '<i id="comment-edit-{0}" class="icon-edit"></i>'.format(comment.id);
 					html += '<i id="comment-delete-{0}" class="icon-trash"></i>'.format(comment.id);

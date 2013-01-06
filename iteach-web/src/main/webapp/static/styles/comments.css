@@ -33,6 +33,10 @@
 	color: gray;
 }
 
+.comment-edition {
+	color: #AA2222;
+}
+
 .comment-actions {
 	display: none;
 }

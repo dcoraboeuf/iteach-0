@@ -452,3 +452,7 @@ comment.edit
 comment.edit.error
 	en -> Error while updating the comment
 	fr -> Erreur lors de la mofication du commentaire
+
+comment.edition
+	en -> edited on {0}
+	fr -> édité le {0}
