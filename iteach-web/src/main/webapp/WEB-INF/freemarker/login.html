@@ -51,12 +51,15 @@
 			</div>
 			<div class="control-group">
 				<div class="controls">
-						<button type="submit" class="btn">
-							<@lh key="login" />
-						</button>
-						<a href="register" class="btn btn-link"><@lh key="register" /></a>
+					<button type="submit" class="btn">
+						<@lh key="login" />
+					</button>
+					<a href="register" class="btn btn-link"><@lh key="register" /></a>
 				</div>
 			</div>
+			<#if error??>
+				<div class="alert alert-error"><@lh key="login.error" /></div>
+			</#if>
 		</form>
 	</@panel>
 	

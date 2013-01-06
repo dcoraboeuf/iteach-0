@@ -105,7 +105,9 @@ login.password
 	en -> Password
 	fr -> Mot de passe
 
-login.
+login.error
+	en -> Incorrect user name or password
+	fr -> Utilisateur ou mot de passe incorrect
     
 [registration]
 
