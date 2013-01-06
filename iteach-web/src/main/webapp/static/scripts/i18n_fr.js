@@ -28,5 +28,6 @@ var i18n = {
 		},
 		axisFormat: 'HH(:mm)',
 		dayOfMonthFormat: 'dddd dd',
-		simpleTimeFormat: 'HH:mm'
+		simpleTimeFormat: 'HH:mm',
+		timestampFormat: 'ddd, dd MMM @ HH:mm'
 };

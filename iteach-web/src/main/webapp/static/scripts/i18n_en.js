@@ -11,5 +11,6 @@ var i18n = {
 			day: 'Day'
 		},
 		dayOfMonthFormat: 'dddd, d',
-		simpleTimeFormat: 'H:mm'
+		simpleTimeFormat: 'H:mm tt',
+		timestampFormat: 'ddd, MMM dd @ H:mm tt'
 };

@@ -1,9 +1,15 @@
 var Comments = function () {
+
+	function formatTimestamp (timestamp) {
+		return $.fullCalendar.formatDate (new Date(timestamp), i18n.timestampFormat, i18n);
+	}
 	
 	function commentToHTML (comment) {
 		var html = '';
 		html += '<div class="comment well" id="{0}">'.format(comment.id);
-			// FIXME Escape and format the message
+			html += '<div class="comment-header">';
+				html += '<span class="comment-creation">{0}</span>'.format(formatTimestamp(comment.creation));
+			html += '</div>';
 			html += '<div class="comment-content">{0}</div>'.format(comment.content);
 		html += '</div>';
 		return html;
