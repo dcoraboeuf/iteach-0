@@ -160,8 +160,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 					.addValue("content", form.getContent())
 					.addValue("edition", SQLUtils.toTimestamp(edition)));
 			if (count != 1) {
-				// TODO Throw another exception
-				throw new RuntimeException("Could not update the comment");
+				throw new CommentUpdateException ();
 			} else {
 				// Manages the format
 				String content = formatComment(form.getContent(), format);
@@ -179,8 +178,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 					.addValue("creation", SQLUtils.toTimestamp(creation)),
 				keyHolder);
 			if (count != 1) {
-				// TODO Throw another exception
-				throw new RuntimeException("Could not insert the comment");
+				throw new CommentUpdateException ();
 			} else {
 				int id = keyHolder.getKey().intValue();
 				return new Comment(id, creation, null, format, form.getContent());

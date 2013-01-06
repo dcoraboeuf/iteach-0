@@ -7,3 +7,6 @@ net.iteach.service.impl.SchoolNameAlreadyDefined
 net.iteach.service.impl.CommentFormatterNotFoundException
 	en -> [E-003] The comment format {0} is not defined.
 	fr -> [E-003] The format de commentaire {0} n'est pas défini.
+net.iteach.service.impl.CommentUpdateException
+	en -> [E-004] Problem while updating/inserting a comment
+	fr -> [E-004] Problème lors de la mise à jour ou l'ajout d'un commentaire
