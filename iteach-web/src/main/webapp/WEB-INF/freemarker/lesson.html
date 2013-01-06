@@ -4,7 +4,7 @@
 	${locFormatDate(lesson.date)} - ${locFormatTime(lesson.from)}
 </#assign>
 
-<@layout_std pageId="lesson" title=lessonName modules=["data","planning","coordinates"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home", lesson.student.school.name: "gui/school/${lesson.student.school.id}", lesson.student.name: "gui/student/${lesson.student.id}"}>
+<@layout_std pageId="lesson" title=lessonName modules=["data","planning","coordinates","comments","planning"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home", lesson.student.school.name: "gui/school/${lesson.student.school.id}", lesson.student.name: "gui/student/${lesson.student.id}"}>
 	<div class="container-fluid">
 		<div id="home-row" class="row-fluid">
 			<!-- Left column -->
@@ -92,8 +92,8 @@
 			</div>
 			<!-- Right column -->
 			<div class="span4">
-				<@panel title=loc("lesson.details.comments")>
-					Coming soon!
+				<@panel id="comments" title=loc("lesson.details.comments")>
+					<@comments url="ui/teacher/lesson/${lesson.id}/comment" />
 				</@panel>
 			</div>
 		</div>
