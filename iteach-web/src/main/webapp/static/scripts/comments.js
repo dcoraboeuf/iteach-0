@@ -14,9 +14,15 @@ var Comments = function () {
 					html += '<i id="comment-delete-{0}" class="icon-trash"></i>'.format(comment.id);
 				html += '</span>';
 			html += '</div>';
-			html += '<div class="comment-content">{0}</div>'.format(comment.content);
+			html += '<div class="comment-content" id="comment-content-{0}">{1}</div>'.format(comment.id, comment.content);
 		html += '</div>';
 		return html;
+	}
+	
+	function reloadComment (id) {
+		loadComment (id, function (comment) {
+			$('#comment-{0}'.format(id)).replaceWith(commentToHTML(comment));
+		});
 	}
 	
 	function loadComment (commentId, callbackFn) {
@@ -78,9 +84,48 @@ var Comments = function () {
 		});
 	}
 	
+	function editComment (id) {
+		var url = $('#comments-url').val();
+		// Loads the full comment
+		application.loading('#comments-list-loading', true);
+		$.ajax({
+			type: 'GET',
+			url: '{0}/{1}/RAW'.format(url, id),
+			dataType: 'json',
+			success: function (data) {
+				application.loading('#comments-list-loading', false);
+				application.dialog({
+					id: 'comments-dialog',
+					title: loc('comment.edit'),
+					width: 500,
+					data: {
+						commentsContent: data.content
+					},
+					open: function () {
+						$('#comment-tab-content').tab('show');
+						$('#comments-preview-error').hide();
+					},
+					submit: {
+						name: loc('general.update'),
+						action: function () {
+							return submitEditComment(id);
+						}
+					}
+				});
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				application.loading('#comments-list-loading', false);
+				application.displayAjaxError(loc('comment.loading.error'), jqXHR, textStatus, errorThrown);
+			}
+		});
+	}
+	
 	function setCommentActions (comment) {
 		$("#comment-delete-{0}".format(comment.id)).click(function () {
 			deleteComment(comment.id);
+		});
+		$("#comment-edit-{0}".format(comment.id)).click(function () {
+			editComment(comment.id);
 		});
 	}
 	
@@ -173,6 +218,35 @@ var Comments = function () {
 			  		$('#comments-dialog-error').show();
 			  	} else {
 			  		application.displayAjaxError (loc('comment.new.error'), jqXHR, textStatus, errorThrown);
+			  	}
+			}
+		});
+		return false;
+	}
+	
+	function submitEditComment (id) {
+		// URL
+		var url = $('#comments-url').val();
+		// POST
+		$.ajax({
+			type: 'POST',
+			url: '{0}/HTML'.format(url),
+			contentType: 'application/json',
+			data: JSON.stringify({
+				id: id,
+				content: $('#commentsContent').val()
+			}),
+			dataType: 'json',
+			success: function (data) {
+				reloadComment(id);
+	  			$('#comments-dialog').dialog('close');
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+			  	if (jqXHR.responseText && jqXHR.responseText != '') {
+			  		$('#comments-dialog-error').html(jqXHR.responseText.htmlWithLines());
+			  		$('#comments-dialog-error').show();
+			  	} else {
+			  		application.displayAjaxError (loc('comment.edit.error'), jqXHR, textStatus, errorThrown);
 			  	}
 			}
 		});

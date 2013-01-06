@@ -444,3 +444,11 @@ comment.delete.prompt
 comment.delete.error
 	en -> Error while deleting the comment
 	fr -> Erreur lors de la suppression du commentaire
+
+comment.edit
+	en -> Edit comment
+	fr -> Editer le commentaire
+
+comment.edit.error
+	en -> Error while updating the comment
+	fr -> Erreur lors de la mofication du commentaire
