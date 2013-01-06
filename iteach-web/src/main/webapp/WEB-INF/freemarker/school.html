@@ -1,6 +1,6 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="school" title=school.name style=true modules=["data","coordinates"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home"}>
+<@layout_std pageId="school" title=school.name style=true modules=["data","coordinates","comments", "planning"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home"}>
 	<div class="container-fluid">
 		<div id="home-row" class="row-fluid">
 			<!-- Left column -->
@@ -48,8 +48,8 @@
 			</div>
 			<!-- Right column -->
 			<div class="span4">
-				<@panel title=loc("school.details.comments")>
-					Coming soon!
+				<@panel id="comments" title=loc("school.details.comments")>
+					<@comments url="ui/teacher/school/${school.id}/comment" />
 				</@panel>
 			</div>
 		</div>
