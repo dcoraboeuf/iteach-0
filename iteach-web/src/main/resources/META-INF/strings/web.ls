@@ -472,3 +472,19 @@ comment.more
 comment.more.tip
 	en -> Loads the full content.
 	fr -> Charge le contenu complet.
+	
+comment.content.help
+	en -> ...
+		<ul>
+			<li>Links are rendered as links</li>
+			<li><code>*...*</code> is rendered as <b>bold</b></li>
+			<li><code>_..._</code> is rendered as <i>italic</i></li>
+		</ul>
+		...
+	fr -> ...
+		<ul>
+			<li>Les liens sont rendus en tant que liens</li>
+			<li><code>*...*</code> est affiché en <b>gras</b></li>
+			<li><code>_..._</code> est affiché en <i>italique</i></li>
+		</ul>
+		...
