@@ -456,3 +456,11 @@ comment.edit.error
 comment.edition
 	en -> edited on {0}
 	fr -> édité le {0}
+
+comment.more
+	en -> more
+	fr -> suite
+
+comment.more.tip
+	en -> Loads the full content.
+	fr -> Charge le contenu complet.

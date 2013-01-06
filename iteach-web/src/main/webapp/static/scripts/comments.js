@@ -4,6 +4,18 @@ var Comments = function () {
 		return $.fullCalendar.formatDate (new Date(timestamp), i18n.timestampFormat, i18n);
 	}
 	
+	function commentContent (comment) {
+		if (comment.summary) {
+			return '{1} <span onclick="" class="comment-more" title="{3}">{2}</span>'.format(
+				comment.id,
+				comment.content,
+				loc('comment.more'),
+				loc('comment.more.tip'));
+		} else {
+			return comment.content;
+		}
+	}
+	
 	function commentToHTML (comment) {
 		var html = '';
 		html += '<div class="comment well" id="comment-{0}">'.format(comment.id);
@@ -19,7 +31,7 @@ var Comments = function () {
 					html += '<i id="comment-delete-{0}" class="icon-trash"></i>'.format(comment.id);
 				html += '</span>';
 			html += '</div>';
-			html += '<div class="comment-content" id="comment-content-{0}">{1}</div>'.format(comment.id, comment.content);
+			html += '<div class="comment-content" id="comment-content-{0}">{1}</div>'.format(comment.id, commentContent(comment));
 		html += '</div>';
 		return html;
 	}

@@ -45,3 +45,14 @@
 	display: inline;
 	cursor: pointer;
 }
+
+.comment-more {
+	cursor: pointer;
+	color: gray;
+	font-size: 75%;
+}
+
+.comment-more:hover {
+	color: blue;
+	text-decoration: underline;
+}

@@ -32,6 +32,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.apache.commons.lang3.StringUtils;
 
 @Service
 public class CommentsServiceImpl extends AbstractServiceImpl implements CommentsService {
@@ -85,10 +86,16 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 					@Override
 					public CommentSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
 						String content = rs.getString("content");
-						// FIXME Truncate the comment if needed
+						// Truncate the comment if needed
+						boolean summary;
+						if (content.length() > maxlength) {
+							content = StringUtils.abbreviate(content, maxlength);
+							summary = true;
+						} else {
+							summary = false;
+						}
 						// Format of the summary
 						content = formatComment(content, format);
-						boolean summary = false;
 						return new CommentSummary(
 							rs.getInt("id"),
 							SQLUtils.getDateTime(rs, "creation"),
