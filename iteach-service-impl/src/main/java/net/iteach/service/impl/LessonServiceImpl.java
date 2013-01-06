@@ -11,10 +11,15 @@ import java.util.List;
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
+import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.LessonService;
 import net.iteach.api.model.Entity;
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Comment;
+import net.iteach.core.model.CommentFormat;
+import net.iteach.core.model.Comments;
+import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.Lesson;
 import net.iteach.core.model.LessonDetails;
@@ -42,11 +47,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class LessonServiceImpl extends AbstractServiceImpl implements LessonService {
 	
 	private final CoordinatesService coordinatesService;
+	private final CommentsService commentsService;
 
 	@Autowired
-	public LessonServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService) {
+	public LessonServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService, CommentsService commentsService) {
 		super(dataSource, validator);
 		this.coordinatesService = coordinatesService;
+		this.commentsService = commentsService;
 	}
 	
 	@Override
@@ -204,6 +211,42 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 		checkTeacherForLesson(teacherId, id);
 		int count = getNamedParameterJdbcTemplate().update(SQL.LESSON_DELETE, params("id", id));
 		return Ack.one(count);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Comments getLessonComments(int userId, int lessonId, int offset, int count, int maxlength, CommentFormat format) {
+		// Check for the associated teacher
+		checkTeacherForLesson(userId, lessonId);
+		// Gets the comments
+		return commentsService.getComments (Entity.LESSONS, lessonId, offset, count, maxlength, format);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Comment getLessonComment(int userId, int lessonId, int commentId, CommentFormat format) {
+		// Check for the associated teacher
+		checkTeacherForLesson(userId, lessonId);
+		// Gets the comment
+		return commentsService.getComment (Entity.LESSONS, lessonId, commentId, format);
+	}
+	
+	@Override
+	@Transactional
+	public Comment editLessonComment(int userId, int lessonId, CommentFormat format, CommentsForm form) {
+		// Check for the associated teacher
+		checkTeacherForLesson(userId, lessonId);
+		// Creates the comment
+		return commentsService.editComment (Entity.LESSONS, lessonId, format, form);
+	}
+	
+	@Override
+	@Transactional
+	public Ack deleteLessonComment(int userId, int lessonId, int commentId) {
+		// Check for the associated teacher
+		checkTeacherForLesson(userId, lessonId);
+		// Deletes the comment
+		return commentsService.deleteComment (Entity.LESSONS, lessonId, commentId);
 	}
 
 }

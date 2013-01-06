@@ -7,11 +7,16 @@ import java.util.List;
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
+import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.SchoolService;
 import net.iteach.api.StudentService;
 import net.iteach.api.model.Entity;
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Comment;
+import net.iteach.core.model.CommentFormat;
+import net.iteach.core.model.Comments;
+import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.SchoolDetails;
@@ -35,12 +40,14 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	
 	private final StudentService studentService;	
 	private final CoordinatesService coordinatesService;
+	private final CommentsService commentsService;
 
 	@Autowired
-	public SchoolServiceImpl(DataSource dataSource, Validator validator, StudentService studentService, CoordinatesService coordinatesService) {
+	public SchoolServiceImpl(DataSource dataSource, Validator validator, StudentService studentService, CoordinatesService coordinatesService, CommentsService commentsService) {
 		super(dataSource, validator);
 		this.studentService = studentService;
 		this.coordinatesService = coordinatesService;
+		this.commentsService = commentsService;
 	}
 
 	@Override
@@ -175,6 +182,42 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		checkTeacherForSchool (userId, id);
 		// OK
 		return coordinatesService.getCoordinates (Entity.SCHOOLS, id);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Comments getSchoolComments(int userId, int schoolId, int offset, int count, int maxlength, CommentFormat format) {
+		// Check for the associated teacher
+		checkTeacherForSchool(userId, schoolId);
+		// Gets the comments
+		return commentsService.getComments (Entity.SCHOOLS, schoolId, offset, count, maxlength, format);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Comment getSchoolComment(int userId, int schoolId, int commentId, CommentFormat format) {
+		// Check for the associated teacher
+		checkTeacherForSchool(userId, schoolId);
+		// Gets the comment
+		return commentsService.getComment (Entity.SCHOOLS, schoolId, commentId, format);
+	}
+	
+	@Override
+	@Transactional
+	public Comment editSchoolComment(int userId, int schoolId, CommentFormat format, CommentsForm form) {
+		// Check for the associated teacher
+		checkTeacherForSchool(userId, schoolId);
+		// Creates the comment
+		return commentsService.editComment (Entity.SCHOOLS, schoolId, format, form);
+	}
+	
+	@Override
+	@Transactional
+	public Ack deleteSchoolComment(int userId, int schoolId, int commentId) {
+		// Check for the associated teacher
+		checkTeacherForSchool(userId, schoolId);
+		// Deletes the comment
+		return commentsService.deleteComment (Entity.SCHOOLS, schoolId, commentId);
 	}
 
 }
