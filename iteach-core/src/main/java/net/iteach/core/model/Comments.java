@@ -8,5 +8,6 @@ import lombok.Data;
 public class Comments {
 	
 	private final List<CommentSummary> list;
+	private final boolean more;
 
 }

@@ -38,7 +38,8 @@ import org.apache.commons.lang3.StringUtils;
 public class CommentsServiceImpl extends AbstractServiceImpl implements CommentsService {
 
 	private static final String SQL_SELECT_FOR_ENTITY_WITH_ID = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :entityId AND ID = :commentId";
-	private static final String SQL_SELECT_FOR_ENTITY_WITH_OFFSET = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :id ORDER BY CREATION DESC";
+	private static final String SQL_COUNT_FOR_ENTITY = "SELECT COUNT(ID) FROM COMMENTS WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :id";
+	private static final String SQL_SELECT_FOR_ENTITY_WITH_OFFSET = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :id ORDER BY CREATION DESC LIMIT :count OFFSET :offset";
 	
 	private static final String SQL_CREATION_TIME = "SELECT CREATION FROM COMMENTS WHERE ID = :id";
 
@@ -77,11 +78,17 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 	@Override
 	@Transactional(readOnly = true)
 	public Comments getComments(Entity entity, int id, int offset, int count, final int maxlength, final CommentFormat format) {
-		// FIXME Offset and count
+		// Total number of comments
+		int total = getNamedParameterJdbcTemplate().queryForInt(
+			format(SQL_COUNT_FOR_ENTITY, entity.name()),
+			params("id", id));
+		// Is there more?
+		boolean more = (offset + count < total);
+		// Gets the list
 		return new Comments(
 			getNamedParameterJdbcTemplate().query(
 				format(SQL_SELECT_FOR_ENTITY_WITH_OFFSET, entity.name()),
-				params("id", id),
+				params("id", id).addValue("offset", offset).addValue("count", count),
 				new RowMapper<CommentSummary>() {
 					@Override
 					public CommentSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -106,7 +113,8 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 							);
 					}
 				}
-			)
+			),
+			more
 		);
 	}
 	

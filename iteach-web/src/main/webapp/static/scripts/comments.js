@@ -1,4 +1,6 @@
 var Comments = function () {
+	
+	var totalComments = 0;
 
 	function formatTimestamp (timestamp) {
 		return $.fullCalendar.formatDate (new Date(timestamp), i18n.timestampFormat, i18n);
@@ -179,6 +181,14 @@ var Comments = function () {
 		  			var comment = data.list[i];
 		  			appendComment(comment);
 		  		}
+		  		// More button
+		  		if (data.more) {
+		  			$('#comments-list-more').show();
+		  		} else {
+		  			$('#comments-list-more').hide();
+		  		}
+		  		// Adjust the total
+		  		totalComments += data.list.length;
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 		  		$('#comments-error').html(application.getAjaxError(loc('comments.loading.error'), jqXHR, textStatus, errorThrown).htmlWithLines());
@@ -190,6 +200,10 @@ var Comments = function () {
 	
 	function loadComments () {
 		loadCommentsWith (0, 10);
+	}
+	
+	function loadMore () {
+		loadCommentsWith (totalComments, 10);
 	}
 	
 	function createComment () {
@@ -282,7 +296,8 @@ var Comments = function () {
 	
 	return {
 		init: init,
-		reloadComment: reloadComment
+		reloadComment: reloadComment,
+		loadMore: loadMore
 	};
 	
 } ();

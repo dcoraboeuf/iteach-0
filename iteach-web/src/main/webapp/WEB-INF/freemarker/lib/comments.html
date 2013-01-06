@@ -7,6 +7,11 @@
 	<div id="comments-list-loading"></div>
 	<div id="comments-error" class="alert alert-error"></div>
 	<div id="comments-list"></div>
+	<div id="comments-list-more">
+		<button class="btn btn-link" type="button" id="comments-list-more-button" title="<@lh key='comment.loading.more.tip' />" onclick="Comments.loadMore();">
+			<@lh key="comment.loading.more" />
+		</button>
+	</div>
 	<@dialog id="comments-dialog">
 		<form id="comments-dialog-form">
 			<div id="comments-dialog-area">

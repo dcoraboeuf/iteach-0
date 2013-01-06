@@ -56,3 +56,7 @@
 	color: blue;
 	text-decoration: underline;
 }
+
+#comments-list-more {
+	display: none;
+}

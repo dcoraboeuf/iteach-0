@@ -417,6 +417,14 @@ comments.loading.error
 	en -> Error while loading the comments
 	fr -> Erreur lors du chargement des commentaires
 
+comment.loading.more
+	en -> More...
+	fr -> Suite...
+
+comment.loading.more.tip
+	en -> Load the next comments.
+	fr -> Charge les commentaires suivants.
+
 comment.new
 	en -> Add a comment
 	fr -> Ajouter un commentaire
