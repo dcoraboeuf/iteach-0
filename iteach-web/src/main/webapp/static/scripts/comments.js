@@ -41,6 +41,7 @@ var Comments = function () {
 	function reloadComment (id) {
 		loadComment (id, function (comment) {
 			$('#comment-{0}'.format(id)).replaceWith(commentToHTML(comment));
+			setCommentActions (id);
 		});
 	}
 	
@@ -139,18 +140,18 @@ var Comments = function () {
 		});
 	}
 	
-	function setCommentActions (comment) {
-		$("#comment-delete-{0}".format(comment.id)).click(function () {
-			deleteComment(comment.id);
+	function setCommentActions (id) {
+		$("#comment-delete-{0}".format(id)).click(function () {
+			deleteComment(id);
 		});
-		$("#comment-edit-{0}".format(comment.id)).click(function () {
-			editComment(comment.id);
+		$("#comment-edit-{0}".format(id)).click(function () {
+			editComment(id);
 		});
 	}
 	
 	function appendComment (comment) {
 		$('#comments-list').append(commentToHTML (comment));
-		setCommentActions (comment);
+		setCommentActions (comment.id);
 	}
 	
 	/**
@@ -159,8 +160,8 @@ var Comments = function () {
 	function prependComment (comment) {
 		loadComment(comment.id, function (c) {
 			$('#comments-list').prepend(commentToHTML (c));
+			setCommentActions (c.id);
 		});
-		setCommentActions (comment);
 	}
 	
 	function loadCommentsWith (offset, count) {
