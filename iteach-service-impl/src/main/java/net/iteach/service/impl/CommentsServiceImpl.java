@@ -14,6 +14,7 @@ import javax.validation.Validator;
 
 import net.iteach.api.CommentsService;
 import net.iteach.api.model.Entity;
+import net.iteach.core.model.Ack;
 import net.iteach.core.model.Comment;
 import net.iteach.core.model.CommentFormat;
 import net.iteach.core.model.CommentPreview;
@@ -43,6 +44,8 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 	private static final String SQL_INSERT = "INSERT INTO COMMENTS (ENTITY_TYPE, ENTITY_ID, CREATION, EDITION, CONTENT) VALUES ('%s', :entityId, :creation, NULL, :content)";
 
 	private static final String SQL_UPDATE = "UPDATE COMMENTS SET EDITION = :edition, CONTENT = :content WHERE ID = :id AND ENTITY_TYPE = '%s' AND ENTITY_ID = :entityId";
+
+	private static final String SQL_DELETE = "DELETE FROM COMMENTS WHERE ID = :id AND ENTITY_TYPE = '%s' AND ENTITY_ID = :entityId";
 	
 	private final EnumMap<CommentFormat, CommentFormatter> commentFormatters;
 
@@ -168,6 +171,15 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 				return new Comment(id, creation, null, format, form.getContent());
 			}
 		}
+	}
+	
+	@Override
+	@Transactional
+	public Ack deleteComment(Entity entity, int entityId, int commentId) {
+		int count = getNamedParameterJdbcTemplate().update(
+			format(SQL_DELETE, entity.name()),
+			params("entityId", entityId).addValue("id", commentId));
+		return Ack.one(count);
 	}
 
 }

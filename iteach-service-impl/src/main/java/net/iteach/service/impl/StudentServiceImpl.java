@@ -222,5 +222,14 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Creates the comment
 		return commentsService.editComment (Entity.STUDENTS, studentId, format, form);
 	}
+	
+	@Override
+	@Transactional
+	public Ack deleteStudentComment(int userId, int studentId, int commentId) {
+		// Check for the associated teacher
+		checkTeacherForStudent(userId, studentId);
+		// Deletes the comment
+		return commentsService.deleteComment (Entity.STUDENTS, studentId, commentId);
+	}
 
 }

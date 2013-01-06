@@ -248,5 +248,14 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// OK
 		return studentService.editStudentComment(userId, studentId, format, form);
 	}
+	
+	@Override
+	@RequestMapping(value = "/student/{studentId:\\d+}/comment/{commentId:\\d+}", method = RequestMethod.DELETE)
+	public Ack deleteStudentComment(@PathVariable int studentId, @PathVariable int commentId) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return studentService.deleteStudentComment(userId, studentId, commentId);
+	}
 
 }

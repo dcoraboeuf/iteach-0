@@ -67,4 +67,6 @@ public interface TeacherUI {
 
 	Comment editStudentComment(int studentId, CommentFormat format, CommentsForm form);
 
+	Ack deleteStudentComment(int studentId, int commentId);
+
 }

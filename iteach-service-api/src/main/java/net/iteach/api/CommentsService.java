@@ -1,6 +1,7 @@
 package net.iteach.api;
 
 import net.iteach.api.model.Entity;
+import net.iteach.core.model.Ack;
 import net.iteach.core.model.Comment;
 import net.iteach.core.model.CommentFormat;
 import net.iteach.core.model.CommentPreview;
@@ -16,5 +17,7 @@ public interface CommentsService {
 	Comment getComment(Entity entity, int id, int commentId, CommentFormat format);
 
 	CommentPreview getPreview(CommentPreview request);
+
+	Ack deleteComment(Entity entity, int entityId, int commentId);
 
 }

@@ -35,4 +35,6 @@ public interface StudentService {
 
 	Comment getStudentComment(int userId, int studentId, int commentId, CommentFormat format);
 
+	Ack deleteStudentComment(int userId, int studentId, int commentId);
+
 }
