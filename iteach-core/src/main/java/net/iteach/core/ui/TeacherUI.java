@@ -59,7 +59,17 @@ public interface TeacherUI {
 
 	Coordinates getSchoolCoordinates(int id);
 	
-	// Comments
+	// Comments for lessons
+	
+	Comments getLessonComments (int lessonId, int offset, int count, int maxlength, CommentFormat format);
+	
+	Comment getLessonComment(int lessonId, int commentId, CommentFormat format);
+
+	Comment editLessonComment(int lessonId, CommentFormat format, CommentsForm form);
+
+	Ack deleteLessonComment(int lessonId, int commentId);
+	
+	// Comments for students
 	
 	Comments getStudentComments (int studentId, int offset, int count, int maxlength, CommentFormat format);
 	
@@ -68,5 +78,15 @@ public interface TeacherUI {
 	Comment editStudentComment(int studentId, CommentFormat format, CommentsForm form);
 
 	Ack deleteStudentComment(int studentId, int commentId);
+	
+	// Comments for schools
+	
+	Comments getSchoolComments (int schoolId, int offset, int count, int maxlength, CommentFormat format);
+	
+	Comment getSchoolComment(int schoolId, int commentId, CommentFormat format);
+
+	Comment editSchoolComment(int schoolId, CommentFormat format, CommentsForm form);
+
+	Ack deleteSchoolComment(int schoolId, int commentId);
 
 }

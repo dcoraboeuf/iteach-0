@@ -223,6 +223,78 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 	}
 	
 	@Override
+	@RequestMapping(value = "/lesson/{lessonId:\\d+}/comment/list/{maxlength:\\d+}/{format}/{offset:\\d+}/{count:\\d+}", method = RequestMethod.GET)
+	public @ResponseBody Comments getLessonComments(@PathVariable int lessonId, @PathVariable int offset, @PathVariable int count, @PathVariable int maxlength, @PathVariable CommentFormat format) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return lessonService.getLessonComments(userId, lessonId, offset, count, maxlength, format);
+	}
+	
+	@Override
+	@RequestMapping(value = "/lesson/{lessonId:\\d+}/comment/{commentId:\\d+}/{format:.*}", method = RequestMethod.GET)
+	public @ResponseBody Comment getLessonComment(@PathVariable int lessonId, @PathVariable int commentId, @PathVariable CommentFormat format) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return lessonService.getLessonComment(userId, lessonId, commentId, format);
+	}
+	
+	@Override
+	@RequestMapping(value = "/lesson/{lessonId:\\d+}/comment/{format:.*}", method = RequestMethod.POST)
+	public @ResponseBody Comment editLessonComment(@PathVariable int lessonId, @PathVariable CommentFormat format, @RequestBody CommentsForm form) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return lessonService.editLessonComment(userId, lessonId, format, form);
+	}
+	
+	@Override
+	@RequestMapping(value = "/lesson/{lessonId:\\d+}/comment/{commentId:\\d+}", method = RequestMethod.DELETE)
+	public @ResponseBody Ack deleteLessonComment(@PathVariable int lessonId, @PathVariable int commentId) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return lessonService.deleteLessonComment(userId, lessonId, commentId);
+	}
+	
+	@Override
+	@RequestMapping(value = "/school/{schoolId:\\d+}/comment/list/{maxlength:\\d+}/{format}/{offset:\\d+}/{count:\\d+}", method = RequestMethod.GET)
+	public @ResponseBody Comments getSchoolComments(@PathVariable int schoolId, @PathVariable int offset, @PathVariable int count, @PathVariable int maxlength, @PathVariable CommentFormat format) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return schoolService.getSchoolComments(userId, schoolId, offset, count, maxlength, format);
+	}
+	
+	@Override
+	@RequestMapping(value = "/school/{schoolId:\\d+}/comment/{commentId:\\d+}/{format:.*}", method = RequestMethod.GET)
+	public @ResponseBody Comment getSchoolComment(@PathVariable int schoolId, @PathVariable int commentId, @PathVariable CommentFormat format) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return schoolService.getSchoolComment(userId, schoolId, commentId, format);
+	}
+	
+	@Override
+	@RequestMapping(value = "/school/{schoolId:\\d+}/comment/{format:.*}", method = RequestMethod.POST)
+	public @ResponseBody Comment editSchoolComment(@PathVariable int schoolId, @PathVariable CommentFormat format, @RequestBody CommentsForm form) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return schoolService.editSchoolComment(userId, schoolId, format, form);
+	}
+	
+	@Override
+	@RequestMapping(value = "/school/{schoolId:\\d+}/comment/{commentId:\\d+}", method = RequestMethod.DELETE)
+	public @ResponseBody Ack deleteSchoolComment(@PathVariable int schoolId, @PathVariable int commentId) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return schoolService.deleteSchoolComment(userId, schoolId, commentId);
+	}
+	
+	@Override
 	@RequestMapping(value = "/student/{studentId:\\d+}/comment/list/{maxlength:\\d+}/{format}/{offset:\\d+}/{count:\\d+}", method = RequestMethod.GET)
 	public @ResponseBody Comments getStudentComments(@PathVariable int studentId, @PathVariable int offset, @PathVariable int count, @PathVariable int maxlength, @PathVariable CommentFormat format) {
 		// Gets the current teacher

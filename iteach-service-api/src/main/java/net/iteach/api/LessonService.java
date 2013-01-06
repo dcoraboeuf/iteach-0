@@ -3,6 +3,10 @@ package net.iteach.api;
 import org.joda.time.LocalDate;
 
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.Comment;
+import net.iteach.core.model.CommentFormat;
+import net.iteach.core.model.Comments;
+import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.LessonDetails;
 import net.iteach.core.model.LessonForm;
@@ -23,5 +27,13 @@ public interface LessonService {
 	StudentLessons getLessonsForStudent(int userId, int id, LocalDate date);
 
 	LessonDetails getLessonDetails(int userId, int id);
+
+	Comments getLessonComments(int userId, int lessonId, int offset, int count, int maxlength, CommentFormat format);
+
+	Comment editLessonComment(int userId, int lessonId, CommentFormat format, CommentsForm form);
+
+	Comment getLessonComment(int userId, int lessonId, int commentId, CommentFormat format);
+
+	Ack deleteLessonComment(int userId, int lessonId, int commentId);
 
 }
