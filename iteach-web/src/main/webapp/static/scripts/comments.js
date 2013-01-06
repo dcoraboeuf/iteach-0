@@ -6,7 +6,7 @@ var Comments = function () {
 	
 	function commentContent (comment) {
 		if (comment.summary) {
-			return '{1} <span onclick="" class="comment-more" title="{3}">{2}</span>'.format(
+			return '{1} <span onclick="Comments.reloadComment({0});" class="comment-more" title="{3}">{2}</span>'.format(
 				comment.id,
 				comment.content,
 				loc('comment.more'),
@@ -281,7 +281,8 @@ var Comments = function () {
 	}
 	
 	return {
-		init: init
+		init: init,
+		reloadComment: reloadComment
 	};
 	
 } ();
