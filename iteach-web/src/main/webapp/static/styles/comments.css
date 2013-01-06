@@ -27,3 +27,17 @@
 	padding: 5px;
 	margin-bottom: 10px;
 }
+
+.comment-header {
+	font-size: 75%;
+	color: gray;
+}
+
+.comment-actions {
+	display: none;
+}
+
+.comment:hover .comment-actions {
+	display: inline;
+	cursor: pointer;
+}

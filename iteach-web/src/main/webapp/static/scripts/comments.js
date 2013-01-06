@@ -8,7 +8,11 @@ var Comments = function () {
 		var html = '';
 		html += '<div class="comment well" id="{0}">'.format(comment.id);
 			html += '<div class="comment-header">';
-				html += '<span class="comment-creation">{0}</span>'.format(formatTimestamp(comment.creation));
+				html += '<small class="comment-creation">{0}</small>'.format(formatTimestamp(comment.creation));
+				html += '<span class="comment-actions pull-right">';
+					html += '<i class="icon-edit"></i>';
+					html += '<i class="icon-trash"></i>';
+				html += '</span>';
 			html += '</div>';
 			html += '<div class="comment-content">{0}</div>'.format(comment.content);
 		html += '</div>';
