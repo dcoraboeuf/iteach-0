@@ -13,7 +13,7 @@
 	<!DOCTYPE html>
 	<html lang="${locSelected()}">
 		<head>
-			<base href="<@spring.url relativeUrl="/" />" />
+			<base href="${baseURL}/" />
 			<#assign base = "resources/v" + loc('app.version') />
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 			<link href="${base}/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />			
