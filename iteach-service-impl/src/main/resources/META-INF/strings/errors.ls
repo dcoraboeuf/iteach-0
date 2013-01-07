@@ -10,3 +10,9 @@ net.iteach.service.impl.CommentFormatterNotFoundException
 net.iteach.service.impl.CommentUpdateException
 	en -> [E-004] Problem while updating/inserting a comment
 	fr -> [E-004] Problème lors de la mise à jour ou l'ajout d'un commentaire
+net.iteach.service.security.UserIdentifierAlreadyExistsException
+	en -> [E-005] A user with the same identifier ({0}) already exists.
+	fr -> [E-005] Un utilisateur ayant le même identifiant ({0}) existe déjà.
+net.iteach.service.security.UserEmailAlreadyExistsException
+	en -> [E-006] A user with the same email ({0}) already exists.
+	fr -> [E-006] Un utilisateur ayant le même courriel ({0}) existe déjà.

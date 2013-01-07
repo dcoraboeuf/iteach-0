@@ -24,6 +24,16 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 	@Transactional
 	public void register(AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password) {
 		// FIXME Controls
+		// Checks for unicity of identifier
+		Integer existingUserId = getFirstItem(SQL.USER_BY_IDENTIFIER, params("identifier", identifier), Integer.class);
+		if (existingUserId != null) {
+			throw new UserIdentifierAlreadyExistsException(identifier);
+		}
+		// Checks for unicity of email
+		existingUserId = getFirstItem(SQL.USER_BY_EMAIL, params("email", email), Integer.class);
+		if (existingUserId != null) {
+			throw new UserEmailAlreadyExistsException(email);
+		}
 		// Parameters
 		MapSqlParameterSource params = params("email", email);
 		params.addValue("firstName", firstName);

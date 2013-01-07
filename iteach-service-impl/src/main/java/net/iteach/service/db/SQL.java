@@ -3,6 +3,9 @@ package net.iteach.service.db;
 public interface SQL {
 	
 	// Users
+
+	String USER_BY_IDENTIFIER = "SELECT ID FROM USERS WHERE IDENTIFIER = :identifier";
+	String USER_BY_EMAIL = "SELECT ID FROM USERS WHERE EMAIL = :email";
 	
 	String USER_CREATE = "INSERT INTO USERS (MODE, IDENTIFIER, PASSWORD, EMAIL, FIRSTNAME, LASTNAME) VALUES (:mode, :identifier, :password, :email, :firstName, :lastName)";
 
