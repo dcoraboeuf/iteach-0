@@ -28,7 +28,7 @@ public class RegistrationController {
 	public String registrationOpenID(Model model, HttpSession session) {
 		String identifier = (String) session.getAttribute("USER_OPENID_CREDENTIAL");
 		model.addAttribute("identifier", identifier);
-		model.addAttribute("mode", "openid");
+		model.addAttribute("mode", AuthenticationMode.openid);
 		return "registrationForm";
 	}
 
@@ -37,16 +37,17 @@ public class RegistrationController {
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(Model model) {
-		model.addAttribute("mode", "basic");
+		model.addAttribute("mode", AuthenticationMode.password);
 		return "registrationForm";
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public String registration(AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password) {
+	public String registration(Model model, AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password) {
 		// Registration
 		securityService.register (mode, identifier, firstName, lastName, email, password);
-		// FIXME Redirect to the login with a message saying that the registration has been successful
-		return "redirect:/login";
+		// Redirect to the login with a message saying that the registration has been successful
+		model.addAttribute("registrationOK", Boolean.TRUE);
+		return "login";
 	}
 
 }

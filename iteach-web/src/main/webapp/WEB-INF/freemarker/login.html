@@ -2,6 +2,12 @@
 
 <@layout_std pageId="login" style=true showSecurity=false breadcrumbs = {loc("page.index"): ""} >
 
+	<#if registrationOK??>
+		<div class="alert alert-success">
+			<@lh key="login.registrationOK" />
+		</div>
+	</#if>
+
 	<@panel title = loc('signInWith') + " Google">
 		<form action="j_spring_openid_security_check" method="post" class="form-horizontal">
 			<div class="control-group">

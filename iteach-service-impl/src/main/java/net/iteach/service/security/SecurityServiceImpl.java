@@ -35,7 +35,7 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 			params.addValue("password", "");
 		} else if (mode == AuthenticationMode.password) {
 			params.addValue("identifier", email);
-			params.addValue("password", digest(password));
+			params.addValue("password", password);
 		} else {
 			throw new UnknownAuthenticationModeException(mode);
 		}

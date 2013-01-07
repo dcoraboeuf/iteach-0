@@ -108,6 +108,10 @@ login.password
 login.error
 	en -> Incorrect user name or password
 	fr -> Utilisateur ou mot de passe incorrect
+	
+login.registrationOK
+	en -> Registration is now OK - you can now log in
+	fr -> L'enregistrement s'est bien passé - vous pouvez maintenant vous connecter
     
 [registration]
 
