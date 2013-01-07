@@ -140,6 +140,8 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		checkTeacherForSchool (teacherId, id);
 		// Deletes the coordinates
 		coordinatesService.removeCoordinates (Entity.SCHOOLS, id);
+		// Deletes the comments
+		commentsService.removeComments (Entity.SCHOOLS, id);
 		// Update
 		int count = getNamedParameterJdbcTemplate().update(SQL.SCHOOL_DELETE, params("teacher", teacherId).addValue("id", id));
 		// OK

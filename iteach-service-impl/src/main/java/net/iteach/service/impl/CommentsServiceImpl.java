@@ -26,13 +26,13 @@ import net.iteach.service.comment.CommentHTMLFormatter;
 import net.iteach.service.comment.CommentRawFormatter;
 import net.iteach.service.db.SQLUtils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.commons.lang3.StringUtils;
 
 @Service
 public class CommentsServiceImpl extends AbstractServiceImpl implements CommentsService {
@@ -48,6 +48,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 	private static final String SQL_UPDATE = "UPDATE COMMENTS SET EDITION = :edition, CONTENT = :content WHERE ID = :id AND ENTITY_TYPE = '%s' AND ENTITY_ID = :entityId";
 
 	private static final String SQL_DELETE = "DELETE FROM COMMENTS WHERE ID = :id AND ENTITY_TYPE = '%s' AND ENTITY_ID = :entityId";
+	private static final String SQL_DELETE_FOR_ENTITY = "DELETE FROM COMMENTS WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :entityId";
 	
 	private final EnumMap<CommentFormat, CommentFormatter> commentFormatters;
 
@@ -67,6 +68,15 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 		} else {
 			return formatter.format (content);
 		}
+	}
+
+	@Override
+	@Transactional
+	public void removeComments (Entity entity, int id) {
+		String sql = format(SQL_DELETE_FOR_ENTITY, entity);
+		getNamedParameterJdbcTemplate().update(
+			sql,
+			params("entityId", id));
 	}
 	
 	@Override

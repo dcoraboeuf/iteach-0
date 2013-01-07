@@ -20,4 +20,6 @@ public interface CommentsService {
 
 	Ack deleteComment(Entity entity, int entityId, int commentId);
 
+	void removeComments(Entity entity, int id);
+
 }

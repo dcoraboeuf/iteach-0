@@ -209,6 +209,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 	@Transactional
 	public Ack deleteLessonForTeacher(int teacherId, int id) {
 		checkTeacherForLesson(teacherId, id);
+		commentsService.removeComments (Entity.LESSONS, id);
 		int count = getNamedParameterJdbcTemplate().update(SQL.LESSON_DELETE, params("id", id));
 		return Ack.one(count);
 	}
