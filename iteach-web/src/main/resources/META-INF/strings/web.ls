@@ -128,9 +128,16 @@ registration.password
 registration.password.confirm
     en -> Confirm
     fr -> Confirmation
+registration.password.confirm.help
+	en -> Enter the same password again
+	fr -> Entrez de nouveau votre mot de passe pour le confirmer
 registration.submit
     en -> Register
     fr -> S'enregistrer
+    
+registration.email.help
+	en -> This email will be used as your identifier when you want to connect.
+	fr -> Ce courriel sera utilisé comme identifiant pour votre connexion.
 
 [home]
 
