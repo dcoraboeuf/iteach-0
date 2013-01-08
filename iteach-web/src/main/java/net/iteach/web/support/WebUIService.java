@@ -20,7 +20,7 @@ public class WebUIService implements UIService {
 	private final Logger logger = LoggerFactory.getLogger(UIService.class);
 
 	@Override
-	public String getLink(TokenType type, String... components) {
+	public String getLink(TokenType type, String token) {
 		// Gets the request from the content
 		HttpServletRequest request = WebInterceptor.getCurrentRequest();
 		// Logs everything about the request
@@ -32,7 +32,7 @@ public class WebUIService implements UIService {
 		String query;
 		switch (type) {
 		case REGISTRATION:
-			query = format("gui/user/confirm/%s/%s", (Object[]) components);
+			query = format("account/registration/%s", type, token);
 			break;
 		default:
 			throw new IllegalStateException("TokenType is not supported: " + type);

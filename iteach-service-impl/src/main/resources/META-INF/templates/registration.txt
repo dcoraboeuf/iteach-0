@@ -1,0 +1,12 @@
+Dear ${userFirstName} ${userLastName},
+
+A new account has been registered for you using the following email:
+
+${userEmail}
+
+Please follow this link in order to validate your account and to create your password.
+
+${link}
+
+Regards,
+${signature}.

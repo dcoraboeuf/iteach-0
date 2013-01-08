@@ -9,13 +9,8 @@ import org.springframework.stereotype.Component;
 public class MockUIService implements UIService {
 
 	@Override
-	public String getLink(TokenType type, String... components) {
-		StringBuilder s = new StringBuilder("http://mock/");
-		s.append(type);
-		for (String component : components) {
-			s.append("/").append(component);
-		}
-		return s.toString();
+	public String getLink(TokenType type, String token) {
+		return String.format("http://mock/%s/%s", type, token);
 	}
 
 }

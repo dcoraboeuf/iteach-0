@@ -5,6 +5,6 @@ import net.iteach.core.model.TokenType;
 
 public interface UIService {
 
-	String getLink(TokenType link, String... components);
+	String getLink(TokenType link, String token);
 
 }

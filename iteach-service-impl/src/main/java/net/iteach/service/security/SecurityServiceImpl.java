@@ -111,14 +111,14 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		// Generates a token for the response
 		String token = tokenService.generateToken(tokenType, email);
 		// Gets the return link
-		String link = uiService.getLink(tokenType, email, token);
+		String link = uiService.getLink(tokenType, token);
 		// TODO Gets the signature
 		String signature = "iteach@test.com";
 		// Message template model
 		TemplateModel model = new TemplateModel();
 		model.add("userFirstName", firstName);
 		model.add("userLastName", lastName);
-		model.add("email", email);
+		model.add("userEmail", email);
 		model.add("link", link);
 		model.add("signature", signature);
 		// Template ID
