@@ -10,4 +10,6 @@ public interface User extends UserDetails {
 	
 	String getEmail();
 
+	boolean isAdmin();
+
 }

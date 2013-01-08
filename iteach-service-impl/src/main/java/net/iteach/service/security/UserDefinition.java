@@ -26,6 +26,11 @@ public class UserDefinition implements User {
 	}
 	
 	@Override
+	public boolean isAdmin() {
+		return account.isAdministrator();
+	}
+	
+	@Override
 	public String getEmail() {
 		return account.getEmail();
 	}

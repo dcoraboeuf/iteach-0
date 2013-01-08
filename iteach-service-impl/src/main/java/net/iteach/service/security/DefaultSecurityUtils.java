@@ -27,6 +27,10 @@ public class DefaultSecurityUtils implements SecurityUtils {
 			return AuthorityUtils.createAuthorityList();
 		}
 		
+		public boolean isAdmin() {
+			return false;
+		}
+		
 		@Override
 		public String getEmail() {
 			return null;
@@ -73,6 +77,12 @@ public class DefaultSecurityUtils implements SecurityUtils {
 		SecurityContext context = SecurityContextHolder.getContext();
 		Authentication authentication = context.getAuthentication();
 		return (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken));
+	}
+	
+	@Override
+	public boolean isAdmin() {
+		User user = getCurrentUser();
+		return user.isAdmin();
 	}
 	
 	@Override

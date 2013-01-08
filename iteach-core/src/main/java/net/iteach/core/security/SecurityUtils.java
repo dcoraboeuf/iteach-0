@@ -8,4 +8,6 @@ public interface SecurityUtils {
 
 	int getCurrentUserId();
 
+	boolean isAdmin();
+
 }
