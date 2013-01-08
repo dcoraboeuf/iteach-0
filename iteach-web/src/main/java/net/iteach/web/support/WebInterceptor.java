@@ -9,6 +9,24 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 @Component("webInterceptor")
 public class WebInterceptor extends HandlerInterceptorAdapter {
+
+	private static final ThreadLocal<HttpServletRequest> CURRENT_REQUEST = new ThreadLocal<HttpServletRequest>();
+
+	public static HttpServletRequest getCurrentRequest() {
+		HttpServletRequest request = CURRENT_REQUEST.get();
+		if (request == null) {
+			throw new IllegalStateException("No current request");
+		} else {
+			return request;
+		}
+	}
+
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		CURRENT_REQUEST.set(request);
+		// OK
+		return true;
+	}
 	
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response,
@@ -20,6 +38,11 @@ public class WebInterceptor extends HandlerInterceptorAdapter {
 		}
 		// OK
 		super.postHandle(request, response, handler, modelAndView);
+	}
+
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+		CURRENT_REQUEST.set(null);
 	}
 
 }
