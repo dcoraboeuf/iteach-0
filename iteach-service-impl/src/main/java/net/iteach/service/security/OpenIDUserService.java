@@ -33,7 +33,8 @@ public class OpenIDUserService extends AbstractUserService {
 						"",
 						rs.getString("email"),
 						rs.getString("firstName"),
-						rs.getString("lastName"));
+						rs.getString("lastName"),
+						false);
 			}
 		};
 	}

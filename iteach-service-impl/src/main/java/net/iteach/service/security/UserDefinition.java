@@ -2,6 +2,7 @@ package net.iteach.service.security;
 
 import java.util.Collection;
 
+import net.iteach.core.security.SecurityRoles;
 import net.iteach.core.security.User;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -17,8 +18,11 @@ public class UserDefinition implements User {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// FIXME Implement UserDetails.getAuthorities
-		return AuthorityUtils.createAuthorityList("ROLE_TEACHER");
+		if (account.isAdministrator()) {
+			return AuthorityUtils.createAuthorityList(SecurityRoles.TEACHER, SecurityRoles.ADMINISTRATOR);
+		} else {
+			return AuthorityUtils.createAuthorityList(SecurityRoles.TEACHER);
+		}
 	}
 	
 	@Override

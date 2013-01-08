@@ -33,7 +33,8 @@ public class BasicUserService extends AbstractUserService {
 						rs.getString("password"),
 						rs.getString("email"),
 						rs.getString("firstName"),
-						rs.getString("lastName"));
+						rs.getString("lastName"),
+						rs.getBoolean("administrator"));
 			}
 		};
 	}
