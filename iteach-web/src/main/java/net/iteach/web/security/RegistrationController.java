@@ -77,7 +77,22 @@ public class RegistrationController {
 		session.setAttribute(SessionKeys.USER_SECURITY_MODE, mode);
 		// Registration
 		securityService.register (mode, identifier, firstName, lastName, email, password);
-		// Redirect to the login with a message saying that the registration has been successful
+		// OK
+		return loginOkNow(model);
+	}
+
+	@RequestMapping(value = "/init", method = RequestMethod.POST)
+	public String init(Model model, String firstName, String lastName, String email, String password) {
+		// Registration
+		securityService.init (firstName, lastName, email, password);
+		// OK
+		return loginOkNow(model);
+	}
+
+	/**
+	 * Redirect to the login with a message saying that the registration has been successful
+	 */
+	protected String loginOkNow(Model model) {
 		model.addAttribute("registrationOK", Boolean.TRUE);
 		return "login";
 	}

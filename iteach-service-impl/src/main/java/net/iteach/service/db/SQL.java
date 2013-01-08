@@ -8,7 +8,8 @@ public interface SQL {
 
 	String USER_BY_IDENTIFIER = "SELECT ID FROM USERS WHERE IDENTIFIER = :identifier";
 	String USER_BY_EMAIL = "SELECT ID FROM USERS WHERE EMAIL = :email";
-	
+
+	String USER_ADMIN = "INSERT INTO USERS (MODE, IDENTIFIER, ADMINISTRATOR, PASSWORD, EMAIL, FIRSTNAME, LASTNAME) VALUES ('password', :email, TRUE, :password, :email, :firstName, :lastName)";
 	String USER_CREATE = "INSERT INTO USERS (MODE, IDENTIFIER, PASSWORD, EMAIL, FIRSTNAME, LASTNAME) VALUES (:mode, :identifier, :password, :email, :firstName, :lastName)";
 
 	String USER_BY_OPENID = "SELECT ID, EMAIL, FIRSTNAME, LASTNAME FROM USERS WHERE MODE = 'openid' AND IDENTIFIER = :identifier";

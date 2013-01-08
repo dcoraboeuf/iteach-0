@@ -33,11 +33,23 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 	public boolean isAdminInitialized() {
 		return getJdbcTemplate().queryForInt(SQL.USER_ADMINISTRATOR_COUNT) > 0;
 	}
+	
+	@Override
+	@Transactional
+	public void init(String firstName, String lastName, String email, String password) {
+		getNamedParameterJdbcTemplate().update(
+			SQL.USER_ADMIN,
+			params("email", email)
+				.addValue("firstName", firstName)
+				.addValue("lastName", lastName)
+				.addValue("identifier", email)
+				.addValue("password", digest(password, email))
+		);
+	}
 
 	@Override
 	@Transactional
 	public void register(AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password) {
-		// FIXME Controls
 		// Checks for unicity of identifier
 		Integer existingUserId = getFirstItem(SQL.USER_BY_IDENTIFIER, params("identifier", identifier), Integer.class);
 		if (existingUserId != null) {
