@@ -106,8 +106,8 @@ login.password
 	fr -> Mot de passe
 
 login.error
-	en -> Incorrect user name or password
-	fr -> Utilisateur ou mot de passe incorrect
+	en -> Incorrect user name or password, or your account has been disabled or has not been confirmed yet.
+	fr -> Utilisateur ou mot de passe incorrect, ou votre compte a été désactivé ou n'a pas encore été confirmé.
 	
 login.registrationOK
 	en -> Registration is now OK - you can now log in
