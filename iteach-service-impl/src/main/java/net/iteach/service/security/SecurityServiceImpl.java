@@ -3,9 +3,19 @@ package net.iteach.service.security;
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
+import net.iteach.api.MessageService;
 import net.iteach.api.SecurityService;
+import net.iteach.api.TemplateService;
+import net.iteach.api.UIService;
 import net.iteach.api.model.AuthenticationMode;
+import net.iteach.api.model.MessageChannel;
+import net.iteach.api.model.MessageDestination;
+import net.iteach.api.model.TemplateModel;
+import net.iteach.core.model.Message;
+import net.iteach.core.model.MessageContent;
+import net.iteach.core.model.TokenType;
 import net.iteach.service.db.SQL;
+import net.iteach.service.token.TokenService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,11 +27,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class SecurityServiceImpl extends AbstractSecurityService implements SecurityService {
 	
 	private final PasswordEncoder passwordEncoder;
+	private final MessageService messageService;
+	private final TokenService tokenService;
+	private final UIService uiService;
+	private final TemplateService templateService;
 
 	@Autowired
-	public SecurityServiceImpl(DataSource dataSource, Validator validator, PasswordEncoder passwordEncoder) {
+	public SecurityServiceImpl(DataSource dataSource, Validator validator, PasswordEncoder passwordEncoder, MessageService messageService, TokenService tokenService, UIService uiService, TemplateService templateService) {
 		super(dataSource, validator);
 		this.passwordEncoder = passwordEncoder;
+		this.messageService = messageService;
+		this.tokenService = tokenService;
+		this.uiService = uiService;
+		this.templateService = templateService;
 	}
 
 	protected String digest(String password, String email) {
@@ -51,8 +69,10 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		MapSqlParameterSource params = params("email", email);
 		params.addValue("firstName", firstName);
 		params.addValue("lastName", lastName);
-		// Administrator
-		params.addValue("administrator", !isAdminInitialized());
+		// Administrator accounts are not to be verified
+		boolean administrator = !isAdminInitialized();
+		params.addValue("administrator", administrator);
+		params.addValue("verified", administrator);
 		// Mode
 		params.addValue("mode", mode.name());
 		if (mode == AuthenticationMode.openid) {
@@ -66,6 +86,47 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		}
 		// Insert the user
 		getNamedParameterJdbcTemplate().update(SQL.USER_CREATE, params);
+		
+		// In case of not administrator
+		if (!administrator) {
+			// Its initial state is not verified and a notification must be sent
+			// to the email
+			Message message = createNewUserMessage(firstName, lastName, email);
+			// Sends the message
+			messageService.sendMessage(message, new MessageDestination(MessageChannel.EMAIL, email));
+		}
+	}
+	
+	private String getMessageTitle (String message) {
+		return String.format("iteach - %s", message);
+	}
+
+	private Message createNewUserMessage(String firstName, String lastName, String email) {
+		return createUserMessage(firstName, lastName, email, TokenType.REGISTRATION, getMessageTitle("registration confirmation"));
+	}
+
+	private Message createUserMessage(String firstName, String lastName, String email,
+			TokenType tokenType,
+			String title) {
+		// Generates a token for the response
+		String token = tokenService.generateToken(tokenType, email);
+		// Gets the return link
+		String link = uiService.getLink(tokenType, email, token);
+		// TODO Gets the signature
+		String signature = "iteach@test.com";
+		// Message template model
+		TemplateModel model = new TemplateModel();
+		model.add("userFirstName", firstName);
+		model.add("userLastName", lastName);
+		model.add("email", email);
+		model.add("link", link);
+		model.add("signature", signature);
+		// Template ID
+		String templateId = tokenType.name().toLowerCase() + ".txt";
+		// Message content
+		String content = templateService.generate(templateId, model);
+		// Creates the message
+		return new Message(title, new MessageContent(content, link, token));
 	}
 
 }

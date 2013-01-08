@@ -1,5 +1,5 @@
 <dataset>
 
-	<USERS id="1" mode="openid" identifier="test.openid" password="" email="test@test.com" firstName="Mr" lastName="John" /> 
+	<USERS id="1" administrator="false" verified="true" mode="openid" identifier="test.openid" password="" email="test@test.com" firstName="Mr" lastName="John" /> 
 
 </dataset>

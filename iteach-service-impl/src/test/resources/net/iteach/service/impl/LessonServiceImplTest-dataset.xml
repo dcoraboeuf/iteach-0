@@ -1,7 +1,7 @@
 <dataset>
 	
-	<USERS id="1" mode="openid" identifier="test:1" password="" email="1@test.com" firstname="Test" lastname="1" />
-	<USERS id="2" mode="openid" identifier="test:2" password="" email="2@test.com" firstname="Test" lastname="2" />
+	<USERS id="1" administrator="false" verified="true" mode="openid" identifier="test:1" password="" email="1@test.com" firstname="Test" lastname="1" />
+	<USERS id="2" administrator="false" verified="true" mode="openid" identifier="test:2" password="" email="2@test.com" firstname="Test" lastname="2" />
 	
 	<SCHOOLS id="1" teacher="1" name="My school 1" color="#FF0000" />
 	<SCHOOLS id="2" teacher="2" name="My school 2" color="#00FF00" />
