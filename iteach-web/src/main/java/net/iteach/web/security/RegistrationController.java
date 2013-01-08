@@ -77,11 +77,11 @@ public class RegistrationController {
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public String registration(Model model, HttpSession session, AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password) {
+	public String registration(Locale locale, Model model, HttpSession session, AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password) {
 		// Session
 		session.setAttribute(SessionKeys.USER_SECURITY_MODE, mode);
 		// Registration
-		securityService.register (mode, identifier, firstName, lastName, email, password);
+		securityService.register (locale, mode, identifier, firstName, lastName, email, password);
 		// OK
 		return loginOkNow(model);
 	}

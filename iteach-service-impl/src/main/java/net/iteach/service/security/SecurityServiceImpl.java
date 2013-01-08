@@ -1,5 +1,7 @@
 package net.iteach.service.security;
 
+import java.util.Locale;
+
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
@@ -16,6 +18,7 @@ import net.iteach.core.model.MessageContent;
 import net.iteach.core.model.TokenType;
 import net.iteach.service.db.SQL;
 import net.iteach.service.token.TokenService;
+import net.sf.jstring.Strings;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -31,15 +34,17 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 	private final TokenService tokenService;
 	private final UIService uiService;
 	private final TemplateService templateService;
+	private final Strings strings;
 
 	@Autowired
-	public SecurityServiceImpl(DataSource dataSource, Validator validator, PasswordEncoder passwordEncoder, MessageService messageService, TokenService tokenService, UIService uiService, TemplateService templateService) {
+	public SecurityServiceImpl(DataSource dataSource, Validator validator, PasswordEncoder passwordEncoder, MessageService messageService, TokenService tokenService, UIService uiService, TemplateService templateService, Strings strings) {
 		super(dataSource, validator);
 		this.passwordEncoder = passwordEncoder;
 		this.messageService = messageService;
 		this.tokenService = tokenService;
 		this.uiService = uiService;
 		this.templateService = templateService;
+		this.strings = strings;
 	}
 
 	protected String digest(String password, String email) {
@@ -54,7 +59,7 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 
 	@Override
 	@Transactional
-	public void register(AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password) {
+	public void register(Locale locale, AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password) {
 		// Checks for unicity of identifier
 		Integer existingUserId = getFirstItem(SQL.USER_BY_IDENTIFIER, params("identifier", identifier), Integer.class);
 		if (existingUserId != null) {
@@ -91,29 +96,25 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		if (!administrator) {
 			// Its initial state is not verified and a notification must be sent
 			// to the email
-			Message message = createNewUserMessage(firstName, lastName, email);
+			Message message = createNewUserMessage(locale, firstName, lastName, email);
 			// Sends the message
 			messageService.sendMessage(message, new MessageDestination(MessageChannel.EMAIL, email));
 		}
 	}
-	
-	private String getMessageTitle (String message) {
-		return String.format("iteach - %s", message);
+
+	private Message createNewUserMessage(Locale locale, String firstName, String lastName, String email) {
+		return createUserMessage(locale, firstName, lastName, email, TokenType.REGISTRATION, strings.get(locale, "message.registration"));
 	}
 
-	private Message createNewUserMessage(String firstName, String lastName, String email) {
-		return createUserMessage(firstName, lastName, email, TokenType.REGISTRATION, getMessageTitle("registration confirmation"));
-	}
-
-	private Message createUserMessage(String firstName, String lastName, String email,
+	private Message createUserMessage(Locale locale, String firstName, String lastName, String email,
 			TokenType tokenType,
 			String title) {
 		// Generates a token for the response
 		String token = tokenService.generateToken(tokenType, email);
 		// Gets the return link
 		String link = uiService.getLink(tokenType, token);
-		// TODO Gets the signature
-		String signature = "iteach@test.com";
+		// Gets the signature
+		String signature = strings.get(locale, "message.signature");
 		// Message template model
 		TemplateModel model = new TemplateModel();
 		model.add("userFirstName", firstName);
