@@ -138,14 +138,18 @@ registration.submit
 registration.email.help
 	en -> This email will be used as your identifier when you want to connect.
 	fr -> Ce courriel sera utilisé comme identifiant pour votre connexion.
-	
-[init]
 
-page.init
-	en -> Initialisation
-	fr -> Initialisation
+registration.admin.email.help
+	en -> ...
+		However, it won't be controlled so make sure
+		it is valid before going on.
+		...
+	fr -> ...
+		Cependant, il ne sera pas controllé alors soyez
+		sûr de sa validité avant de continuer.
+		...
 	
-init.message
+registration.admin.message
 	en -> ...
 		No administrator has not been defined yet for the application
 		and one must be created.
@@ -153,16 +157,6 @@ init.message
 	fr -> ...
 		Aucun administrateur n'a encore été défini pour l'application
 		et un doit être créé maintenant.
-		...
-
-init.email.help
-	en -> ...
-		@[registration.email.help] However, it won't be controlled so make sure
-		it is valid before going on.
-		...
-	fr -> ...
-		@[registration.email.help] Cependant, il ne sera pas controllé alors soyez
-		sûr de sa validité avant de continuer.
 		...
 
 [home]

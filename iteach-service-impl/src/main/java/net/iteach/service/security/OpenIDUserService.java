@@ -34,7 +34,7 @@ public class OpenIDUserService extends AbstractUserService {
 						rs.getString("email"),
 						rs.getString("firstName"),
 						rs.getString("lastName"),
-						false);
+						rs.getBoolean("administrator"));
 			}
 		};
 	}

@@ -8,6 +8,4 @@ public interface SecurityService {
 
 	boolean isAdminInitialized();
 
-	void init(String firstName, String lastName, String email, String password);
-
 }
