@@ -9,15 +9,23 @@ import net.iteach.service.db.SQL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SecurityServiceImpl extends AbstractSecurityService implements SecurityService {
+	
+	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public SecurityServiceImpl(DataSource dataSource, Validator validator) {
+	public SecurityServiceImpl(DataSource dataSource, Validator validator, PasswordEncoder passwordEncoder) {
 		super(dataSource, validator);
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	protected String digest(String password, String email) {
+		return passwordEncoder.encodePassword(password, email);
 	}
 
 	@Override
@@ -45,7 +53,7 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 			params.addValue("password", "");
 		} else if (mode == AuthenticationMode.password) {
 			params.addValue("identifier", email);
-			params.addValue("password", password);
+			params.addValue("password", digest(password, email));
 		} else {
 			throw new UnknownAuthenticationModeException(mode);
 		}

@@ -26,6 +26,11 @@ public class DefaultSecurityUtils implements SecurityUtils {
 		public Collection<? extends GrantedAuthority> getAuthorities() {
 			return AuthorityUtils.createAuthorityList();
 		}
+		
+		@Override
+		public String getEmail() {
+			return null;
+		}
 
 		@Override
 		public String getPassword() {

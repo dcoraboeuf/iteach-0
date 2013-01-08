@@ -7,5 +7,7 @@ public interface User extends UserDetails {
 	boolean isAnonymous();
 	
 	int getId();
+	
+	String getEmail();
 
 }

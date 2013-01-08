@@ -2,10 +2,10 @@ package net.iteach.service.security;
 
 import java.util.Collection;
 
+import net.iteach.core.security.User;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-
-import net.iteach.core.security.User;
 
 public class UserDefinition implements User {
 	
@@ -19,6 +19,11 @@ public class UserDefinition implements User {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// FIXME Implement UserDetails.getAuthorities
 		return AuthorityUtils.createAuthorityList("ROLE_TEACHER");
+	}
+	
+	@Override
+	public String getEmail() {
+		return account.getEmail();
 	}
 
 	@Override

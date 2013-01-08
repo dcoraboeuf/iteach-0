@@ -16,7 +16,11 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	</http>
 	
 	<authentication-manager>
-		<authentication-provider user-service-ref="basicUserService" />
+		<authentication-provider user-service-ref="basicUserService">
+			<password-encoder ref="passwordEncoder">
+				<salt-source user-property="email" />
+			</password-encoder>
+		</authentication-provider>
 	</authentication-manager>
 
 </beans:beans>
