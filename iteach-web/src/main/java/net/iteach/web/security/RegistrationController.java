@@ -59,7 +59,7 @@ public class RegistrationController {
 		String identifier = (String) session.getAttribute(SessionKeys.USER_OPENID_CREDENTIAL);
 		model.addAttribute("identifier", identifier);
 		model.addAttribute("mode", AuthenticationMode.openid);
-		return "registrationForm";
+		return registrationForm(model);
 	}
 
 	/**
@@ -68,6 +68,11 @@ public class RegistrationController {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(Model model) {
 		model.addAttribute("mode", AuthenticationMode.password);
+		return registrationForm(model);
+	}
+
+	protected String registrationForm(Model model) {
+		model.addAttribute("admin", !securityService.isAdminInitialized());
 		return "registrationForm";
 	}
 
@@ -77,14 +82,6 @@ public class RegistrationController {
 		session.setAttribute(SessionKeys.USER_SECURITY_MODE, mode);
 		// Registration
 		securityService.register (mode, identifier, firstName, lastName, email, password);
-		// OK
-		return loginOkNow(model);
-	}
-
-	@RequestMapping(value = "/init", method = RequestMethod.POST)
-	public String init(Model model, String firstName, String lastName, String email, String password) {
-		// Registration
-		securityService.init (firstName, lastName, email, password);
 		// OK
 		return loginOkNow(model);
 	}

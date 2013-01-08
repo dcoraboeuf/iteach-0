@@ -4,6 +4,11 @@
     <form action="registration" method="POST" onsubmit="return registration.control();" class="form-horizontal">
         <input id="mode" type="hidden" name="mode" value="${mode?html}" />
         <input id="identifier" name="identifier" type="hidden" value="${identifier!''?html}" />
+        <#if admin>
+			<div class="alert alert-warning">
+				<@lh key="registration.admin.message" />
+			</div>
+		</#if>
         <div class="control-group">
             <label class="control-label" for="firstName"><@lh key="user.firstName" /></label>
             <div class="controls">
@@ -20,7 +25,12 @@
             <label class="control-label" for="email"><@lh key="user.email" /></label>
             <div class="controls">
                 <input id="email" name="email" type="email" required="required" maxlength="100" size="40" />
-                <span class="help-inline"><@lh key="registration.email.help" /></span>
+                <span class="help-block">
+                	<@lh key="registration.email.help" />
+			        <#if admin>
+						&nbsp;<@lh key="registration.admin.email.help" />
+					</#if>
+                </span>
             </div>
         </div>
         <div id="password-line" class="control-group">

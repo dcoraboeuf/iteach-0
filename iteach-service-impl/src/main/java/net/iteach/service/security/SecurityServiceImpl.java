@@ -33,19 +33,6 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 	public boolean isAdminInitialized() {
 		return getJdbcTemplate().queryForInt(SQL.USER_ADMINISTRATOR_COUNT) > 0;
 	}
-	
-	@Override
-	@Transactional
-	public void init(String firstName, String lastName, String email, String password) {
-		getNamedParameterJdbcTemplate().update(
-			SQL.USER_ADMIN,
-			params("email", email)
-				.addValue("firstName", firstName)
-				.addValue("lastName", lastName)
-				.addValue("identifier", email)
-				.addValue("password", digest(password, email))
-		);
-	}
 
 	@Override
 	@Transactional
@@ -64,6 +51,8 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		MapSqlParameterSource params = params("email", email);
 		params.addValue("firstName", firstName);
 		params.addValue("lastName", lastName);
+		// Administrator
+		params.addValue("administrator", !isAdminInitialized());
 		// Mode
 		params.addValue("mode", mode.name());
 		if (mode == AuthenticationMode.openid) {
