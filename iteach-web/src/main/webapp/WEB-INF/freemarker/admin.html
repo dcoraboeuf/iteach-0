@@ -1,0 +1,47 @@
+<#include "/lib/layout.html">
+
+<@layout_std pageId="admin" script=true showSecurity=false>
+	<form action="admin" method="POST" onsubmit="return Admin.control();" class="form-horizontal">
+		<div class="alert alert-warning">
+			<@lh key="admin.message" />
+		</div>
+        <div class="control-group">
+            <label class="control-label" for="firstName"><@lh key="user.firstName" /></label>
+            <div class="controls">
+                <input id="firstName" name="firstName" type="text" required="required" maxlength="40" size="20" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="lastName"><@lh key="user.lastName" /></label>
+            <div class="controls">
+                <input id="lastName" name="lastName" type="text" required="required" maxlength="40" size="20" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="email"><@lh key="user.email" /></label>
+            <div class="controls">
+                <input id="email" name="email" type="email" required="required" maxlength="100" size="40" />
+                <span class="help-inline"><@lh key="admin.email.help" /></span>
+            </div>
+        </div>
+        <div id="password-line" class="control-group">
+            <label class="control-label" for="password"><@lh key="registration.password" /></label>
+            <div class="controls">
+                <input id="password" name="password" type="password" maxlength="20" required="required" />
+            </div>
+        </div>
+        <div id="password-confirm-line" class="control-group">
+            <label class="control-label" for="password"><@lh key="registration.password.confirm" /></label>
+            <div class="controls">
+                <input id="confirmPassword" name="confirmPassword" type="password" maxlength="20" required="required" />
+                <span class="help-inline"><@lh key="registration.password.confirm.help" /></span>                
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input class="btn btn-primary" type="submit" value="<@lh key='general.create' />" />
+                <a class="btn btn-link" href="logout"><@lh key="general.cancel" /></a>
+            </div>
+        </div>
+	</form>
+</@layout_std>

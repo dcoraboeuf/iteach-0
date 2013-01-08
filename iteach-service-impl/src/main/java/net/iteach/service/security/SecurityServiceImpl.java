@@ -27,6 +27,12 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 	protected String digest(String password, String email) {
 		return passwordEncoder.encodePassword(password, email);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public boolean isAdminInitialized() {
+		return getJdbcTemplate().queryForInt(SQL.USER_ADMINISTRATOR_COUNT) > 0;
+	}
 
 	@Override
 	@Transactional

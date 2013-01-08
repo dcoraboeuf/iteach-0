@@ -3,6 +3,8 @@ package net.iteach.service.db;
 public interface SQL {
 	
 	// Users
+	
+	String USER_ADMINISTRATOR_COUNT = "SELECT COUNT(ID) FROM USERS WHERE ADMINISTRATOR IS TRUE";
 
 	String USER_BY_IDENTIFIER = "SELECT ID FROM USERS WHERE IDENTIFIER = :identifier";
 	String USER_BY_EMAIL = "SELECT ID FROM USERS WHERE EMAIL = :email";

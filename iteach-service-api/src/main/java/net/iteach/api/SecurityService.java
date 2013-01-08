@@ -6,4 +6,6 @@ public interface SecurityService {
 
 	void register(AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password);
 
+	boolean isAdminInitialized();
+
 }
