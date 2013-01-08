@@ -22,7 +22,7 @@ public class LoginController {
 		if (securityService.isAdminInitialized()) {
 			return "login";
 		} else {
-			return "admin";
+			return "init";
 		}
 	}
 	

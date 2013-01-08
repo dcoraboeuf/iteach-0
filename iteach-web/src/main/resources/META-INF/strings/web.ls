@@ -139,13 +139,13 @@ registration.email.help
 	en -> This email will be used as your identifier when you want to connect.
 	fr -> Ce courriel sera utilisé comme identifiant pour votre connexion.
 	
-[admin]
+[init]
 
-page.admin
+page.init
 	en -> Initialisation
 	fr -> Initialisation
 	
-admin.message
+init.message
 	en -> ...
 		No administrator has not been defined yet for the application
 		and one must be created.
@@ -155,7 +155,7 @@ admin.message
 		et un doit être créé maintenant.
 		...
 
-admin.email.help
+init.email.help
 	en -> ...
 		@[registration.email.help] However, it won't be controlled so make sure
 		it is valid before going on.
