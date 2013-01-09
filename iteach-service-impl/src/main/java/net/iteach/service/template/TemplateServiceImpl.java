@@ -33,7 +33,7 @@ public class TemplateServiceImpl implements TemplateService {
 		// Gets the template
 		Template template;
 		try {
-			template = configuration.getTemplate(templateId, locale);
+			template = configuration.getTemplate(templateId, locale, "UTF-8");
 		} catch (IOException ex) {
 			throw new TemplateNotFoundException (templateId, ex);
 		}
