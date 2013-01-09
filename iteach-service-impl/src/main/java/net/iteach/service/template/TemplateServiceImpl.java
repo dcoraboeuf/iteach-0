@@ -2,6 +2,7 @@ package net.iteach.service.template;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Locale;
 import java.util.Map;
 
 import net.iteach.api.TemplateService;
@@ -26,13 +27,13 @@ public class TemplateServiceImpl implements TemplateService {
 	}
 
 	@Override
-	public String generate(String templateId, TemplateModel templateModel) {
+	public String generate(String templateId, Locale locale, TemplateModel templateModel) {
 		// Creates the model as a map
 		Map<String, Object> root = templateModel.toMap();
 		// Gets the template
 		Template template;
 		try {
-			template = configuration.getTemplate(templateId);
+			template = configuration.getTemplate(templateId, locale);
 		} catch (IOException ex) {
 			throw new TemplateNotFoundException (templateId, ex);
 		}

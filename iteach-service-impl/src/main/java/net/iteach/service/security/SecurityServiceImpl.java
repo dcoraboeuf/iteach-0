@@ -113,19 +113,16 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		String token = tokenService.generateToken(tokenType, email);
 		// Gets the return link
 		String link = uiService.getLink(tokenType, token);
-		// Gets the signature
-		String signature = strings.get(locale, "message.signature");
 		// Message template model
 		TemplateModel model = new TemplateModel();
 		model.add("userFirstName", firstName);
 		model.add("userLastName", lastName);
 		model.add("userEmail", email);
 		model.add("link", link);
-		model.add("signature", signature);
 		// Template ID
 		String templateId = tokenType.name().toLowerCase() + ".txt";
 		// Message content
-		String content = templateService.generate(templateId, model);
+		String content = templateService.generate(templateId, locale, model);
 		// Creates the message
 		return new Message(title, new MessageContent(content, link, token));
 	}
