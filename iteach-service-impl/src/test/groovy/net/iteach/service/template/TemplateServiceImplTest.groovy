@@ -1,7 +1,5 @@
 package net.iteach.service.template
 
-import java.lang.invoke.MethodHandleImpl.BindCaller.T
-
 import net.iteach.api.TemplateService
 import net.iteach.api.model.TemplateModel
 import net.iteach.test.AbstractIntegrationTest
