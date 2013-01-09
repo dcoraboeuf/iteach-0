@@ -1,4 +1,4 @@
 message.registration
-	en -> Validation of your account
-	fr -> Validation de votre compte
+	en -> @[app.title] - Validation of your account
+	fr -> @[app.title] - Validation de votre compte
  
