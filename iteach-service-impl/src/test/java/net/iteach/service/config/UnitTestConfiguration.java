@@ -1,8 +1,13 @@
 package net.iteach.service.config;
 
+import java.io.IOException;
+import java.util.Locale;
+
 import javax.sql.DataSource;
 
 import net.iteach.core.RunProfile;
+import net.sf.jstring.Strings;
+import net.sf.jstring.support.StringsLoader;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.slf4j.Logger;
@@ -16,6 +21,11 @@ import org.springframework.context.annotation.Profile;
 public class UnitTestConfiguration {
 
 	private static final Logger log = LoggerFactory.getLogger(UnitTestConfiguration.class);
+	
+	@Bean
+	public Strings strings() throws IOException {
+		return StringsLoader.auto(Locale.ENGLISH, Locale.FRENCH, Locale.GERMAN);
+	}
 
 	@Bean
 	public DataSource dataSource() {
