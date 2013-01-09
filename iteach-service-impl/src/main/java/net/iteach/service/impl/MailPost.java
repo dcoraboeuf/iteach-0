@@ -40,7 +40,7 @@ public class MailPost extends AbstractMessagePost {
 	@Override
 	public void post(final Message message, final String destination) {
 		
-		// TODO Reply-to address
+		// TODO Reply-to address (configuration service, see #58)
 		final String replyToAddress = "iteach@test.com";
 		logger.debug("[mail] Sending message from: {}", replyToAddress);
 
