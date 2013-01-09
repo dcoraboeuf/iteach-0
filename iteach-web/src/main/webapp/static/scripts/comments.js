@@ -29,12 +29,13 @@ var Comments = function () {
 						loc('comment.edition', formatTimestamp(comment.edition))
 						);
 				}
-				html += '<span class="comment-actions pull-right">';
+			html += '</div>';
+			html += '<div class="comment-content" id="comment-content-{0}">{1}'.format(comment.id, commentContent(comment));
+				html += ' <span class="comment-actions">';
 					html += '<i id="comment-edit-{0}" class="icon-edit"></i>'.format(comment.id);
 					html += '<i id="comment-delete-{0}" class="icon-trash"></i>'.format(comment.id);
 				html += '</span>';
 			html += '</div>';
-			html += '<div class="comment-content" id="comment-content-{0}">{1}</div>'.format(comment.id, commentContent(comment));
 		html += '</div>';
 		return html;
 	}
