@@ -32,7 +32,7 @@ public class WebUIService implements UIService {
 		String query;
 		switch (type) {
 		case REGISTRATION:
-			query = format("account/registration/%s", type, token);
+			query = format("account/registration/%s", token);
 			break;
 		default:
 			throw new IllegalStateException("TokenType is not supported: " + type);

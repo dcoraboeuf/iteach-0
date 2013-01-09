@@ -6,7 +6,7 @@ public interface TokenService {
 
 	String generateToken(TokenType type, String key);
 
-	void checkToken(String token, TokenType type, String key);
+	TokenKey checkToken(String token, TokenType type);
 
 	void consumesToken(String token, TokenType type, String key);
 

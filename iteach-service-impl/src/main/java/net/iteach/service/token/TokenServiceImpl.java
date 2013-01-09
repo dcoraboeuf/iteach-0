@@ -1,5 +1,7 @@
 package net.iteach.service.token;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -16,6 +18,7 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.security.core.token.Sha512DigestUtils;
 import org.springframework.stereotype.Service;
@@ -53,23 +56,33 @@ public class TokenServiceImpl extends AbstractServiceImpl implements TokenServic
 	
 	@Override
 	@Transactional(readOnly = true)
-	public void checkToken(String token, TokenType type, String key) {
+	public TokenKey checkToken(String token, TokenType type) {
 			try {
-				Timestamp creation = getNamedParameterJdbcTemplate().queryForObject(
+				TokenKey key = getNamedParameterJdbcTemplate().queryForObject(
 						SQL.TOKEN_CHECK, 
 						new MapSqlParameterSource()
 							.addValue("token", token)
-							.addValue("tokentype", type.name())
-							.addValue("tokenkey", key),
-						Timestamp.class);
-				DateTime utcCreation = SQLUtils.getDateTime(creation);
+							.addValue("tokentype", type.name()),
+						new RowMapper<TokenKey>() {
+
+							@Override
+							public TokenKey mapRow(ResultSet rs, int index) throws SQLException {
+								return new TokenKey(
+									rs.getString("tokenkey"),
+									SQLUtils.getDateTime(rs, "creation")
+								);
+							}
+							
+						});
 				DateTime utcNow = DateTime.now(DateTimeZone.UTC);
-				Days days = Days.daysBetween(utcCreation, utcNow);
+				Days days = Days.daysBetween(key.getCreation(), utcNow);
 				if (days.isGreaterThan(Days.days(EXPIRATION_DELAY))) {
 					throw new TokenExpiredException (token, type, key);
+				} else {
+					return key;
 				}
 			} catch (EmptyResultDataAccessException ex) {
-				throw new TokenNotFoundException (token, type, key);
+				throw new TokenNotFoundException (token, type);
 			}
 	}
 	
@@ -77,7 +90,7 @@ public class TokenServiceImpl extends AbstractServiceImpl implements TokenServic
 	@Transactional
 	public void consumesToken(String token, TokenType type, String key) {
 		// Checks the token
-		checkToken(token, type, key);
+		checkToken(token, type);
 		// Deletes the token
 		getNamedParameterJdbcTemplate().update(
 				SQL.TOKEN_DELETE,

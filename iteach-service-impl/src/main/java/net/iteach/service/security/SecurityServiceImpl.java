@@ -1,5 +1,7 @@
 package net.iteach.service.security;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Locale;
 
 import javax.sql.DataSource;
@@ -15,12 +17,16 @@ import net.iteach.api.model.MessageDestination;
 import net.iteach.api.model.TemplateModel;
 import net.iteach.core.model.Message;
 import net.iteach.core.model.MessageContent;
+import net.iteach.core.model.RegistrationCompletionForm;
 import net.iteach.core.model.TokenType;
+import net.iteach.core.model.UserSummary;
 import net.iteach.service.db.SQL;
+import net.iteach.service.token.TokenKey;
 import net.iteach.service.token.TokenService;
 import net.sf.jstring.Strings;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -66,7 +72,7 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 			throw new UserIdentifierAlreadyExistsException(identifier);
 		}
 		// Checks for unicity of email
-		existingUserId = getFirstItem(SQL.USER_BY_EMAIL, params("email", email), Integer.class);
+		existingUserId = getFirstItem(SQL.USER_ID_BY_EMAIL, params("email", email), Integer.class);
 		if (existingUserId != null) {
 			throw new UserEmailAlreadyExistsException(email);
 		}
@@ -100,6 +106,34 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 			// Sends the message
 			messageService.sendMessage(message, new MessageDestination(MessageChannel.EMAIL, email));
 		}
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public RegistrationCompletionForm getRegistrationCompletionForm(String token) {
+		// User email
+		TokenKey key = tokenService.checkToken(token, TokenType.REGISTRATION);
+		String email = key.getKey();
+		// Gets the user basic data for display
+		UserSummary user = getUserSummaryByEmail(email);
+		// Returns the form
+		return new RegistrationCompletionForm(token, user);
+	}
+
+	protected UserSummary getUserSummaryByEmail(final String email) {
+		return getNamedParameterJdbcTemplate().queryForObject(
+			SQL.USER_SUMMARY_BY_EMAIL,
+			params("email", email),
+			new RowMapper<UserSummary>() {
+				@Override
+				public UserSummary mapRow(ResultSet rs, int index) throws SQLException {
+					return new UserSummary(
+						rs.getInt("id"),
+						rs.getString("firstName"),
+						rs.getString("lastName"),
+						email);
+				}
+			});
 	}
 
 	private Message createNewUserMessage(Locale locale, String firstName, String lastName, String email) {
