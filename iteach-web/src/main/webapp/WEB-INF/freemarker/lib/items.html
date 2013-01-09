@@ -1,8 +1,6 @@
 <link rel="stylesheet/less" type="text/css" href="${base}/less/items.less" />
 
 <#macro item color>
-	<#assign itemActions = "" />
-	<#assign content><#nested/></#assign>
 	<tr>
 		<td class="item">
 			<table class="item">
@@ -12,10 +10,7 @@
 							&nbsp;
 						</td>
 						<td class="item-content">
-							${content}
-						</td>
-						<td class="item-actions">
-							${itemActions} 
+							<#nested>
 						</td>
 					</tr>
 				</tbody>
@@ -25,5 +20,5 @@
 </#macro>
 
 <#macro item_actions>
-	<#assign itemActions><#nested/></#assign>
+	<span class="item-actions"><#nested/></span>
 </#macro>

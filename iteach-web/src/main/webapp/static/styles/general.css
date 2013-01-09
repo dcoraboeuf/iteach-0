@@ -44,15 +44,16 @@ table.items tbody tr:hover {
 	background-color: #EEEEFF;
 }
 
-table.items tbody tr:hover .item-actions {
-	display: inline;
+table.items .item-actions {
+	font-size: 60%;
+	opacity: 0.0;
+	float: right;
+}
+
+table.items tr:hover .item-actions {
+	opacity: 0.7;
 }
 
 table.items tfoot td {
 	padding-top: 0.5em;
-}
-
-.item-actions {
-	display: none;
-	font-size: 60%;
 }
