@@ -15,6 +15,7 @@ import net.iteach.api.model.AuthenticationMode;
 import net.iteach.api.model.MessageChannel;
 import net.iteach.api.model.MessageDestination;
 import net.iteach.api.model.TemplateModel;
+import net.iteach.core.model.Ack;
 import net.iteach.core.model.Message;
 import net.iteach.core.model.MessageContent;
 import net.iteach.core.model.RegistrationCompletionForm;
@@ -118,6 +119,19 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		UserSummary user = getUserSummaryByEmail(email);
 		// Returns the form
 		return new RegistrationCompletionForm(token, user);
+	}
+	
+	@Override
+	@Transactional
+	public Ack completeRegistration(RegistrationCompletionForm form) {
+		// Consumes the token
+		tokenService.consumesToken(form.getToken(), TokenType.REGISTRATION, form.getUser().getEmail());
+		// Updates the verified flag
+		int count = getNamedParameterJdbcTemplate().update(
+			SQL.USER_SET_VERIFIED,
+			params("id", form.getUser().getId()));
+		// OK
+		return Ack.one(count);
 	}
 
 	protected UserSummary getUserSummaryByEmail(final String email) {
