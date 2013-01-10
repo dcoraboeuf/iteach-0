@@ -47,7 +47,6 @@ table.items tbody tr:hover {
 table.items .item-actions {
 	font-size: 60%;
 	opacity: 0.0;
-	float: right;
 }
 
 table.items tr:hover .item-actions {
