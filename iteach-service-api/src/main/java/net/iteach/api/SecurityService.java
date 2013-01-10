@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import net.iteach.api.model.AuthenticationMode;
 import net.iteach.core.model.Ack;
-import net.iteach.core.model.RegistrationCompletionForm;
 
 public interface SecurityService {
 
@@ -23,9 +22,7 @@ public interface SecurityService {
 	Ack register(Locale locale, AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password);
 
 	boolean isAdminInitialized();
-
-	RegistrationCompletionForm getRegistrationCompletionForm(String token);
 	
-	Ack completeRegistration (RegistrationCompletionForm form);
+	Ack completeRegistration (String token);
 
 }

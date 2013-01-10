@@ -1,7 +1,11 @@
 package net.iteach.web.security;
 
+import java.util.Locale;
+
 import net.iteach.api.SecurityService;
-import net.iteach.core.model.RegistrationCompletionForm;
+import net.iteach.core.model.Ack;
+import net.iteach.core.model.UserMessage;
+import net.sf.jstring.Strings;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,24 +19,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AccountController {
 	
 	private final SecurityService securityService;
+	private final Strings strings;
 	
 	
 	@Autowired
-	public AccountController(SecurityService securityService) {
+	public AccountController(SecurityService securityService, Strings strings) {
 		this.securityService = securityService;
+		this.strings = strings;
 	}
 
 	/**
-	 * The user has received his registration form and wants to complete it. He
-	 * will receive his data and will have to enter his password again.
+	 * The user has received his registration form and wants to complete it.
 	 */
 	@RequestMapping(value = "/registration/{token}", method = RequestMethod.GET)
-	public String completeRegistration (Model model, @PathVariable String token) {
-		// Checks and gets the registration completion form
-		RegistrationCompletionForm form = securityService.getRegistrationCompletionForm(token);
-		model.addAttribute("form", form);
-		// OK
-		return "completeRegistrationForm";
+	public String completeRegistration (Locale locale, Model model, @PathVariable String token) {
+		Ack ack = securityService.completeRegistration(token);
+		UserMessage message;
+		if (ack.isSuccess()) {
+			message = UserMessage.success(strings.get(locale, "login.registrationConfirmed"));
+		} else {
+			message = UserMessage.error(strings.get(locale, "login.registrationConfirmationFailed"));
+		}
+		model.addAttribute("message", message);
+		return "login";
 	}
 
 }

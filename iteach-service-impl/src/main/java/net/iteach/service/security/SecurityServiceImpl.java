@@ -18,7 +18,6 @@ import net.iteach.api.model.TemplateModel;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.Message;
 import net.iteach.core.model.MessageContent;
-import net.iteach.core.model.RegistrationCompletionForm;
 import net.iteach.core.model.TokenType;
 import net.iteach.core.model.UserSummary;
 import net.iteach.service.db.SQL;
@@ -113,26 +112,19 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 	}
 	
 	@Override
-	@Transactional(readOnly = true)
-	public RegistrationCompletionForm getRegistrationCompletionForm(String token) {
+	@Transactional
+	public Ack completeRegistration(String token) {
 		// User email
 		TokenKey key = tokenService.checkToken(token, TokenType.REGISTRATION);
 		String email = key.getKey();
 		// Gets the user basic data for display
 		UserSummary user = getUserSummaryByEmail(email);
-		// Returns the form
-		return new RegistrationCompletionForm(token, user);
-	}
-	
-	@Override
-	@Transactional
-	public Ack completeRegistration(RegistrationCompletionForm form) {
 		// Consumes the token
-		tokenService.consumesToken(form.getToken(), TokenType.REGISTRATION, form.getUser().getEmail());
+		tokenService.consumesToken(token, TokenType.REGISTRATION, user.getEmail());
 		// Updates the verified flag
 		int count = getNamedParameterJdbcTemplate().update(
 			SQL.USER_SET_VERIFIED,
-			params("id", form.getUser().getId()));
+			params("id", user.getId()));
 		// OK
 		return Ack.one(count);
 	}

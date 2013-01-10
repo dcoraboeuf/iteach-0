@@ -116,6 +116,14 @@ login.registrationOK
 login.registrationConfirmationNeeded
 	en -> Registration is OK and a mail has been sent to you. Follow its instructions before logging in.
 	fr -> L'enregistrement s'est bien passé et un courriel vous a été envoyé. Suivez les instructions qu'il contient avant de vous connecter.
+		
+login.registrationConfirmed
+	en -> Your registration has been confirmed. You can now login.
+	fr -> Votre enregistrement a été validé. Vous pouvez maintenant vous connecter.
+		
+login.registrationConfirmationFailed
+	en -> The confirmation of your registration has failed. Contact the administrator.
+	fr -> La confirmation de votre enregistrement a échoué. Contactez l'administrateur.
 
 [registration]
 
