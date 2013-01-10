@@ -3,6 +3,7 @@ package net.iteach.api;
 import java.util.Locale;
 
 import net.iteach.api.model.AuthenticationMode;
+import net.iteach.core.model.Ack;
 import net.iteach.core.model.RegistrationCompletionForm;
 
 public interface SecurityService {
@@ -12,5 +13,7 @@ public interface SecurityService {
 	boolean isAdminInitialized();
 
 	RegistrationCompletionForm getRegistrationCompletionForm(String token);
+	
+	Ack completeRegistration (RegistrationCompletionForm form);
 
 }
