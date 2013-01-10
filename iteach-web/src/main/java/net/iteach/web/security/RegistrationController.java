@@ -7,9 +7,12 @@ import javax.servlet.http.HttpSession;
 
 import net.iteach.api.SecurityService;
 import net.iteach.api.model.AuthenticationMode;
+import net.iteach.core.model.Ack;
+import net.iteach.core.model.UserMessage;
 import net.iteach.utils.InputException;
 import net.iteach.web.support.ErrorHandler;
 import net.iteach.web.support.ErrorMessage;
+import net.sf.jstring.Strings;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,11 +27,13 @@ public class RegistrationController {
 
 	private final SecurityService securityService;
 	private final ErrorHandler errorHandler; 
+	private final Strings strings;
 
 	@Autowired
-	public RegistrationController(SecurityService securityService, ErrorHandler errorHandler) {
+	public RegistrationController(SecurityService securityService, ErrorHandler errorHandler, Strings strings) {
 		this.securityService = securityService;
 		this.errorHandler = errorHandler;
+		this.strings = strings;
 	}
 	
 	@ExceptionHandler(InputException.class)
@@ -40,7 +45,7 @@ public class RegistrationController {
 		// Error
 		mav.addObject("error", error);
 		// Mode
-		mav.addObject("mode", (AuthenticationMode) session.getAttribute(SessionKeys.USER_SECURITY_MODE));
+		mav.addObject("mode", session.getAttribute(SessionKeys.USER_SECURITY_MODE));
 		// Identifier
 		String identifier = (String) session.getAttribute(SessionKeys.USER_OPENID_CREDENTIAL);
 		if (identifier == null) {
@@ -77,20 +82,33 @@ public class RegistrationController {
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public String registration(Model model, HttpSession session, AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password) {
+	public String registration(Locale locale, Model model, HttpSession session, AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password) {
 		// Session
 		session.setAttribute(SessionKeys.USER_SECURITY_MODE, mode);
 		// Registration
-		securityService.register (mode, identifier, firstName, lastName, email, password);
+		Ack ack = securityService.register (locale, mode, identifier, firstName, lastName, email, password);
 		// OK
-		return loginOkNow(model);
+		if (ack.isSuccess()) {
+			return loginOkNow(locale, model);
+		} else {
+			return loginValidationNeeded(locale, model);
+		}
+	}
+
+	/**
+	 * Redirect to the login with a message saying that the registration has been successful, but
+	 * needs to be confirmed.
+	 */
+	protected String loginValidationNeeded(Locale locale, Model model) {
+		model.addAttribute("message", UserMessage.warning(strings.get(locale, "login.registrationConfirmationNeeded")));
+		return "login";
 	}
 
 	/**
 	 * Redirect to the login with a message saying that the registration has been successful
 	 */
-	protected String loginOkNow(Model model) {
-		model.addAttribute("registrationOK", Boolean.TRUE);
+	protected String loginOkNow(Locale locale, Model model) {
+		model.addAttribute("message", UserMessage.success(strings.get(locale, "login.registrationOK")));
 		return "login";
 	}
 

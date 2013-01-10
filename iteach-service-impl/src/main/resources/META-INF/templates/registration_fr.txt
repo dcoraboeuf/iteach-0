@@ -1,0 +1,12 @@
+Cher/chère ${userFirstName} ${userLastName},
+
+Un nouveau compte a été enrégistré pour le courrier suivant :
+
+${userEmail}
+
+Veuillez suivre le lien suivant afin de poursuivre la validation de votre compte :
+
+${link}
+
+Cordialement,
+l'équipe iTeach.

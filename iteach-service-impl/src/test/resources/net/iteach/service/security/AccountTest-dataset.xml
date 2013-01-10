@@ -1,0 +1,5 @@
+<dataset>
+
+	<USERS id="1" administrator="true" verified="true" mode="password" identifier="admin@test.com" password="admin" email="admin@test.com" firstName="The" lastName="Administrator" />
+
+</dataset>

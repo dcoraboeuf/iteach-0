@@ -106,13 +106,25 @@ login.password
 	fr -> Mot de passe
 
 login.error
-	en -> Incorrect user name or password
-	fr -> Utilisateur ou mot de passe incorrect
+	en -> Incorrect user name or password, or your account has been disabled or has not been confirmed yet.
+	fr -> Utilisateur ou mot de passe incorrect, ou votre compte a été désactivé ou n'a pas encore été confirmé.
 	
 login.registrationOK
 	en -> Registration is now OK - you can now log in
 	fr -> L'enregistrement s'est bien passé - vous pouvez maintenant vous connecter
     
+login.registrationConfirmationNeeded
+	en -> Registration is OK and a mail has been sent to you. Follow its instructions before logging in.
+	fr -> L'enregistrement s'est bien passé et un courriel vous a été envoyé. Suivez les instructions qu'il contient avant de vous connecter.
+		
+login.registrationConfirmed
+	en -> Your registration has been confirmed. You can now login.
+	fr -> Votre enregistrement a été validé. Vous pouvez maintenant vous connecter.
+		
+login.registrationConfirmationFailed
+	en -> The confirmation of your registration has failed. Contact the administrator.
+	fr -> La confirmation de votre enregistrement a échoué. Contactez l'administrateur.
+
 [registration]
 
 page.registrationForm

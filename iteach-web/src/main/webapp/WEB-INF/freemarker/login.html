@@ -2,9 +2,9 @@
 
 <@layout_std pageId="login" style=true showSecurity=false breadcrumbs = {loc("page.index"): ""} >
 
-	<#if registrationOK??>
-		<div class="alert alert-success">
-			<@lh key="login.registrationOK" />
+	<#if message??>
+		<div class="alert alert-${message.type}">
+			${message.message?html}
 		</div>
 	</#if>
 
@@ -63,9 +63,6 @@
 					<a href="register" class="btn btn-link"><@lh key="register" /></a>
 				</div>
 			</div>
-			<#if error??>
-				<div class="alert alert-error"><@lh key="login.error" /></div>
-			</#if>
 		</form>
 	</@panel>
 	
