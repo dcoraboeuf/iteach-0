@@ -47,15 +47,8 @@ class AccountTest extends AbstractIntegrationTest {
 		// Gets the token
 		def token = message.content.token
 		assert StringUtils.isNotBlank(token)
-		// Get the form to complete the registration
-		def form = securityService.getRegistrationCompletionForm(token)
-		assert form != null
-		assert token == form.token
-		assert "user1@test.com" == form.user.email
-		assert "Test1" == form.user.firstName
-		assert "User" == form.user.lastName
 		// Complete the registration
-		def ack = securityService.completeRegistration(form)
+		def ack = securityService.completeRegistration(token)
 		assert ack != null && ack.success
 		
 		// Checks we can now login
