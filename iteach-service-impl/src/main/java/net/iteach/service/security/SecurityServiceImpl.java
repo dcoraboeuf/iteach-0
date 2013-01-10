@@ -66,7 +66,7 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 
 	@Override
 	@Transactional
-	public void register(Locale locale, AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password) {
+	public Ack register(Locale locale, AuthenticationMode mode, String identifier, String firstName, String lastName, String email, String password) {
 		// Checks for unicity of identifier
 		Integer existingUserId = getFirstItem(SQL.USER_BY_IDENTIFIER, params("identifier", identifier), Integer.class);
 		if (existingUserId != null) {
@@ -107,6 +107,9 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 			// Sends the message
 			messageService.sendMessage(message, new MessageDestination(MessageChannel.EMAIL, email));
 		}
+		
+		// OK
+		return Ack.validate(administrator);
 	}
 	
 	@Override

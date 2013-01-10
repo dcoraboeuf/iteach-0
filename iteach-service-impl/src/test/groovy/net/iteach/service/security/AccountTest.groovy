@@ -1,7 +1,5 @@
 package net.iteach.service.security
 
-import java.lang.invoke.MethodHandleImpl.BindCaller.T
-
 import net.iteach.api.SecurityService
 import net.iteach.api.model.AuthenticationMode
 import net.iteach.api.support.InMemoryPost
