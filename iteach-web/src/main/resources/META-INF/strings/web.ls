@@ -113,6 +113,10 @@ login.registrationOK
 	en -> Registration is now OK - you can now log in
 	fr -> L'enregistrement s'est bien passé - vous pouvez maintenant vous connecter
     
+login.registrationConfirmationNeeded
+	en -> Registration is OK and a mail has been sent to you. Follow its instructions before logging in.
+	fr -> L'enregistrement s'est bien passé et un courriel vous a été envoyé. Suivez les instructions qu'il contient avant de vous connecter.
+
 [registration]
 
 page.registrationForm
