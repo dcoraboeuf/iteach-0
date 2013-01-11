@@ -9,7 +9,6 @@ import net.iteach.core.security.SecurityUtils;
 import net.sf.jstring.Strings;
 import net.sf.jstring.support.CoreException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +49,11 @@ public class DefaultErrorHandler implements ErrorHandler {
 			loggedMessage = ex.getMessage();
 			stackTrace = true;
 			// Gets a display message for this exception class
-			displayMessage = strings.get(Locale.ENGLISH, ex.getClass().getName(), false);
-			if (StringUtils.isBlank(displayMessage)) {
-				displayMessage = strings.get(Locale.ENGLISH, "general.error.message");
+			String messageKey = ex.getClass().getName();
+			if (strings.isDefined(locale, messageKey)) {
+				displayMessage = strings.get(locale, messageKey, false);
+			} else {
+				displayMessage = strings.get(locale, "general.error.technical");
 			}
 		}
 		// Traces the error

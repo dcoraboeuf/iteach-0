@@ -33,10 +33,6 @@ public class StudentController extends AbstractGUIController {
 
 	@RequestMapping("/{id:\\d+}")
 	public String details (@PathVariable int id, Model model, HttpSession session) {
-		// FIXME Test for #62
-		if (true) {
-			throw new RuntimeException("Test");
-		}
 		// Loads the student details
 		model.addAttribute("student", ui.getStudent(id));
 		// Current date

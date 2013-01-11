@@ -10,28 +10,25 @@ language.de
     
 [general]
 
-general.failure
-	en -> ...
-		A general error has occurred..\n
-		Please report the following identifier to your administrator.\n
-		{0}
-		...
-	fr -> ...
-		Une erreur générale est survenue.\n
-		Veuillez signaler l'identifiant qui suit à votre administrateur.\n
-		{0}
-		...
+general.error.technical
+	en -> Technical error
+	fr -> Erreur technique
+	
+general.error.contact
+	en -> Please report the following message and identifier to the iTeach administrator.
+	fr -> Veuillez signaler le message et l'identifiant qui suivent à l'administrateur d'iTeach.
 
-general.error
+general.error.full
 	en -> ...
 		An error has occurred.\n
-		Please report the following message and identifier to your administrator.\n
+		@[general.error.contact]\n
+		\n
 		{0}\n
 		Identifier: {1}
 		...
 	fr -> ...
 		Une erreur est survenue.\n
-		Veuillez signaler le message et l'identifiant qui suivent à votre administrateur.\n
+		@[general.error.contact]\n
 		{0}\n
 		Identifiant : {1}
 		...
@@ -90,15 +87,10 @@ page.error
 	
 error.message
 	en -> ...
-		An error has occurred. We are sorry for any inconvenience.\n
-		\n
-		You can send the following information to the administrator
-		of iTeach.
+		An error has occurred. We are sorry for any inconvenience.
 		...
 	fr -> ...
-		Une erreur s'est produite. Nous nous excusons pour le problème rencontré.\n
-		\n
-		Vous pouvez envoyer les informations suivantes à l'administrateur d'iTeach.
+		Une erreur s'est produite. Nous nous excusons pour le problème rencontré.
 		...
 
 error.back

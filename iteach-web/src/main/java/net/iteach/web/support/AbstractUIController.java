@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.utils.InputException;
 import net.sf.jstring.Strings;
-import net.sf.jstring.support.CoreException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -44,23 +43,13 @@ public abstract class AbstractUIController extends AbstractController {
 		// OK
 		return getMessageResponse(message);
 	}
-
-	@ExceptionHandler(CoreException.class)
-	public ResponseEntity<String> onCoreException (HttpServletRequest request, Locale locale, CoreException ex) {
-		// Error message
-		ErrorMessage error = errorHandler.handleError (request, locale, ex);
-		// Returns a message to display to the user
-		String message = strings.get(locale, "general.error", error.getMessage(), error.getUuid());
-		// Ok
-		return getMessageResponse(message);
-	}
-
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> onException (HttpServletRequest request, Locale locale, Exception ex) {
 		// Error message
 		ErrorMessage error = errorHandler.handleError (request, locale, ex);
 		// Returns a message to display to the user
-		String message = strings.get(locale, "general.failure", error.getUuid());
+		String message = strings.get(locale, "general.error.full", error.getMessage(), error.getUuid());
 		// Ok
 		return getMessageResponse(message);
 	}
