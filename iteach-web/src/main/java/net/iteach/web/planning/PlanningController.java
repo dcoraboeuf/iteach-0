@@ -2,17 +2,13 @@ package net.iteach.web.planning;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import net.iteach.core.model.Lesson;
-import net.iteach.core.model.LessonDetails;
 import net.iteach.core.model.LessonRange;
 import net.iteach.core.model.Lessons;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.core.ui.TeacherUI;
+import net.iteach.web.support.AbstractUIController;
 import net.iteach.web.support.ErrorHandler;
-import net.iteach.web.support.UserSession;
-import net.iteach.web.ui.AbstractUIController;
 import net.iteach.web.ui.LessonEvent;
 import net.iteach.web.ui.LessonEvents;
 import net.sf.jstring.Strings;
@@ -20,8 +16,6 @@ import net.sf.jstring.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,14 +29,12 @@ import com.google.common.collect.Lists;
 public class PlanningController extends AbstractUIController {
 
 	private final TeacherUI teacherUI;
-	private final UserSession userSession;
 
 	@Autowired
 	public PlanningController(SecurityUtils securityUtils,
-			ErrorHandler errorHandler, Strings strings, TeacherUI teacherUI, UserSession userSession) {
+			ErrorHandler errorHandler, Strings strings, TeacherUI teacherUI) {
 		super(securityUtils, errorHandler, strings);
 		this.teacherUI = teacherUI;
-		this.userSession = userSession;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -58,18 +50,6 @@ public class PlanningController extends AbstractUIController {
 		});
 		// OK
 		return new LessonEvents(events);
-	}
-
-	@RequestMapping(value = "/{id:\\d+}", method = RequestMethod.GET)
-	public String lesson (@PathVariable int id, Model model, HttpSession session) {
-		// Loads the lesson
-		LessonDetails lesson = teacherUI.getLesson(id);
-		// Sets the lesson for the page
-		model.addAttribute("lesson", lesson);
-		// Adjust the current date
-		userSession.setCurrentDate(session, lesson.getDate());
-		// OK
-		return "lesson";
 	}
 
 	protected LessonEvent toEvent(Lesson lesson) {

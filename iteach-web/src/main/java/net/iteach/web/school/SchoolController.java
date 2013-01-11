@@ -1,6 +1,8 @@
 package net.iteach.web.school;
 
 import net.iteach.core.ui.TeacherUI;
+import net.iteach.web.support.AbstractGUIController;
+import net.iteach.web.support.ErrorHandler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/gui/school")
-public class SchoolController {
+public class SchoolController extends AbstractGUIController {
 
 	private final TeacherUI ui;
 	
 	@Autowired
-	public SchoolController(TeacherUI ui) {
+	public SchoolController(ErrorHandler errorHandler, TeacherUI ui) {
+		super(errorHandler);
 		this.ui = ui;
 	}
 

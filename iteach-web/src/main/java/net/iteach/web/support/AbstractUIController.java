@@ -1,4 +1,4 @@
-package net.iteach.web.ui;
+package net.iteach.web.support;
 
 import java.util.Locale;
 
@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.utils.InputException;
-import net.iteach.web.support.ErrorHandler;
-import net.iteach.web.support.ErrorMessage;
 import net.sf.jstring.Strings;
 import net.sf.jstring.support.CoreException;
 
@@ -17,18 +15,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-public abstract class AbstractUIController {
+public abstract class AbstractUIController extends AbstractController {
 
 	protected final SecurityUtils securityUtils;
-	private final ErrorHandler errorHandler;
 	private final Strings strings;
 
 	@Autowired
 	public AbstractUIController(SecurityUtils securityUtils,
                                 ErrorHandler errorHandler,
                                 Strings strings) {
+		super(errorHandler);
 		this.securityUtils = securityUtils;
-		this.errorHandler = errorHandler;
 		this.strings = strings;
 	}
 

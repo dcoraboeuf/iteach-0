@@ -5,6 +5,8 @@ import java.util.Locale;
 import net.iteach.api.SecurityService;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.UserMessage;
+import net.iteach.web.support.AbstractGUIController;
+import net.iteach.web.support.ErrorHandler;
 import net.sf.jstring.Strings;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/account")
-public class AccountController {
+public class AccountController extends AbstractGUIController {
 	
 	private final SecurityService securityService;
 	private final Strings strings;
 	
 	
 	@Autowired
-	public AccountController(SecurityService securityService, Strings strings) {
+	public AccountController(ErrorHandler errorHandler, SecurityService securityService, Strings strings) {
+		super(errorHandler);
 		this.securityService = securityService;
 		this.strings = strings;
 	}

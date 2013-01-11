@@ -23,6 +23,7 @@ import net.iteach.core.model.StudentLessons;
 import net.iteach.core.model.StudentSummaries;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.core.ui.TeacherUI;
+import net.iteach.web.support.AbstractUIController;
 import net.iteach.web.support.ErrorHandler;
 import net.sf.jstring.Strings;
 

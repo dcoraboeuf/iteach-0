@@ -4,6 +4,8 @@ import javax.servlet.http.HttpSession;
 
 import net.iteach.core.model.StudentLessons;
 import net.iteach.core.ui.TeacherUI;
+import net.iteach.web.support.AbstractGUIController;
+import net.iteach.web.support.ErrorHandler;
 import net.iteach.web.support.UserSession;
 
 import org.joda.time.LocalDate;
@@ -17,19 +19,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/gui/student")
-public class StudentController {
+public class StudentController extends AbstractGUIController {
 
 	private final TeacherUI ui;
 	private final UserSession userSession;
 	
 	@Autowired
-	public StudentController(TeacherUI ui, UserSession userSession) {
+	public StudentController(ErrorHandler errorHandler, TeacherUI ui, UserSession userSession) {
+		super(errorHandler);
 		this.ui = ui;
 		this.userSession = userSession;
 	}
 
 	@RequestMapping("/{id:\\d+}")
 	public String details (@PathVariable int id, Model model, HttpSession session) {
+		// FIXME Test for #62
+		if (true) {
+			throw new RuntimeException("Test");
+		}
 		// Loads the student details
 		model.addAttribute("student", ui.getStudent(id));
 		// Current date

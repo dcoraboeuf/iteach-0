@@ -1,6 +1,8 @@
 package net.iteach.web.home;
 
 import net.iteach.core.ui.TeacherUI;
+import net.iteach.web.support.AbstractGUIController;
+import net.iteach.web.support.ErrorHandler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/gui/home")
-public class HomeController {
+public class HomeController extends AbstractGUIController {
 
 	private final TeacherUI ui;
 
 	@Autowired
-	public HomeController(TeacherUI ui) {
+	public HomeController(ErrorHandler errorHandler, TeacherUI ui) {
+		super(errorHandler);
 		this.ui = ui;
 	}
 

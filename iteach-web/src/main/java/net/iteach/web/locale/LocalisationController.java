@@ -11,6 +11,8 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import net.iteach.web.support.AbstractGUIController;
+import net.iteach.web.support.ErrorHandler;
 import net.sf.jstring.Strings;
 
 import org.slf4j.Logger;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class LocalisationController {
+public class LocalisationController extends AbstractGUIController {
 	
 	private final Logger logger = LoggerFactory.getLogger(LocalisationController.class);
 
@@ -29,7 +31,8 @@ public class LocalisationController {
 	private final LocalisationUtils localisationUtils;
 
 	@Autowired
-	public LocalisationController(Strings strings, LocalisationUtils localisationUtils) {
+	public LocalisationController(ErrorHandler errorHandler, Strings strings, LocalisationUtils localisationUtils) {
+		super(errorHandler);
 		this.strings = strings;
 		this.localisationUtils = localisationUtils;
 	}

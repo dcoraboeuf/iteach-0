@@ -3,6 +3,8 @@ package net.iteach.web.security;
 import java.util.Locale;
 
 import net.iteach.core.model.UserMessage;
+import net.iteach.web.support.AbstractGUIController;
+import net.iteach.web.support.ErrorHandler;
 import net.sf.jstring.Strings;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class LoginController {
+public class LoginController extends AbstractGUIController {
 	
 	private final Strings strings;
 	
 	@Autowired
-	public LoginController(Strings strings) {
+	public LoginController(ErrorHandler errorHandler, Strings strings) {
+		super(errorHandler);
 		this.strings = strings;
 	}
 

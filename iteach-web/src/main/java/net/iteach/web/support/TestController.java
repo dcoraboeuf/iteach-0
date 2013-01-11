@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.iteach.api.support.InMemoryPost;
 import net.iteach.core.RunProfile;
 import net.iteach.core.model.Message;
+import net.iteach.core.security.SecurityUtils;
+import net.sf.jstring.Strings;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -22,14 +24,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/test")
 @Profile({RunProfile.TEST, RunProfile.IT})
-public class TestController {
+public class TestController extends AbstractUIController {
 	
 	private final InMemoryPost inMemoryPost;
-		
+	
 	@Autowired
-	public TestController(InMemoryPost inMemoryPost) {
+	public TestController(SecurityUtils securityUtils, ErrorHandler errorHandler, Strings strings, InMemoryPost inMemoryPost) {
+		super(securityUtils, errorHandler, strings);
 		this.inMemoryPost = inMemoryPost;
 	}
+
+
 
 	/**
 	 * Collects the message for a user

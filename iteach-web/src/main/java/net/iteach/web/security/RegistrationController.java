@@ -10,6 +10,7 @@ import net.iteach.api.model.AuthenticationMode;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.UserMessage;
 import net.iteach.utils.InputException;
+import net.iteach.web.support.AbstractGUIController;
 import net.iteach.web.support.ErrorHandler;
 import net.iteach.web.support.ErrorMessage;
 import net.sf.jstring.Strings;
@@ -23,16 +24,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class RegistrationController {
+public class RegistrationController extends AbstractGUIController {
 
 	private final SecurityService securityService;
-	private final ErrorHandler errorHandler; 
 	private final Strings strings;
 
 	@Autowired
 	public RegistrationController(SecurityService securityService, ErrorHandler errorHandler, Strings strings) {
+		super(errorHandler);
 		this.securityService = securityService;
-		this.errorHandler = errorHandler;
 		this.strings = strings;
 	}
 	
