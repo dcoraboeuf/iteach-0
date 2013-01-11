@@ -30,6 +30,8 @@ public abstract class AbstractGUIController extends AbstractController {
 		// Model
 		ModelAndView mav = new ModelAndView("error");
 		mav.addObject("error", error);
+		// Base URL (needed for static resources)
+		mav.addObject("baseURL", WebUtils.getBaseURL(request));
 		// OK
 		return mav;
 	}

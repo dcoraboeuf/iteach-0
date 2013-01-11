@@ -80,7 +80,31 @@ app.login
 app.logout
     en -> Log out
     fr -> Déconnexion
-    
+
+# Error page
+[error]
+
+page.error
+	en -> Error
+	fr -> Erreur
+	
+error.message
+	en -> ...
+		An error has occurred. We are sorry for any inconvenience.\n
+		\n
+		You can send the following information to the administrator
+		of iTeach.
+		...
+	fr -> ...
+		Une erreur s'est produite. Nous nous excusons pour le problème rencontré.\n
+		\n
+		Vous pouvez envoyer les informations suivantes à l'administrateur d'iTeach.
+		...
+
+error.back
+	en -> Go back to the portal
+	fr -> Revenir à l'acceuil   
+
 [login]
 
 login
