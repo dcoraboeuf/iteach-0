@@ -11,6 +11,7 @@
 				<th><@lh key="admin.accounts.mode" /></th>
 				<th><@lh key="admin.accounts.administrator" /></th>
 				<th><@lh key="admin.accounts.verified" /></th>
+				<th>&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,6 +32,11 @@
 					<td><@lh key= "admin.accounts.mode." + account.mode /></td>
 					<td><@yes_no value=account.admin /></td>
 					<td><@yes_no value=account.verified /></td>
+					<td>
+						<#if !account.admin>
+							<a href="admin/account/${account.id}/delete"><@lh key="general.delete"/></a>
+						</#if>
+					</td>
 				</tr>
 			</#list>
 		</tbody>
