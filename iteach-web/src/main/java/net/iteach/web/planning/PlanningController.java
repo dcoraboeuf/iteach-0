@@ -2,13 +2,16 @@ package net.iteach.web.planning;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import net.iteach.core.model.Lesson;
-import net.iteach.core.model.LessonRange;
+import net.iteach.core.model.LessonListRequest;
 import net.iteach.core.model.Lessons;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.core.ui.TeacherUI;
 import net.iteach.web.support.AbstractUIController;
 import net.iteach.web.support.ErrorHandler;
+import net.iteach.web.support.UserSession;
 import net.iteach.web.ui.LessonEvent;
 import net.iteach.web.ui.LessonEvents;
 import net.sf.jstring.Strings;
@@ -29,18 +32,20 @@ import com.google.common.collect.Lists;
 public class PlanningController extends AbstractUIController {
 
 	private final TeacherUI teacherUI;
+	private final UserSession userSession;
 
 	@Autowired
 	public PlanningController(SecurityUtils securityUtils,
-			ErrorHandler errorHandler, Strings strings, TeacherUI teacherUI) {
+			ErrorHandler errorHandler, Strings strings, TeacherUI teacherUI, UserSession userSession) {
 		super(securityUtils, errorHandler, strings);
 		this.teacherUI = teacherUI;
+		this.userSession = userSession;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public @ResponseBody LessonEvents lessons(@RequestBody LessonRange range) {
+	public @ResponseBody LessonEvents lessons(@RequestBody LessonListRequest request, HttpSession session) {
 		// Gets the regular lessons from the model
-		Lessons lessons = teacherUI.getLessons(range);
+		Lessons lessons = teacherUI.getLessons(request.getRange());
 		// Transformation
 		List<LessonEvent> events = Lists.transform(lessons.getLessons(), new Function<Lesson, LessonEvent>() {
 			@Override
@@ -48,6 +53,10 @@ public class PlanningController extends AbstractUIController {
 				return toEvent (lesson);
 			}
 		});
+		// Sets the current date
+		if (request.isSetDate()) {
+			userSession.setCurrentDate(session, request.getRange().getFrom().toLocalDate());
+		}
 		// OK
 		return new LessonEvents(events);
 	}

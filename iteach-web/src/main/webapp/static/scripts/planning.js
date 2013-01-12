@@ -1,5 +1,7 @@
 var Planning = function () {
 	
+	var initialization = true;
+	
 	function formatTimePart (n) {
 		return n < 10 ? '0' + n : '' + n;
 	}
@@ -25,13 +27,23 @@ var Planning = function () {
 	}
 	
 	function fetchEvents (start, end, callback) {
+		var setDate;
+		if (initialization) {
+			initialization = false;
+			setDate = false;
+		} else {
+			setDate = true;
+		}
 		$.ajax({
 			type: 'POST',
 			url: 'gui/lesson/list',
 			contentType: 'application/json',
 			data: JSON.stringify({
-				from: formatDateTime(start),
-				to: formatDateTime(end)
+				range: {
+					from: formatDateTime(start),
+					to: formatDateTime(end)
+				},
+				setDate: setDate
 			}),
 			dataType: 'json',
 			success: function (data) {
@@ -193,6 +205,8 @@ var Planning = function () {
 	}
 
 	function init () {
+		// Current date on initialization
+		var currentDate = application.getCurrentDate();
 		// TODO Week-end enabled or not
 		// TODO Basic or agenda mode
 		var p = $("#planning-calendar").fullCalendar({
@@ -201,6 +215,10 @@ var Planning = function () {
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
+			// Current date
+			year: currentDate.getFullYear(),
+			month: currentDate.getMonth(),
+			date: currentDate.getDay(),
 			// i18n
 			firstDay: i18n.firstDay,
 			dayNames: i18n.dayNames,
