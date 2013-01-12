@@ -561,5 +561,9 @@ comment.content.help
 [admin]
 
 admin.accounts.link
+	en -> @[page.accounts]
+	fr -> @[page.accounts]
+
+page.accounts
 	en -> Manage accounts
 	fr -> Gestion des comptes

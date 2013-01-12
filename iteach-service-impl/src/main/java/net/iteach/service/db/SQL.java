@@ -79,4 +79,8 @@ public interface SQL {
 	String TOKEN_DELETE = "DELETE FROM TOKENS WHERE TOKENTYPE = :tokentype AND TOKENKEY = :tokenkey";
 	String TOKEN_CLEANUP = "DELETE FROM TOKENS WHERE CREATION < :creation";
 	
+	// Administrator queries
+
+	String ADMIN_ACCOUNTS = "SELECT * FROM USERS ORDER BY LASTNAME, FIRSTNAME";
+	
 }

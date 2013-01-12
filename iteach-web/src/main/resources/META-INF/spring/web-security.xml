@@ -8,8 +8,9 @@ http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<http auto-config="true">
-		<intercept-url pattern="/gui/**" access="ROLE_TEACHER,ROLE_ADMIN"/>
-		<intercept-url pattern="/ui/**" access="ROLE_TEACHER,ROLE_ADMIN"/>
+		<intercept-url pattern="/gui/**" access="ROLE_TEACHER,ROLE_ADMINISTRATOR"/>
+		<intercept-url pattern="/ui/**" access="ROLE_TEACHER,ROLE_ADMINISTRATOR"/>
+		<intercept-url pattern="/admin/**" access="ROLE_ADMINISTRATOR"/>
 		<openid-login login-page="/login" authentication-failure-handler-ref="openIDAuthenticationFailureHandler" user-service-ref="openIDUserService" />
 		<form-login authentication-failure-url="/login_error"/>
 		<logout logout-url="/logout"/>
