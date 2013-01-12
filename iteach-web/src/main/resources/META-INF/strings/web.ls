@@ -63,6 +63,10 @@ general.loading
 	en -> Loading...
 	fr -> En cours de chargement...
 
+general.warning
+	en -> Warning!
+	fr -> Attention !
+
 general.confirm.title
     en -> Confirmation
     fr -> Confirmation
@@ -593,3 +597,24 @@ admin.accounts.mode.openid
 admin.accounts.mode.password
 	en -> Password
 	fr -> Mot de passe
+
+admin.accounts.schoolCount
+	en -> Number of schools
+	fr -> Nombre d'écoles
+
+admin.accounts.studentCount
+	en -> Number of student
+	fr -> Nombre d'étudiants
+
+admin.accounts.lessonCount
+	en -> Number of lessons
+	fr -> Nombre de leçons
+
+
+page.accountDelete
+	en -> Account deletion confirmation
+	fr -> Confirmation pour la suppression d'un compte
+
+page.accountDelete.prompt
+	en -> Are you sure to delete the following account? All his data will be lost! No cancelletion will be possible.
+	fr -> Etes-vous sûr de supprimer le compte suivant ? Toutes ses données seront perdues ! Aucune annulation n'est possible.

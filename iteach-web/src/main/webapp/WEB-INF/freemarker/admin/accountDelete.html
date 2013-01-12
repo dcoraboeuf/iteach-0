@@ -1,0 +1,53 @@
+<#include "/lib/layout.html">
+
+<@layout_std pageId="accountDelete">
+    <form action="admin/account/${details.summary.id}/delete" method="POST" class="form-horizontal">
+        <input id="id" type="hidden" name="id" value="${details.summary.id}" />
+        <div class="alert alert-warning">
+        	<h4><@lh key="general.warning" /></h4>
+        	<@lh key="page.accountDelete.prompt" />
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="firstName"><@lh key="user.firstName" /></label>
+            <div class="controls">
+                <input id="firstName" type="text" readonly="readonly" value="${details.summary.firstName?html}" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="lastName"><@lh key="user.lastName" /></label>
+            <div class="controls">
+                <input id="lastName" type="text" readonly="readonly" value="${details.summary.lastName?html}" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="email"><@lh key="user.email" /></label>
+            <div class="controls">
+                <input id="email" type="text" readonly="readonly" value="${details.summary.email?html}" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="schoolCount"><@lh key="admin.accounts.schoolCount" /></label>
+            <div class="controls">
+                <input id="schoolCount" type="text" readonly="readonly" value="${details.schoolCount?html}" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="studentCount"><@lh key="admin.accounts.studentCount" /></label>
+            <div class="controls">
+                <input id="studentCount" type="text" readonly="readonly" value="${details.studentCount?html}" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="lessonCount"><@lh key="admin.accounts.lessonCount" /></label>
+            <div class="controls">
+                <input id="lessonCount" type="text" readonly="readonly" value="${details.lessonCount?html}" />
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input class="btn btn-danger" type="submit" value="<@lh key='general.delete' />" />
+                <a class="btn btn-link" href="admin/accounts"><@lh key="general.cancel" /></a>
+            </div>
+        </div>
+    </form>
+</@layout_std>
