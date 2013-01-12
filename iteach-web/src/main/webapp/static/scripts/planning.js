@@ -238,7 +238,7 @@ var Planning = function () {
 			// Current date
 			year: currentDate.getFullYear(),
 			month: currentDate.getMonth(),
-			date: currentDate.getDay(),
+			date: currentDate.getDate(),
 			// i18n
 			firstDay: i18n.firstDay,
 			dayNames: i18n.dayNames,
