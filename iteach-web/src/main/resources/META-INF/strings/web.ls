@@ -125,6 +125,10 @@ login.error
 	en -> Incorrect user name or password, or your account has been disabled or has not been confirmed yet.
 	fr -> Utilisateur ou mot de passe incorrect, ou votre compte a été désactivé ou n'a pas encore été confirmé.
 	
+login.openid.error
+	en -> Your account could not be validated.
+	fr -> Votre compte n'a pas pu être validé.
+	
 login.registrationOK
 	en -> Registration is now OK - you can now log in
 	fr -> L'enregistrement s'est bien passé - vous pouvez maintenant vous connecter

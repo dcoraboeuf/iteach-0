@@ -23,17 +23,18 @@ public class OpenIDAuthenticationFailureHandler extends
 	public void onAuthenticationFailure(HttpServletRequest request,
 			HttpServletResponse response, AuthenticationException exception)
 			throws IOException, ServletException {
+		DefaultRedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 		if (exception instanceof UsernameNotFoundException
 				&& exception.getAuthentication() instanceof OpenIDAuthenticationToken
 				&& ((OpenIDAuthenticationToken) exception.getAuthentication()).getStatus().equals(OpenIDAuthenticationStatus.SUCCESS)) {
-			DefaultRedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 			request.getSession(true).setAttribute(
 					"USER_OPENID_CREDENTIAL",
 					((UsernameNotFoundException) exception).getAuthentication().getName());
 			// redirect to create account page
 			redirectStrategy.sendRedirect(request, response, "/registration_openid");
 		} else {
-			super.onAuthenticationFailure(request, response, exception);
+			// Goes back to the login page with an error message
+			redirectStrategy.sendRedirect(request, response, "/login_openid_failed");
 		}
 	}
 }

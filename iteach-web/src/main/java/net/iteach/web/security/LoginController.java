@@ -34,4 +34,11 @@ public class LoginController extends AbstractGUIController {
 		return "login";
 	}
 	
+	@RequestMapping("/login_openid_failed")
+	public String login_openid_error (Locale locale, Model model) {
+		model.addAttribute("message", UserMessage.error(strings.get(locale, "login.openid.error")));
+		return "login";
+	}
+	
+	
 }
