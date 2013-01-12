@@ -4,6 +4,7 @@
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
+				<th>&nbsp;</th>
 				<th><@lh key="user.lastName" /></th>
 				<th><@lh key="user.firstName" /></th>
 				<th><@lh key="user.email" /></th>
@@ -19,6 +20,11 @@
 					<#assign classes = "error" />
 				</#if>
 				<tr class="${classes}">
+					<td>
+						<#if account.self>
+							&#9658;
+						</#if>
+					</td>
 					<td>${account.lastName?html}</td>
 					<td>${account.firstName?html}</td>
 					<td><a href="mailto:${account.email?html}">${account.email?html}</a></td>
