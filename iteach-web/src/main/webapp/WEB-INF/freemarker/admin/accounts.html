@@ -14,7 +14,11 @@
 		</thead>
 		<tbody>
 			<#list accounts as account>
-				<tr>
+				<#assign classes="" />
+				<#if !account.verified>
+					<#assign classes = "error" />
+				</#if>
+				<tr class="${classes}">
 					<td>${account.lastName?html}</td>
 					<td>${account.firstName?html}</td>
 					<td><a href="mailto:${account.email?html}">${account.email?html}</a></td>
