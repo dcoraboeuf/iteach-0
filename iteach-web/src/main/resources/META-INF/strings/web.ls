@@ -557,3 +557,9 @@ comment.content.help
 			<li><code>_..._</code> est affiché en <i>italique</i></li>
 		</ul>
 		...
+
+[admin]
+
+admin.accounts.link
+	en -> Manage accounts
+	fr -> Gestion des comptes

@@ -13,6 +13,9 @@
 				<b class="caret"></b>
 			</a>
 			<ul class="dropdown-menu">
+				<#if secAdmin() >
+					<li><a href="admin/accounts"><@lh key="admin.accounts.link" /></a></li>
+				</#if>
 				<li><a href="logout"><@lh key="app.logout" /></a></li>
 			</ul>
 		</li>
