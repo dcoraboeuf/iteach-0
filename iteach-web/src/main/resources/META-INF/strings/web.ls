@@ -10,6 +10,16 @@ language.de
     
 [general]
 
+general.yes
+	en -> Yes
+	fr -> Oui
+	de -> Ja
+
+general.no
+	en -> No
+	fr -> Non
+	de -> Nein
+
 general.error.technical
 	en -> Technical error
 	fr -> Erreur technique
@@ -567,3 +577,19 @@ admin.accounts.link
 page.accounts
 	en -> Manage accounts
 	fr -> Gestion des comptes
+
+admin.accounts.mode
+	en -> Authentication mode
+	fr -> Mode d'authentification
+admin.accounts.administrator
+	en -> Administrator
+	fr -> Administrateur
+admin.accounts.verified
+	en -> Verified
+	fr -> Vérifié
+
+admin.accounts.mode.openid
+	en,fr,de -> OpenID
+admin.accounts.mode.password
+	en -> Password
+	fr -> Mot de passe

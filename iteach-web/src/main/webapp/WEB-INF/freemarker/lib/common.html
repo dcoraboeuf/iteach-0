@@ -1,6 +1,14 @@
 <#import "/spring.ftl" as spring />
 <#include "/lib/i18n.html" />
 
+<#macro yes_no value>
+	<#if value>
+		<@lh key="general.yes" />
+	<#else>
+		<@lh key="general.no" />
+	</#if>
+</#macro>
+
 <#macro select_option value text selection>
 	<#if value == selection>
 		<option value="${value?html}" selected="selected">${text?html}</option>
