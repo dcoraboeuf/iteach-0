@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,10 +20,6 @@ public abstract class AbstractGUIController extends AbstractController {
 	 */
 	@ExceptionHandler(Exception.class)
 	public ModelAndView onException (HttpServletRequest request, Locale locale, Exception ex) {
-		// Forwards access denied exceptions
-		if (ex instanceof AccessDeniedException) {
-			throw (AccessDeniedException) ex;
-		}
 		// Error message
 		ErrorMessage error = errorHandler.handleError (request, locale, ex);
 		// Model
