@@ -7,6 +7,7 @@ import net.iteach.core.model.Comments;
 import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
+import net.iteach.core.model.LessonChange;
 import net.iteach.core.model.LessonDetails;
 import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.LessonRange;
@@ -58,6 +59,8 @@ public interface TeacherUI {
 	Coordinates getStudentCoordinates(int id);
 
 	Coordinates getSchoolCoordinates(int id);
+	
+	Ack changeLesson (int id, LessonChange change);
 	
 	// Comments for lessons
 	

@@ -22,6 +22,7 @@ import net.iteach.core.model.Comments;
 import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.ID;
 import net.iteach.core.model.Lesson;
+import net.iteach.core.model.LessonChange;
 import net.iteach.core.model.LessonDetails;
 import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.LessonRange;
@@ -37,6 +38,8 @@ import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -211,6 +214,57 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 		checkTeacherForLesson(teacherId, id);
 		commentsService.removeComments (Entity.LESSONS, id);
 		int count = getNamedParameterJdbcTemplate().update(SQL.LESSON_DELETE, params("id", id));
+		return Ack.one(count);
+	}
+	
+	@Override
+	@Transactional
+	public Ack changeLessonForTeacher(int userId, int lessonId, LessonChange change) {
+		// Check for the associated teacher
+		checkTeacherForLesson(userId, lessonId);
+		// Loads the lesson range
+		LessonRange range = getNamedParameterJdbcTemplate().queryForObject(
+			SQL.LESSON_RANGE,
+			params("id", lessonId),
+			new RowMapper<LessonRange>() {
+				@Override
+				public LessonRange mapRow(ResultSet rs, int rowNum) throws SQLException {
+					LocalDate date = SQLUtils.dateFromDB(rs.getString("pdate"));
+					LocalTime from = SQLUtils.timeFromDB(rs.getString("pfrom"));
+					LocalTime to = SQLUtils.timeFromDB(rs.getString("pto"));
+					return new LessonRange(
+						date.toLocalDateTime(from),
+						date.toLocalDateTime(to));
+				}
+			});
+		// Adjust the range
+		LocalDateTime from = range.getFrom();
+		LocalDateTime to = range.getTo();
+		// Days?
+		int dayDelta = change.getDayDelta();
+		if (dayDelta != 0) {
+			// Shifts both dates
+			from = from.plusDays(dayDelta);
+			to = to.plusDays(dayDelta);
+		}
+		// Minutes
+		int minuteDelta = change.getMinuteDelta();
+		if (minuteDelta != 0) {
+			// Shifts only the end
+			to = to.plusMinutes(minuteDelta);
+		}
+		// Redefines the lesson range
+		LocalDate pdate = from.toLocalDate();
+		LocalTime pfrom = from.toLocalTime();
+		LocalTime pto = to.toLocalTime();
+		// Updates the period
+		int count = getNamedParameterJdbcTemplate().update(
+				SQL.LESSON_RANGE_UPDATE,
+				params("id", lessonId)
+					.addValue("date", dateToDB(pdate))
+					.addValue("from", timeToDB(pfrom))
+					.addValue("to", timeToDB(pto))
+				);
 		return Ack.one(count);
 	}
 	

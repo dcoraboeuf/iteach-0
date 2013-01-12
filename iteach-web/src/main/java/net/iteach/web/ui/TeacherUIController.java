@@ -10,6 +10,7 @@ import net.iteach.core.model.Comments;
 import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.Coordinates;
 import net.iteach.core.model.ID;
+import net.iteach.core.model.LessonChange;
 import net.iteach.core.model.LessonDetails;
 import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.LessonRange;
@@ -203,6 +204,15 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
 		return lessonService.deleteLessonForTeacher(userId, id);
+	}
+	
+	@Override
+	@RequestMapping(value = "/lesson/{id}/change", method = RequestMethod.POST)
+	public @ResponseBody Ack changeLesson(@PathVariable int id, @RequestBody LessonChange change) {
+		// Gets the current teacher
+		int userId = securityUtils.getCurrentUserId();
+		// OK
+		return lessonService.changeLessonForTeacher(userId, id, change);
 	}
 
 	@Override

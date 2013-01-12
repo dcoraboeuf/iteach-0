@@ -8,6 +8,7 @@ import net.iteach.core.model.CommentFormat;
 import net.iteach.core.model.Comments;
 import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.ID;
+import net.iteach.core.model.LessonChange;
 import net.iteach.core.model.LessonDetails;
 import net.iteach.core.model.LessonForm;
 import net.iteach.core.model.LessonRange;
@@ -35,5 +36,7 @@ public interface LessonService {
 	Comment getLessonComment(int userId, int lessonId, int commentId, CommentFormat format);
 
 	Ack deleteLessonComment(int userId, int lessonId, int commentId);
+
+	Ack changeLessonForTeacher(int userId, int id, LessonChange change);
 
 }

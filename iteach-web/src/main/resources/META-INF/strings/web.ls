@@ -449,6 +449,10 @@ lesson.delete.prompt
 lesson.delete.error
 	en -> Error while deleting this lesson
 	fr -> Erreur lors de la suppression de cette leçon
+	
+lesson.change.error
+	en -> Error while changing the lesson schedule
+	fr -> Erreur pendant la modification de la leçon
 
 lesson.details.data
 	en -> Schedule

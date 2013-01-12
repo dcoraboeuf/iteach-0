@@ -26,6 +26,26 @@ var Planning = function () {
 		});
 	}
 	
+	function onEventChange (event, dayDelta, minuteDelta, revertFunc) {
+		$.ajax({
+			type: 'POST',
+			url: 'ui/teacher/lesson/{0}/change'.format(event.id),
+			contentType: 'application/json',
+			data: JSON.stringify({
+				dayDelta: dayDelta,
+				minuteDelta: minuteDelta
+			}),
+			dataType: 'json',
+			success: function (data) {
+				// Nothing to do... Already displayed
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+			  	revertFunc();
+			  	application.displayAjaxError (loc('lesson.change.error'), jqXHR, textStatus, errorThrown);
+			}
+		});
+	}
+	
 	function fetchEvents (start, end, callback) {
 		var setDate;
 		if (initialization) {
@@ -242,7 +262,13 @@ var Planning = function () {
 			selectHelper: true,
 			select: onSelect,
 			// Loading of events
-			events: fetchEvents
+			events: fetchEvents,
+			// Resizing of an event
+			editable: true,
+			eventResize: onEventChange,
+			eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc) {
+				onEventChange(event, dayDelta, minuteDelta, revertFunc);
+			}
 		});
 	}
 

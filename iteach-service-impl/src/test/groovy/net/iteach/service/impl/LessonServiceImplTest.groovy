@@ -4,6 +4,7 @@ import net.iteach.api.LessonService
 import net.iteach.core.model.CoordinateType
 import net.iteach.core.model.Coordinates
 import net.iteach.core.model.Lesson
+import net.iteach.core.model.LessonChange;
 import net.iteach.core.model.LessonDetails
 import net.iteach.core.model.LessonForm
 import net.iteach.core.model.LessonRange
@@ -203,6 +204,87 @@ class LessonServiceImplTest extends AbstractIntegrationTest {
 	@Test(expected = AccessDeniedException)
 	void deleteLessonForTeacher_access_denied() {
 		service.deleteLessonForTeacher(2, 1)
+	}
+	
+	@Test(expected = AccessDeniedException)
+	void changeLessonForTeacher_access_denied() {
+		service.changeLessonForTeacher(2, 1, null)
+	}
+	
+	@Test
+	void changeLessonForTeacher_plus_minutes() {
+		def id = service.createLessonForTeacher(1, new LessonForm(
+			new LocalDate(2013,1,12),
+			new LocalTime(11,0),
+			new LocalTime(12,30),
+			1,
+			"Test"))
+		assert id != null
+		assert id.success
+		def ack = service.changeLessonForTeacher(1, id.value, new LessonChange(0, 15))
+		assert ack != null
+		assert ack.success
+		def lesson = service.getLessonDetails(1, id.value)
+		assert new LocalDate(2013,1,12) == lesson.date
+		assert new LocalTime(11,0) == lesson.from
+		assert new LocalTime(12,45) == lesson.to		
+	}
+	
+	@Test
+	void changeLessonForTeacher_minus_minutes() {
+		def id = service.createLessonForTeacher(1, new LessonForm(
+			new LocalDate(2013,1,12),
+			new LocalTime(11,0),
+			new LocalTime(12,30),
+			1,
+			"Test"))
+		assert id != null
+		assert id.success
+		def ack = service.changeLessonForTeacher(1, id.value, new LessonChange(0, -15))
+		assert ack != null
+		assert ack.success
+		def lesson = service.getLessonDetails(1, id.value)
+		assert new LocalDate(2013,1,12) == lesson.date
+		assert new LocalTime(11,0) == lesson.from
+		assert new LocalTime(12,15) == lesson.to		
+	}
+	
+	@Test
+	void changeLessonForTeacher_plus_days() {
+		def id = service.createLessonForTeacher(1, new LessonForm(
+			new LocalDate(2013,1,31),
+			new LocalTime(11,0),
+			new LocalTime(12,30),
+			1,
+			"Test"))
+		assert id != null
+		assert id.success
+		def ack = service.changeLessonForTeacher(1, id.value, new LessonChange(1, 0))
+		assert ack != null
+		assert ack.success
+		def lesson = service.getLessonDetails(1, id.value)
+		assert new LocalDate(2013,2,1) == lesson.date
+		assert new LocalTime(11,0) == lesson.from
+		assert new LocalTime(12,30) == lesson.to		
+	}
+	
+	@Test
+	void changeLessonForTeacher_minus_days() {
+		def id = service.createLessonForTeacher(1, new LessonForm(
+			new LocalDate(2013,2,1),
+			new LocalTime(11,0),
+			new LocalTime(12,30),
+			1,
+			"Test"))
+		assert id != null
+		assert id.success
+		def ack = service.changeLessonForTeacher(1, id.value, new LessonChange(-1, 0))
+		assert ack != null
+		assert ack.success
+		def lesson = service.getLessonDetails(1, id.value)
+		assert new LocalDate(2013,1,31) == lesson.date
+		assert new LocalTime(11,0) == lesson.from
+		assert new LocalTime(12,30) == lesson.to		
 	}
 	
 }
