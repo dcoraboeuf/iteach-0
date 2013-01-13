@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import javax.validation.Validator;
 
 import net.iteach.api.CommentsService;
-import net.iteach.api.model.Entity;
+import net.iteach.api.model.CommentEntity;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.Comment;
 import net.iteach.core.model.CommentFormat;
@@ -72,7 +72,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 
 	@Override
 	@Transactional
-	public void removeComments (Entity entity, int id) {
+	public void removeComments (CommentEntity entity, int id) {
 		String sql = format(SQL_DELETE_FOR_ENTITY, entity);
 		getNamedParameterJdbcTemplate().update(
 			sql,
@@ -87,7 +87,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 
 	@Override
 	@Transactional(readOnly = true)
-	public Comments getComments(Entity entity, int id, int offset, int count, final int maxlength, final CommentFormat format) {
+	public Comments getComments(CommentEntity entity, int id, int offset, int count, final int maxlength, final CommentFormat format) {
 		// Total number of comments
 		int total = getNamedParameterJdbcTemplate().queryForInt(
 			format(SQL_COUNT_FOR_ENTITY, entity.name()),
@@ -130,7 +130,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Comment getComment(Entity entity, int id, final int commentId, final CommentFormat format) {
+	public Comment getComment(CommentEntity entity, int id, final int commentId, final CommentFormat format) {
 		return getNamedParameterJdbcTemplate().queryForObject(
 			format(SQL_SELECT_FOR_ENTITY_WITH_ID, entity.name()),
 			params("entityId", id).addValue("commentId", commentId),
@@ -153,7 +153,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 	
 	@Override
 	@Transactional
-	public Comment editComment(Entity entity, int entityId, CommentFormat format, CommentsForm form) {
+	public Comment editComment(CommentEntity entity, int entityId, CommentFormat format, CommentsForm form) {
 		final int commentId = form.getId();
 		// Edition
 		if (commentId > 0) {
@@ -198,7 +198,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 	
 	@Override
 	@Transactional
-	public Ack deleteComment(Entity entity, int entityId, int commentId) {
+	public Ack deleteComment(CommentEntity entity, int entityId, int commentId) {
 		int count = getNamedParameterJdbcTemplate().update(
 			format(SQL_DELETE, entity.name()),
 			params("entityId", entityId).addValue("id", commentId));

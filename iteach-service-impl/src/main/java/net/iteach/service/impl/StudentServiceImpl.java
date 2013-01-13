@@ -11,7 +11,8 @@ import javax.validation.Validator;
 import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.StudentService;
-import net.iteach.api.model.Entity;
+import net.iteach.api.model.CommentEntity;
+import net.iteach.api.model.CoordinateEntity;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.Comment;
 import net.iteach.core.model.CommentFormat;
@@ -95,7 +96,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 								rs.getInt("ID"),
 								rs.getString("SUBJECT"),
 								rs.getString("NAME"),
-								coordinatesService.getCoordinates(Entity.STUDENTS, id),
+								coordinatesService.getCoordinates(CoordinateEntity.STUDENTS, id),
 								school,
 								studentHours);
 					}
@@ -145,7 +146,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		ID id = ID.count(count).withId(keyHolder.getKey().intValue());
 		// Coordinates
 		if (id.isSuccess()) {
-			coordinatesService.setCoordinates (Entity.STUDENTS, id.getValue(), form.getCoordinates());
+			coordinatesService.setCoordinates (CoordinateEntity.STUDENTS, id.getValue(), form.getCoordinates());
 		}
 		// OK
 		return id;
@@ -157,9 +158,9 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(teacherId, id);
 		// Deletes the coordinates
-		coordinatesService.removeCoordinates (Entity.STUDENTS, id);
+		coordinatesService.removeCoordinates (CoordinateEntity.STUDENTS, id);
 		// Deletes the comments
-		commentsService.removeComments (Entity.STUDENTS, id);
+		commentsService.removeComments (CommentEntity.STUDENTS, id);
 		// Deletion
 		int count = getNamedParameterJdbcTemplate().update(SQL.STUDENT_DELETE, params("id", id));
 		return Ack.one(count);
@@ -183,7 +184,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		Ack ack = Ack.one(count);
 		// Coordinates
 		if (ack.isSuccess()) {
-			coordinatesService.setCoordinates (Entity.STUDENTS, id, form.getCoordinates());
+			coordinatesService.setCoordinates (CoordinateEntity.STUDENTS, id, form.getCoordinates());
 		}
 		// OK
 		return ack;
@@ -195,7 +196,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(userId, id);
 		// Gets the coordinates
-		return coordinatesService.getCoordinates (Entity.STUDENTS, id);
+		return coordinatesService.getCoordinates (CoordinateEntity.STUDENTS, id);
 	}
 	
 	@Override
@@ -204,7 +205,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(userId, studentId);
 		// Gets the comments
-		return commentsService.getComments (Entity.STUDENTS, studentId, offset, count, maxlength, format);
+		return commentsService.getComments (CommentEntity.STUDENTS, studentId, offset, count, maxlength, format);
 	}
 	
 	@Override
@@ -213,7 +214,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(userId, studentId);
 		// Gets the comment
-		return commentsService.getComment (Entity.STUDENTS, studentId, commentId, format);
+		return commentsService.getComment (CommentEntity.STUDENTS, studentId, commentId, format);
 	}
 	
 	@Override
@@ -222,7 +223,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(userId, studentId);
 		// Creates the comment
-		return commentsService.editComment (Entity.STUDENTS, studentId, format, form);
+		return commentsService.editComment (CommentEntity.STUDENTS, studentId, format, form);
 	}
 	
 	@Override
@@ -231,7 +232,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(userId, studentId);
 		// Deletes the comment
-		return commentsService.deleteComment (Entity.STUDENTS, studentId, commentId);
+		return commentsService.deleteComment (CommentEntity.STUDENTS, studentId, commentId);
 	}
 
 }

@@ -11,7 +11,8 @@ import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.SchoolService;
 import net.iteach.api.StudentService;
-import net.iteach.api.model.Entity;
+import net.iteach.api.model.CommentEntity;
+import net.iteach.api.model.CoordinateEntity;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.Comment;
 import net.iteach.core.model.CommentFormat;
@@ -100,7 +101,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 						rs.getInt("id"),
 						rs.getString("name"),
 						rs.getString("color"),
-						coordinatesService.getCoordinates(Entity.SCHOOLS, id),
+						coordinatesService.getCoordinates(CoordinateEntity.SCHOOLS, id),
 						students);
 				}
 				
@@ -123,7 +124,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 			ID id = ID.count(count).withId(keyHolder.getKey().intValue());
 			// Coordinates
 			if (id.isSuccess()) {
-				coordinatesService.setCoordinates (Entity.SCHOOLS, id.getValue(), form.getCoordinates());
+				coordinatesService.setCoordinates (CoordinateEntity.SCHOOLS, id.getValue(), form.getCoordinates());
 			}
 			// OK
 			return id;
@@ -139,9 +140,9 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool (teacherId, id);
 		// Deletes the coordinates
-		coordinatesService.removeCoordinates (Entity.SCHOOLS, id);
+		coordinatesService.removeCoordinates (CoordinateEntity.SCHOOLS, id);
 		// Deletes the comments
-		commentsService.removeComments (Entity.SCHOOLS, id);
+		commentsService.removeComments (CommentEntity.SCHOOLS, id);
 		// Update
 		int count = getNamedParameterJdbcTemplate().update(SQL.SCHOOL_DELETE, params("teacher", teacherId).addValue("id", id));
 		// OK
@@ -167,7 +168,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 			Ack ack = Ack.one(count);
 			// Coordinates
 			if (ack.isSuccess()) {
-				coordinatesService.setCoordinates (Entity.SCHOOLS, id, form.getCoordinates());
+				coordinatesService.setCoordinates (CoordinateEntity.SCHOOLS, id, form.getCoordinates());
 			}
 			// OK
 			return ack;
@@ -183,7 +184,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool (userId, id);
 		// OK
-		return coordinatesService.getCoordinates (Entity.SCHOOLS, id);
+		return coordinatesService.getCoordinates (CoordinateEntity.SCHOOLS, id);
 	}
 	
 	@Override
@@ -192,7 +193,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool(userId, schoolId);
 		// Gets the comments
-		return commentsService.getComments (Entity.SCHOOLS, schoolId, offset, count, maxlength, format);
+		return commentsService.getComments (CommentEntity.SCHOOLS, schoolId, offset, count, maxlength, format);
 	}
 	
 	@Override
@@ -201,7 +202,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool(userId, schoolId);
 		// Gets the comment
-		return commentsService.getComment (Entity.SCHOOLS, schoolId, commentId, format);
+		return commentsService.getComment (CommentEntity.SCHOOLS, schoolId, commentId, format);
 	}
 	
 	@Override
@@ -210,7 +211,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool(userId, schoolId);
 		// Creates the comment
-		return commentsService.editComment (Entity.SCHOOLS, schoolId, format, form);
+		return commentsService.editComment (CommentEntity.SCHOOLS, schoolId, format, form);
 	}
 	
 	@Override
@@ -219,7 +220,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool(userId, schoolId);
 		// Deletes the comment
-		return commentsService.deleteComment (Entity.SCHOOLS, schoolId, commentId);
+		return commentsService.deleteComment (CommentEntity.SCHOOLS, schoolId, commentId);
 	}
 
 }

@@ -14,7 +14,8 @@ import javax.validation.Validator;
 import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.LessonService;
-import net.iteach.api.model.Entity;
+import net.iteach.api.model.CommentEntity;
+import net.iteach.api.model.CoordinateEntity;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.Comment;
 import net.iteach.core.model.CommentFormat;
@@ -150,13 +151,13 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 							schoolId,
 							rs.getString("SCHOOL_NAME"),
 							rs.getString("SCHOOL_COLOR"),
-							coordinatesService.getCoordinates(Entity.SCHOOLS, schoolId));
+							coordinatesService.getCoordinates(CoordinateEntity.SCHOOLS, schoolId));
 					StudentSummaryWithCoordinates student = new StudentSummaryWithCoordinates(
 							studentId,
 							rs.getString("STUDENT_SUBJECT"),
 							rs.getString("STUDENT_NAME"),
 							school,
-							coordinatesService.getCoordinates(Entity.STUDENTS, studentId));
+							coordinatesService.getCoordinates(CoordinateEntity.STUDENTS, studentId));
 					return new LessonDetails(
 							rs.getInt("id"),
 							student,
@@ -212,7 +213,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 	@Transactional
 	public Ack deleteLessonForTeacher(int teacherId, int id) {
 		checkTeacherForLesson(teacherId, id);
-		commentsService.removeComments (Entity.LESSONS, id);
+		commentsService.removeComments (CommentEntity.LESSONS, id);
 		int count = getNamedParameterJdbcTemplate().update(SQL.LESSON_DELETE, params("id", id));
 		return Ack.one(count);
 	}
@@ -274,7 +275,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 		// Check for the associated teacher
 		checkTeacherForLesson(userId, lessonId);
 		// Gets the comments
-		return commentsService.getComments (Entity.LESSONS, lessonId, offset, count, maxlength, format);
+		return commentsService.getComments (CommentEntity.LESSONS, lessonId, offset, count, maxlength, format);
 	}
 	
 	@Override
@@ -283,7 +284,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 		// Check for the associated teacher
 		checkTeacherForLesson(userId, lessonId);
 		// Gets the comment
-		return commentsService.getComment (Entity.LESSONS, lessonId, commentId, format);
+		return commentsService.getComment (CommentEntity.LESSONS, lessonId, commentId, format);
 	}
 	
 	@Override
@@ -292,7 +293,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 		// Check for the associated teacher
 		checkTeacherForLesson(userId, lessonId);
 		// Creates the comment
-		return commentsService.editComment (Entity.LESSONS, lessonId, format, form);
+		return commentsService.editComment (CommentEntity.LESSONS, lessonId, format, form);
 	}
 	
 	@Override
@@ -301,7 +302,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 		// Check for the associated teacher
 		checkTeacherForLesson(userId, lessonId);
 		// Deletes the comment
-		return commentsService.deleteComment (Entity.LESSONS, lessonId, commentId);
+		return commentsService.deleteComment (CommentEntity.LESSONS, lessonId, commentId);
 	}
 
 }
