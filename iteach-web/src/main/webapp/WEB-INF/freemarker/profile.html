@@ -1,4 +1,52 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="profile" breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home"}>	
+<@layout_std pageId="profile" modules=["data"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home"}>
+	<div class="container-fluid">
+		<div id="home-row" class="row-fluid">
+			<div class="span5">
+				<@panel title=loc("profile.data")>
+					<table class="data">
+						<tbody>
+							<tr>
+								<td class="data-label"><@lh key="user.firstName" /></td>
+								<td class="data-value">${profile.firstName?html}</td>
+							</tr>
+							<tr>
+								<td class="data-label"><@lh key="user.firstName" /></td>
+								<td class="data-value">${profile.firstName?html}</td>
+							</tr>
+							<tr>
+								<td class="data-label"><@lh key="user.email" /></td>
+								<td class="data-value">${profile.email?html}</td>
+							</tr>
+							<tr>
+								<td class="data-label"><@lh key="profile.administrator" /></td>
+								<td class="data-value"><@yes_no value=profile.admin /></td>
+							</tr>
+						</tbody>
+					</table>
+				</@panel>
+			</div>
+			<div class="span3">	
+				<@panel title=loc("profile.stats")>
+					<table class="data">
+						<tbody>
+							<tr>
+								<td class="data-label"><@lh key="profile.schoolCount"/></td>
+								<td class="data-value">${profile.schoolCount}</td>
+							</tr>
+							<tr>
+								<td class="data-label"><@lh key="profile.studentCount"/></td>
+								<td class="data-value">${profile.studentCount}</td>
+							</tr>
+							<tr>
+								<td class="data-label"><@lh key="profile.lessonCount"/></td>
+								<td class="data-value">${profile.lessonCount}</td>
+							</tr>
+						</tbody>
+					</table>
+				</@panel>
+			</div>
+		</div>
+	</div>
 </@layout_std>

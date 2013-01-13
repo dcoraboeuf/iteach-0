@@ -585,9 +585,6 @@ page.accounts
 admin.accounts.mode
 	en -> Authentication mode
 	fr -> Mode d'authentification
-admin.accounts.administrator
-	en -> Administrator
-	fr -> Administrateur
 admin.accounts.verified
 	en -> Verified
 	fr -> Vérifié
@@ -597,19 +594,6 @@ admin.accounts.mode.openid
 admin.accounts.mode.password
 	en -> Password
 	fr -> Mot de passe
-
-admin.accounts.schoolCount
-	en -> Schools
-	fr -> Ecoles
-
-admin.accounts.studentCount
-	en -> Student
-	fr -> Etudiants
-
-admin.accounts.lessonCount
-	en -> Lessons
-	fr -> Leçons
-
 
 page.accountDelete
 	en -> Account deletion confirmation
@@ -624,3 +608,27 @@ page.accountDelete.prompt
 page.profile
 	en -> Account
 	fr -> Compte
+	
+profile.data
+	en -> General data
+	fr -> Données générales
+	
+profile.stats
+	en -> Statistics
+	fr -> Statistiques
+	
+profile.administrator
+	en -> Administrator
+	fr -> Administrateur
+
+profile.schoolCount
+	en -> Schools
+	fr -> Ecoles
+
+profile.studentCount
+	en -> Students
+	fr -> Etudiants
+
+profile.lessonCount
+	en -> Lessons
+	fr -> Leçons
