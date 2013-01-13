@@ -7,8 +7,6 @@ public interface CoordinatesService {
 
 	void setCoordinates(CoordinateEntity entity, int id, Coordinates coordinates);
 
-	void removeCoordinates(CoordinateEntity entity, int id);
-
 	Coordinates getCoordinates(CoordinateEntity entity, int id);
 
 }

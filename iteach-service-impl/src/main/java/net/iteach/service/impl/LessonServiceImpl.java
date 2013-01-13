@@ -151,13 +151,13 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 							schoolId,
 							rs.getString("SCHOOL_NAME"),
 							rs.getString("SCHOOL_COLOR"),
-							coordinatesService.getCoordinates(CoordinateEntity.SCHOOLS, schoolId));
+							coordinatesService.getCoordinates(CoordinateEntity.SCHOOL, schoolId));
 					StudentSummaryWithCoordinates student = new StudentSummaryWithCoordinates(
 							studentId,
 							rs.getString("STUDENT_SUBJECT"),
 							rs.getString("STUDENT_NAME"),
 							school,
-							coordinatesService.getCoordinates(CoordinateEntity.STUDENTS, studentId));
+							coordinatesService.getCoordinates(CoordinateEntity.STUDENT, studentId));
 					return new LessonDetails(
 							rs.getInt("id"),
 							student,

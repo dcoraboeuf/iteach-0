@@ -2,8 +2,8 @@ package net.iteach.api.model;
 
 public enum CoordinateEntity {
 	
-	STUDENTS,
+	STUDENT,
 	
-	SCHOOLS;
+	SCHOOL;
 
 }

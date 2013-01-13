@@ -101,7 +101,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 						rs.getInt("id"),
 						rs.getString("name"),
 						rs.getString("color"),
-						coordinatesService.getCoordinates(CoordinateEntity.SCHOOLS, id),
+						coordinatesService.getCoordinates(CoordinateEntity.SCHOOL, id),
 						students);
 				}
 				
@@ -124,7 +124,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 			ID id = ID.count(count).withId(keyHolder.getKey().intValue());
 			// Coordinates
 			if (id.isSuccess()) {
-				coordinatesService.setCoordinates (CoordinateEntity.SCHOOLS, id.getValue(), form.getCoordinates());
+				coordinatesService.setCoordinates (CoordinateEntity.SCHOOL, id.getValue(), form.getCoordinates());
 			}
 			// OK
 			return id;
@@ -139,8 +139,6 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 	public Ack deleteSchoolForTeacher(int teacherId, int id) {
 		// Check for the associated teacher
 		checkTeacherForSchool (teacherId, id);
-		// Deletes the coordinates
-		coordinatesService.removeCoordinates (CoordinateEntity.SCHOOLS, id);
 		// Update
 		int count = getNamedParameterJdbcTemplate().update(SQL.SCHOOL_DELETE, params("teacher", teacherId).addValue("id", id));
 		// OK
@@ -166,7 +164,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 			Ack ack = Ack.one(count);
 			// Coordinates
 			if (ack.isSuccess()) {
-				coordinatesService.setCoordinates (CoordinateEntity.SCHOOLS, id, form.getCoordinates());
+				coordinatesService.setCoordinates (CoordinateEntity.SCHOOL, id, form.getCoordinates());
 			}
 			// OK
 			return ack;
@@ -182,7 +180,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool (userId, id);
 		// OK
-		return coordinatesService.getCoordinates (CoordinateEntity.SCHOOLS, id);
+		return coordinatesService.getCoordinates (CoordinateEntity.SCHOOL, id);
 	}
 	
 	@Override

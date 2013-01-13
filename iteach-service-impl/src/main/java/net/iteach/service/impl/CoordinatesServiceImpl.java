@@ -25,15 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CoordinatesServiceImpl extends AbstractServiceImpl implements CoordinatesService {
 
-	private static final String SQL_DELETE = "DELETE FROM COORDINATES WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :id";
-	
-	private static final String SQL_DELETE_FOR_TYPE = "DELETE FROM COORDINATES WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :id AND COORD_TYPE = :type";
-	private static final String SQL_SELECT_FOR_TYPE = "SELECT COORD_VALUE FROM COORDINATES WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :id AND COORD_TYPE = :type";
-	private static final String SQL_UPDATE_FOR_TYPE = "UPDATE COORDINATES SET COORD_VALUE = :value WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :id AND COORD_TYPE = :type";
-	private static final String SQL_INSERT_FOR_TYPE = "INSERT INTO COORDINATES (ENTITY_TYPE, ENTITY_ID, COORD_TYPE, COORD_VALUE) VALUES ('%s', :id, :type, :value)";
+	private static final String SQL_DELETE_FOR_TYPE = "DELETE FROM COORDINATES WHERE %s = :id AND COORD_TYPE = :type";
+	private static final String SQL_SELECT_FOR_TYPE = "SELECT COORD_VALUE FROM COORDINATES WHERE %s = :id AND COORD_TYPE = :type";
+	private static final String SQL_UPDATE_FOR_TYPE = "UPDATE COORDINATES SET COORD_VALUE = :value WHERE %s = :id AND COORD_TYPE = :type";
+	private static final String SQL_INSERT_FOR_TYPE = "INSERT INTO COORDINATES (%s, COORD_TYPE, COORD_VALUE) VALUES (:id, :type, :value)";
 	
 
-	private static final String SQL_SELECT_FOR_ENTITY = "SELECT COORD_TYPE, COORD_VALUE FROM COORDINATES WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :id";
+	private static final String SQL_SELECT_FOR_ENTITY = "SELECT COORD_TYPE, COORD_VALUE FROM COORDINATES WHERE %s = :id";
 
 	@Autowired
 	public CoordinatesServiceImpl(DataSource dataSource, Validator validator) {
@@ -63,15 +61,6 @@ public class CoordinatesServiceImpl extends AbstractServiceImpl implements Coord
 
 	protected MapSqlParameterSource params(int id, CoordinateType type) {
 		return params("id", id).addValue("type", type.name());
-	}
-
-	@Override
-	@Transactional
-	public void removeCoordinates(CoordinateEntity entity, int id) {
-		String sql = format(SQL_DELETE, entity);
-		getNamedParameterJdbcTemplate().update(
-			sql,
-			params("id", id));
 	}
 	
 	@Override
