@@ -99,5 +99,12 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
 			params("id", id),
 			new AccountSummaryRowMapper(userId));
 	}
-
+	
+	@Override
+	@Transactional
+	@Secured(SecurityRoles.ADMINISTRATOR)
+	public void deleteAccount(int id) {
+		getNamedParameterJdbcTemplate().update(SQL.ADMIN_ACCOUNT_DELETE, params("id", id));
+	}
+	
 }

@@ -37,12 +37,23 @@ public class AdminController {
 	 * Page to confirm the deletion
 	 */
 	@RequestMapping(value = "/account/{id}/delete", method = RequestMethod.GET)
-	public String accountDelete(Model model, @PathVariable int id) {
+	public String accountDeleteForm(Model model, @PathVariable int id) {
 		// Loads user details
 		AccountSummary details = adminService.getAccount(id);
 		model.addAttribute("details", details);
 		// OK
 		return "admin/accountDelete";
+	}
+	
+	/**
+	 * Deletes the user
+	 */
+	@RequestMapping(value = "/account/{id}/delete", method = RequestMethod.POST)
+	public String accountDelete(Model model, @PathVariable int id) {
+		// Deletes the user
+		adminService.deleteAccount(id);
+		// OK
+		return "redirect:/admin/accounts";
 	}
 
 }

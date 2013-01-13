@@ -8,4 +8,6 @@ public interface AdminService {
 
 	AccountSummary getAccount(int id);
 
+	void deleteAccount(int id);
+
 }

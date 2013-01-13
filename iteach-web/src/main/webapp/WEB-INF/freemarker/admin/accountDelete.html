@@ -1,8 +1,7 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="accountDelete">
+<@layout_std pageId="accountDelete" breadcrumbs = {loc("page.index"): "", loc("page.accounts"): "admin/accounts"}>
     <form action="admin/account/${details.id}/delete" method="POST" class="form-horizontal">
-        <input id="id" type="hidden" name="id" value="${details.id}" />
         <div class="alert alert-warning">
         	<h4><@lh key="general.warning" /></h4>
         	<@lh key="page.accountDelete.prompt" />

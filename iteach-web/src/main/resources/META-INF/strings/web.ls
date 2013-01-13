@@ -599,16 +599,16 @@ admin.accounts.mode.password
 	fr -> Mot de passe
 
 admin.accounts.schoolCount
-	en -> Number of schools
-	fr -> Nombre d'écoles
+	en -> Schools
+	fr -> Ecoles
 
 admin.accounts.studentCount
-	en -> Number of student
-	fr -> Nombre d'étudiants
+	en -> Student
+	fr -> Etudiants
 
 admin.accounts.lessonCount
-	en -> Number of lessons
-	fr -> Nombre de leçons
+	en -> Lessons
+	fr -> Leçons
 
 
 page.accountDelete
