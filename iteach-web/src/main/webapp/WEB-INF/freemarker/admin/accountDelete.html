@@ -1,8 +1,8 @@
 <#include "/lib/layout.html">
 
 <@layout_std pageId="accountDelete">
-    <form action="admin/account/${details.summary.id}/delete" method="POST" class="form-horizontal">
-        <input id="id" type="hidden" name="id" value="${details.summary.id}" />
+    <form action="admin/account/${details.id}/delete" method="POST" class="form-horizontal">
+        <input id="id" type="hidden" name="id" value="${details.id}" />
         <div class="alert alert-warning">
         	<h4><@lh key="general.warning" /></h4>
         	<@lh key="page.accountDelete.prompt" />
@@ -10,19 +10,19 @@
         <div class="control-group">
             <label class="control-label" for="firstName"><@lh key="user.firstName" /></label>
             <div class="controls">
-                <input id="firstName" type="text" readonly="readonly" value="${details.summary.firstName?html}" />
+                <input id="firstName" type="text" readonly="readonly" value="${details.firstName?html}" />
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="lastName"><@lh key="user.lastName" /></label>
             <div class="controls">
-                <input id="lastName" type="text" readonly="readonly" value="${details.summary.lastName?html}" />
+                <input id="lastName" type="text" readonly="readonly" value="${details.lastName?html}" />
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="email"><@lh key="user.email" /></label>
             <div class="controls">
-                <input id="email" type="text" readonly="readonly" value="${details.summary.email?html}" />
+                <input id="email" type="text" readonly="readonly" value="${details.email?html}" />
             </div>
         </div>
         <div class="control-group">

@@ -13,7 +13,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.iteach.api.admin.AccountDetails;
 import net.iteach.api.admin.AccountSummary;
 import net.iteach.api.admin.AdminService;
 import net.iteach.api.model.AuthenticationMode;
@@ -26,8 +25,7 @@ import net.iteach.service.impl.AbstractServiceImpl;
 @Service
 public class AdminServiceImpl extends AbstractServiceImpl implements AdminService {
 	
-	public static class AccountSummaryRowMapper implements
-			RowMapper<AccountSummary> {
+	public class AccountSummaryRowMapper implements RowMapper<AccountSummary> {
 		
 		private final int userId;
 
@@ -36,9 +34,24 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
 		}
 
 		@Override
-		public AccountSummary mapRow(ResultSet rs, int rowNum)
-				throws SQLException {
+		public AccountSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
 			int id = rs.getInt("id");
+			// Count of schools
+			int schoolCount = getNamedParameterJdbcTemplate().queryForList(
+				SQL.SCHOOL_IDS_FOR_TEACHER,
+				params("teacher", id),
+				Integer.class).size();
+			// Count of students
+			int studentCount = getNamedParameterJdbcTemplate().queryForList(
+					SQL.STUDENT_IDS_FOR_TEACHER,
+					params("teacher", id),
+					Integer.class).size();
+			// Count of lessons
+			int lessonCount = getNamedParameterJdbcTemplate().queryForList(
+					SQL.LESSON_IDS_FOR_TEACHER,
+					params("teacher", id),
+					Integer.class).size();
+			// Summary
 			return new AccountSummary(
 				id == userId,
 				id,
@@ -47,7 +60,10 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
 				rs.getString("lastName"),
 				rs.getString("email"),
 				rs.getBoolean("administrator"),
-				rs.getBoolean("verified"));
+				rs.getBoolean("verified"),
+				schoolCount,
+				studentCount,
+				lessonCount);
 		}
 	}
 
@@ -74,31 +90,14 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
 	@Override
 	@Transactional(readOnly = true)
 	@Secured(SecurityRoles.ADMINISTRATOR)
-	public AccountDetails getAccountDetails(int id) {
+	public AccountSummary getAccount(int id) {
 		// Current user
 		int userId = securityUtils.getCurrentUserId();
 		// Summary
-		AccountSummary summary = getNamedParameterJdbcTemplate().queryForObject(
+		return getNamedParameterJdbcTemplate().queryForObject(
 			SQL.ADMIN_ACCOUNT_BY_ID,
 			params("id", id),
 			new AccountSummaryRowMapper(userId));
-		// Count of schools
-		int schoolCount = getNamedParameterJdbcTemplate().queryForList(
-			SQL.SCHOOL_IDS_FOR_TEACHER,
-			params("teacher", id),
-			Integer.class).size();
-		// Count of students
-		int studentCount = getNamedParameterJdbcTemplate().queryForList(
-				SQL.STUDENT_IDS_FOR_TEACHER,
-				params("teacher", id),
-				Integer.class).size();
-		// Count of lessons
-		int lessonCount = getNamedParameterJdbcTemplate().queryForList(
-				SQL.LESSON_IDS_FOR_TEACHER,
-				params("teacher", id),
-				Integer.class).size();
-		// OK
-		return new AccountDetails(summary, schoolCount, studentCount, lessonCount);
 	}
 
 }

@@ -6,6 +6,6 @@ public interface AdminService {
 
 	List<AccountSummary> getAccounts();
 
-	AccountDetails getAccountDetails(int id);
+	AccountSummary getAccount(int id);
 
 }

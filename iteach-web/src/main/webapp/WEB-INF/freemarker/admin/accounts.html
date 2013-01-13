@@ -11,6 +11,9 @@
 				<th><@lh key="admin.accounts.mode" /></th>
 				<th><@lh key="admin.accounts.administrator" /></th>
 				<th><@lh key="admin.accounts.verified" /></th>
+				<th><@lh key="admin.accounts.schoolCount" /></th>
+				<th><@lh key="admin.accounts.studentCount" /></th>
+				<th><@lh key="admin.accounts.lessonCount" /></th>
 				<th>&nbsp;</th>
 			</tr>
 		</thead>
@@ -32,6 +35,9 @@
 					<td><@lh key= "admin.accounts.mode." + account.mode /></td>
 					<td><@yes_no value=account.admin /></td>
 					<td><@yes_no value=account.verified /></td>
+					<td>${account.schoolCount}</td>
+					<td>${account.studentCount}</td>
+					<td>${account.lessonCount}</td>
 					<td>
 						<#if !account.admin>
 							<a href="admin/account/${account.id}/delete"><@lh key="general.delete"/></a>

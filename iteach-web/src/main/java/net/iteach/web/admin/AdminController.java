@@ -1,6 +1,6 @@
 package net.iteach.web.admin;
 
-import net.iteach.api.admin.AccountDetails;
+import net.iteach.api.admin.AccountSummary;
 import net.iteach.api.admin.AdminService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class AdminController {
 	@RequestMapping(value = "/account/{id}/delete", method = RequestMethod.GET)
 	public String accountDelete(Model model, @PathVariable int id) {
 		// Loads user details
-		AccountDetails details = adminService.getAccountDetails(id);
+		AccountSummary details = adminService.getAccount(id);
 		model.addAttribute("details", details);
 		// OK
 		return "admin/accountDelete";

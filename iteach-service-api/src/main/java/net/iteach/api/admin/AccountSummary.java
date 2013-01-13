@@ -14,5 +14,9 @@ public class AccountSummary {
 	private final String email;
 	private final boolean admin;
 	private final boolean verified;
+	
+	private final int schoolCount;
+	private final int studentCount;
+	private final int lessonCount;
 
 }
