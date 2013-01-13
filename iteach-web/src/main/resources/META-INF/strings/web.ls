@@ -618,3 +618,9 @@ page.accountDelete
 page.accountDelete.prompt
 	en -> Are you sure to delete the following account? All his data will be lost! No cancelletion will be possible.
 	fr -> Etes-vous sûr de supprimer le compte suivant ? Toutes ses données seront perdues ! Aucune annulation n'est possible.
+
+[profile]
+
+page.profile
+	en -> Account
+	fr -> Compte
