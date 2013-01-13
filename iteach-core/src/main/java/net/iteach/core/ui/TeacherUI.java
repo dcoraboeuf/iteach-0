@@ -1,5 +1,6 @@
 package net.iteach.core.ui;
 
+import net.iteach.core.model.AccountProfile;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.Comment;
 import net.iteach.core.model.CommentFormat;
@@ -91,5 +92,9 @@ public interface TeacherUI {
 	Comment editSchoolComment(int schoolId, CommentFormat format, CommentsForm form);
 
 	Ack deleteSchoolComment(int schoolId, int commentId);
+	
+	// Profile management
+	
+	AccountProfile getProfile();
 
 }

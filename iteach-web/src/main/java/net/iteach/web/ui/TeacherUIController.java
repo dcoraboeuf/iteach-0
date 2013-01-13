@@ -1,8 +1,10 @@
 package net.iteach.web.ui;
 
 import net.iteach.api.LessonService;
+import net.iteach.api.ProfileService;
 import net.iteach.api.SchoolService;
 import net.iteach.api.StudentService;
+import net.iteach.core.model.AccountProfile;
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.Comment;
 import net.iteach.core.model.CommentFormat;
@@ -41,18 +43,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/ui/teacher")
 public class TeacherUIController extends AbstractUIController implements TeacherUI {
 
+	private final ProfileService profileService;
 	private final SchoolService schoolService;
 	private final StudentService studentService;
 	private final LessonService lessonService;
 
 	@Autowired
-	public TeacherUIController(SchoolService schoolService,
+	public TeacherUIController(ProfileService profileService,
+			SchoolService schoolService,
 			StudentService studentService,
 			LessonService lessonService,
 			SecurityUtils securityUtils,
 			ErrorHandler errorHandler,
 			Strings strings) {
         super(securityUtils, errorHandler, strings);
+        this.profileService = profileService;
 		this.schoolService = schoolService;
 		this.studentService = studentService;
 		this.lessonService = lessonService;
@@ -339,6 +344,12 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
 		return studentService.deleteStudentComment(userId, studentId, commentId);
+	}
+	
+	@Override
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public @ResponseBody AccountProfile getProfile() {
+		return profileService.getProfile();
 	}
 
 }

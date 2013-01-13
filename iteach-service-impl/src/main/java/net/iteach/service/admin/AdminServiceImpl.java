@@ -13,9 +13,11 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.iteach.api.ProfileService;
 import net.iteach.api.admin.AccountSummary;
 import net.iteach.api.admin.AdminService;
 import net.iteach.api.model.AuthenticationMode;
+import net.iteach.core.model.AccountProfile;
 import net.iteach.core.security.SecurityRoles;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.service.db.SQL;
@@ -36,21 +38,8 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
 		@Override
 		public AccountSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
 			int id = rs.getInt("id");
-			// Count of schools
-			int schoolCount = getNamedParameterJdbcTemplate().queryForList(
-				SQL.SCHOOL_IDS_FOR_TEACHER,
-				params("teacher", id),
-				Integer.class).size();
-			// Count of students
-			int studentCount = getNamedParameterJdbcTemplate().queryForList(
-					SQL.STUDENT_IDS_FOR_TEACHER,
-					params("teacher", id),
-					Integer.class).size();
-			// Count of lessons
-			int lessonCount = getNamedParameterJdbcTemplate().queryForList(
-					SQL.LESSON_IDS_FOR_TEACHER,
-					params("teacher", id),
-					Integer.class).size();
+			// Gets the profile
+			AccountProfile profile = profileService.getProfile(id);
 			// Summary
 			return new AccountSummary(
 				id == userId,
@@ -61,18 +50,20 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
 				rs.getString("email"),
 				rs.getBoolean("administrator"),
 				rs.getBoolean("verified"),
-				schoolCount,
-				studentCount,
-				lessonCount);
+				profile.getSchoolCount(),
+				profile.getStudentCount(),
+				profile.getLessonCount());
 		}
 	}
 
 	private final SecurityUtils securityUtils;
+	private final ProfileService profileService;
 
 	@Autowired
-	public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils) {
+	public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, ProfileService profileService) {
 		super(dataSource, validator);
 		this.securityUtils = securityUtils;
+		this.profileService = profileService;
 	}
 
 	@Override
