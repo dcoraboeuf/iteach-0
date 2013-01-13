@@ -2,10 +2,10 @@ package net.iteach.api.model;
 
 public enum CommentEntity {
 	
-	LESSONS,
+	LESSON,
 	
-	STUDENTS,
+	STUDENT,
 	
-	SCHOOLS;
+	SCHOOL;
 
 }

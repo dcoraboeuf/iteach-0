@@ -159,8 +159,6 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		checkTeacherForStudent(teacherId, id);
 		// Deletes the coordinates
 		coordinatesService.removeCoordinates (CoordinateEntity.STUDENTS, id);
-		// Deletes the comments
-		commentsService.removeComments (CommentEntity.STUDENTS, id);
 		// Deletion
 		int count = getNamedParameterJdbcTemplate().update(SQL.STUDENT_DELETE, params("id", id));
 		return Ack.one(count);
@@ -205,7 +203,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(userId, studentId);
 		// Gets the comments
-		return commentsService.getComments (CommentEntity.STUDENTS, studentId, offset, count, maxlength, format);
+		return commentsService.getComments (CommentEntity.STUDENT, studentId, offset, count, maxlength, format);
 	}
 	
 	@Override
@@ -214,7 +212,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(userId, studentId);
 		// Gets the comment
-		return commentsService.getComment (CommentEntity.STUDENTS, studentId, commentId, format);
+		return commentsService.getComment (CommentEntity.STUDENT, studentId, commentId, format);
 	}
 	
 	@Override
@@ -223,7 +221,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(userId, studentId);
 		// Creates the comment
-		return commentsService.editComment (CommentEntity.STUDENTS, studentId, format, form);
+		return commentsService.editComment (CommentEntity.STUDENT, studentId, format, form);
 	}
 	
 	@Override
@@ -232,7 +230,7 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForStudent(userId, studentId);
 		// Deletes the comment
-		return commentsService.deleteComment (CommentEntity.STUDENTS, studentId, commentId);
+		return commentsService.deleteComment (CommentEntity.STUDENT, studentId, commentId);
 	}
 
 }

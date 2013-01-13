@@ -141,8 +141,6 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		checkTeacherForSchool (teacherId, id);
 		// Deletes the coordinates
 		coordinatesService.removeCoordinates (CoordinateEntity.SCHOOLS, id);
-		// Deletes the comments
-		commentsService.removeComments (CommentEntity.SCHOOLS, id);
 		// Update
 		int count = getNamedParameterJdbcTemplate().update(SQL.SCHOOL_DELETE, params("teacher", teacherId).addValue("id", id));
 		// OK
@@ -193,7 +191,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool(userId, schoolId);
 		// Gets the comments
-		return commentsService.getComments (CommentEntity.SCHOOLS, schoolId, offset, count, maxlength, format);
+		return commentsService.getComments (CommentEntity.SCHOOL, schoolId, offset, count, maxlength, format);
 	}
 	
 	@Override
@@ -202,7 +200,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool(userId, schoolId);
 		// Gets the comment
-		return commentsService.getComment (CommentEntity.SCHOOLS, schoolId, commentId, format);
+		return commentsService.getComment (CommentEntity.SCHOOL, schoolId, commentId, format);
 	}
 	
 	@Override
@@ -211,7 +209,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool(userId, schoolId);
 		// Creates the comment
-		return commentsService.editComment (CommentEntity.SCHOOLS, schoolId, format, form);
+		return commentsService.editComment (CommentEntity.SCHOOL, schoolId, format, form);
 	}
 	
 	@Override
@@ -220,7 +218,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 		// Check for the associated teacher
 		checkTeacherForSchool(userId, schoolId);
 		// Deletes the comment
-		return commentsService.deleteComment (CommentEntity.SCHOOLS, schoolId, commentId);
+		return commentsService.deleteComment (CommentEntity.SCHOOL, schoolId, commentId);
 	}
 
 }

@@ -37,18 +37,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CommentsServiceImpl extends AbstractServiceImpl implements CommentsService {
 
-	private static final String SQL_SELECT_FOR_ENTITY_WITH_ID = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :entityId AND ID = :commentId";
-	private static final String SQL_COUNT_FOR_ENTITY = "SELECT COUNT(ID) FROM COMMENTS WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :id";
-	private static final String SQL_SELECT_FOR_ENTITY_WITH_OFFSET = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :id ORDER BY CREATION DESC LIMIT :count OFFSET :offset";
+	private static final String SQL_SELECT_FOR_ENTITY_WITH_ID = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE %s = :entityId AND ID = :commentId";
+	private static final String SQL_COUNT_FOR_ENTITY = "SELECT COUNT(ID) FROM COMMENTS WHERE %s = :id";
+	private static final String SQL_SELECT_FOR_ENTITY_WITH_OFFSET = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE %s = :id ORDER BY CREATION DESC LIMIT :count OFFSET :offset";
 	
 	private static final String SQL_CREATION_TIME = "SELECT CREATION FROM COMMENTS WHERE ID = :id";
 
-	private static final String SQL_INSERT = "INSERT INTO COMMENTS (ENTITY_TYPE, ENTITY_ID, CREATION, EDITION, CONTENT) VALUES ('%s', :entityId, :creation, NULL, :content)";
+	private static final String SQL_INSERT = "INSERT INTO COMMENTS (%s, CREATION, EDITION, CONTENT) VALUES (:entityId, :creation, NULL, :content)";
 
-	private static final String SQL_UPDATE = "UPDATE COMMENTS SET EDITION = :edition, CONTENT = :content WHERE ID = :id AND ENTITY_TYPE = '%s' AND ENTITY_ID = :entityId";
+	private static final String SQL_UPDATE = "UPDATE COMMENTS SET EDITION = :edition, CONTENT = :content WHERE ID = :id AND %s = :entityId";
 
-	private static final String SQL_DELETE = "DELETE FROM COMMENTS WHERE ID = :id AND ENTITY_TYPE = '%s' AND ENTITY_ID = :entityId";
-	private static final String SQL_DELETE_FOR_ENTITY = "DELETE FROM COMMENTS WHERE ENTITY_TYPE = '%s' AND ENTITY_ID = :entityId";
+	private static final String SQL_DELETE = "DELETE FROM COMMENTS WHERE ID = :id AND %s = :entityId";
 	
 	private final EnumMap<CommentFormat, CommentFormatter> commentFormatters;
 
@@ -68,15 +67,6 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 		} else {
 			return formatter.format (content);
 		}
-	}
-
-	@Override
-	@Transactional
-	public void removeComments (CommentEntity entity, int id) {
-		String sql = format(SQL_DELETE_FOR_ENTITY, entity);
-		getNamedParameterJdbcTemplate().update(
-			sql,
-			params("entityId", id));
 	}
 	
 	@Override
@@ -191,7 +181,8 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 				throw new CommentUpdateException ();
 			} else {
 				int id = keyHolder.getKey().intValue();
-				return new Comment(id, creation, null, format, form.getContent());
+				String content = formatComment(form.getContent(), format);
+				return new Comment(id, creation, null, format, content);
 			}
 		}
 	}

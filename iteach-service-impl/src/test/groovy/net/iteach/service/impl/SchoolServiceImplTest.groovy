@@ -1,6 +1,8 @@
 package net.iteach.service.impl
 
 import net.iteach.api.SchoolService
+import net.iteach.core.model.CommentFormat;
+import net.iteach.core.model.CommentsForm;
 import net.iteach.core.model.CoordinateType
 import net.iteach.core.model.Coordinates
 import net.iteach.core.model.SchoolDetails
@@ -174,6 +176,33 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 				new SchoolDetailsStudent(1, "Student 1", "Subject 1", 0),
 				new SchoolDetailsStudent(2, "Student 2", "Subject 2", 0)
 			]) == school
+	}
+	
+	@Test
+	void comments() {
+		// Creates a school for tests
+		def id = service.createSchoolForTeacher(1, new SchoolForm("School for comments", "#CCCCCC", Coordinates.create()))
+		assert id != null && id.success
+		
+		// Adds some comments
+		// 1
+		def comment1 = service.editSchoolComment(1, id.value, CommentFormat.HTML, new CommentsForm(0, "*Bold* comment"))
+		assert comment1 != null && "<b>Bold</b> comment" == comment1.content
+		// 2
+		def comment2 = service.editSchoolComment(1, id.value, CommentFormat.HTML, new CommentsForm(0, "_Italic_ comment"))
+		assert comment2 != null && "<i>Italic</i> comment" == comment2.content
+		
+		// Gets all the comments
+		def comments = service.getSchoolComments(1, id.value, 0, 10, 50, CommentFormat.RAW)
+		assert comments != null
+		assert !comments.more
+		assert 2 == comments.list.size()
+		assert "_Italic_ comment" == comments.list.get(0).content
+		assert "*Bold* comment" == comments.list.get(1).content
+		
+		// Deletes the school
+		def ack = service.deleteSchoolForTeacher(1, id.value)
+		assert ack != null && ack.success
 	}
 
 }

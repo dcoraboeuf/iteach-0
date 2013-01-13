@@ -213,7 +213,6 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 	@Transactional
 	public Ack deleteLessonForTeacher(int teacherId, int id) {
 		checkTeacherForLesson(teacherId, id);
-		commentsService.removeComments (CommentEntity.LESSONS, id);
 		int count = getNamedParameterJdbcTemplate().update(SQL.LESSON_DELETE, params("id", id));
 		return Ack.one(count);
 	}
@@ -275,7 +274,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 		// Check for the associated teacher
 		checkTeacherForLesson(userId, lessonId);
 		// Gets the comments
-		return commentsService.getComments (CommentEntity.LESSONS, lessonId, offset, count, maxlength, format);
+		return commentsService.getComments (CommentEntity.LESSON, lessonId, offset, count, maxlength, format);
 	}
 	
 	@Override
@@ -284,7 +283,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 		// Check for the associated teacher
 		checkTeacherForLesson(userId, lessonId);
 		// Gets the comment
-		return commentsService.getComment (CommentEntity.LESSONS, lessonId, commentId, format);
+		return commentsService.getComment (CommentEntity.LESSON, lessonId, commentId, format);
 	}
 	
 	@Override
@@ -293,7 +292,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 		// Check for the associated teacher
 		checkTeacherForLesson(userId, lessonId);
 		// Creates the comment
-		return commentsService.editComment (CommentEntity.LESSONS, lessonId, format, form);
+		return commentsService.editComment (CommentEntity.LESSON, lessonId, format, form);
 	}
 	
 	@Override
@@ -302,7 +301,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 		// Check for the associated teacher
 		checkTeacherForLesson(userId, lessonId);
 		// Deletes the comment
-		return commentsService.deleteComment (CommentEntity.LESSONS, lessonId, commentId);
+		return commentsService.deleteComment (CommentEntity.LESSON, lessonId, commentId);
 	}
 
 }
