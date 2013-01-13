@@ -46,14 +46,14 @@ public class CoordinatesServiceImpl extends AbstractServiceImpl implements Coord
 			String value = entry.getValue();
 			MapSqlParameterSource params = params(id, type);
 			if (StringUtils.isBlank(value)) {
-				getNamedParameterJdbcTemplate().update(format(SQL_DELETE_FOR_TYPE, entity), params);
+				getNamedParameterJdbcTemplate().update(format(SQL_DELETE_FOR_TYPE, entity.name()), params);
 			} else {
-				String existingValue = getFirstItem(format(SQL_SELECT_FOR_TYPE, entity), params, String.class);
+				String existingValue = getFirstItem(format(SQL_SELECT_FOR_TYPE, entity.name()), params, String.class);
 				params = params.addValue("value", value);
 				if (existingValue == null) {
-					getNamedParameterJdbcTemplate().update(format(SQL_INSERT_FOR_TYPE, entity), params);
+					getNamedParameterJdbcTemplate().update(format(SQL_INSERT_FOR_TYPE, entity.name()), params);
 				} else {
-					getNamedParameterJdbcTemplate().update(format(SQL_UPDATE_FOR_TYPE, entity), params);
+					getNamedParameterJdbcTemplate().update(format(SQL_UPDATE_FOR_TYPE, entity.name()), params);
 				}
 			}
 		}
@@ -68,7 +68,7 @@ public class CoordinatesServiceImpl extends AbstractServiceImpl implements Coord
 	public Coordinates getCoordinates(CoordinateEntity entity, int id) {
 		final AtomicReference<Coordinates> coordinates = new AtomicReference<>(Coordinates.create());
 		getNamedParameterJdbcTemplate().query(
-			format(SQL_SELECT_FOR_ENTITY, entity),
+			format(SQL_SELECT_FOR_ENTITY, entity.name()),
 			params("id", id),
 			new RowCallbackHandler() {
 				@Override

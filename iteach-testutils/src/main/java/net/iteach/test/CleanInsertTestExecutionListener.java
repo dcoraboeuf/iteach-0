@@ -70,7 +70,7 @@ public class CleanInsertTestExecutionListener implements TestExecutionListener {
 				} else {
 					try {
 						LOG.info("Injecting dataset {} for {}", dataSetResourcePath, testContext.getClass().getName());
-						IDataSet dataSet = new FlatXmlDataSetBuilder().build(in);
+						IDataSet dataSet = new FlatXmlDataSetBuilder().setColumnSensing(true).build(in);
 						DatabaseOperation.CLEAN_INSERT.execute(dbConn, dataSet);
 					} finally {
 						in.close();

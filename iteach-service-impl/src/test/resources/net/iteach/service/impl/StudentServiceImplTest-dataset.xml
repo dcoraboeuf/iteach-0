@@ -11,10 +11,10 @@
 	<STUDENTS id="2" school="1" subject="German" name="B. Bernard" />
 	<STUDENTS id="3" school="3" subject="German" name="C. Charles" />
 	
-	<COORDINATES id="1" entity_type="SCHOOLS" entity_id="1" coord_type="ADDRESS" coord_value="At my school 1" />
-	<COORDINATES id="2" entity_type="SCHOOLS" entity_id="1" coord_type="WEB" coord_value="http://school/1" />
-	<COORDINATES id="3" entity_type="STUDENTS" entity_id="1" coord_type="MOBILE_PHONE" coord_value="0123456789" />
-	<COORDINATES id="4" entity_type="STUDENTS" entity_id="1" coord_type="EMAIL" coord_value="albert@test.com" />
+	<COORDINATES id="1" school="1" coord_type="ADDRESS" coord_value="At my school 1" />
+	<COORDINATES id="2" school="1" coord_type="WEB" coord_value="http://school/1" />
+	<COORDINATES id="3" student="1" coord_type="MOBILE_PHONE" coord_value="0123456789" />
+	<COORDINATES id="4" student="1" coord_type="EMAIL" coord_value="albert@test.com" />
 	
 	<LESSONS id="1" student="1" pdate="2013-01-04" pfrom="12:00" pto="13:00" location="" />
 	<LESSONS id="2" student="1" pdate="2013-01-07" pfrom="18:00" pto="20:30" location="His place" />

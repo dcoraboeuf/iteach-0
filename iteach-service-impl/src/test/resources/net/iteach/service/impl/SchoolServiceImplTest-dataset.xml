@@ -10,7 +10,7 @@
 	<STUDENTS id="1" school="1" name="Student 1" subject="Subject 1" />
 	<STUDENTS id="2" school="1" name="Student 2" subject="Subject 2" />
 	
-	<COORDINATES id="1" entity_type="SCHOOLS" entity_id="1" coord_type="ADDRESS" coord_value="At my school 1" />
-	<COORDINATES id="2" entity_type="SCHOOLS" entity_id="1" coord_type="WEB" coord_value="http://school/1" />
+	<COORDINATES id="1" school="1" coord_type="ADDRESS" coord_value="At my school 1" />
+	<COORDINATES id="2" school="1" coord_type="WEB" coord_value="http://school/1" />
 
 </dataset>
