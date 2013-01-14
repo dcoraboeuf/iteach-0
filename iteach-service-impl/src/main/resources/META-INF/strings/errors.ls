@@ -18,4 +18,10 @@ net.iteach.service.security.UserEmailAlreadyExistsException
 	fr -> [E-006] Un utilisateur ayant le même courriel ({0}) existe déjà.
 net.iteach.service.security.UserCannotChangePasswordException
 	en -> [E-007] Cannot change password
-	fr -> [E-008] Impossible de changer le mot de passe
+	fr -> [E-007] Impossible de changer le mot de passe
+net.iteach.service.token.TokenNotFoundException
+	en -> [E-008] Token not found
+	fr -> [E-008] Jeton non défini
+net.iteach.service.token.TokenExpiredException
+	en -> [E-009] Token expired
+	fr -> [E-010] Jeton expiré
