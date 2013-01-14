@@ -25,6 +25,7 @@ import net.iteach.service.token.TokenKey;
 import net.iteach.service.token.TokenService;
 import net.sf.jstring.Strings;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -138,6 +139,20 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 			params("id", user.getId()));
 		// OK
 		return Ack.one(count);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public void checkTokenForUserId(TokenType tokenType, String token, int userId) {
+		// Gets the user
+		UserSummary user = getUserSummaryByID(userId);
+		// Token
+		TokenKey key = tokenService.checkToken(token, tokenType);
+		String email = key.getKey();
+		// Check
+		if (!StringUtils.equals(email, user.getEmail())) {
+			throw new TokenMatchException (tokenType, token, user.getEmail());
+		}
 	}
 	
 	@Override

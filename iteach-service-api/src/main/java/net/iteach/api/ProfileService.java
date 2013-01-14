@@ -12,6 +12,8 @@ public interface ProfileService {
 
 	void passwordRequest(Locale locale);
 
+	void passwordChangeCheck(String token);
+
 	void passwordChange(String token, String oldPassword, String newPassword);
 
 }

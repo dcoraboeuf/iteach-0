@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.AuthenticationMode;
+import net.iteach.core.model.TokenType;
 
 public interface SecurityService {
 
@@ -28,5 +29,7 @@ public interface SecurityService {
 	void passwordRequest(Locale locale, int userId);
 
 	void passwordChange(int userId, String token, String oldPassword, String newPassword);
+
+	void checkTokenForUserId(TokenType tokenType, String token, int userId);
 
 }

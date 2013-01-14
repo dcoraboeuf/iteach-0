@@ -57,6 +57,9 @@ public class ProfileController extends AbstractGUIController {
 	 */
 	@RequestMapping(value = "/passwordChange/{token}", method = RequestMethod.GET)
 	public String passwordChangeForm (Model model, @PathVariable String token) {
+		// Checks the token
+		profileService.passwordChangeCheck(token);
+		// Displays the form
 		model.addAttribute("token", token);
 		return "passwordChange";
 	}

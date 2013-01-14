@@ -24,4 +24,7 @@ net.iteach.service.token.TokenNotFoundException
 	fr -> [E-008] Jeton non défini
 net.iteach.service.token.TokenExpiredException
 	en -> [E-009] Token expired
-	fr -> [E-010] Jeton expiré
+	fr -> [E-009] Jeton expiré
+net.iteach.service.security.TokenMatchException
+	en -> [E-010] The token does not match with the "{2}" email
+	fr -> [E-010] Le jeton ne correspond pas au courriel "{2}".

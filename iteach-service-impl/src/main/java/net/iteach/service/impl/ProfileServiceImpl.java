@@ -11,6 +11,7 @@ import net.iteach.api.ProfileService;
 import net.iteach.api.SecurityService;
 import net.iteach.core.model.AccountProfile;
 import net.iteach.core.model.AuthenticationMode;
+import net.iteach.core.model.TokenType;
 import net.iteach.core.security.SecurityRoles;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.service.db.SQL;
@@ -88,6 +89,12 @@ public class ProfileServiceImpl extends AbstractServiceImpl implements
 	public void passwordRequest(Locale locale) {
 		int userId = securityUtils.getCurrentUserId();
 		securityService.passwordRequest(locale, userId);
+	}
+	
+	@Override
+	public void passwordChangeCheck(String token) {
+		int userId = securityUtils.getCurrentUserId();
+		securityService.checkTokenForUserId (TokenType.PASSWORD_REQUEST, token, userId);
 	}
 	
 	@Override
