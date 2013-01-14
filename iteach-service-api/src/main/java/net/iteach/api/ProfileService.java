@@ -3,6 +3,7 @@ package net.iteach.api;
 import java.util.Locale;
 
 import net.iteach.core.model.AccountProfile;
+import net.iteach.core.model.Ack;
 
 public interface ProfileService {
 
@@ -14,6 +15,6 @@ public interface ProfileService {
 
 	void passwordChangeCheck(String token);
 
-	void passwordChange(String token, String oldPassword, String newPassword);
+	Ack passwordChange(String token, String oldPassword, String newPassword);
 
 }

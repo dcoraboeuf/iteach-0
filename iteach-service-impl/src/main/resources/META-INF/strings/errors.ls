@@ -16,15 +16,12 @@ net.iteach.service.security.UserIdentifierAlreadyExistsException
 net.iteach.service.security.UserEmailAlreadyExistsException
 	en -> [E-006] A user with the same email ({0}) already exists.
 	fr -> [E-006] Un utilisateur ayant le même courriel ({0}) existe déjà.
-net.iteach.service.security.UserCannotChangePasswordException
-	en -> [E-007] Cannot change password
-	fr -> [E-007] Impossible de changer le mot de passe
 net.iteach.service.token.TokenNotFoundException
-	en -> [E-008] Token not found
-	fr -> [E-008] Jeton non défini
+	en -> [E-007] Token not found
+	fr -> [E-007] Jeton non défini
 net.iteach.service.token.TokenExpiredException
-	en -> [E-009] Token expired
-	fr -> [E-009] Jeton expiré
+	en -> [E-008] Token expired
+	fr -> [E-008] Jeton expiré
 net.iteach.service.security.TokenMatchException
-	en -> [E-010] The token does not match with the "{2}" email
-	fr -> [E-010] Le jeton ne correspond pas au courriel "{2}".
+	en -> [E-009] The token does not match with the "{2}" email
+	fr -> [E-009] Le jeton ne correspond pas au courriel "{2}".

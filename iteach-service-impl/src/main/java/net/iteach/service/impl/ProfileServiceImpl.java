@@ -10,6 +10,7 @@ import javax.validation.Validator;
 import net.iteach.api.ProfileService;
 import net.iteach.api.SecurityService;
 import net.iteach.core.model.AccountProfile;
+import net.iteach.core.model.Ack;
 import net.iteach.core.model.AuthenticationMode;
 import net.iteach.core.model.TokenType;
 import net.iteach.core.security.SecurityRoles;
@@ -98,9 +99,9 @@ public class ProfileServiceImpl extends AbstractServiceImpl implements
 	}
 	
 	@Override
-	public void passwordChange(String token, String oldPassword, String newPassword) {
+	public Ack passwordChange(String token, String oldPassword, String newPassword) {
 		int userId = securityUtils.getCurrentUserId();
-		securityService.passwordChange(userId, token, oldPassword, newPassword);
+		return securityService.passwordChange(userId, token, oldPassword, newPassword);
 	}
 
 }

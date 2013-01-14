@@ -681,3 +681,7 @@ page.passwordRequest.submit
 page.passwordRequest.ok
 	en -> Your password has been successfully changed.
 	fr -> Votre mot de passe a été changé.
+
+page.passwordRequest.error
+	en -> Your password could not be changed. Maybe your old password was incorrect.
+	fr -> Votre mot de passe n'a pas pu être changé. Votre ancien mot de passe était peut-être incorrect.

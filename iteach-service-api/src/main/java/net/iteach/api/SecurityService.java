@@ -28,7 +28,7 @@ public interface SecurityService {
 
 	void passwordRequest(Locale locale, int userId);
 
-	void passwordChange(int userId, String token, String oldPassword, String newPassword);
+	Ack passwordChange(int userId, String token, String oldPassword, String newPassword);
 
 	void checkTokenForUserId(TokenType tokenType, String token, int userId);
 

@@ -168,7 +168,7 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 	
 	@Override
 	@Transactional
-	public void passwordChange(int userId, String token, String oldPassword, String newPassword) {
+	public Ack passwordChange(int userId, String token, String oldPassword, String newPassword) {
 		// Gets the user details
 		UserSummary user = getUserSummaryByID(userId);
 		// Consumes the token
@@ -180,9 +180,7 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 				.addValue("newpassword", passwordEncoder.encodePassword(newPassword, user.getEmail()))
 				.addValue("oldpassword", passwordEncoder.encodePassword(oldPassword, user.getEmail())));
 		// Check
-		if (count != 1) {
-			throw new UserCannotChangePasswordException();
-		}
+		return Ack.one(count);
 	}
 
 	protected UserSummary getUserSummaryByEmail(String email) {

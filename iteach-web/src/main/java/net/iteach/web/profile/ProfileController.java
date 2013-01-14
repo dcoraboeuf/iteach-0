@@ -3,6 +3,7 @@ package net.iteach.web.profile;
 import java.util.Locale;
 
 import net.iteach.api.ProfileService;
+import net.iteach.core.model.Ack;
 import net.iteach.core.model.UserMessage;
 import net.iteach.web.support.AbstractGUIController;
 import net.iteach.web.support.ErrorHandler;
@@ -70,11 +71,17 @@ public class ProfileController extends AbstractGUIController {
 	@RequestMapping(value = "/passwordChange", method = RequestMethod.POST)
 	public String passwordChangeForm (Locale locale, Model model, @RequestParam String token, @RequestParam String oldPassword, @RequestParam String newPassword) {
 		// Change
-		profileService.passwordChange(token, oldPassword, newPassword);
-		// OK
-		model.addAttribute("message", UserMessage.success(strings.get(locale, "page.passwordRequest.ok")));
-		// Goes back to profile
-		return profile(model);
+		Ack ack = profileService.passwordChange(token, oldPassword, newPassword);
+		if (ack.isSuccess()) {
+			// OK
+			model.addAttribute("message", UserMessage.success(strings.get(locale, "page.passwordRequest.ok")));
+			// Goes back to profile
+			return profile(model);
+		} else {
+			model.addAttribute("message", UserMessage.error(strings.get(locale, "page.passwordRequest.error")));
+			model.addAttribute("token", token);
+			return "passwordChange";
+		}
 	}
 
 }
