@@ -1,6 +1,6 @@
 # Define all Groovy files as LF
-*.groovy text eol=lf
+*.groovy eol=lf
 
 # Define all text files as LF
-*.txt text eol=lf
+*.txt eol=lf
 
