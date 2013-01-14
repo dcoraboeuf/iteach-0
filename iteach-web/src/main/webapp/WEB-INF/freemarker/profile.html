@@ -1,6 +1,9 @@
 <#include "/lib/layout.html">
 
 <@layout_std pageId="profile" modules=["data"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home"}>
+
+	<@usermessage/>
+	
 	<div class="container-fluid">
 		<div id="home-row" class="row-fluid">
 			<div class="span5">

@@ -1,6 +1,14 @@
 <#import "/spring.ftl" as spring />
 <#include "/lib/i18n.html" />
 
+<#macro usermessage>
+	<#if message??>
+		<div class="alert alert-${message.type}">
+			${message.message?html}
+		</div>
+	</#if>
+</#macro>
+
 <#macro yes_no value>
 	<#if value>
 		<@lh key="general.yes" />
