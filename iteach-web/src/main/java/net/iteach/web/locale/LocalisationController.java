@@ -15,8 +15,6 @@ import net.iteach.web.support.AbstractGUIController;
 import net.iteach.web.support.ErrorHandler;
 import net.sf.jstring.Strings;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class LocalisationController extends AbstractGUIController {
-	
-	private final Logger logger = LoggerFactory.getLogger(LocalisationController.class);
 
 	private final Strings strings;
 	private final LocalisationUtils localisationUtils;
@@ -60,7 +56,7 @@ public class LocalisationController extends AbstractGUIController {
 		// logger.debug("[localization] No need for regeneration (not modified)");
 		// response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
 		// } else {
-			logger.debug("[localization] Regeneration needed");
+			// logger.debug("[localization] Regeneration needed");
 			// Gets the list of key/values
 			Map<String, String> map = strings.getKeyValues(locale);
 			// Output
