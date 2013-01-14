@@ -7,6 +7,7 @@ import net.iteach.api.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -41,6 +42,15 @@ public class ProfileController {
 		profileService.passwordRequest(locale);
 		// OK
 		return "passwordRequest";
+	}
+
+	/**
+	 * The user to enter his old password and his new password
+	 */
+	@RequestMapping(value = "/passwordChange/{token}", method = RequestMethod.GET)
+	public String passwordChangeForm (Model model, @PathVariable String token) {
+		model.addAttribute("token", token);
+		return "passwordChange";
 	}
 
 }

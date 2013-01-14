@@ -640,6 +640,9 @@ profile.actions
 profile.changePassword
 	en -> Change password
 	fr -> Changer de mot de passe
+	
+page.passwordChange
+	en,fr -> @[profile.changePassword]
 
 page.passwordRequest
 	en -> Password change request
@@ -658,3 +661,19 @@ page.passwordRequest.message
 page.passwordRequest.back
 	en -> Go back to the planning
 	fr -> Retourner au planning
+
+page.passwordRequest.oldPassword
+	en -> Old password
+	fr -> Ancien mot de passe
+	
+page.passwordRequest.newPassword
+	en -> New password
+	fr -> Nouveau mot de passe
+	
+page.passwordRequest.confirmPassword
+	en -> Confirm password
+	fr -> Confirmation
+
+page.passwordRequest.submit
+	en -> Change
+	fr -> Changer
