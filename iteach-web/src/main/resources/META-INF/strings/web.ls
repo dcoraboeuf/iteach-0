@@ -677,3 +677,7 @@ page.passwordRequest.confirmPassword
 page.passwordRequest.submit
 	en -> Change
 	fr -> Changer
+
+page.passwordRequest.ok
+	en -> Your password has been successfully changed.
+	fr -> Votre mot de passe a été changé.

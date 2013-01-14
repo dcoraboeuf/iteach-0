@@ -16,3 +16,6 @@ net.iteach.service.security.UserIdentifierAlreadyExistsException
 net.iteach.service.security.UserEmailAlreadyExistsException
 	en -> [E-006] A user with the same email ({0}) already exists.
 	fr -> [E-006] Un utilisateur ayant le même courriel ({0}) existe déjà.
+net.iteach.service.security.UserCannotChangePasswordException
+	en -> [E-007] Cannot change password
+	fr -> [E-008] Impossible de changer le mot de passe

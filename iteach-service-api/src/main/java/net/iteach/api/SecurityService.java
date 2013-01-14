@@ -27,4 +27,6 @@ public interface SecurityService {
 
 	void passwordRequest(Locale locale, int userId);
 
+	void passwordChange(int userId, String token, String oldPassword, String newPassword);
+
 }

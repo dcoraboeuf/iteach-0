@@ -150,6 +150,25 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		// Sends the message
 		messageService.sendMessage(message, new MessageDestination(MessageChannel.EMAIL, user.getEmail()));
 	}
+	
+	@Override
+	@Transactional
+	public void passwordChange(int userId, String token, String oldPassword, String newPassword) {
+		// Gets the user details
+		UserSummary user = getUserSummaryByID(userId);
+		// Consumes the token
+		tokenService.consumesToken(token, TokenType.PASSWORD_REQUEST, user.getEmail());
+		// Changes the verified flag
+		int count = getNamedParameterJdbcTemplate().update(
+			SQL.USER_CHANGE_PASSWORD,
+			params("id", user.getId())
+				.addValue("newpassword", passwordEncoder.encodePassword(newPassword, user.getEmail()))
+				.addValue("oldpassword", passwordEncoder.encodePassword(oldPassword, user.getEmail())));
+		// Check
+		if (count != 1) {
+			throw new UserCannotChangePasswordException();
+		}
+	}
 
 	protected UserSummary getUserSummaryByEmail(String email) {
 		return getNamedParameterJdbcTemplate().queryForObject(

@@ -89,5 +89,11 @@ public class ProfileServiceImpl extends AbstractServiceImpl implements
 		int userId = securityUtils.getCurrentUserId();
 		securityService.passwordRequest(locale, userId);
 	}
+	
+	@Override
+	public void passwordChange(String token, String oldPassword, String newPassword) {
+		int userId = securityUtils.getCurrentUserId();
+		securityService.passwordChange(userId, token, oldPassword, newPassword);
+	}
 
 }
