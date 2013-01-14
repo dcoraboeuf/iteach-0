@@ -4,5 +4,10 @@ public enum TokenType {
 	/**
 	 * The user has just been created and he must enter his new password.
 	 */
-	REGISTRATION;
+	REGISTRATION,
+	
+	/**
+	 * The user has requested a new password
+	 */
+	PASSWORD_REQUEST;
 }

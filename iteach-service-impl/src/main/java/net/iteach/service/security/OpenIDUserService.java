@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
-import net.iteach.api.model.AuthenticationMode;
+import net.iteach.core.model.AuthenticationMode;
 import net.iteach.service.db.SQL;
 
 import org.springframework.beans.factory.annotation.Autowired;

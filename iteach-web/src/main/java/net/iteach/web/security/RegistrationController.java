@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.iteach.api.SecurityService;
-import net.iteach.api.model.AuthenticationMode;
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.AuthenticationMode;
 import net.iteach.core.model.UserMessage;
 import net.iteach.utils.InputException;
 import net.iteach.web.support.AbstractGUIController;

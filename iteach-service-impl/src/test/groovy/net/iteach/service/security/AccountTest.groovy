@@ -1,8 +1,8 @@
 package net.iteach.service.security
 
 import net.iteach.api.SecurityService
-import net.iteach.api.model.AuthenticationMode
 import net.iteach.api.support.InMemoryPost
+import net.iteach.core.model.AuthenticationMode;
 import net.iteach.test.AbstractIntegrationTest
 
 import org.apache.commons.lang3.StringUtils

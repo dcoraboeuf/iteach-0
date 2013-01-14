@@ -6,6 +6,7 @@ import lombok.Data;
 public class AccountProfile {
 
 	private final int id;
+	private final AuthenticationMode mode;
 	private final String firstName;
 	private final String lastName;
 	private final String email;

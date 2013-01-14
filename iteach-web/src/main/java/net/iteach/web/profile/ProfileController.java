@@ -1,5 +1,7 @@
 package net.iteach.web.profile;
 
+import java.util.Locale;
+
 import net.iteach.api.ProfileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +36,9 @@ public class ProfileController {
 	 * Requests a password change
 	 */
 	@RequestMapping(value = "/password", method = RequestMethod.GET)
-	public String password () {
-		// TODO Request
+	public String password (Locale locale) {
+		// Request
+		profileService.passwordRequest(locale);
 		// OK
 		return "passwordRequest";
 	}

@@ -34,6 +34,9 @@ public class WebUIService implements UIService {
 		case REGISTRATION:
 			query = format("account/registration/%s", token);
 			break;
+		case PASSWORD_REQUEST:
+			query = format("account/passwordChange/%s", token);
+			break;
 		default:
 			throw new IllegalStateException("TokenType is not supported: " + type);
 		}

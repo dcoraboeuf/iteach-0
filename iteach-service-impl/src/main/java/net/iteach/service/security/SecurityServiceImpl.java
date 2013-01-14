@@ -11,11 +11,11 @@ import net.iteach.api.MessageService;
 import net.iteach.api.SecurityService;
 import net.iteach.api.TemplateService;
 import net.iteach.api.UIService;
-import net.iteach.api.model.AuthenticationMode;
 import net.iteach.api.model.MessageChannel;
 import net.iteach.api.model.MessageDestination;
 import net.iteach.api.model.TemplateModel;
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.AuthenticationMode;
 import net.iteach.core.model.Message;
 import net.iteach.core.model.MessageContent;
 import net.iteach.core.model.TokenType;
@@ -35,6 +35,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SecurityServiceImpl extends AbstractSecurityService implements SecurityService {
 	
+	public static class UserSummaryRowMapper implements RowMapper<UserSummary> {
+		@Override
+		public UserSummary mapRow(ResultSet rs, int index) throws SQLException {
+			return new UserSummary(
+				rs.getInt("id"),
+				rs.getString("firstName"),
+				rs.getString("lastName"),
+				rs.getString("email"));
+		}
+	}
+
 	private final PasswordEncoder passwordEncoder;
 	private final MessageService messageService;
 	private final TokenService tokenService;
@@ -128,21 +139,34 @@ public class SecurityServiceImpl extends AbstractSecurityService implements Secu
 		// OK
 		return Ack.one(count);
 	}
+	
+	@Override
+	@Transactional
+	public void passwordRequest(Locale locale, int userId) {
+		// Gets the user
+		UserSummary user = getUserSummaryByID(userId);
+		// Creates the message
+		Message message = createPasswordRequestMessage(locale, user.getFirstName(), user.getLastName(), user.getEmail());
+		// Sends the message
+		messageService.sendMessage(message, new MessageDestination(MessageChannel.EMAIL, user.getEmail()));
+	}
 
-	protected UserSummary getUserSummaryByEmail(final String email) {
+	protected UserSummary getUserSummaryByEmail(String email) {
 		return getNamedParameterJdbcTemplate().queryForObject(
 			SQL.USER_SUMMARY_BY_EMAIL,
 			params("email", email),
-			new RowMapper<UserSummary>() {
-				@Override
-				public UserSummary mapRow(ResultSet rs, int index) throws SQLException {
-					return new UserSummary(
-						rs.getInt("id"),
-						rs.getString("firstName"),
-						rs.getString("lastName"),
-						email);
-				}
-			});
+			new UserSummaryRowMapper());
+	}
+
+	protected UserSummary getUserSummaryByID(int id) {
+		return getNamedParameterJdbcTemplate().queryForObject(
+			SQL.USER_SUMMARY_BY_ID,
+			params("id", id),
+			new UserSummaryRowMapper());
+	}
+
+	private Message createPasswordRequestMessage(Locale locale, String firstName, String lastName, String email) {
+		return createUserMessage(locale, firstName, lastName, email, TokenType.PASSWORD_REQUEST, strings.get(locale, "message.passwordRequest"));
 	}
 
 	private Message createNewUserMessage(Locale locale, String firstName, String lastName, String email) {

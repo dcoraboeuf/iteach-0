@@ -2,8 +2,8 @@ package net.iteach.api;
 
 import java.util.Locale;
 
-import net.iteach.api.model.AuthenticationMode;
 import net.iteach.core.model.Ack;
+import net.iteach.core.model.AuthenticationMode;
 
 public interface SecurityService {
 
@@ -24,5 +24,7 @@ public interface SecurityService {
 	boolean isAdminInitialized();
 	
 	Ack completeRegistration (String token);
+
+	void passwordRequest(Locale locale, int userId);
 
 }
