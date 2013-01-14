@@ -29,5 +29,15 @@ public class ProfileController {
 		// OK
 		return "profile";
 	}
+	
+	/**
+	 * Requests a password change
+	 */
+	@RequestMapping(value = "/password", method = RequestMethod.GET)
+	public String password () {
+		// TODO Request
+		// OK
+		return "passwordRequest";
+	}
 
 }

@@ -640,3 +640,21 @@ profile.actions
 profile.changePassword
 	en -> Change password
 	fr -> Changer de mot de passe
+
+page.passwordRequest
+	en -> Password change request
+	fr -> Demande de changement de mot de passe
+
+page.passwordRequest.message
+	en -> ...
+		Your request for the change of your password has been accepted. An email has been sent to you. Follow its instructions
+		to complete the change.
+		...
+	fr -> ...
+		Votre demande de changement de mot de passe a été acceptée. Un courriel vous a été envoyé. Suivez les instructions qu'il
+		contient afin de compléter le changement.
+		...
+
+page.passwordRequest.back
+	en -> Go back to the planning
+	fr -> Retourner au planning
