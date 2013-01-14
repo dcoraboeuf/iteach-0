@@ -39,7 +39,7 @@ public class CommentsServiceImpl extends AbstractServiceImpl implements Comments
 
 	private static final String SQL_SELECT_FOR_ENTITY_WITH_ID = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE %s = :entityId AND ID = :commentId";
 	private static final String SQL_COUNT_FOR_ENTITY = "SELECT COUNT(ID) FROM COMMENTS WHERE %s = :id";
-	private static final String SQL_SELECT_FOR_ENTITY_WITH_OFFSET = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE %s = :id ORDER BY CREATION DESC LIMIT :count OFFSET :offset";
+	private static final String SQL_SELECT_FOR_ENTITY_WITH_OFFSET = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE %s = :id ORDER BY ID DESC LIMIT :count OFFSET :offset";
 	
 	private static final String SQL_CREATION_TIME = "SELECT CREATION FROM COMMENTS WHERE ID = :id";
 

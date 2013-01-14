@@ -48,5 +48,17 @@
 				</@panel>
 			</div>
 		</div>
+		
+		<div id="home-row" class="row-fluid">
+			<div class="span3">
+				<@panel title=loc("profile.actions")>
+					<#if profile.mode == "password">
+						<p>
+							<a href="gui/profile/password" class="btn btn-link"><@lh key="profile.changePassword" /></a>
+						</p>
+					</#if>
+				</@panel>
+			</div>
+		</div>
 	</div>
 </@layout_std>

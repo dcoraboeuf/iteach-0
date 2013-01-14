@@ -7,22 +7,20 @@ import java.util.List;
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
+import net.iteach.api.ProfileService;
+import net.iteach.api.admin.AccountSummary;
+import net.iteach.api.admin.AdminService;
+import net.iteach.core.model.AccountProfile;
+import net.iteach.core.security.SecurityRoles;
+import net.iteach.core.security.SecurityUtils;
+import net.iteach.service.db.SQL;
+import net.iteach.service.impl.AbstractServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import net.iteach.api.ProfileService;
-import net.iteach.api.admin.AccountSummary;
-import net.iteach.api.admin.AdminService;
-import net.iteach.api.model.AuthenticationMode;
-import net.iteach.core.model.AccountProfile;
-import net.iteach.core.security.SecurityRoles;
-import net.iteach.core.security.SecurityUtils;
-import net.iteach.service.db.SQL;
-import net.iteach.service.db.SQLUtils;
-import net.iteach.service.impl.AbstractServiceImpl;
 
 @Service
 public class AdminServiceImpl extends AbstractServiceImpl implements AdminService {
@@ -44,11 +42,11 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
 			return new AccountSummary(
 				id == userId,
 				id,
-				SQLUtils.getEnum(AuthenticationMode.class, rs, "mode"),
-				rs.getString("firstName"),
-				rs.getString("lastName"),
-				rs.getString("email"),
-				rs.getBoolean("administrator"),
+				profile.getMode(),
+				profile.getFirstName(),
+				profile.getLastName(),
+				profile.getEmail(),
+				profile.isAdmin(),
 				rs.getBoolean("verified"),
 				profile.getSchoolCount(),
 				profile.getStudentCount(),

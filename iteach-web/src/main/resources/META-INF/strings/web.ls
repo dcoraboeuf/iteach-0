@@ -632,3 +632,52 @@ profile.studentCount
 profile.lessonCount
 	en -> Lessons
 	fr -> Leçons
+
+profile.actions
+	en -> Actions
+	fr -> Actions
+
+profile.changePassword
+	en -> Change password
+	fr -> Changer de mot de passe
+	
+page.passwordChange
+	en,fr -> @[profile.changePassword]
+
+page.passwordRequest
+	en -> Password change request
+	fr -> Demande de changement de mot de passe
+
+page.passwordRequest.message
+	en -> ...
+		Your request for the change of your password has been accepted. An email has been sent to you. Follow its instructions
+		to complete the change.
+		...
+	fr -> ...
+		Votre demande de changement de mot de passe a été acceptée. Un courriel vous a été envoyé. Suivez les instructions qu'il
+		contient afin de compléter le changement.
+		...
+
+page.passwordRequest.back
+	en -> Go back to the planning
+	fr -> Retourner au planning
+
+page.passwordRequest.oldPassword
+	en -> Old password
+	fr -> Ancien mot de passe
+	
+page.passwordRequest.newPassword
+	en -> New password
+	fr -> Nouveau mot de passe
+	
+page.passwordRequest.confirmPassword
+	en -> Confirm password
+	fr -> Confirmation
+
+page.passwordRequest.submit
+	en -> Change
+	fr -> Changer
+
+page.passwordRequest.ok
+	en -> Your password has been successfully changed.
+	fr -> Votre mot de passe a été changé.

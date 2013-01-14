@@ -2,15 +2,19 @@ package net.iteach.service.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
 import net.iteach.api.ProfileService;
+import net.iteach.api.SecurityService;
 import net.iteach.core.model.AccountProfile;
+import net.iteach.core.model.AuthenticationMode;
 import net.iteach.core.security.SecurityRoles;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.service.db.SQL;
+import net.iteach.service.db.SQLUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -23,11 +27,13 @@ public class ProfileServiceImpl extends AbstractServiceImpl implements
 		ProfileService {
 
 	private final SecurityUtils securityUtils;
+	private final SecurityService securityService;
 
 	@Autowired
-	public ProfileServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils) {
+	public ProfileServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, SecurityService securityService) {
 		super(dataSource, validator);
 		this.securityUtils = securityUtils;
+		this.securityService = securityService;
 	}
 
 	@Override
@@ -66,6 +72,7 @@ public class ProfileServiceImpl extends AbstractServiceImpl implements
 					// OK
 					return new AccountProfile(
 							userId,
+							SQLUtils.getEnum(AuthenticationMode.class, rs, "mode"),
 							rs.getString("firstName"),
 							rs.getString("lastName"),
 							rs.getString("email"),
@@ -75,6 +82,18 @@ public class ProfileServiceImpl extends AbstractServiceImpl implements
 							lessonCount);
 				}
 			});
+	}
+	
+	@Override
+	public void passwordRequest(Locale locale) {
+		int userId = securityUtils.getCurrentUserId();
+		securityService.passwordRequest(locale, userId);
+	}
+	
+	@Override
+	public void passwordChange(String token, String oldPassword, String newPassword) {
+		int userId = securityUtils.getCurrentUserId();
+		securityService.passwordChange(userId, token, oldPassword, newPassword);
 	}
 
 }

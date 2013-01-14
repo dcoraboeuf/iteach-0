@@ -1,4 +1,4 @@
-package net.iteach.api.model;
+package net.iteach.core.model;
 
 public enum AuthenticationMode {
 	

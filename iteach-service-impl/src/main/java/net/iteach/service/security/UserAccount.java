@@ -1,6 +1,6 @@
 package net.iteach.service.security;
 
-import net.iteach.api.model.AuthenticationMode;
+import net.iteach.core.model.AuthenticationMode;
 import lombok.Data;
 
 @Data
