@@ -632,3 +632,11 @@ profile.studentCount
 profile.lessonCount
 	en -> Lessons
 	fr -> Leçons
+
+profile.actions
+	en -> Actions
+	fr -> Actions
+
+profile.changePassword
+	en -> Change password
+	fr -> Changer de mot de passe
