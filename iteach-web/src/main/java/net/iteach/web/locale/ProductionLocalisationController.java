@@ -70,7 +70,7 @@ public class ProductionLocalisationController extends LocalisationController {
 		// See https://developers.google.com/speed/docs/best-practices/caching for cache management
 		final long now = System.currentTimeMillis();
 		response.setDateHeader("Expires", now + CACHE_PERIOD_SECONDS * 1000L);
-		response.setDateHeader("Last-Modified", now);
+		response.setDateHeader("Last-Modified", now - 3600 * 1000);
 		
 		writeJS(content, response);
 	}
