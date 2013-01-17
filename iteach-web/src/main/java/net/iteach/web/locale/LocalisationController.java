@@ -22,7 +22,7 @@ public abstract class LocalisationController {
 		this.strings = strings;
 	}
 	
-	public abstract void localisation(Locale locale, HttpServletResponse response, String version) throws IOException;
+	public abstract void localisation(Locale locale, HttpServletResponse response, String language, String version) throws IOException;
 
 	protected String generateJS(Locale locale) {
 		// Restricts the locale

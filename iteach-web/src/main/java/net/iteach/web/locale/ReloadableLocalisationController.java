@@ -29,8 +29,8 @@ public class ReloadableLocalisationController extends LocalisationController {
 	 * @param version This parameter prevents the caching from one version to the other
 	 */
 	@Override
-	@RequestMapping(value = "/localization/{version:.*}", method = RequestMethod.GET)
-	public void localisation(Locale locale, HttpServletResponse response, @PathVariable String version) throws IOException {
+	@RequestMapping(value = "/localization/{language}/{version:.*}", method = RequestMethod.GET)
+	public void localisation(Locale locale, HttpServletResponse response, @PathVariable String language, @PathVariable String version) throws IOException {
 		
 		if (locale == null) {
 			locale = Locale.ENGLISH;
