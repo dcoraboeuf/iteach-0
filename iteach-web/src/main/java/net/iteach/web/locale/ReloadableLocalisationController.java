@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@Profile({RunProfile.TEST, RunProfile.IT})
+@Profile({RunProfile.TEST, RunProfile.IT, RunProfile.DEV})
 public class ReloadableLocalisationController extends LocalisationController {
 
 	@Autowired

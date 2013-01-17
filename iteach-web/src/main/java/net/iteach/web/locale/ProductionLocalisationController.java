@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@Profile(RunProfile.DEV)
+@Profile(RunProfile.PROD)
 public class ProductionLocalisationController extends LocalisationController {
 	
 	private static final long CACHE_PERIOD_SECONDS = 365 * 24 * 3600L;
