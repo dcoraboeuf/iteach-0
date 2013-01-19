@@ -1,8 +1,10 @@
 package net.iteach.service.impl;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.sql.DataSource;
 import javax.validation.Validator;
@@ -88,6 +90,11 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 				
 			}
 		);
+		// Total hours
+		final AtomicReference<BigDecimal> totalHours = new AtomicReference<>(BigDecimal.ZERO);
+		for (SchoolDetailsStudent student : students) {
+			totalHours.set(totalHours.get().add(student.getHours()));
+		}
 		// Details
 		return getNamedParameterJdbcTemplate().queryForObject(
 			SQL.SCHOOL_DETAILS,
@@ -102,7 +109,8 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 						rs.getString("name"),
 						rs.getString("color"),
 						coordinatesService.getCoordinates(CoordinateEntity.SCHOOL, id),
-						students);
+						students,
+						totalHours.get());
 				}
 				
 			}

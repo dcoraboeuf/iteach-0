@@ -43,6 +43,16 @@
 								</tr>
 							</#list>
 						</tbody>
+						<tfooter>
+							<tr class="total">
+								<td>
+									<@lh key="school.details.totalHours" />
+								</td>
+								<td class="hours">
+									${ loc('school.student.hours', school.totalHours)?html }
+								</td>
+							</tr>
+						</tfooter>
 					</table>
 				</@panel>
 			</div>

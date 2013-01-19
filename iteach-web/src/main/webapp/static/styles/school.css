@@ -5,3 +5,11 @@
 
 .hours {
 }
+
+tr.total {
+	border-top: solid 1px gray;
+}
+
+tr.total td.hours {
+	font-weight: bold;
+}

@@ -305,6 +305,10 @@ school.details.coordinates
 school.details.students
 	en -> Its students
 	fr -> Ses étudiants
+	
+school.details.totalHours
+	en -> Total hours
+	fr -> Total d'heures
 
 school.details.comments
 	en -> Your comments
