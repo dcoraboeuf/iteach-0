@@ -175,7 +175,7 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 			[
 				new SchoolDetailsStudent(1, "Student 1", "Subject 1", 0),
 				new SchoolDetailsStudent(2, "Student 2", "Subject 2", 0)
-			]) == school
+			], 0) == school
 	}
 	
 	@Test
