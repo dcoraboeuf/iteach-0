@@ -689,3 +689,13 @@ page.passwordRequest.ok
 page.passwordRequest.error
 	en -> Your password could not be changed. Maybe your old password was incorrect.
 	fr -> Votre mot de passe n'a pas pu être changé. Votre ancien mot de passe était peut-être incorrect.
+
+[reports]
+
+report.monthly
+	en -> Monthly report
+	fr -> Rapport mensuel
+
+report.monthly.tip
+	en -> Displays a report of all students hours, grouped per school.
+	fr -> Affiche un rapport pour toutes les heures des étudiants, groupés par école.
