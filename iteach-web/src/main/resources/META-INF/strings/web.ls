@@ -695,6 +695,9 @@ page.passwordRequest.error
 report.monthly
 	en -> Monthly report
 	fr -> Rapport mensuel
+	
+report.monthly.title
+	en,fr -> @[report.monthly] ({0})
 
 report.monthly.tip
 	en -> Displays a report of all students hours, grouped per school.

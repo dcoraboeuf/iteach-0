@@ -1,12 +1,16 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="report.monthly" title="TODO" breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home"}>
+<@layout_std pageId="report.monthly" title=loc("report.monthly.title", yearMonth) breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home"}>
 	<table class="table">
 		<thead>
 			<tr>
 				<th colspan="2"><@lh key="report.school" /></th>
 				<th><@lh key="report.student" /></th>
-				<th>TODO Month</th>
+				<th>
+					<a href="gui/report/monthly/previous">&#9668;</a>
+					<span>${yearMonth}</span>
+					<a href="gui/report/monthly/next">&#9658;</a>
+				</th>
 				<th><@lh key="report.total" /></th>
 			</tr>
 		</thead>
