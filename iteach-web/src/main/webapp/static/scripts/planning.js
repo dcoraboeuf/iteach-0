@@ -2,24 +2,6 @@ var Planning = function () {
 	
 	var initialization = true;
 	
-	function formatTimePart (n) {
-		return n < 10 ? '0' + n : '' + n;
-	}
-
-	function formatTime (d) {
-		var hours = formatTimePart(d.getHours());
-		var minutes = formatTimePart(d.getMinutes());
-		return hours + ':' + minutes;
-	}
-	
-	function formatDate (d) {
-		return '{0}-{1}-{2}'.format(d.getFullYear(), formatTimePart(d.getMonth() + 1), formatTimePart(d.getDate()));
-	}
-	
-	function formatDateTime (d) {
-		return '{0}T{1}'.format(formatDate(d), formatTime(d));
-	}
-	
 	function completeEvents (events) {
 		$.each (events, function (index, event) {
 			event.url = 'gui/lesson/{0}'.format(event.id);
@@ -60,8 +42,8 @@ var Planning = function () {
 			contentType: 'application/json',
 			data: JSON.stringify({
 				range: {
-					from: formatDateTime(start),
-					to: formatDateTime(end)
+					from: application.formatDateTime(start),
+					to: application.formatDateTime(end)
 				},
 				setDate: setDate
 			}),
@@ -82,9 +64,9 @@ var Planning = function () {
 		if (allDay) {
 			$("#planning-calendar").fullCalendar('unselect');
 		} else {
-			var date = formatDate(start);
-			var startTime = formatTime(start);
-			var endTime = formatTime(end);
+			var date = application.formatDate(start);
+			var startTime = application.formatTime(start);
+			var endTime = application.formatTime(end);
 			application.dialog({
 				id: 'lesson-dialog',
 				title: loc('lesson.new'),

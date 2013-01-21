@@ -46,6 +46,24 @@ function id (value) {
 
 var application = function () {
 	
+	function formatTimePart (n) {
+		return n < 10 ? '0' + n : '' + n;
+	}
+
+	function formatTime (d) {
+		var hours = formatTimePart(d.getHours());
+		var minutes = formatTimePart(d.getMinutes());
+		return hours + ':' + minutes;
+	}
+	
+	function formatDate (d) {
+		return '{0}-{1}-{2}'.format(d.getFullYear(), formatTimePart(d.getMonth() + 1), formatTimePart(d.getDate()));
+	}
+	
+	function formatDateTime (d) {
+		return '{0}T{1}'.format(formatDate(d), formatTime(d));
+	}
+	
 	function getCurrentDate () {
 		return new Date($('#current_date').val());
 	}
@@ -207,7 +225,11 @@ var application = function () {
 		dialog: dialog,
 		loading: loading,
 		getCurrentDate: getCurrentDate,
-		getMonth: getMonth
+		getMonth: getMonth,
+		formatTimePart: formatTimePart,
+		formatTime: formatTime,
+		formatDate: formatDate,
+		formatDateTime: formatDateTime
 	};
 	
 } ();
