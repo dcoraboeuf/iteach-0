@@ -26,6 +26,7 @@ var Lessons = function () {
 	}
 	
 	function lessonDialogInit () {
+		$( "#lessonDate" ).attr("placeholder", i18n.dateCalendarFormat);
 		$( "#lessonDate" ).datepicker( "destroy" );
 		$( "#lessonDate" ).datepicker({
 			showOtherMonths: true,
