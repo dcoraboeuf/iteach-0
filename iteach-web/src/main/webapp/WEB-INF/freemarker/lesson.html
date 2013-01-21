@@ -4,7 +4,7 @@
 	${locFormatDate(lesson.date)} - ${locFormatTime(lesson.from)}
 </#assign>
 
-<@layout_std pageId="lesson" title=lessonName modules=["data","planning","coordinates","comments","planning"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home", lesson.student.school.name: "gui/school/${lesson.student.school.id}", lesson.student.name: "gui/student/${lesson.student.id}"}>
+<@layout_std pageId="lesson" title=lessonName modules=["data","lessons","coordinates","comments","planning"] breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home", lesson.student.school.name: "gui/school/${lesson.student.school.id}", lesson.student.name: "gui/student/${lesson.student.id}"}>
 	<div class="container-fluid">
 		<div id="home-row" class="row-fluid">
 			<!-- Left column -->
@@ -40,8 +40,8 @@
 								<tr>
 									<td colspan="2">
 										<div>&nbsp;</div>
-										<button class="btn" type="button" onclick="Planning.editLesson()"><@lh key="general.update" /></button>
-										<button class="btn btn-danger" type="button" onclick="Planning.deleteLesson(${lesson.id})"><@lh key="general.delete" /></button>
+										<button class="btn" type="button" onclick="Lessons.editLesson()"><@lh key="general.update" /></button>
+										<button class="btn btn-danger" type="button" onclick="Lessons.deleteLesson(${lesson.id})"><@lh key="general.delete" /></button>
 									</td>
 								</tr>
 							</tfooter>
