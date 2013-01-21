@@ -25,6 +25,11 @@ var Lessons = function () {
 		);
 	}
 	
+	function readDate () {
+		var raw = $( "#lessonDate" ).datepicker("getDate");
+		return application.formatDate(raw);
+	}
+	
 	function lessonDialogInit () {
 		$( "#lessonDate" ).attr("placeholder", i18n.dateCalendarFormat);
 		$( "#lessonDate" ).datepicker( "destroy" );
@@ -33,6 +38,7 @@ var Lessons = function () {
 		    selectOtherMonths: true,
 		    dateFormat: i18n.dateCalendarFormat
 		});
+		$( "#lessonDate" ).datepicker ("setDate", new Date ($( "#lessonDate" ).val()));
 	}
 	
 	function editLesson () {
@@ -69,7 +75,7 @@ var Lessons = function () {
 			url: 'ui/teacher/lesson/{0}'.format(id),
 			contentType: 'application/json',
 			data: JSON.stringify({
-				date: $('#lessonDate').val(),
+				date: readDate($('#lessonDate').val()),
 				from: $('#lessonFrom').val(),
 				to: $('#lessonTo').val(),
 				student: $('#lessonStudent').val(),
@@ -98,7 +104,8 @@ var Lessons = function () {
 	return {
 		lessonDialogInit: lessonDialogInit,
 		deleteLesson: deleteLesson,
-		editLesson: editLesson
+		editLesson: editLesson,
+		readDate: readDate
 	};
 
 } ();

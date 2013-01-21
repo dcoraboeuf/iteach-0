@@ -96,7 +96,7 @@ var Planning = function () {
 			url: 'ui/teacher/lesson',
 			contentType: 'application/json',
 			data: JSON.stringify({
-				date: $('#lessonDate').val(),
+				date: Lessons.readDate($('#lessonDate').val()),
 				from: $('#lessonFrom').val(),
 				to: $('#lessonTo').val(),
 				student: $('#lessonStudent').val(),
