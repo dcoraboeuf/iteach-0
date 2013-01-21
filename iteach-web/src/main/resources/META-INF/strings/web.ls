@@ -699,3 +699,15 @@ report.monthly
 report.monthly.tip
 	en -> Displays a report of all students hours, grouped per school.
 	fr -> Affiche un rapport pour toutes les heures des étudiants, groupés par école.
+
+report.school
+	en -> School
+	fr -> Ecole
+
+report.student
+	en -> Student
+	fr -> Etudiant
+
+report.hours
+	en -> Hours
+	fr -> Heures
