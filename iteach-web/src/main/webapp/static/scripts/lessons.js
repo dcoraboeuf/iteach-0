@@ -29,7 +29,8 @@ var Lessons = function () {
 		$( "#lessonDate" ).datepicker( "destroy" );
 		$( "#lessonDate" ).datepicker({
 			showOtherMonths: true,
-		    selectOtherMonths: true
+		    selectOtherMonths: true,
+		    dateFormat: i18n.dateCalendarFormat
 		});
 	}
 	
