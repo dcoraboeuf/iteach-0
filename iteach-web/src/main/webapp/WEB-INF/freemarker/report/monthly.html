@@ -6,7 +6,8 @@
 			<tr>
 				<th colspan="2"><@lh key="report.school" /></th>
 				<th><@lh key="report.student" /></th>
-				<th><@lh key="report.hours" /></th>
+				<th>TODO Month</th>
+				<th><@lh key="report.total" /></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -15,16 +16,23 @@
 					<td width="24" style="background-color: ${school.color?html}">&nbsp;</td>
 					<td><a href="gui/school/${school.id}">${school.name?html}</a></td>
 					<td>&nbsp;</td>
-					<td><b>${school.hours}</b></td>
+					<td><b>${school.monthlyHours}</b></td>
+					<td><b><i>${school.totalHours}</i></b></td>
 				</tr>
 				<#list school.students?values as student>
 					<tr>
 						<td colspan="2">&nbsp;</td>
 						<td><a href="gui/student/${student.id}">${student.name?html}</a></td>
-						<td>${student.hours}</td>
+						<td>${student.monthlyHours}</td>
+						<td><i>${student.totalHours}</i></td>
 					</tr>
 				</#list>
 			</#list>
+			<tr class="success">
+				<td colspan="3">&nbsp;</td>
+				<td>${report.monthlyHours}</td>
+				<td><b>${report.totalHours}</b></td>
+			</tr>
 		</tbody>
-	</table>	
+	</table>
 </@layout_std>

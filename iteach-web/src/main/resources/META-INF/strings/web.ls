@@ -711,3 +711,7 @@ report.student
 report.hours
 	en -> Hours
 	fr -> Heures
+
+report.total
+	en -> Total
+	fr -> Total

@@ -12,8 +12,8 @@ import javax.validation.Validator;
 
 import net.iteach.api.report.ReportService;
 import net.iteach.core.report.MonthlyReport;
-import net.iteach.core.report.SchoolHours;
-import net.iteach.core.report.StudentHours;
+import net.iteach.core.report.SchoolMonthlyHours;
+import net.iteach.core.report.StudentMonthlyHours;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
@@ -44,39 +44,41 @@ public class ReportServiceImpl extends AbstractServiceImpl implements ReportServ
 		// Gets the current user
 		int userId = securityUtils.getCurrentUserId();
 		// From: first day of the month
-		String from = date.withDayOfMonth(1).toString();
+		final LocalDate from = date.withDayOfMonth(1);
 		// To: last day of the month
-		String to = date.withDayOfMonth(date.dayOfMonth().getMaximumValue()).toString();
+		final LocalDate to = date.withDayOfMonth(date.dayOfMonth().getMaximumValue());
 		// Indexes
-		final Map<Integer, SchoolHours> schoolHoursIndex = new LinkedHashMap<>();
-		final Map<Integer, StudentHours> studentHoursIndex = new LinkedHashMap<>();
+		final Map<Integer, SchoolMonthlyHours> schoolHoursIndex = new LinkedHashMap<>();
+		final Map<Integer, StudentMonthlyHours> studentHoursIndex = new LinkedHashMap<>();
 		// Gets the full list of lessons
 		getNamedParameterJdbcTemplate().query(
 			SQL.REPORT_MONTHLY,
-			params("teacher", userId).addValue("from", from).addValue("to", to),
+			params("teacher", userId),
 			new RowCallbackHandler() {
 				@Override
 				public void processRow(ResultSet rs) throws SQLException {
+					LocalDate lineDate = SQLUtils.dateFromDB(rs.getString("pdate"));
 					LocalTime timeFrom = SQLUtils.timeFromDB(rs.getString("pfrom"));
 					LocalTime timeTo = SQLUtils.timeFromDB(rs.getString("pto"));
 					BigDecimal hours = getHours(timeFrom, timeTo);
+					
+					boolean monthlyHours = (lineDate.compareTo(from) >= 0) && (lineDate.compareTo(to) <= 0);
 	
 					int studentId = rs.getInt("student");
 					String studentName = rs.getString("student_name");
-					StudentHours studentHours = studentHoursIndex.get(studentId);
+					StudentMonthlyHours studentHours = studentHoursIndex.get(studentId);
 					if (studentHours == null) {
-						studentHours = new StudentHours(studentId, studentName, hours);
-					} else {
-						studentHours = studentHours.addHours(hours);
+						studentHours = new StudentMonthlyHours(studentId, studentName);
 					}
+					studentHours = studentHours.addHours(hours, monthlyHours);
 					studentHoursIndex.put(studentId, studentHours);
 	
 					int schoolId = rs.getInt("school");
 					String schoolName = rs.getString("school_name");
 					String schoolColor = rs.getString("school_color");
-					SchoolHours schoolHours = schoolHoursIndex.get(schoolId);
+					SchoolMonthlyHours schoolHours = schoolHoursIndex.get(schoolId);
 					if (schoolHours == null) {
-						schoolHours = new SchoolHours(schoolId, schoolName, schoolColor);
+						schoolHours = new SchoolMonthlyHours(schoolId, schoolName, schoolColor);
 					}
 					
 					schoolHours = schoolHours.addStudent(studentHours);
