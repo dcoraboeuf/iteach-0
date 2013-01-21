@@ -25,6 +25,14 @@ var Lessons = function () {
 		);
 	}
 	
+	function lessonDialogInit () {
+		$( "#lessonDate" ).datepicker( "destroy" );
+		$( "#lessonDate" ).datepicker({
+			showOtherMonths: true,
+		    selectOtherMonths: true
+		});
+	}
+	
 	function editLesson () {
 		var id = $('#lesson-id').val();
 		var student = $('#lesson-student').val();
@@ -48,7 +56,8 @@ var Lessons = function () {
 				action: function () {
 					return submitEditLesson (id);
 				}
-			}
+			},
+			open: lessonDialogInit
 		});		
 	}
 	
@@ -85,6 +94,7 @@ var Lessons = function () {
 	}
 
 	return {
+		lessonDialogInit: lessonDialogInit,
 		deleteLesson: deleteLesson,
 		editLesson: editLesson
 	};

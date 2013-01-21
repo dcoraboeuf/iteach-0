@@ -100,6 +100,7 @@ var Planning = function () {
 					name: loc('general.create'),
 					action: submitCreateLesson
 				},
+				open: Lessons.lessonDialogInit,
 				cancel: function () {
 					$("#planning-calendar").fullCalendar('unselect');
 				}

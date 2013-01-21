@@ -71,9 +71,7 @@ var application = function () {
 		// Open event
 		var onOpen;
 		if (config.open) {
-			onOpen = function () {
-				config.open();
-			};
+			onOpen = config.open;
 		} else {
 			onOpen = function () {};
 		}
