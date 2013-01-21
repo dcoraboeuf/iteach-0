@@ -1,6 +1,7 @@
 package net.iteach.service.impl;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -60,7 +61,7 @@ public abstract class AbstractServiceImpl extends NamedParameterJdbcDaoSupport {
 	protected BigDecimal getHours(LocalTime from, LocalTime to) {
 		Period duration = new Period(from, to);
 		BigDecimal minutes = new BigDecimal(duration.toStandardMinutes().getMinutes());
-		return minutes.divide(MINUTES_IN_HOUR);
+		return minutes.divide(MINUTES_IN_HOUR, 2, RoundingMode.HALF_UP);
 	}
 	
 	protected <T> T getFirstItem (String sql, MapSqlParameterSource criteria, Class<T> type) {

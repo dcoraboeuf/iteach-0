@@ -93,13 +93,14 @@ class StudentServiceImplTest extends AbstractIntegrationTest {
 	@Test
 	void getStudentForTeacher() {
 		def student = service.getStudentForTeacher(1, 1)
+		println student
 		assert new StudentDetails(
 			1,
 			"English",
 			"A. Albert",
 			Coordinates.create().add(CoordinateType.EMAIL, "albert@test.com").add(CoordinateType.MOBILE_PHONE, "0123456789"),
 			new SchoolSummary(1, "My school 1", "#FF0000"),
-			3.5) == student
+			3.50) == student
 	}
 	
 	@Test(expected = AccessDeniedException)
