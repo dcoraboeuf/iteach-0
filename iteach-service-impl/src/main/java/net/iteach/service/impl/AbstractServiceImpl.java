@@ -2,6 +2,7 @@ package net.iteach.service.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -75,6 +76,12 @@ public abstract class AbstractServiceImpl extends NamedParameterJdbcDaoSupport {
 	
 	protected MapSqlParameterSource params (String name, Object value) {
 		return new MapSqlParameterSource(name, value);
+	}
+	
+	protected void validate (boolean test, Localizable message) {
+		if (!test) {
+			throw new ValidationException(new MultiLocalizable(Arrays.asList(message)));
+		}
 	}
 
     protected void validate (final Object o, Class<?> group) {

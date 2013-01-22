@@ -37,6 +37,7 @@ import net.iteach.core.model.StudentSummaryWithCoordinates;
 import net.iteach.core.validation.LessonFormValidation;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
+import net.sf.jstring.LocalizableMessage;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -176,6 +177,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 	public ID createLessonForTeacher(int userId, LessonForm form) {
         // Validation
         validate(form, LessonFormValidation.class);
+        validate(form.getTo().isAfter(form.getFrom()), new LocalizableMessage("lesson.error.timeorder"));
         checkTeacherForStudent(userId, form.getStudent());
         
 		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
