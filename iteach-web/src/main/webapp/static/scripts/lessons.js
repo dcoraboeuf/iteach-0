@@ -41,6 +41,62 @@ var Lessons = function () {
 		$( "#lessonDate" ).datepicker ("setDate", new Date ($( "#lessonDate" ).val()));
 	}
 	
+	function createLesson (date, startTime, endTime, cancelFn, successFn) {
+		application.dialog({
+			id: 'lesson-dialog',
+			title: loc('lesson.new'),
+			width: 500,
+			data: {
+				lessonDate: date,
+				lessonFrom: startTime,
+				lessonTo: endTime,
+				lessonStudent: '',
+				lessonLocation: ''
+			},
+			submit: {
+				name: loc('general.create'),
+				action: function () {
+					return submitCreateLesson(successFn);
+				}
+			},
+			open: lessonDialogInit,
+			cancel: cancelFn
+		});		
+	}
+	
+	function submitCreateLesson (successFn) {
+		$.ajax({
+			type: 'POST',
+			url: 'ui/teacher/lesson',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				date: readDate($('#lessonDate').val()),
+				from: $('#lessonFrom').val(),
+				to: $('#lessonTo').val(),
+				student: $('#lessonStudent').val(),
+				location: $('#lessonLocation').val()
+			}),
+			dataType: 'json',
+			success: function (data) {
+				if (data.success) {
+					successFn();
+					$('#lesson-dialog').dialog('close');
+				} else {
+					application.displayError(loc('lesson.new.error'));
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+			  	if (jqXHR.responseText && jqXHR.responseText != '') {
+			  		$('#lesson-dialog-error').html(jqXHR.responseText.htmlWithLines());
+			  		$('#lesson-dialog-error').show();
+			  	} else {
+			  		application.displayAjaxError (loc('lesson.new.error'), jqXHR, textStatus, errorThrown);
+			  	}
+			}
+		});
+		return false;
+	}
+	
 	function editLesson () {
 		var id = $('#lesson-id').val();
 		var student = $('#lesson-student').val();
@@ -105,6 +161,7 @@ var Lessons = function () {
 		lessonDialogInit: lessonDialogInit,
 		deleteLesson: deleteLesson,
 		editLesson: editLesson,
+		createLesson: createLesson,
 		readDate: readDate
 	};
 
