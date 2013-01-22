@@ -97,7 +97,7 @@ var Lessons = function () {
 		application.dialog({
 			id: 'lesson-dialog',
 			title: loc('lesson.new'),
-			width: 500,
+			width: 550,
 			data: {
 				lessonDate: date,
 				lessonFrom: startTime,
@@ -159,7 +159,7 @@ var Lessons = function () {
 		application.dialog({
 			id: 'lesson-dialog',
 			title: loc('lesson.edit'),
-			width: 500,
+			width: 550,
 			data: {
 				lessonDate: date,
 				lessonFrom: startTime,
