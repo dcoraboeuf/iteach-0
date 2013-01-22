@@ -1,10 +1,12 @@
 var Lessons = function () {
 	
+	var timePattern = /[0-9]{2}:[0-9]{2}/;
+	
 	function _parseTime (s) {
-		var colon = s.indexOf(':');
-		if (colon < 0) {
+		if (!timePattern.test(s)) {
 			throw "Wrong time format: " + s;
 		} else {
+			var colon = s.indexOf(':');
 			var sHours = s.substring(0, colon);
 			var sMinutes = s.substring(colon + 1);
 			var timestamp = Number(sHours) * 60 + Number(sMinutes);
@@ -78,6 +80,32 @@ var Lessons = function () {
 		$(selector).timespinner();
 	}
 	
+	/**
+	 * Reverts to the current date in case of error
+	 */
+	function validateDate(selector) {
+		var raw = $(selector).datepicker("getDate");
+		$(selector).datepicker("setDate", raw);
+		return true;
+	}
+	
+	function validateTime (selector) {
+		var value = $(selector).val();
+		if (timePattern.test(value)) {
+			application.validate(selector, true);
+			return true;
+		} else {
+			application.validate(selector, false);
+			return false;
+		}
+	}
+	
+	function validateLesson () {
+		return validateDate("#lessonDate")
+			&& validateTime("#lessonFrom")
+			&& validateTime("#lessonTo");
+	}
+	
 	function lessonDialogInit () {
 		// Date field
 		$( "#lessonDate" ).attr("placeholder", i18n.dateCalendarFormat);
@@ -117,35 +145,37 @@ var Lessons = function () {
 	}
 	
 	function submitCreateLesson (successFn) {
-		$.ajax({
-			type: 'POST',
-			url: 'ui/teacher/lesson',
-			contentType: 'application/json',
-			data: JSON.stringify({
-				date: readDate($('#lessonDate').val()),
-				from: $('#lessonFrom').val(),
-				to: $('#lessonTo').val(),
-				student: $('#lessonStudent').val(),
-				location: $('#lessonLocation').val()
-			}),
-			dataType: 'json',
-			success: function (data) {
-				if (data.success) {
-					successFn();
-					$('#lesson-dialog').dialog('close');
-				} else {
-					application.displayError(loc('lesson.new.error'));
+		if (validateLesson()) {
+			$.ajax({
+				type: 'POST',
+				url: 'ui/teacher/lesson',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					date: readDate($('#lessonDate').val()),
+					from: $('#lessonFrom').val(),
+					to: $('#lessonTo').val(),
+					student: $('#lessonStudent').val(),
+					location: $('#lessonLocation').val()
+				}),
+				dataType: 'json',
+				success: function (data) {
+					if (data.success) {
+						successFn();
+						$('#lesson-dialog').dialog('close');
+					} else {
+						application.displayError(loc('lesson.new.error'));
+					}
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+				  	if (jqXHR.responseText && jqXHR.responseText != '') {
+				  		$('#lesson-dialog-error').html(jqXHR.responseText.htmlWithLines());
+				  		$('#lesson-dialog-error').show();
+				  	} else {
+				  		application.displayAjaxError (loc('lesson.new.error'), jqXHR, textStatus, errorThrown);
+				  	}
 				}
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-			  	if (jqXHR.responseText && jqXHR.responseText != '') {
-			  		$('#lesson-dialog-error').html(jqXHR.responseText.htmlWithLines());
-			  		$('#lesson-dialog-error').show();
-			  	} else {
-			  		application.displayAjaxError (loc('lesson.new.error'), jqXHR, textStatus, errorThrown);
-			  	}
-			}
-		});
+			});
+		}
 		return false;
 	}
 	
@@ -178,34 +208,36 @@ var Lessons = function () {
 	}
 	
 	function submitEditLesson (id) {
-		$.ajax({
-			type: 'PUT',
-			url: 'ui/teacher/lesson/{0}'.format(id),
-			contentType: 'application/json',
-			data: JSON.stringify({
-				date: readDate($('#lessonDate').val()),
-				from: $('#lessonFrom').val(),
-				to: $('#lessonTo').val(),
-				student: $('#lessonStudent').val(),
-				location: $('#lessonLocation').val()
-			}),
-			dataType: 'json',
-			success: function (data) {
-				if (data.success) {
-					location.reload();
-				} else {
-					application.displayError(loc('lesson.edit.error'));
+		if (validateLesson()) {
+			$.ajax({
+				type: 'PUT',
+				url: 'ui/teacher/lesson/{0}'.format(id),
+				contentType: 'application/json',
+				data: JSON.stringify({
+					date: readDate($('#lessonDate').val()),
+					from: $('#lessonFrom').val(),
+					to: $('#lessonTo').val(),
+					student: $('#lessonStudent').val(),
+					location: $('#lessonLocation').val()
+				}),
+				dataType: 'json',
+				success: function (data) {
+					if (data.success) {
+						location.reload();
+					} else {
+						application.displayError(loc('lesson.edit.error'));
+					}
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+				  	if (jqXHR.responseText && jqXHR.responseText != '') {
+				  		$('#lesson-dialog-error').html(jqXHR.responseText.htmlWithLines());
+				  		$('#lesson-dialog-error').show();
+				  	} else {
+				  		application.displayAjaxError (loc('lesson.edit.error'), jqXHR, textStatus, errorThrown);
+				  	}
 				}
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-			  	if (jqXHR.responseText && jqXHR.responseText != '') {
-			  		$('#lesson-dialog-error').html(jqXHR.responseText.htmlWithLines());
-			  		$('#lesson-dialog-error').show();
-			  	} else {
-			  		application.displayAjaxError (loc('lesson.edit.error'), jqXHR, textStatus, errorThrown);
-			  	}
-			}
-		});
+			});
+		}
 		return false;
 	}
 

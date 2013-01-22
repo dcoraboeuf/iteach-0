@@ -9,6 +9,10 @@
 	cursor: pointer;
 }
 
+.invalid {
+	border: red;
+}
+
 /* Loading indicator */
 .loading {
 	padding-left: 24px;

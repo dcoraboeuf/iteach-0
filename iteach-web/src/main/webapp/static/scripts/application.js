@@ -226,6 +226,7 @@ var application = function () {
 			var confirmValue = $(confirmation).val();
 			return validate (confirmation, confirmValue == value);
 		},
+		validate: validate,
 		dialog: dialog,
 		loading: loading,
 		getCurrentDate: getCurrentDate,
