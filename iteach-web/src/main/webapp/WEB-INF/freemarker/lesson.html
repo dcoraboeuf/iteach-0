@@ -14,8 +14,8 @@
 						<input id="lesson-id" type="hidden" name="id" value="${lesson.id}" />
 						<input id="lesson-student" type="hidden" name="student" value="${lesson.student.id}" />
 						<input id="lesson-date" type="hidden" name="date" value="${lesson.date}" />
-						<input id="lesson-from" type="hidden" name="from" value="${lesson.from}" />
-						<input id="lesson-to" type="hidden" name="to" value="${lesson.to}" />
+						<input id="lesson-from" type="hidden" name="from" value="${locFormatTimeISO(lesson.from)}" />
+						<input id="lesson-to" type="hidden" name="to" value="${locFormatTimeISO(lesson.to)}" />
 						<input id="lesson-location" type="hidden" name="location" value="${lesson.location?html}" />
 						<table class="data-values">
 							<tbody>
