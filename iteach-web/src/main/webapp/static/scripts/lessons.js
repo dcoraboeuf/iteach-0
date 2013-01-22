@@ -1,5 +1,49 @@
 var Lessons = function () {
 	
+	function _parseTime (s) {
+		var colon = s.indexOf(':');
+		if (colon < 0) {
+			throw "Wrong time format: " + s;
+		} else {
+			var sHours = s.substring(0, colon);
+			var sMinutes = s.substring(colon + 1);
+			var timestamp = Number(sHours) * 60 + Number(sMinutes);
+			return timestamp;
+		}
+	}
+	
+	function _formatTime (value) {
+		var hours = Math.floor(value / 60);
+		var minutes = value % 60;
+		return application.formatTimeHM(hours, minutes);
+	}
+	
+	function init() {
+		$.widget("ui.timespinner", $.ui.spinner, {
+			options : {
+				// minutes
+				step : 1,
+				// hours
+				page : 60
+			},
+			_parse : function(value) {
+				if (typeof value === "string") {
+					// already a timestamp
+					if (Number(value) == value) {
+						return Number(value);
+					} else {
+						return _parseTime(value);
+					}
+				}
+				return value;
+			},
+
+			_format : function(value) {
+				return _formatTime(value);
+			}
+		});
+	}
+	
 	function deleteLesson (id) {
 		application.confirmAndCall(
 			loc('lesson.delete.prompt'),
@@ -30,7 +74,12 @@ var Lessons = function () {
 		return application.formatDate(raw);
 	}
 	
+	function timeFieldInit (selector) {
+		$(selector).timespinner();
+	}
+	
 	function lessonDialogInit () {
+		// Date field
 		$( "#lessonDate" ).attr("placeholder", i18n.dateCalendarFormat);
 		$( "#lessonDate" ).datepicker( "destroy" );
 		$( "#lessonDate" ).datepicker({
@@ -39,6 +88,9 @@ var Lessons = function () {
 		    dateFormat: i18n.dateCalendarFormat
 		});
 		$( "#lessonDate" ).datepicker ("setDate", new Date ($( "#lessonDate" ).val()));
+		// Time fields
+		timeFieldInit("#lessonFrom");
+		timeFieldInit("#lessonTo");
 	}
 	
 	function createLesson (date, startTime, endTime, cancelFn, successFn) {
@@ -162,7 +214,9 @@ var Lessons = function () {
 		deleteLesson: deleteLesson,
 		editLesson: editLesson,
 		createLesson: createLesson,
-		readDate: readDate
+		init: init
 	};
 
 } ();
+
+$(document).ready(Lessons.init);

@@ -50,10 +50,14 @@ var application = function () {
 		return n < 10 ? '0' + n : '' + n;
 	}
 
-	function formatTime (d) {
-		var hours = formatTimePart(d.getHours());
-		var minutes = formatTimePart(d.getMinutes());
+	function formatTimeHM (hours, minutes) {
+		var hours = formatTimePart(hours);
+		var minutes = formatTimePart(minutes);
 		return hours + ':' + minutes;
+	}
+
+	function formatTime (d) {
+		return formatTimeHM(d.getHours(), d.getMinutes());
 	}
 	
 	function formatDate (d) {
@@ -227,6 +231,7 @@ var application = function () {
 		getCurrentDate: getCurrentDate,
 		getMonth: getMonth,
 		formatTimePart: formatTimePart,
+		formatTimeHM: formatTimeHM,
 		formatTime: formatTime,
 		formatDate: formatDate,
 		formatDateTime: formatDateTime
