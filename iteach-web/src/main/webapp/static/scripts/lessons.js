@@ -92,10 +92,20 @@ var Lessons = function () {
 	function validateTime (selector) {
 		var value = $(selector).val();
 		if (timePattern.test(value)) {
-			application.validate(selector, true);
 			return true;
 		} else {
-			application.validate(selector, false);
+			application.displayError(loc('lesson.error.timeformat', value));
+			return false;
+		}
+	}
+	
+	function validateTimeRange (from, to) {
+		var a = _parseTime($(from).val());
+		var b = _parseTime($(to).val());
+		if (a < b) {
+			return true; 
+		} else {
+			application.displayError(loc('lesson.error.timeorder'));
 			return false;
 		}
 	}
@@ -103,7 +113,8 @@ var Lessons = function () {
 	function validateLesson () {
 		return validateDate("#lessonDate")
 			&& validateTime("#lessonFrom")
-			&& validateTime("#lessonTo");
+			&& validateTime("#lessonTo")
+			&& validateTimeRange("#lessonFrom", "#lessonTo");
 	}
 	
 	function lessonDialogInit () {

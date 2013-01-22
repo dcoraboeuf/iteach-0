@@ -447,6 +447,14 @@ lesson.student
 lesson.location
 	en -> Location
 	fr -> Emplacement
+	
+lesson.error.timeformat
+	en -> Wrong time format: {0}
+	fr -> Format incorrect: {0}
+
+lesson.error.timeorder
+	en -> The end time must be later than the start time
+	fr -> L'heure de fin doit être plus tard que l'heure de début
 
 lesson.new.error
 	en -> Error while creating the lesson
