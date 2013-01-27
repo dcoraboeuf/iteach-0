@@ -69,8 +69,8 @@ class LessonServiceImplTest extends AbstractIntegrationTest {
 		assert result != null
 		assert result.lessons != null
 		
-		def student1 = new StudentSummary(1, "English", "A. Albert", new SchoolSummary(1, "My school 1", "#FF0000"))
-		def student3 = new StudentSummary(3, "German", "C. Charles", new SchoolSummary(3, "My school 3", "#0000FF"))
+		def student1 = new StudentSummary(1, "English", "A. Albert", new SchoolSummary(1, "My school 1", "#FF0000", MoneyUtils.money(10)))
+		def student3 = new StudentSummary(3, "German", "C. Charles", new SchoolSummary(3, "My school 3", "#0000FF", MoneyUtils.money(30)))
 		
 		assert [
 			new Lesson(2, student1, new LocalDate(2013,1,7), new LocalTime(18,0), new LocalTime(20,30), "Home"),
@@ -85,8 +85,8 @@ class LessonServiceImplTest extends AbstractIntegrationTest {
 		assert result != null
 		assert result.lessons != null
 		
-		def student1 = new StudentSummary(1, "English", "A. Albert", new SchoolSummary(1, "My school 1", "#FF0000"))
-		def student3 = new StudentSummary(3, "German", "C. Charles", new SchoolSummary(3, "My school 3", "#0000FF"))
+		def student1 = new StudentSummary(1, "English", "A. Albert", new SchoolSummary(1, "My school 1", "#FF0000", MoneyUtils.money(10)))
+		def student3 = new StudentSummary(3, "German", "C. Charles", new SchoolSummary(3, "My school 3", "#0000FF", MoneyUtils.money(30)))
 		
 		assert [
 			new Lesson(4, student1, new LocalDate(2013,2,1), new LocalTime(18,0), new LocalTime(20,30), "Home"),
@@ -113,6 +113,7 @@ class LessonServiceImplTest extends AbstractIntegrationTest {
 					1,
 					"My school 1",
 					"#FF0000",
+					MoneyUtils.money(10),
 					Coordinates.create()
 						.add(CoordinateType.ADDRESS, "At my school 1")
 						.add(CoordinateType.WEB, "http://school/1")),

@@ -1,8 +1,8 @@
 package net.iteach.service.impl
 
 import net.iteach.api.SchoolService
-import net.iteach.core.model.CommentFormat;
-import net.iteach.core.model.CommentsForm;
+import net.iteach.core.model.CommentFormat
+import net.iteach.core.model.CommentsForm
 import net.iteach.core.model.CoordinateType
 import net.iteach.core.model.Coordinates
 import net.iteach.core.model.SchoolDetails
@@ -34,14 +34,14 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 	
 	@Test
 	void createSchool() {
-		def id = service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCCCCC", Coordinates.create()));
+		def id = service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCCCCC", 10, Coordinates.create()));
 		assert id != null
 		assert id.isSuccess()
 	}
 	
 	@Test
 	void deleteSchool() {
-		def id = service.createSchoolForTeacher(2, new SchoolForm("Test for delete", "#CCCCCC", Coordinates.create()));
+		def id = service.createSchoolForTeacher(2, new SchoolForm("Test for delete", "#CCCCCC", 10, Coordinates.create()));
 		assert id != null
 		assert id.isSuccess()
 		def ack = service.deleteSchoolForTeacher(2, id.getValue())
@@ -50,7 +50,7 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 	
 	@Test(expected = AccessDeniedException.class)
 	void deleteSchool_access_denied() {
-		def id = service.createSchoolForTeacher(2, new SchoolForm("Test for delete and access denied", "#CCCCCC", Coordinates.create()));
+		def id = service.createSchoolForTeacher(2, new SchoolForm("Test for delete and access denied", "#CCCCCC", 12, Coordinates.create()));
 		assert id != null
 		assert id.isSuccess()
 		service.deleteSchoolForTeacher(1, id.getValue())
@@ -68,81 +68,95 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 
     @Test
     void school_no_name () {
-        validation( { service.createSchoolForTeacher(2, new SchoolForm(null, "#CCCCCC", Coordinates.create())) },
+        validation( { service.createSchoolForTeacher(2, new SchoolForm(null, "#CCCCCC", 0, Coordinates.create())) },
                 " - School name: may not be null\n")
     }
 
     @Test
     void school_tooshort_name () {
-        validation( { service.createSchoolForTeacher(2, new SchoolForm("", "#CCCCCC", Coordinates.create())) },
+        validation( { service.createSchoolForTeacher(2, new SchoolForm("", "#CCCCCC", 0, Coordinates.create())) },
                 " - School name: size must be between 1 and 80\n")
     }
 
     @Test
     void school_toolong_name () {
-        validation ( { service.createSchoolForTeacher(2, new SchoolForm("x" * 81, "#CCCCCC", Coordinates.create())) },
+        validation ( { service.createSchoolForTeacher(2, new SchoolForm("x" * 81, "#CCCCCC", 0, Coordinates.create())) },
                 " - School name: size must be between 1 and 80\n")
     }
 
     @Test
     void school_no_color () {
-        validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", null, Coordinates.create())) },
+        validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", null, 0, Coordinates.create())) },
                 " - Colour code for the school: may not be null\n")
     }
 
     @Test
     void school_tooshort_color () {
-        validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCC", Coordinates.create())) },
+        validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCC", 0, Coordinates.create())) },
                 " - Colour code for the school: must match \"#[0-9A-Fa-f]{6}\"\n")
     }
 
     @Test
     void school_toolong_color () {
-        validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCCCCCC", Coordinates.create())) },
+        validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#CCCCCCC", 0, Coordinates.create())) },
                 " - Colour code for the school: must match \"#[0-9A-Fa-f]{6}\"\n")
     }
 
     @Test
     void school_wrong_color () {
-        validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#55CCMM", Coordinates.create())) },
+        validation ( { service.createSchoolForTeacher(2, new SchoolForm("Test", "#55CCMM", 0, Coordinates.create())) },
                 " - Colour code for the school: must match \"#[0-9A-Fa-f]{6}\"\n")
     }
 	
 	@Test(expected = AccessDeniedException.class)
 	void editSchool_access_denied() {
-		service.editSchoolForTeacher(2, 1, new SchoolForm("My school 11", "#ff0000", Coordinates.create()));
+		service.editSchoolForTeacher(2, 1, new SchoolForm("My school 11", "#ff0000", 0, Coordinates.create()));
 	}
 	
 	@Test
 	void editSchool_name() {
-		def ack = service.editSchoolForTeacher(1, 1, new SchoolForm("My school 11", "#ff0000", Coordinates.create()));
+		def ack = service.editSchoolForTeacher(1, 1, new SchoolForm("My school 11", "#ff0000", 10, Coordinates.create()));
 		assert ack != null
 		assert ack.isSuccess()
 		def schools = service.getSchoolsForTeacher(1)
 		def school = schools.getSummaries().find { it.getId() == 1 }
 		assert "My school 11" == school.getName()
 		assert "#ff0000" == school.getColor()
+		assert "EUR 10.00" == school.getHourlyRate().toString()
 	}
 	
 	@Test
 	void editSchool_color() {
-		def ack = service.editSchoolForTeacher(1, 3, new SchoolForm("My school 3", "#FFFF00", Coordinates.create()));
+		def ack = service.editSchoolForTeacher(1, 3, new SchoolForm("My school 3", "#FFFF00", 10, Coordinates.create()));
 		assert ack != null
 		assert ack.isSuccess()
 		def schools = service.getSchoolsForTeacher(1)
 		def school = schools.getSummaries().find { it.getId() == 3 }
 		assert "My school 3" == school.getName()
 		assert "#FFFF00" == school.getColor()
+		assert "EUR 10.00" == school.getHourlyRate().toString()
+	}
+	
+	@Test
+	void editSchool_hourlyRate() {
+		def ack = service.editSchoolForTeacher(1, 3, new SchoolForm("My school 3", "#FFFF00", 20, Coordinates.create()));
+		assert ack != null
+		assert ack.isSuccess()
+		def schools = service.getSchoolsForTeacher(1)
+		def school = schools.getSummaries().find { it.getId() == 3 }
+		assert "My school 3" == school.getName()
+		assert "#FFFF00" == school.getColor()
+		assert "EUR 20.00" == school.getHourlyRate().toString()
 	}
 	
 	@Test(expected = SchoolNameAlreadyDefined.class)
 	void editSchool_name_already_defined() {
-		service.editSchoolForTeacher(1, 1, new SchoolForm("My school 3", "#FF0000", Coordinates.create()));
+		service.editSchoolForTeacher(1, 1, new SchoolForm("My school 3", "#FF0000", 0, Coordinates.create()));
 	}
 	
 	@Test(expected = SchoolNameAlreadyDefined.class)
 	void createSchool_name_already_defined() {
-		service.createSchoolForTeacher(1, new SchoolForm("My school 3", "#CCCCCC", Coordinates.create()));
+		service.createSchoolForTeacher(1, new SchoolForm("My school 3", "#CCCCCC", 0, Coordinates.create()));
 	}
 	
 	@Test(expected = AccessDeniedException.class)
@@ -171,6 +185,7 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 			1,
 			"My school 1",
 			"#FF0000",
+			MoneyUtils.money(10),
 			Coordinates.create().add(CoordinateType.ADDRESS, "At my school 1").add(CoordinateType.WEB, "http://school/1"),
 			[
 				new SchoolDetailsStudent(1, "Student 1", "Subject 1", 0),
@@ -181,7 +196,7 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 	@Test
 	void comments() {
 		// Creates a school for tests
-		def id = service.createSchoolForTeacher(1, new SchoolForm("School for comments", "#CCCCCC", Coordinates.create()))
+		def id = service.createSchoolForTeacher(1, new SchoolForm("School for comments", "#CCCCCC", 0, Coordinates.create()))
 		assert id != null && id.success
 		
 		// Adds some comments
