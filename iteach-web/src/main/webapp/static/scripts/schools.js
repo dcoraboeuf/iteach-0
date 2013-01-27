@@ -76,6 +76,7 @@ var Schools = function () {
 				data: JSON.stringify({
 					name: $('#schoolName').val(),
 					color: $('#schoolColor').val(),
+					hourlyRate: $('#schoolHourlyRate').val(),
 					coordinates: Coordinates.getValues('school')
 				}),
 				dataType: 'json',
@@ -108,6 +109,7 @@ var Schools = function () {
 				data: JSON.stringify({
 					name: $('#schoolName').val(),
 					color: $('#schoolColor').val(),
+					hourlyRate: $('#schoolHourlyRate').val(),
 					coordinates: Coordinates.getValues('school')
 				}),
 				dataType: 'json',

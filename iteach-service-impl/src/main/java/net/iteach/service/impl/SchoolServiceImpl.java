@@ -129,7 +129,8 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 					SQL.SCHOOL_CREATE,
 					params("teacher", teacherId)
 						.addValue("name", form.getName())
-						.addValue("color", form.getColor()),
+						.addValue("color", form.getColor())
+						.addValue("hourlyRate", form.getHourlyRate()),
 					keyHolder);
 			ID id = ID.count(count).withId(keyHolder.getKey().intValue());
 			// Coordinates
@@ -170,6 +171,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 						.addValue("id", id)
 						.addValue("name", form.getName())
 						.addValue("color", form.getColor())
+						.addValue("hourlyRate", form.getHourlyRate())
 					);
 			Ack ack = Ack.one(count);
 			// Coordinates
