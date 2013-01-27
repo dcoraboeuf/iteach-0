@@ -6,20 +6,6 @@
 			<div class="control-group">
 				<span class="help-block"><@lh key="lesson.tip" /></span>
 			</div>
-			<div class="control-group">
-				<label class="control-label" for="lessonDate"><@lh key="lesson.date" /></label>
-				<div class="controls">
-					<input class="input-medium" id="lessonDate" name="date" type="text" size="10" maxlength="10" required="required" />
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label"><@lh key="lesson.from" /></label>
-				<div class="controls">
-					<input class="input-small" id="lessonFrom" name="from" type="text" size="5" maxlength="5" required="required" />
-					<@lh key="lesson.to" />
-					<input class="input-small" id="lessonTo" name="to" type="text" size="5" maxlength="5" required="required" />
-				</div>
-			</div>
 			<#if withStudentSelection>
 				<div class="control-group">
 					<label class="control-label" for="lessonStudent"><@lh key="lesson.student" /></label>
@@ -35,6 +21,20 @@
 			<#else>
 				<input id="lessonStudent" name="student" type="hidden" />
 			</#if>
+			<div class="control-group">
+				<label class="control-label" for="lessonDate"><@lh key="lesson.date" /></label>
+				<div class="controls">
+					<input class="input-medium" id="lessonDate" name="date" type="text" size="10" maxlength="10" required="required" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label"><@lh key="lesson.from" /></label>
+				<div class="controls">
+					<input class="input-small" id="lessonFrom" name="from" type="text" size="5" maxlength="5" required="required" />
+					<@lh key="lesson.to" />
+					<input class="input-small" id="lessonTo" name="to" type="text" size="5" maxlength="5" required="required" />
+				</div>
+			</div>
 			<div class="control-group">
 				<label class="control-label" for="lessonLocation"><@lh key="lesson.location" /></label>
 				<div class="controls">
