@@ -109,6 +109,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 						rs.getInt("id"),
 						rs.getString("name"),
 						rs.getString("color"),
+						SQLUtils.moneyFromDB(rs, "hrate"),
 						coordinatesService.getCoordinates(CoordinateEntity.SCHOOL, id),
 						students,
 						totalHours.get());

@@ -290,6 +290,10 @@ school.color
 	en -> Colour code
 	fr -> Code couleur
 
+school.hourlyRate
+	en -> Hourly rate
+	fr -> Taux horaire
+
 school.coordinates
     en -> Coordinates
     fr -> Coordonnées
@@ -379,6 +383,10 @@ student.subject
 student.school
 	en -> Student's school
 	fr -> Ecole de l'étudiant
+	
+student.school.hourlyRate
+	en -> School hourly rate
+	fr -> Taux horaire de l'école
 
 student.coordinates
     en -> Coordinates

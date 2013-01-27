@@ -9,6 +9,10 @@
 	</#if>
 </#macro>
 
+<#macro money value>
+	${value.currencyUnit.code} ${value.amount}
+</#macro>
+
 <#macro yes_no value>
 	<#if value>
 		<@lh key="general.yes" />
