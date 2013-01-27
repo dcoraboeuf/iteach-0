@@ -293,6 +293,10 @@ school.color
 school.hourlyRate
 	en -> Hourly rate
 	fr -> Taux horaire
+	
+school.hourlyRate.wrong
+	en -> The hourly rate must be a positive number
+	fr -> Le taux horaire doit être un nombre positif
 
 school.coordinates
     en -> Coordinates

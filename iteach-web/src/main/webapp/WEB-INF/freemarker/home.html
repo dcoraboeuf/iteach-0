@@ -65,6 +65,7 @@
 									<@item_actions>
 										<input id="school-name-${school.id}" type="hidden" value="${school.name?html}" />
 										<input id="school-color-${school.id}" type="hidden" value="${school.color?html}" />
+										<input id="school-hourlyRate-${school.id}" type="hidden" value="${school.hourlyRate.amount?html}" />
 										<i class="action icon-trash" title="${loc('school.delete',school.name)?html}" onclick="Schools.deleteSchool(${school.id});"></i>
 										<i class="action icon-edit" title="${loc('school.edit',school.name)?html}" onclick="Schools.editSchool(${school.id});"></i>
 									</@item_actions>
