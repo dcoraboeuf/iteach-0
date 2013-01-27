@@ -738,3 +738,11 @@ report.hours
 report.total
 	en -> Total
 	fr -> Total
+
+report.amount
+	en -> Amount
+	fr -> Montant
+
+report.amount.na
+	en -> Several currencies
+	fr -> Plusieurs devises

@@ -13,6 +13,10 @@
 	border: red;
 }
 
+.info {
+	color: gray;
+}
+
 /* Loading indicator */
 .loading {
 	padding-left: 24px;

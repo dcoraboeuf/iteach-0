@@ -10,7 +10,7 @@
 </#macro>
 
 <#macro money value>
-	${value.currencyUnit.code} ${value.amount}
+	${value?html}
 </#macro>
 
 <#macro yes_no value>

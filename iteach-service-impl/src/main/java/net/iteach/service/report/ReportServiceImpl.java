@@ -19,6 +19,7 @@ import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 import net.iteach.service.impl.AbstractServiceImpl;
 
+import org.joda.money.Money;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.joda.time.YearMonth;
@@ -63,12 +64,14 @@ public class ReportServiceImpl extends AbstractServiceImpl implements ReportServ
 					BigDecimal hours = getHours(timeFrom, timeTo);
 					
 					boolean monthlyHours = (lineDate.compareTo(from) >= 0) && (lineDate.compareTo(to) <= 0);
+					
+					Money hourlyRate = SQLUtils.moneyFromDB(rs, "school_hrate");
 	
 					int studentId = rs.getInt("student");
 					String studentName = rs.getString("student_name");
 					StudentMonthlyHours studentHours = studentHoursIndex.get(studentId);
 					if (studentHours == null) {
-						studentHours = new StudentMonthlyHours(studentId, studentName);
+						studentHours = new StudentMonthlyHours(studentId, studentName, hourlyRate);
 					}
 					studentHours = studentHours.addHours(hours, monthlyHours);
 					studentHoursIndex.put(studentId, studentHours);
@@ -78,7 +81,7 @@ public class ReportServiceImpl extends AbstractServiceImpl implements ReportServ
 					String schoolColor = rs.getString("school_color");
 					SchoolMonthlyHours schoolHours = schoolHoursIndex.get(schoolId);
 					if (schoolHours == null) {
-						schoolHours = new SchoolMonthlyHours(schoolId, schoolName, schoolColor);
+						schoolHours = new SchoolMonthlyHours(schoolId, schoolName, schoolColor, hourlyRate);
 					}
 					
 					schoolHours = schoolHours.addStudent(studentHours);
