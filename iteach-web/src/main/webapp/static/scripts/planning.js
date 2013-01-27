@@ -107,8 +107,8 @@ var Planning = function () {
 			axisFormat: i18n.axisFormat,
 			// General appearance
 			allDaySlot: false,
-			minTime: 6,
-			maxTime: 22,
+			minTime: 8,
+			maxTime: 21,
 			weekends: true,
 			// Default view
 			defaultView: 'agendaWeek',
