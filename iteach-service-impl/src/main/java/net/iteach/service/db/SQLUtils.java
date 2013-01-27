@@ -1,9 +1,12 @@
 package net.iteach.service.db;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
@@ -54,6 +57,14 @@ public final class SQLUtils {
 		} else {
 			return Enum.valueOf(enumClass, value);
 		}
+	}
+
+	public static Money moneyFromDB(ResultSet rs, String column) throws SQLException {
+		BigDecimal amount = rs.getBigDecimal(column);
+		if (amount == null) {
+			amount = BigDecimal.ZERO;
+		}
+		return Money.of(CurrencyUnit.EUR, amount);
 	}
 
 }

@@ -29,6 +29,7 @@ import net.iteach.core.model.SchoolSummaries;
 import net.iteach.core.model.SchoolSummary;
 import net.iteach.core.validation.SchoolFormValidation;
 import net.iteach.service.db.SQL;
+import net.iteach.service.db.SQLUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -62,7 +63,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 							@Override
 							public SchoolSummary mapRow(ResultSet rs, int rowNum)
 									throws SQLException {
-								return new SchoolSummary(rs.getInt("id"), rs.getString("name"), rs.getString("color"));
+								return new SchoolSummary(rs.getInt("id"), rs.getString("name"), rs.getString("color"), SQLUtils.moneyFromDB(rs, "hrate"));
 							}
 						}));
 	}

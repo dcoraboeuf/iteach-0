@@ -118,7 +118,8 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 								SchoolSummary school = new SchoolSummary(
 										rs.getInt("SCHOOL_ID"),
 										rs.getString("SCHOOL_NAME"),
-										rs.getString("SCHOOL_COLOR"));
+										rs.getString("SCHOOL_COLOR"),
+										SQLUtils.moneyFromDB(rs, "SCHOOL_HRATE"));
 								StudentSummary student = new StudentSummary(
 										rs.getInt("STUDENT_ID"),
 										rs.getString("STUDENT_SUBJECT"),
@@ -152,6 +153,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 							schoolId,
 							rs.getString("SCHOOL_NAME"),
 							rs.getString("SCHOOL_COLOR"),
+							SQLUtils.moneyFromDB(rs, "SCHOOL_HRATE"),
 							coordinatesService.getCoordinates(CoordinateEntity.SCHOOL, schoolId));
 					StudentSummaryWithCoordinates student = new StudentSummaryWithCoordinates(
 							studentId,

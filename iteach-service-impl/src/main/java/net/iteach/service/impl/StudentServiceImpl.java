@@ -62,7 +62,8 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 								SchoolSummary school = new SchoolSummary(
 										rs.getInt("SCHOOL_ID"),
 										rs.getString("SCHOOL_NAME"),
-										rs.getString("SCHOOL_COLOR"));
+										rs.getString("SCHOOL_COLOR"),
+										SQLUtils.moneyFromDB(rs, "SCHOOL_HRATE"));
 								return new StudentSummary(
 										rs.getInt("ID"),
 										rs.getString("SUBJECT"),
@@ -91,7 +92,8 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 						SchoolSummary school = new SchoolSummary(
 								rs.getInt("SCHOOL_ID"),
 								rs.getString("SCHOOL_NAME"),
-								rs.getString("SCHOOL_COLOR"));
+								rs.getString("SCHOOL_COLOR"),
+								SQLUtils.moneyFromDB(rs, "SCHOOL_HRATE"));
 						return new StudentDetails(
 								rs.getInt("ID"),
 								rs.getString("SUBJECT"),

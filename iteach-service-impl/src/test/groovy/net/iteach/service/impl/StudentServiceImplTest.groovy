@@ -8,6 +8,8 @@ import net.iteach.core.model.StudentDetails
 import net.iteach.core.model.StudentForm
 import net.iteach.test.AbstractIntegrationTest
 
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.AccessDeniedException
@@ -99,7 +101,7 @@ class StudentServiceImplTest extends AbstractIntegrationTest {
 			"English",
 			"A. Albert",
 			Coordinates.create().add(CoordinateType.EMAIL, "albert@test.com").add(CoordinateType.MOBILE_PHONE, "0123456789"),
-			new SchoolSummary(1, "My school 1", "#FF0000"),
+			new SchoolSummary(1, "My school 1", "#FF0000", Money.of(CurrencyUnit.EUR, 10.0)),
 			3.50) == student
 	}
 	

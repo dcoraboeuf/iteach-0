@@ -17,6 +17,7 @@ public class SchoolMonthlyHours {
 	private final String name;
 	private final String color;
 	private final Map<Integer, StudentMonthlyHours> students;
+	// private final Money amount;
 
 	public SchoolMonthlyHours(int id, String name, String color) {
 		this(id, name, color, Collections.<Integer, StudentMonthlyHours> emptyMap());
