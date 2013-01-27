@@ -90,6 +90,15 @@ var Planning = function () {
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
+			// Dimensions
+			aspectRatio: 0.5,
+			viewDisplay: function (view) {
+				if ('month' == view.name) {
+					$('#planning-calendar').fullCalendar('option', 'aspectRatio', 1.25);
+				} else {
+					$('#planning-calendar').fullCalendar('option', 'aspectRatio', 0.5);
+				}
+			},
 			// Current date
 			year: currentDate.getFullYear(),
 			month: currentDate.getMonth(),
