@@ -1,0 +1,2 @@
+-- Adds hourly rate column
+ALTER TABLE SCHOOLS ADD COLUMN HRATE DECIMAL(5,2);
