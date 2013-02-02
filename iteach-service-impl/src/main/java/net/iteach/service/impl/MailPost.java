@@ -5,6 +5,8 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import net.iteach.api.ConfigurationService;
+import net.iteach.api.model.ConfigurationKey;
 import net.iteach.api.model.MessageChannel;
 import net.iteach.core.RunProfile;
 import net.iteach.core.model.Message;
@@ -26,10 +28,12 @@ public class MailPost extends AbstractMessagePost {
 	private final Logger logger = LoggerFactory.getLogger(MailPost.class);
 
 	private final JavaMailSender mailSender;
+	private final ConfigurationService configurationService;
 
 	@Autowired
-	public MailPost(JavaMailSender mailSender) {
+	public MailPost(JavaMailSender mailSender, ConfigurationService configurationService) {
 		this.mailSender = mailSender;
+		this.configurationService = configurationService;
 	}
 
 	@Override
@@ -40,8 +44,7 @@ public class MailPost extends AbstractMessagePost {
 	@Override
 	public void post(final Message message, final String destination) {
 		
-		// TODO Reply-to address (configuration service, see #58)
-		final String replyToAddress = "iteach@test.com";
+		final String replyToAddress = configurationService.getConfigurationValue(ConfigurationKey.MAIL_REPLY_TO);
 		logger.debug("[mail] Sending message from: {}", replyToAddress);
 
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
