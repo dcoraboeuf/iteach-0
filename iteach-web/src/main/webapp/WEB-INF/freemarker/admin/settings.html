@@ -1,0 +1,25 @@
+<#include "/lib/layout.html">
+
+<@layout_std pageId="settings" modules = [] breadcrumbs = {loc("page.index"): ""}>
+    <form action="admin/settings" method="POST" class="form-horizontal">
+    	<#list settings.list as setting>
+	        <div class="control-group">
+	            <label class="control-label" for="${setting.key}"><@lh key="ConfigurationKey.${setting.key}" /></label>
+	            <div class="controls">
+	                <input id="${setting.key}" name="${setting.key}" value="${setting.value!''?html}" placeholder="${setting.defaultValue?html}" type="${setting.type}" maxlength="200" size="40" />
+	            </div>
+	        </div>
+    	</#list>
+        <div class="control-group">
+            <div class="controls">
+                <input class="btn btn-primary" type="submit" value="<@lh key='general.submit' />" />
+                <a class="btn btn-link" href=""><@lh key="general.cancel" /></a>
+            </div>
+        </div>
+    </form>
+    <#if error??>
+    	<div class="alert alert-error">
+    		${error.message?html}
+    	</div>
+    </#if>
+</@layout_std>

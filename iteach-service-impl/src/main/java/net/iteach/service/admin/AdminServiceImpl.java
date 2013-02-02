@@ -2,6 +2,7 @@ package net.iteach.service.admin;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -10,6 +11,9 @@ import javax.validation.Validator;
 import net.iteach.api.ProfileService;
 import net.iteach.api.admin.AccountSummary;
 import net.iteach.api.admin.AdminService;
+import net.iteach.api.admin.Setting;
+import net.iteach.api.admin.Settings;
+import net.iteach.api.model.ConfigurationKey;
 import net.iteach.core.model.AccountProfile;
 import net.iteach.core.security.SecurityRoles;
 import net.iteach.core.security.SecurityUtils;
@@ -21,6 +25,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 @Service
 public class AdminServiceImpl extends AbstractServiceImpl implements AdminService {
@@ -62,6 +69,22 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
 		super(dataSource, validator);
 		this.securityUtils = securityUtils;
 		this.profileService = profileService;
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	@Secured(SecurityRoles.ADMINISTRATOR)
+	public Settings getSettings() {
+		List<Setting> list = Lists.transform(Arrays.asList(ConfigurationKey.values()),
+			new Function<ConfigurationKey, Setting>() {
+				@Override
+				public Setting apply (ConfigurationKey key) {
+					String value = getFirstItem(SQL.CONFIGURATION_GET, params("name", key.name()), String.class);
+					String defaultValue = key.getDefaultValue();
+					return new Setting(key, defaultValue, value, key.getType());
+				}
+			});
+		return new Settings(list);
 	}
 
 	@Override

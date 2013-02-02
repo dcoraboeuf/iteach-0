@@ -50,7 +50,11 @@ general.cancel
 general.create
 	en -> Create
 	fr -> Créer
-	
+
+general.submit
+	en -> Submit
+	fr -> Confirmer
+
 general.update
 	en -> Update
 	fr -> Modifier
@@ -630,6 +634,9 @@ page.accountDelete.prompt
 admin.settings
 	en -> Settings
 	fr -> Configuration
+	
+page.settings
+	en,fr -> @[admin.settings]
 
 [profile]
 

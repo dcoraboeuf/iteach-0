@@ -21,6 +21,17 @@ public class AdminController {
 		super();
 		this.adminService = adminService;
 	}
+	
+	/**
+	 * Settings
+	 */
+	@RequestMapping(value = "/settings", method = RequestMethod.GET)
+	public String settings(Model model) {
+		// Loads the settings
+		model.addAttribute("settings", adminService.getSettings());
+		// OK
+		return "admin/settings";
+	}
 
 	/**
 	 * List of accounts

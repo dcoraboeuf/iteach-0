@@ -10,4 +10,6 @@ public interface AdminService {
 
 	void deleteAccount(int id);
 
+	Settings getSettings();
+
 }
