@@ -46,6 +46,10 @@ general.error.full
 general.cancel
 	en -> Cancel
 	fr -> Annuler
+	
+general.close
+	en -> Close
+	fr -> Fermer
 
 general.create
 	en -> Create
@@ -634,6 +638,10 @@ page.accountDelete.prompt
 admin.settings
 	en -> Settings
 	fr -> Configuration
+
+admin.settings.ok
+	en -> Settings have been saved.
+	fr -> La configuration a été enregistrée.
 	
 page.settings
 	en,fr -> @[admin.settings]

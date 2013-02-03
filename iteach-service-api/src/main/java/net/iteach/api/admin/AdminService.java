@@ -12,4 +12,6 @@ public interface AdminService {
 
 	Settings getSettings();
 
+	void setSettings(SettingsUpdate update);
+
 }

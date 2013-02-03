@@ -13,6 +13,7 @@ import net.iteach.api.admin.AccountSummary;
 import net.iteach.api.admin.AdminService;
 import net.iteach.api.admin.Setting;
 import net.iteach.api.admin.Settings;
+import net.iteach.api.admin.SettingsUpdate;
 import net.iteach.api.model.ConfigurationKey;
 import net.iteach.core.model.AccountProfile;
 import net.iteach.core.security.SecurityRoles;
@@ -20,6 +21,7 @@ import net.iteach.core.security.SecurityUtils;
 import net.iteach.service.db.SQL;
 import net.iteach.service.impl.AbstractServiceImpl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.access.annotation.Secured;
@@ -85,6 +87,24 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
 				}
 			});
 		return new Settings(list);
+	}
+	
+	@Override
+	@Transactional
+	@Secured(SecurityRoles.ADMINISTRATOR)
+	public void setSettings(SettingsUpdate update) {
+		for (ConfigurationKey key: ConfigurationKey.values()) {
+			// Deletes the property in all cases
+			getNamedParameterJdbcTemplate().update(SQL.CONFIGURATION_DELETE, params("name", key.name()));
+			// Gets the input value
+			String value = update.getValue(key);
+			// Update if not blank
+			if (StringUtils.isNotBlank(value)) {
+				// TODO Control for the value
+				// Updates the value
+				getNamedParameterJdbcTemplate().update(SQL.CONFIGURATION_SET, params("name", key.name()).addValue("value", value));
+			}
+		}
 	}
 
 	@Override

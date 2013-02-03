@@ -1,7 +1,16 @@
 package net.iteach.web.admin;
 
+import java.util.Locale;
+
 import net.iteach.api.admin.AccountSummary;
 import net.iteach.api.admin.AdminService;
+import net.iteach.api.admin.SettingsUpdate;
+import net.iteach.api.model.ConfigurationKey;
+import net.iteach.core.model.UserMessage;
+import net.iteach.utils.InputException;
+import net.iteach.web.support.AbstractGUIController;
+import net.iteach.web.support.ErrorHandler;
+import net.sf.jstring.Strings;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,19 +18,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminController extends AbstractGUIController {
 
 	private final AdminService adminService;
-
+	private final Strings strings;
+		
 	@Autowired
-	public AdminController(AdminService adminService) {
-		super();
+	public AdminController(ErrorHandler errorHandler, AdminService adminService, Strings strings) {
+		super(errorHandler);
 		this.adminService = adminService;
+		this.strings = strings;
 	}
-	
+
 	/**
 	 * Settings
 	 */
@@ -29,6 +41,34 @@ public class AdminController {
 	public String settings(Model model) {
 		// Loads the settings
 		model.addAttribute("settings", adminService.getSettings());
+		// OK
+		return "admin/settings";
+	}
+	
+	/**
+	 * Uploads the settings
+	 */
+	@RequestMapping(value = "/settings", method = RequestMethod.POST)
+	public String setSettings(Model model, WebRequest request, Locale locale) {
+		// Gets all keys
+		SettingsUpdate update = new SettingsUpdate();
+		for (ConfigurationKey key: ConfigurationKey.values()) {
+			String[] values = request.getParameterValues(key.name());
+			if (values != null && values.length == 1) {
+				update = update.withValue(key, values[0]);
+			}
+		}
+		// Loads the settings
+		model.addAttribute("settings", adminService.getSettings());
+		try {
+			// Sends the update
+			adminService.setSettings(update);
+			// Message
+			model.addAttribute("message", UserMessage.success(strings.get(locale, "admin.settings.ok")));
+		} catch (InputException ex) {
+			// Message
+			model.addAttribute("message", UserMessage.error(errorHandler.displayableError(ex, locale)));
+		}
 		// OK
 		return "admin/settings";
 	}

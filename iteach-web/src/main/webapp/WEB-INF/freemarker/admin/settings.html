@@ -1,6 +1,7 @@
 <#include "/lib/layout.html">
 
 <@layout_std pageId="settings" modules = [] breadcrumbs = {loc("page.index"): ""}>
+	<@usermessage/>
     <form action="admin/settings" method="POST" class="form-horizontal">
     	<#list settings.list as setting>
 	        <div class="control-group">
@@ -13,13 +14,8 @@
         <div class="control-group">
             <div class="controls">
                 <input class="btn btn-primary" type="submit" value="<@lh key='general.submit' />" />
-                <a class="btn btn-link" href=""><@lh key="general.cancel" /></a>
+                <a class="btn btn-link" href=""><@lh key="general.close" /></a>
             </div>
         </div>
     </form>
-    <#if error??>
-    	<div class="alert alert-error">
-    		${error.message?html}
-    	</div>
-    </#if>
 </@layout_std>

@@ -3,14 +3,13 @@ package net.iteach.service.impl;
 import javax.sql.DataSource;
 import javax.validation.Validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import net.iteach.api.ConfigurationService;
 import net.iteach.api.model.ConfigurationKey;
 import net.iteach.service.db.SQL;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ConfigurationServiceImpl extends AbstractServiceImpl implements ConfigurationService {
@@ -29,14 +28,6 @@ public class ConfigurationServiceImpl extends AbstractServiceImpl implements Con
 		} else {
 			return value;
 		}
-	}
-
-	@Override
-	@Transactional
-	public void setConfigurationValue(ConfigurationKey key, String value) {
-		MapSqlParameterSource params = params("name", key.name());
-		getNamedParameterJdbcTemplate().update(SQL.CONFIGURATION_DELETE, params);
-		getNamedParameterJdbcTemplate().update(SQL.CONFIGURATION_SET, params.addValue("value", value));
 	}
 
 }
