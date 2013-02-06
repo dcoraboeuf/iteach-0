@@ -1,5 +1,5 @@
 # Define all Groovy files as LF
-*.groovy eol=lf
+# *.groovy eol=lf
 
 # Define all text files as LF
 *.txt eol=lf
