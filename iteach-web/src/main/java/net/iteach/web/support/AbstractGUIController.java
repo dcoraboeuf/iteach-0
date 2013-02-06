@@ -1,11 +1,10 @@
 package net.iteach.web.support;
 
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 // TODO Spring 3.2 - the hierarchy can be deprecated in favor of the annotations
 
@@ -25,8 +24,8 @@ public abstract class AbstractGUIController extends AbstractController {
 		// Model
 		ModelAndView mav = new ModelAndView("error");
 		mav.addObject("error", error);
-		// Base URL (needed for static resources)
-		mav.addObject("baseURL", WebUtils.getBaseURL(request));
+        // Prepare the view
+        WebUtils.prepareModelAndView(mav, request);
 		// OK
 		return mav;
 	}
