@@ -11,8 +11,9 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.iteach.api.CommunicationService;
+import net.iteach.api.model.ErrorMessage;
 import net.iteach.core.security.SecurityUtils;
-import net.iteach.web.support.DefaultErrorHandler;
 import net.sf.jstring.Strings;
 import net.sf.jstring.support.CoreException;
 import net.sf.jstring.support.StringsLoader;
@@ -31,7 +32,8 @@ public class DefaultErrorHandlerTest {
 	public void before() {
 		strings = StringsLoader.auto(Locale.ENGLISH, Locale.FRENCH, Locale.GERMAN);
 		securityUtils = mock(SecurityUtils.class);
-		handler = new DefaultErrorHandler(strings, securityUtils);
+        CommunicationService communicationService = mock(CommunicationService.class);
+        handler = new DefaultErrorHandler(strings, securityUtils, communicationService);
 	}
 	
 	@Test

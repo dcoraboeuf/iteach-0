@@ -12,7 +12,7 @@ import net.iteach.core.model.UserMessage;
 import net.iteach.utils.InputException;
 import net.iteach.web.support.AbstractGUIController;
 import net.iteach.web.support.ErrorHandler;
-import net.iteach.web.support.ErrorMessage;
+import net.iteach.api.model.ErrorMessage;
 import net.iteach.web.support.WebUtils;
 import net.sf.jstring.Strings;
 

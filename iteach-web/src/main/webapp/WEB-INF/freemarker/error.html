@@ -21,6 +21,7 @@
     <div id="error-contact-form" class="alert alert-info" style="display: none;">
         <p><@lh key="error.contact.help" /></p>
         <form action="error" method="POST">
+            <input name="token" type="hidden" value="${token?html}" />
             <input name="uuid" type="hidden" value="${error.uuid?html}" />
             <input name="error" type="hidden" value="${error.message?html}" />
             <textarea class="input-xxlarge" name="message" required="required" maxlength="500" rows="5" cols="200" placeholder="<@lh key='error.contact.placeholder' />"></textarea>

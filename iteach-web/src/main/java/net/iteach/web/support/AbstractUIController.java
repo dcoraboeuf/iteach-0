@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.iteach.api.model.ErrorMessage;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.utils.InputException;
 import net.sf.jstring.Strings;

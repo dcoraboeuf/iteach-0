@@ -9,5 +9,10 @@ public enum TokenType {
 	/**
 	 * The user has requested a new password
 	 */
-	PASSWORD_REQUEST;
+	PASSWORD_REQUEST,
+
+    /**
+     * An error has been generated and an associated token can be used to send an error report to the admin by the user.
+     */
+    ERROR;
 }

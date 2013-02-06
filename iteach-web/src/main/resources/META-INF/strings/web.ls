@@ -148,6 +148,10 @@ error.contact.success
     en -> Your message has been sent to the administrator.
     fr -> Votre message a été envoyé à l'administrateur.
 
+error.contact.failed
+    en -> Sorry, your message could not be sent.
+    fr -> Désolé, votre message n'a pas pu être envoyé.
+
 [login]
 
 login

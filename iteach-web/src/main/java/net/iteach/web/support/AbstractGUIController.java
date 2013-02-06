@@ -19,16 +19,9 @@ public abstract class AbstractGUIController extends AbstractController {
 	 */
 	@ExceptionHandler(Exception.class)
 	public ModelAndView onException (HttpServletRequest request, Locale locale, Exception ex) {
-		// Error message
-		ErrorMessage error = errorHandler.handleError (request, locale, ex);
-		// Model
-		ModelAndView mav = new ModelAndView("error");
-		mav.addObject("error", error);
-        // Prepare the view
-        WebUtils.prepareModelAndView(mav, request);
-		// OK
-		return mav;
-	}
-	
+        return errorHandler.getErrorModelAndView(request, locale, ex);
+
+    }
+
 
 }
