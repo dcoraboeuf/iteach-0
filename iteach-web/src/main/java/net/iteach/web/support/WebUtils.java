@@ -3,6 +3,7 @@ package net.iteach.web.support;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.servlet.ModelAndView;
 
 public class WebUtils {
 
@@ -37,4 +38,7 @@ public class WebUtils {
 		return s.toString();
 	}
 
+    public static void prepareModelAndView(ModelAndView modelAndView, HttpServletRequest request) {
+        modelAndView.addObject("baseURL", WebUtils.getBaseURL(request));
+    }
 }

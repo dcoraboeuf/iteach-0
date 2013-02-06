@@ -34,7 +34,7 @@ public class WebInterceptor extends HandlerInterceptorAdapter {
 			ModelAndView modelAndView) throws Exception {
 		// Adds the base URL to the model
 		if (modelAndView != null) {
-			modelAndView.addObject("baseURL", WebUtils.getBaseURL(request));
+            WebUtils.prepareModelAndView(modelAndView, request);
 		}
 		// OK
 		super.postHandle(request, response, handler, modelAndView);

@@ -13,6 +13,7 @@ import net.iteach.utils.InputException;
 import net.iteach.web.support.AbstractGUIController;
 import net.iteach.web.support.ErrorHandler;
 import net.iteach.web.support.ErrorMessage;
+import net.iteach.web.support.WebUtils;
 import net.sf.jstring.Strings;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,9 @@ public class RegistrationController extends AbstractGUIController {
 			identifier = "";
 		}
 		mav.addObject("identifier", identifier);
-		// OK
+        // Prepare the view
+        WebUtils.prepareModelAndView(mav, request);
+        // OK
 		return mav;
 	}
 
