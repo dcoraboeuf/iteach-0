@@ -1,5 +1,5 @@
 <#include "/lib/layout.html">
-<@layout_std pageId="error">
+<@layout_std pageId="error" script=true>
 	<p>
 		<@lh key="error.message" />
 	</p>
@@ -11,10 +11,20 @@
 		<br/><b>${error.uuid?html}</b>
 	</p>
 	<p>
+        <button type="button" class="btn" onclick="Error.displayContactForm();"><@lh key="error.contact.button" /></button>
 		<#if secLogged()>
-			<a href="gui/home" class="btn"><@lh key="error.back" /></a>
+			<a href="gui/home" class="btn btn-link"><@lh key="error.back" /></a>
 		<#else>
-			<a href="" class="btn"><@lh key="error.back" /></a>
+			<a href="" class="btn btn-link"><@lh key="error.back" /></a>
 		</#if>
 	</p>
+    <div id="error-contact-form" class="alert alert-info" style="display: none;">
+        <p><@lh key="error.contact.help" /></p>
+        <form action="/error" method="POST">
+            <input name="uuid" type="hidden" value="${error.uuid?html}" />
+            <input name="error" type="hidden" value="${error.message?html}" />
+            <textarea class="input-xxlarge" name="message" required="required" maxlength="500" rows="5" cols="200" placeholder="<@lh key='error.contact.placeholder' />"></textarea>
+            <div><input type="submit" value="<@lh key='error.contact.send'/>" /></div>
+        </form>
+    </div>
 </@layout_std>

@@ -33,12 +33,15 @@ public class StudentController extends AbstractGUIController {
 
 	@RequestMapping("/{id:\\d+}")
 	public String details (@PathVariable int id, Model model, HttpSession session) {
+        throw new RuntimeException("TEST horrible exception");
+        /*
 		// Loads the student details
 		model.addAttribute("student", ui.getStudent(id));
 		// Current date
 		model.addAttribute("currentDate", userSession.getCurrentDate(session).toString());
 		// View
 		return "student";
+		*/
 	}
 	
 	@RequestMapping(value = "/{id:\\d+}/lessons", method = RequestMethod.GET)

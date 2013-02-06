@@ -117,7 +117,32 @@ error.message
 
 error.back
 	en -> Go back to the portal
-	fr -> Revenir à l'acceuil   
+	fr -> Revenir à l'acceuil
+
+error.contact.button
+    en -> Contact the administrator
+    fr -> Contacter l'administrator
+
+error.contact.help
+    en -> ...
+        The error information has already been sent to the administrator, but you
+        can send an additional message if you wish to do so. Just fill and send the form
+        below.
+        ...
+    fr -> ...
+        Les informations relatives à l'erreur ont déjà été envoyées à l'administrateur
+        mais vous pouvez, si vous le souhaitez, lui envoyer un message supplémentaire,
+        en remplissant et en envoyant le formulaire ci-dessous.
+        ...
+
+error.contact.send
+    en -> Send
+    fr -> Envoyer
+    de -> Senden
+
+error.contact.placeholder
+    en -> Maximum 500 characters
+    fr -> Maximum 500 caractères
 
 [login]
 
