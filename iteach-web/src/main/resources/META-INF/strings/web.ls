@@ -144,6 +144,10 @@ error.contact.placeholder
     en -> Maximum 500 characters
     fr -> Maximum 500 caractères
 
+error.contact.success
+    en -> Your message has been sent to the administrator.
+    fr -> Votre message a été envoyé à l'administrateur.
+
 [login]
 
 login

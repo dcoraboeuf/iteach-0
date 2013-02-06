@@ -1,10 +1,13 @@
 <#import "/spring.ftl" as spring />
 <#include "/lib/i18n.html" />
 
-<#macro usermessage>
+<#macro usermessage closeable=false>
 	<#if message??>
 		<div class="alert alert-${message.type}">
 			${message.message?html}
+            <#if closeable>
+                <a class="close" data-dismiss="alert" href="#">&times;</a>
+            </#if>
 		</div>
 	</#if>
 </#macro>
