@@ -7,7 +7,7 @@ import net.sf.jstring.LocalizableMessage;
 
 public enum PreferenceKey {
 	
-	PLANNING_MIN_TIME {
+	PLANNING_MIN_TIME("8") {
 
 		@Override
 		public Localizable validate(String value) {
@@ -16,7 +16,7 @@ public enum PreferenceKey {
 		
 	},
 	
-	PLANNING_MAX_TIME {
+	PLANNING_MAX_TIME("20") {
 
 		@Override
 		public Localizable validate(String value) {
@@ -29,6 +29,16 @@ public enum PreferenceKey {
 	private static final String PREFERENCE_KEY_MAX_TIME = "preference.key.max_time";
 	private static final String PREFERENCE_VALIDATION_RANGE = "preference.validation.range";
 	private static final String PREFERENCE_VALIDATION_INTEGER = "preference.validation.integer";
+	
+	private final String defaultValue;
+	
+	private PreferenceKey(String defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+	
+	public String getDefaultValue() {
+		return defaultValue;
+	}
 
 	public abstract Localizable validate(String value);
 
