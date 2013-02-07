@@ -1,9 +1,13 @@
 package net.iteach.core.model;
 
+import net.iteach.core.validation.ValidationException;
+import net.sf.jstring.MultiLocalizable;
 import org.apache.commons.lang3.StringUtils;
 
 import net.sf.jstring.Localizable;
 import net.sf.jstring.LocalizableMessage;
+
+import java.util.Collections;
 
 public enum PreferenceKey {
 	
@@ -60,4 +64,21 @@ public enum PreferenceKey {
 		}
 	}
 
+    public String validateAndFormat(String value) {
+        // Validation
+        Localizable message = validate(value);
+        if (message != null) {
+            throw createValidationException(message);
+        } else {
+            return format(value);
+        }
+    }
+
+    private ValidationException createValidationException(Localizable message) {
+        return new ValidationException(new MultiLocalizable(Collections.singletonList(message)));
+    }
+
+    private String format(String value) {
+        return StringUtils.trim(value);
+    }
 }
