@@ -120,8 +120,8 @@ var Planning = function () {
 			axisFormat: i18n.axisFormat,
 			// General appearance
 			allDaySlot: false,
-			minTime: 8,
-			maxTime: 21,
+			minTime: Number($('#planning-calendar').attr("minTime")),
+			maxTime: Number($('#planning-calendar').attr("maxTime")),
 			weekends: true,
 			// Default view
 			defaultView: 'agendaWeek',

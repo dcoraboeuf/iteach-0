@@ -2,6 +2,8 @@ package net.iteach.web.home;
 
 import javax.servlet.http.HttpSession;
 
+import net.iteach.api.PreferenceService;
+import net.iteach.core.model.PreferenceKey;
 import net.iteach.core.ui.TeacherUI;
 import net.iteach.web.support.AbstractGUIController;
 import net.iteach.web.support.ErrorHandler;
@@ -19,13 +21,15 @@ public class HomeController extends AbstractGUIController {
 
 	private final TeacherUI ui;
 	private final UserSession userSession;
+    private final PreferenceService preferenceService;
 
 	@Autowired
-	public HomeController(ErrorHandler errorHandler, TeacherUI ui, UserSession userSession) {
+	public HomeController(ErrorHandler errorHandler, TeacherUI ui, UserSession userSession, PreferenceService preferenceService) {
 		super(errorHandler);
 		this.ui = ui;
 		this.userSession = userSession;
-	}
+        this.preferenceService = preferenceService;
+    }
 
 	/**
 	 * Home page
@@ -38,6 +42,9 @@ public class HomeController extends AbstractGUIController {
 		model.addAttribute("schools", ui.getSchools());
 		// Current date
 		model.addAttribute("currentDate", userSession.getCurrentDate(session).toString());
+        // Min/max time preferences
+        model.addAttribute("minTime", preferenceService.getPreference(PreferenceKey.PLANNING_MIN_TIME));
+        model.addAttribute("maxTime", preferenceService.getPreference(PreferenceKey.PLANNING_MAX_TIME));
 		// OK
 		return "home";
 	}

@@ -10,7 +10,7 @@
                     <div id="planning-min-time" title="<@lh key='planning.mintime.change'/>">
                         <span class="planning-bound label label-info"><span onclick="Planning.minTime(1)">+</span> / <span onclick="Planning.minTime(-1)">-</span></span>
                     </div>
-					<div id="planning-calendar">
+					<div id="planning-calendar" minTime="${minTime?html}" maxTime="${maxTime?html}">
 					</div>
                     <div id="planning-max-time" title="<@lh key='planning.maxtime.change'/>">
                         <span class="planning-bound label label-info"><span onclick="Planning.maxTime(1)">+</span> / <span onclick="Planning.maxTime(-1)">-</span></span>
