@@ -41,7 +41,13 @@ public class PreferenceServiceImpl extends AbstractServiceImpl implements Prefer
         }
 	}
 
-	@Override
+    @Override
+    @Transactional(readOnly = true)
+    public int getPreferenceAsInt(PreferenceKey key) {
+        return Integer.parseInt(getPreference(key), 10);
+    }
+
+    @Override
     @Transactional
 	public void setPreference(PreferenceKey key, String value) {
         NamedParameterJdbcTemplate t = getNamedParameterJdbcTemplate();
@@ -60,7 +66,10 @@ public class PreferenceServiceImpl extends AbstractServiceImpl implements Prefer
                 SQL.PREF_SET,
                 params.addValue("value", valueToStore));
 	}
-	
-	
 
+    @Override
+    @Transactional
+    public void setPreference(PreferenceKey key, int value) {
+        setPreference(key, String.valueOf(value));
+    }
 }

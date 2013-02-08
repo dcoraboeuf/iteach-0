@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import net.iteach.api.PreferenceService;
+import net.iteach.core.model.Ack;
 import net.iteach.core.model.Lesson;
 import net.iteach.core.model.LessonListRequest;
 import net.iteach.core.model.Lessons;
@@ -19,10 +21,7 @@ import net.sf.jstring.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -33,14 +32,16 @@ public class PlanningController extends AbstractUIController {
 
 	private final TeacherUI teacherUI;
 	private final UserSession userSession;
+    private final PreferenceService preferenceService;
 
 	@Autowired
 	public PlanningController(SecurityUtils securityUtils,
-			ErrorHandler errorHandler, Strings strings, TeacherUI teacherUI, UserSession userSession) {
+                              ErrorHandler errorHandler, Strings strings, TeacherUI teacherUI, UserSession userSession, PreferenceService preferenceService) {
 		super(securityUtils, errorHandler, strings);
 		this.teacherUI = teacherUI;
 		this.userSession = userSession;
-	}
+        this.preferenceService = preferenceService;
+    }
 
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public @ResponseBody LessonEvents lessons(@RequestBody LessonListRequest request, HttpSession session) {
@@ -60,6 +61,19 @@ public class PlanningController extends AbstractUIController {
 		// OK
 		return new LessonEvents(events);
 	}
+
+    @RequestMapping(value = "/bound/{bound}/{direction}", method = RequestMethod.POST)
+    public @ResponseBody
+    Ack planningRange (@PathVariable PlanningBound bound, @PathVariable PlanningBoundDirection direction) {
+        // Gets the current value, as integer
+        int value = preferenceService.getPreferenceAsInt(bound.getPreferenceKey());
+        // Increase/decreases the value
+        int newValue = direction.change(value);
+        // Sets the value as an int
+        preferenceService.setPreference(bound.getPreferenceKey(), newValue);
+        // OK
+        return Ack.OK;
+    }
 
 	protected LessonEvent toEvent(Lesson lesson) {
 		String start = lesson.getDate().toLocalDateTime(lesson.getFrom()).toString();
