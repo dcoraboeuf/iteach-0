@@ -79,6 +79,16 @@ var Planning = function () {
 		}
 	}
 
+	function onViewDisplay (view) {
+        if ('month' == view.name) {
+            $('#planning-calendar').fullCalendar('option', 'aspectRatio', 1.25);
+            $('.planning-bound').hide();
+        } else {
+            $('#planning-calendar').fullCalendar('option', 'aspectRatio', 0.5);
+            $('.planning-bound').show();
+        }
+    }
+
 	function init () {
 		// Current date on initialization
 		var currentDate = application.getCurrentDate();
@@ -92,13 +102,7 @@ var Planning = function () {
 			},
 			// Dimensions
 			aspectRatio: 0.5,
-			viewDisplay: function (view) {
-				if ('month' == view.name) {
-					$('#planning-calendar').fullCalendar('option', 'aspectRatio', 1.25);
-				} else {
-					$('#planning-calendar').fullCalendar('option', 'aspectRatio', 0.5);
-				}
-			},
+			viewDisplay: onViewDisplay,
 			// Current date
 			year: currentDate.getFullYear(),
 			month: currentDate.getMonth(),
@@ -136,8 +140,27 @@ var Planning = function () {
 		});
 	}
 
+	function planningBound (bound, direction) {
+        $.post(
+            'gui/lesson/bound/{0}/{1}'.format(bound, direction),
+            '',
+            function (data) {
+                if (data.success) {
+                    location.reload();
+                }
+            },
+            'json'
+        );
+	}
+
 	return {
-		init: init
+		init: init,
+		minTime: function (inc) {
+		    planningBound('MIN', inc > 0 ? 'PLUS' : 'MINUS');
+		},
+		maxTime: function (inc) {
+		    planningBound('MAX', inc > 0 ? 'PLUS' : 'MINUS');
+		}
 	};
 
 } ();

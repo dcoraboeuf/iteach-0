@@ -8,3 +8,17 @@
 .fc-header-title h2 {
 	font-size: 150%;	
 }
+
+.planning-bound {
+    opacity: 0.35;
+    cursor: pointer;
+}
+
+.planning-bound:hover {
+    opacity: 1;
+}
+
+#planning-min-time {
+    position:relative;
+    top:48px;
+}

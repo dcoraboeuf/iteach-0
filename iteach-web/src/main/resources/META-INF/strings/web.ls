@@ -282,6 +282,14 @@ home.students
 	en -> My students
 	fr -> Mes étudiants
 
+planning.mintime.change
+    en -> Change the minimum time
+    fr -> Change l'heure minimale
+
+planning.maxtime.change
+    en -> Change the maximum time
+    fr -> Change l'heure maximale
+
 [schools]
 
 school.new
