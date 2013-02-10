@@ -29,21 +29,21 @@ class LessonServiceImplTest extends AbstractIntegrationTest {
 	
 	@Test(expected = AccessDeniedException)
 	void getLessonsForStudent_access_denied() {
-		service.getLessonsForStudent(2, 1, null, locale)
+		service.getLessonsForStudent(2, 1, null, Locale.ENGLISH)
 	}
 	
 	@Test
 	void getLessonsForStudent() {
 		def testDate = new LocalDate(2013, 1, 4)
-		def studentLessons = service.getLessonsForStudent(1, 1, testDate, locale)
+		def studentLessons = service.getLessonsForStudent(1, 1, testDate, Locale.ENGLISH)
 		assert studentLessons != null
 		assert testDate == studentLessons.date
 		assert 5 == studentLessons.hours
 		def lessons = studentLessons.lessons
 		assert lessons != null
 		assert [
-			new StudentLesson(2, new LocalDate(2013, 1, 7), new LocalTime(18,0), new LocalTime(20,30), "Home"),
-			new StudentLesson(3, new LocalDate(2013, 1, 9), new LocalTime(18,0), new LocalTime(20,30), "Home")
+			new StudentLesson(2, new LocalDate(2013, 1, 7), new LocalTime(18,0), new LocalTime(20,30), "Home", "Jan 7, 2013", "6:00 PM", "8:30 PM"),
+			new StudentLesson(3, new LocalDate(2013, 1, 9), new LocalTime(18,0), new LocalTime(20,30), "Home", "Jan 9, 2013", "6:00 PM", "8:30 PM")
 			] == lessons		
 	}
 	
