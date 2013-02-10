@@ -12,7 +12,7 @@ var Student = function () {
 	}
 	
 	function getLessonTime (lesson, time) {
-		return $.fullCalendar.formatDate (new Date (lesson.date + 'T' + time), i18n.simpleTimeFormat, i18n);
+	    return time;
 	}
 		
 	function getLessonSchedule (lesson) {
