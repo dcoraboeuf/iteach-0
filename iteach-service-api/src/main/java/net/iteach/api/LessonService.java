@@ -15,6 +15,8 @@ import net.iteach.core.model.LessonRange;
 import net.iteach.core.model.Lessons;
 import net.iteach.core.model.StudentLessons;
 
+import java.util.Locale;
+
 public interface LessonService {
 
 	Lessons getLessonsForTeacher(int userId, LessonRange range);
@@ -25,7 +27,7 @@ public interface LessonService {
 
 	Ack deleteLessonForTeacher(int userId, int id);
 
-	StudentLessons getLessonsForStudent(int userId, int id, LocalDate date);
+	StudentLessons getLessonsForStudent(int userId, int id, LocalDate date, Locale locale);
 
 	LessonDetails getLessonDetails(int userId, int id);
 

@@ -13,5 +13,8 @@ public class StudentLesson {
 	private final LocalTime from;
 	private final LocalTime to;
 	private final String location;
+    private final String localizedDate;
+    private final String localizedFrom;
+    private final String localizedTo;
 
 }

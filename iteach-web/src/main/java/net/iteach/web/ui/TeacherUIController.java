@@ -39,6 +39,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Locale;
+
 @Controller
 @RequestMapping("/ui/teacher")
 public class TeacherUIController extends AbstractUIController implements TeacherUI {
@@ -159,11 +161,11 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 	
 	@Override
 	@RequestMapping(value = "/student/{id}/lessons/{date}", method = RequestMethod.GET)
-	public @ResponseBody StudentLessons getStudentLessons(@PathVariable int id, @PathVariable LocalDate date) {
+	public @ResponseBody StudentLessons getStudentLessons(@PathVariable int id, @PathVariable LocalDate date, Locale locale) {
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return lessonService.getLessonsForStudent (userId, id, date);
+		return lessonService.getLessonsForStudent (userId, id, date, locale);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
 
 import javax.sql.DataSource;
 import javax.validation.Validator;
@@ -42,6 +43,8 @@ import net.sf.jstring.LocalizableMessage;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -63,13 +66,16 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 	
 	@Override
 	@Transactional(readOnly = true)
-	public StudentLessons getLessonsForStudent(int userId, int id, LocalDate date) {
+	public StudentLessons getLessonsForStudent(int userId, int id, LocalDate date, Locale locale) {
 		// Check for the associated teacher
 		checkTeacherForStudent(userId, id);
 		// From: first day of the month
 		String from = date.withDayOfMonth(1).toString();
 		// To: last day of the month
 		String to = date.withDayOfMonth(date.dayOfMonth().getMaximumValue()).toString();
+        // Localization
+        final DateTimeFormatter dateFormat = DateTimeFormat.mediumDate().withLocale(locale);
+        final DateTimeFormatter timeFormat = DateTimeFormat.shortTime().withLocale(locale);
 		// All lessons
 		List<StudentLesson> lessons = getNamedParameterJdbcTemplate().query(
 			SQL.LESSONS_FOR_STUDENT,
@@ -78,12 +84,23 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 				@Override
 				public StudentLesson mapRow(ResultSet rs, int rowNum)
 						throws SQLException {
-					return new StudentLesson(
+                    LocalDate rsDate = SQLUtils.dateFromDB(rs.getString("pdate"));
+                    LocalTime rsFrom = SQLUtils.timeFromDB(rs.getString("pfrom"));
+                    LocalTime rsTo = SQLUtils.timeFromDB(rs.getString("pto"));
+                    // Localization
+                    String sDate = dateFormat.print(rsDate);
+                    String sFrom = timeFormat.print(rsFrom);
+                    String sTo = timeFormat.print(rsTo);
+                    // OK
+                    return new StudentLesson(
 							rs.getInt("id"),
-							SQLUtils.dateFromDB(rs.getString("pdate")),
-							SQLUtils.timeFromDB(rs.getString("pfrom")),
-							SQLUtils.timeFromDB(rs.getString("pto")),
-							rs.getString("location")
+                            rsDate,
+                            rsFrom,
+                            rsTo,
+							rs.getString("location"),
+                            sDate,
+                            sFrom,
+                            sTo
 							);
 				}
 			}

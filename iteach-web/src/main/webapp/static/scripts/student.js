@@ -1,22 +1,7 @@
 var Student = function () {
-	
-	function getLessonDate (lesson) {
-		return $.fullCalendar.formatDate (new Date (lesson.date), i18n.dayOfMonthFormat, i18n);
-	}
-	
-	function getLessonTimeSchedule (lesson) {
-		return '{0} - {1}'.format(
-				getLessonTime (lesson, lesson.from),
-				getLessonTime (lesson, lesson.to)
-			);
-	}
-	
-	function getLessonTime (lesson, time) {
-	    return time;
-	}
 		
 	function getLessonSchedule (lesson) {
-		return '{0} - {1}'.format (getLessonDate(lesson), getLessonTimeSchedule(lesson));
+		return '{0} - {1} - {2}'.format (lesson.localizedDate, lesson.localizedFrom, lesson.localizedTo);
 	}
 	
 	function loadLessons () {

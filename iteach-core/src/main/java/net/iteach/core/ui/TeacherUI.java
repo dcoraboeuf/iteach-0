@@ -23,6 +23,8 @@ import net.iteach.core.model.StudentSummaries;
 
 import org.joda.time.LocalDate;
 
+import java.util.Locale;
+
 public interface TeacherUI {
 
 	SchoolSummaries getSchools();
@@ -51,7 +53,7 @@ public interface TeacherUI {
 	
 	StudentDetails getStudent (int id);
 
-	StudentLessons getStudentLessons(int id, LocalDate date);
+	StudentLessons getStudentLessons(int id, LocalDate date, Locale locale);
 
 	SchoolDetails getSchool(int id);
 
