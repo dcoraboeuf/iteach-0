@@ -5,6 +5,10 @@ validation.field
     en,de -> {0}: {1}
     fr -> {0} : {1}
 
+preference.validation.boolean
+    en -> {0} must be a boolean.
+    fr -> {0} doit être un booléen (true ou false).
+
 preference.validation.integer
 	en -> {0} must be an integer.
 	fr -> {0} doit être un entier.
@@ -18,6 +22,10 @@ preference.key.min_time
 	fr -> L'heure minimale pour le planning
 preference.key.min_time.help
 	en,fr -> (1 - 11)
+
+preference.key.weekend
+    en -> Displaying week-ends on the planning
+    fr -> Afficher le week-end sur le planning
 
 preference.key.max_time
 	en -> Maximum time for the planning
