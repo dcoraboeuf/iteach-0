@@ -721,10 +721,18 @@ profile.actions
 	en -> Actions
 	fr -> Actions
 
+profile.account
+    en -> Account management
+    fr -> Gestion du compte
+
 profile.changePassword
 	en -> Change password
 	fr -> Changer de mot de passe
-	
+
+profile.changePassword.help
+    en -> Click this button in order to request a change of your password
+    fr -> Cliquez sur ce bouton afin de demander un changement de votre mot de passe.
+
 page.passwordChange
 	en,fr -> @[profile.changePassword]
 
