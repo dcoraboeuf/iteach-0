@@ -733,6 +733,14 @@ profile.changePassword.help
     en -> Click this button in order to request a change of your password
     fr -> Cliquez sur ce bouton afin de demander un changement de votre mot de passe.
 
+profile.preferences
+    en -> Preferences
+    fr -> Préférences
+
+profile.preferences.weekend
+    en -> Display the week-end days in the planning
+    fr -> Afficher les jours de week-end dans le planning
+
 page.passwordChange
 	en,fr -> @[profile.changePassword]
 

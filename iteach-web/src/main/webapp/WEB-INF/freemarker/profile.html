@@ -82,6 +82,32 @@
                 </div>
             </div>
         </#if>
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#preferences">
+                    <@lh key="profile.preferences" />
+                </a>
+            </div>
+            <div id="preferences" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    <form action="gui/profile/preferences" method="POST" class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label" for="PLANNING_WEEKEND"><@lh key="profile.preferences.weekend" /></label>
+                            <div class="controls">
+                                <input id="PLANNING_WEEKEND" type="checkbox" name="PLANNING_WEEKEND" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">
+                                    <@lh key="general.submit" />
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <a href="gui/home" class="btn"><@lh key="general.close"/></a>
 </@layout_std>
