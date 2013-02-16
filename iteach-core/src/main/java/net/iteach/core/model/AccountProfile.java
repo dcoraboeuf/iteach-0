@@ -16,4 +16,6 @@ public class AccountProfile {
 	private final int studentCount;
 	private final int lessonCount;
 
+    private final Preferences preferences;
+
 }

@@ -1,6 +1,7 @@
 package net.iteach.api;
 
 import net.iteach.core.model.PreferenceKey;
+import net.iteach.core.model.Preferences;
 
 public interface PreferenceService {
 	
@@ -11,4 +12,6 @@ public interface PreferenceService {
 	void setPreference (PreferenceKey key, String value);
 
     void setPreference(PreferenceKey key, int value);
+
+    Preferences getPreferences();
 }

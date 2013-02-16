@@ -1,8 +1,8 @@
 package net.iteach.service.impl;
 
-import javax.sql.DataSource;
-import javax.validation.Validator;
-
+import net.iteach.api.PreferenceService;
+import net.iteach.core.model.PreferenceKey;
+import net.iteach.core.model.Preferences;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.service.db.SQL;
 import org.apache.commons.lang3.StringUtils;
@@ -10,25 +10,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
-
-import net.iteach.api.PreferenceService;
-import net.iteach.core.model.PreferenceKey;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.sql.DataSource;
+import javax.validation.Validator;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class PreferenceServiceImpl extends AbstractServiceImpl implements PreferenceService {
 
     private final SecurityUtils securityUtils;
 
-	@Autowired
-	public PreferenceServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils) {
-		super(dataSource, validator);
+    @Autowired
+    public PreferenceServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils) {
+        super(dataSource, validator);
         this.securityUtils = securityUtils;
     }
 
-	@Override
+    @Override
     @Transactional(readOnly = true)
-	public String getPreference(PreferenceKey key) {
+    public String getPreference(PreferenceKey key) {
         // Gets the current user
         int userId = securityUtils.getCurrentUserId();
         // Gets the stored value
@@ -39,7 +41,7 @@ public class PreferenceServiceImpl extends AbstractServiceImpl implements Prefer
         } else {
             return value;
         }
-	}
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -49,7 +51,7 @@ public class PreferenceServiceImpl extends AbstractServiceImpl implements Prefer
 
     @Override
     @Transactional
-	public void setPreference(PreferenceKey key, String value) {
+    public void setPreference(PreferenceKey key, String value) {
         NamedParameterJdbcTemplate t = getNamedParameterJdbcTemplate();
         // Gets the current user
         int userId = securityUtils.getCurrentUserId();
@@ -65,11 +67,22 @@ public class PreferenceServiceImpl extends AbstractServiceImpl implements Prefer
         t.update(
                 SQL.PREF_SET,
                 params.addValue("value", valueToStore));
-	}
+    }
 
     @Override
     @Transactional
     public void setPreference(PreferenceKey key, int value) {
         setPreference(key, String.valueOf(value));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Preferences getPreferences() {
+        Map<PreferenceKey, String> map = new HashMap<>();
+        for (PreferenceKey key : PreferenceKey.values()) {
+            String value = getPreference(key);
+            map.put(key, value);
+        }
+        return new Preferences(map);
     }
 }
