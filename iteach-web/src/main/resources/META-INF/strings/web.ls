@@ -741,6 +741,10 @@ profile.preferences.weekend
     en -> Display the week-end days in the planning
     fr -> Afficher les jours de week-end dans le planning
 
+profile.preferences.saved
+    en -> Preferences have been saved.
+    fr -> Les préférences ont été sauvegardées.
+
 page.passwordChange
 	en,fr -> @[profile.changePassword]
 

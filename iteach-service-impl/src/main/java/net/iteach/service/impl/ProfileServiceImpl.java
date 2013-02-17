@@ -19,6 +19,7 @@ import javax.validation.Validator;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Locale;
+import java.util.Map;
 
 @Service
 public class ProfileServiceImpl extends AbstractServiceImpl implements
@@ -41,6 +42,16 @@ public class ProfileServiceImpl extends AbstractServiceImpl implements
     public AccountProfile getProfile() {
         int userId = securityUtils.getCurrentUserId();
         return getProfile(userId);
+    }
+
+    @Override
+    @Transactional
+    public void savePreferences(Map<PreferenceKey, String> preferences) {
+        for (Map.Entry<PreferenceKey, String> entry : preferences.entrySet()) {
+            PreferenceKey key = entry.getKey();
+            String value = entry.getValue();
+            preferenceService.setPreference(key, value);
+        }
     }
 
     @Override
