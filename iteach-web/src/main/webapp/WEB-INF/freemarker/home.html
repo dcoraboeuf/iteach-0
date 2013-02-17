@@ -1,103 +1,116 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="home" modules = ["items", "schools", "students", "planning", "lessons"] style=true breadcrumbs = {loc("page.index"): ""}>
-	<@current_date />
-	<div class="container-fluid">
-		<div id="home-row" class="row-fluid">
-			<div class="span9">
-				<!--Body content-->
-				<@panel id="planning-panel" class="planning" title = loc("home.planning")>
-                    <div id="planning-min-time" title="<@lh key='planning.mintime.change'/>">
-                        <span class="planning-bound label label-info"><span onclick="Planning.minTime(1)">+</span> / <span onclick="Planning.minTime(-1)">-</span></span>
-                    </div>
-					<div id="planning-calendar" minTime="${minTime?html}" maxTime="${maxTime?html}">
-					</div>
-                    <div id="planning-max-time" title="<@lh key='planning.maxtime.change'/>">
-                        <span class="planning-bound label label-info"><span onclick="Planning.maxTime(1)">+</span> / <span onclick="Planning.maxTime(-1)">-</span></span>
-                    </div>
-				</@panel>
-			</div>
-			<div class="span3">
-				<!-- Reports -->
-				<a href="gui/report/monthly" class="btn" title="<@lh key='report.monthly.tip' />">
-					<img src="${base}/images/report.png" />
-					<@lh key="report.monthly" />
-				</a>
-				<!-- Students -->
-				<@panel class="data students" title = loc("home.students")>
-					<table class="items students" width="100%">
-						<tbody>
-							<#list students.summaries as student>
-								<@item color=student.school.color>
-									<div class="student-name">
-										<a href="gui/student/${student.id}" title="<@lh key='student.link' />">${student.name?html}</a>									
-										<@item_actions>			
-											<input id="student-name-${student.id}" type="hidden" value="${student.name?html}" />
-											<input id="student-subject-${student.id}" type="hidden" value="${student.subject?html}" />
-											<input id="student-school-${student.id}" type="hidden" value="${student.school.id?html}" />
-											<i class="action icon-trash" title="${loc('student.delete',student.name)?html}" onclick="Students.deleteStudent(${student.id});"></i>
-											<i class="action icon-edit" title="${loc('student.edit',student.name)?html}" onclick="Students.editStudent(${student.id});"></i>
-										</@item_actions>
-									</div>
-									<div class="student-description">${student.subject?html} @ ${student.school.name?html}</div>
-								</@item>
-							</#list>
-						</tbody>
-						<tfoot>
-							<tr>
-								<td>
-									<#if schools.summaries?size == 0>
-		                                <p class="alert">
-		                                	<@lh key="student.new.noschool" />
-		                                </p>
-									<#else>
-		                                <button class="btn" onclick="Students.createStudent();">
-		                                    <img src="${base}/images/student_add.png" />
-		                                    <@lh key="student.new" />
-		                                </button>
-									</#if>
-								</td>
-							</tr>
-						</tfoot>
-					</table>
-				</@panel>
-				<!-- Schools -->
-				<@panel class="data schools" title = loc("home.schools")>
-					<table class="items schools" width="100%">
-						<tbody>
-							<#list schools.summaries as school>
-								<@item color=school.color>
-									<a href="gui/school/${school.id}">${school.name?html}</a>
-									<@item_actions>
-										<input id="school-name-${school.id}" type="hidden" value="${school.name?html}" />
-										<input id="school-color-${school.id}" type="hidden" value="${school.color?html}" />
-										<input id="school-hourlyRate-${school.id}" type="hidden" value="${school.hourlyRate.amount?html}" />
-										<i class="action icon-trash" title="${loc('school.delete',school.name)?html}" onclick="Schools.deleteSchool(${school.id});"></i>
-										<i class="action icon-edit" title="${loc('school.edit',school.name)?html}" onclick="Schools.editSchool(${school.id});"></i>
-									</@item_actions>
-								</@item>
-							</#list>
-						</tbody>
-						<tfoot>
-							<tr>
-								<td>
-                                    <button class="btn" onclick="Schools.createSchool();">
-                                        <img src="${base}/images/school_add.png" />
-                                        <@lh key="school.new" />
-                                    </button>
-								</td>
-							</tr>
-						</tfoot>
-					</table>
-				</@panel>
-			</div>
-		</div>
-	</div>
-	
-	<#-- Dialogs -->
-	
-	<@student_dialog />
-	<@lesson_dialog />
-	<@school_dialog />
-	
+    <@layout_std pageId="home" modules = ["items", "schools", "students", "planning", "lessons"] style=true breadcrumbs
+    = {loc("page.index"): ""}>
+    <@current_date />
+    <@preference key="PLANNING_WEEKEND" />
+    <div class="container-fluid">
+        <div id="home-row" class="row-fluid">
+            <div class="span9">
+                <!--Body content-->
+                <@panel id="planning-panel" class="planning" title = loc("home.planning")>
+                <div id="planning-min-time" title="<@lh key='planning.mintime.change'/>">
+                    <span class="planning-bound label label-info"><span onclick="Planning.minTime(1)">+</span> / <span
+                            onclick="Planning.minTime(-1)">-</span></span>
+                </div>
+                <div id="planning-calendar" minTime="${minTime?html}" maxTime="${maxTime?html}">
+                </div>
+                <div id="planning-max-time" title="<@lh key='planning.maxtime.change'/>">
+                    <span class="planning-bound label label-info"><span onclick="Planning.maxTime(1)">+</span> / <span
+                            onclick="Planning.maxTime(-1)">-</span></span>
+                </div>
+            </
+            @panel>
+        </div>
+        <div class="span3">
+            <!-- Reports -->
+            <a href="gui/report/monthly" class="btn" title="<@lh key='report.monthly.tip' />">
+                <img src="${base}/images/report.png"/>
+                <@lh key="report.monthly" />
+            </a>
+            <!-- Students -->
+            <@panel class="data students" title = loc("home.students")>
+            <table class="items students" width="100%">
+                <tbody>
+                <#list students.summaries as student>
+                    <@item color=student.school.color>
+                    <div class="student-name">
+                        <a href="gui/student/${student.id}" title="<@lh key='student.link' />">${student.name?html}</a>
+                        <@item_actions>
+                        <input id="student-name-${student.id}" type="hidden" value="${student.name?html}"/>
+                        <input id="student-subject-${student.id}" type="hidden" value="${student.subject?html}"/>
+                        <input id="student-school-${student.id}" type="hidden" value="${student.school.id?html}"/>
+                        <i class="action icon-trash" title="${loc('student.delete',student.name)?html}"
+                           onclick="Students.deleteStudent(${student.id});"></i>
+                        <i class="action icon-edit" title="${loc('student.edit',student.name)?html}"
+                           onclick="Students.editStudent(${student.id});"></i>
+                    </
+                    @item_actions>
+        </div>
+        <div class="student-description">${student.subject?html} @ ${student.school.name?html}</div>
+    </
+    @item>
+    </#list>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td>
+            <#if schools.summaries?size == 0>
+                <p class="alert">
+                    <@lh key="student.new.noschool" />
+                </p>
+                <#else>
+                    <button class="btn" onclick="Students.createStudent();">
+                        <img src="${base}/images/student_add.png"/>
+                        <@lh key="student.new" />
+                    </button>
+            </#if>
+        </td>
+    </tr>
+    </tfoot>
+    </table>
+</@panel>
+<!-- Schools -->
+<@panel class="data schools" title = loc("home.schools")>
+<table class="items schools" width="100%">
+    <tbody>
+    <#list schools.summaries as school>
+        <@item color=school.color>
+        <a href="gui/school/${school.id}">${school.name?html}</a>
+        <@item_actions>
+        <input id="school-name-${school.id}" type="hidden" value="${school.name?html}"/>
+        <input id="school-color-${school.id}" type="hidden" value="${school.color?html}"/>
+        <input id="school-hourlyRate-${school.id}" type="hidden" value="${school.hourlyRate.amount?html}"/>
+        <i class="action icon-trash" title="${loc('school.delete',school.name)?html}"
+           onclick="Schools.deleteSchool(${school.id});"></i>
+        <i class="action icon-edit" title="${loc('school.edit',school.name)?html}"
+           onclick="Schools.editSchool(${school.id});"></i>
+    </
+    @item_actions>
+    </
+    @item>
+    </#list>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td>
+            <button class="btn" onclick="Schools.createSchool();">
+                <img src="${base}/images/school_add.png"/>
+                <@lh key="school.new" />
+            </button>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+</@panel>
+</div>
+</div>
+</div>
+
+<#-- Dialogs -->
+
+    <@student_dialog />
+    <@lesson_dialog />
+    <@school_dialog />
+
 </@layout_std>
