@@ -27,6 +27,10 @@ preference.key.weekend
     en -> Displaying week-ends on the planning
     fr -> Afficher le week-end sur le planning
 
+preference.key.reportTotalDisplayed
+    en -> Display the total hours and amounts
+    fr -> Afficher le total des heures et des montants
+
 preference.key.max_time
 	en -> Maximum time for the planning
 	fr -> L'heure maximale pour le planning

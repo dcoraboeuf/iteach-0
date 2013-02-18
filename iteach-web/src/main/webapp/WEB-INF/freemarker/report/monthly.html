@@ -1,7 +1,7 @@
 <#include "/lib/layout.html">
 
-<@layout_std pageId="report.monthly" title=loc("report.monthly.title", yearMonth) breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home"}>
-	<table class="table">
+<@layout_std pageId="report.monthly" script=true title=loc("report.monthly.title", yearMonth) breadcrumbs = {loc("page.index"): "", loc("page.home"): "gui/home"}>
+	<table id="report" class="table">
 		<thead>
 			<tr>
 				<th colspan="2"><@lh key="report.school" /></th>
@@ -11,13 +11,13 @@
 					<span>${yearMonth}</span>
 					<a href="gui/report/monthly/next">&#9658;</a>
 				</th>
-				<th colspan="2"><@lh key="report.total" /></th>
+				<th colspan="2" class="total"><@lh key="report.total" /></th>
 			</tr>
 				<th colspan="3">&nbsp;</th>
 				<th><@lh key="report.hours" /></th>
 				<th><@lh key="report.amount" /></th>
-				<th><@lh key="report.hours" /></th>
-				<th><@lh key="report.amount" /></th>
+				<th class="total"><@lh key="report.hours" /></th>
+				<th class="total"><@lh key="report.amount" /></th>
 			<tr>
 			</tr>
 		</thead>
@@ -32,8 +32,8 @@
 					<td>&nbsp;</td>
 					<td><b>${school.monthlyHours}</b></td>
 					<td class="money">${school.monthlyAmount}</td>
-					<td><b><i>${school.totalHours}</i></b></td>
-					<td class="money">${school.totalAmount}</td>
+					<td class="total"><b><i>${school.totalHours}</i></b></td>
+					<td class="total money">${school.totalAmount}</td>
 				</tr>
 				<#list school.students?values as student>
 					<tr>
@@ -41,8 +41,8 @@
 						<td><a href="gui/student/${student.id}">${student.name?html}</a></td>
 						<td>${student.monthlyHours}</td>
 						<td class="money">${student.monthlyAmount}</td>
-						<td><i>${student.totalHours}</i></td>
-						<td class="money">${student.totalAmount}</td>
+						<td class="total"><i>${student.totalHours}</i></td>
+						<td class="total money">${student.totalAmount}</td>
 					</tr>
 				</#list>
 			</#list>
@@ -50,9 +50,12 @@
 				<td colspan="3">&nbsp;</td>
 				<td>${report.monthlyHours}</td>
 				<td class="money">${report.monthlyAmount!loc('report.amount.na')}</td>
-				<td><b>${report.totalHours}</b></td>
-				<td class="money">${report.totalAmount!loc('report.amount.na')}</td>
+				<td class="total"><b>${report.totalHours}</b></td>
+				<td class="total money">${report.totalAmount!loc('report.amount.na')}</td>
 			</tr>
 		</tbody>
 	</table>
+    <!-- Enabling the display of totals -->
+    <@preference key="REPORT_TOTAL_DISPLAYED" />
+    <label for="displayTotal" class="muted"><input id="displayTotal" type="checkbox" /> <@lh key="report.total.display" /></label>
 </@layout_std>

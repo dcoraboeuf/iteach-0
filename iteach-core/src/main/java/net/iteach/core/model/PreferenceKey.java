@@ -36,11 +36,21 @@ public enum PreferenceKey {
             return validateBoolean(PREFERENCE_KEY_WEEKEND, value);
         }
 
+    },
+
+    REPORT_TOTAL_DISPLAYED("true") {
+
+        @Override
+        public Localizable validate(String value) {
+            return validateBoolean(PREFERENCE_KEY_REPORT_TOTAL_DISPLAYED, value);
+        }
+
     };
 	
 	private static final String PREFERENCE_KEY_MIN_TIME = "preference.key.min_time";
     private static final String PREFERENCE_KEY_MAX_TIME = "preference.key.max_time";
     private static final String PREFERENCE_KEY_WEEKEND = "preference.key.weekend";
+    private static final String PREFERENCE_KEY_REPORT_TOTAL_DISPLAYED = "preference.key.reportTotalDisplayed";
     private static final String PREFERENCE_VALIDATION_BOOLEAN = "preference.validation.boolean";
     private static final String PREFERENCE_VALIDATION_RANGE = "preference.validation.range";
 	private static final String PREFERENCE_VALIDATION_INTEGER = "preference.validation.integer";

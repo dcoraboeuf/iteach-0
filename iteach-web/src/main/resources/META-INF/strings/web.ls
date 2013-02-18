@@ -819,6 +819,9 @@ report.total
 	en -> Total
 	fr -> Total
 
+report.total.display
+    en,fr,de -> @[preference.key.reportTotalDisplayed]
+
 report.amount
 	en -> Amount
 	fr -> Montant
