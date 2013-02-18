@@ -122,7 +122,7 @@ var Planning = function () {
 			allDaySlot: false,
 			minTime: Number($('#planning-calendar').attr("minTime")),
 			maxTime: Number($('#planning-calendar').attr("maxTime")),
-			weekends: true,
+			weekends: $('#PLANNING_WEEKEND').val() == 'true',
 			// Default view
 			defaultView: 'agendaWeek',
 			// Allowing selection (-> creation)
