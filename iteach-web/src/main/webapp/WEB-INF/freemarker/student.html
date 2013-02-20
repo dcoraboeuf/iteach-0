@@ -36,49 +36,50 @@
                 </form>
                 <@coordinates values=student.coordinates />
                 <button type="button" class="btn btn-danger"><@lh key="student.disable" /></button>
-                @panel>
-            </div>
-            <!-- Middle column -->
-            <div class="span4">
-                <@panel id="lessons" title=loc("student.details.lessons")>
-                <table class="data">
-                    <tbody>
-                    <tr>
-                        <td class="data-label"><@lh key="student.lessons.hours.total" /></td>
-                        <td class="data-value" id="lessons-total-hours">${student.totalHours}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div>&nbsp;</div>
-                <section>
-                    <header style="text-align: center;">
-                        <span id="lessons-month">...</span>
-
-                        <div class="action pull-left" onclick="Student.previousMonth()">&#9668;</div>
-                        <div class="action pull-right" onclick="Student.nextMonth()">&#9658;</div>
-                    </header>
-                    <div id="lessons-list"></div>
-                    <div id="lessons-error" class="alert alert-error"></div>
-                    <footer>
-                        <table class="data">
-                            <tbody>
-                            <tr>
-                                <td class="data-label"><@lh key="student.lessons.hours.month" /></td>
-                                <td class="data-value" id="lessons-month-hours">TODO</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </footer>
-                </section>
             </
             @panel>
         </div>
-        <!-- Right column -->
+        <!-- Middle column -->
         <div class="span4">
-            <@panel id="comments" title=loc("student.details.comments")>
-            <@comments url="ui/teacher/student/${student.id}/comment" />
+            <@panel id="lessons" title=loc("student.details.lessons")>
+            <table class="data">
+                <tbody>
+                <tr>
+                    <td class="data-label"><@lh key="student.lessons.hours.total" /></td>
+                    <td class="data-value" id="lessons-total-hours">${student.totalHours}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div>&nbsp;</div>
+            <section>
+                <header style="text-align: center;">
+                    <span id="lessons-month">...</span>
+
+                    <div class="action pull-left" onclick="Student.previousMonth()">&#9668;</div>
+                    <div class="action pull-right" onclick="Student.nextMonth()">&#9658;</div>
+                </header>
+                <div id="lessons-list"></div>
+                <div id="lessons-error" class="alert alert-error"></div>
+                <footer>
+                    <table class="data">
+                        <tbody>
+                        <tr>
+                            <td class="data-label"><@lh key="student.lessons.hours.month" /></td>
+                            <td class="data-value" id="lessons-month-hours">TODO</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </footer>
+            </section>
         </
         @panel>
+    </div>
+    <!-- Right column -->
+    <div class="span4">
+        <@panel id="comments" title=loc("student.details.comments")>
+        <@comments url="ui/teacher/student/${student.id}/comment" />
+    </
+    @panel>
     </div>
     </div>
     </div>
