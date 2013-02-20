@@ -51,6 +51,18 @@ var Student = function () {
 			}
 		});
 	}
+
+	function disable () {
+		// Student ID
+		var id = $('#student-id').val();
+        // Confirmation before going on
+        application.confirmAndCall(
+            loc('student.disable.prompt'),
+            function () {
+                location = 'gui/student/{0}/disable'.format(id);
+            }
+        );
+	}
 	
 	function previousMonth () {
 		loadLessonsWith('gui/student/{0}/lessons/previousMonth');
@@ -72,7 +84,8 @@ var Student = function () {
 	return {
 		init: init,
 		previousMonth: previousMonth,
-		nextMonth: nextMonth
+		nextMonth: nextMonth,
+		disable: disable
 	};
 	
 } ();

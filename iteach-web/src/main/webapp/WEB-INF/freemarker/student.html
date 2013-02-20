@@ -8,7 +8,7 @@
 			<div class="span4">
 				<@panel title=loc("student.details.data")>
 					<form>
-						<input id="student-id" type="hidden" name="id" value="${student.id}" />
+                        <input id="student-id" type="hidden" name="id" value="${student.id}" />
 						<table class="data">
 							<tbody>
 								<tr>
@@ -33,7 +33,11 @@
 						</table>
 					</form>
 					<@coordinates values=student.coordinates />
-                    <button type="button" class="btn btn-danger"><@lh key="student.disable" /></button>
+                    <#if !student.disabled>
+                        <button type="button" class="btn btn-danger" onclick="Student.disable()"><@lh key="student.disable" /></button>
+                    <#else>
+                        <a class="btn btn-warning" href="gui/student/${student.id}/enable"><@lh key="student.enable" /></a>
+                    </#if>
 				</@panel>
 			</div>
 			<!-- Middle column -->
