@@ -473,6 +473,30 @@ student.details.comments
 	en -> Your comments
 	fr -> Vos commentaires
 
+student.disabled
+    en -> Student is disabled
+    fr -> L'étudiant est désactivé.
+
+student.disable
+    en -> Disable
+    fr -> Désactiver
+
+student.disable.prompt
+    en -> ...
+        Disabling this student will hide him from the list of students and from the monthly report, but he
+        will remain visible in the list of students for the school and in the list of lessons. The student
+        can also be enabled again later.
+        ...
+    fr -> ...
+        Désactiver cet étudiant va l'enlever de la liste des étudiants et du rapport mensuel, but il
+        restera visible dans la liste des étudiants de l'école et dans la liste des lessons. L'étudiant
+        pourra être réactivé plus tard.
+        ...
+
+student.enable
+    en -> Enable
+    fr -> Réactiver
+
 [lessons]
 
 lesson.new
