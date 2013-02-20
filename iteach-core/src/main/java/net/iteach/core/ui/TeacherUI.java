@@ -1,26 +1,6 @@
 package net.iteach.core.ui;
 
-import net.iteach.core.model.AccountProfile;
-import net.iteach.core.model.Ack;
-import net.iteach.core.model.Comment;
-import net.iteach.core.model.CommentFormat;
-import net.iteach.core.model.Comments;
-import net.iteach.core.model.CommentsForm;
-import net.iteach.core.model.Coordinates;
-import net.iteach.core.model.ID;
-import net.iteach.core.model.LessonChange;
-import net.iteach.core.model.LessonDetails;
-import net.iteach.core.model.LessonForm;
-import net.iteach.core.model.LessonRange;
-import net.iteach.core.model.Lessons;
-import net.iteach.core.model.SchoolDetails;
-import net.iteach.core.model.SchoolForm;
-import net.iteach.core.model.SchoolSummaries;
-import net.iteach.core.model.StudentDetails;
-import net.iteach.core.model.StudentForm;
-import net.iteach.core.model.StudentLessons;
-import net.iteach.core.model.StudentSummaries;
-
+import net.iteach.core.model.*;
 import org.joda.time.LocalDate;
 
 import java.util.Locale;
@@ -42,6 +22,10 @@ public interface TeacherUI {
 	Ack deleteStudent(int id);
 
 	Ack editStudent(int id, StudentForm form);
+
+    Ack disableStudent(int id);
+
+    Ack enableStudent(int id);
 
 	ID createLesson(LessonForm form);
 
@@ -98,5 +82,4 @@ public interface TeacherUI {
 	// Profile management
 	
 	AccountProfile getProfile();
-
 }

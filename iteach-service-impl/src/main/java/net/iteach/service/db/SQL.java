@@ -45,6 +45,10 @@ public interface SQL {
 	String STUDENT_DELETE = "DELETE FROM STUDENTS WHERE ID = :id";
 
 	String STUDENT_UPDATE = "UPDATE STUDENTS SET SCHOOL = :school, SUBJECT = :subject, NAME = :name WHERE ID = :id";
+
+    String STUDENT_DISABLE = "UPDATE STUDENTS SET DISABLED = TRUE WHERE ID = :id";
+
+    String STUDENT_ENABLE = "UPDATE STUDENTS SET DISABLED = FALSE WHERE ID = :id";
 	
 	// Lessons
 	
@@ -113,4 +117,5 @@ public interface SQL {
     String PREF_GET = "SELECT VALUE FROM PREFERENCES WHERE USERID = :user AND NAME = :name";
     String PREF_DELETE = "DELETE FROM PREFERENCES WHERE USERID = :user AND NAME = :name";
     String PREF_SET = "INSERT INTO PREFERENCES (USERID, NAME, VALUE) VALUES (:user, :name, :value)";
+
 }

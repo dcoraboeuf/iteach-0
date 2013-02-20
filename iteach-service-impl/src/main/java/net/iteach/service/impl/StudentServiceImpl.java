@@ -152,8 +152,28 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 		int count = getNamedParameterJdbcTemplate().update(SQL.STUDENT_DELETE, params("id", id));
 		return Ack.one(count);
 	}
-	
-	@Override
+
+    @Override
+    @Transactional
+    public Ack disableStudentForTeacher(int teacherId, int id) {
+        // Check for the associated teacher
+        checkTeacherForStudent(teacherId, id);
+        // Update
+        int count = getNamedParameterJdbcTemplate().update(SQL.STUDENT_DISABLE, params("id", id));
+        return Ack.one(count);
+    }
+
+    @Override
+    @Transactional
+    public Ack enableStudentForTeacher(int teacherId, int id) {
+        // Check for the associated teacher
+        checkTeacherForStudent(teacherId, id);
+        // Update
+        int count = getNamedParameterJdbcTemplate().update(SQL.STUDENT_ENABLE, params("id", id));
+        return Ack.one(count);
+    }
+
+    @Override
 	@Transactional
 	public Ack editStudentForTeacher(int userId, int id, StudentForm form) {
 		// Check for the associated teacher

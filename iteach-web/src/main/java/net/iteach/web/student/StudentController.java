@@ -31,15 +31,27 @@ public class StudentController extends AbstractGUIController {
 		this.userSession = userSession;
 	}
 
-	@RequestMapping("/{id:\\d+}")
-	public String details (@PathVariable int id, Model model, HttpSession session) {
-		// Loads the student details
-		model.addAttribute("student", ui.getStudent(id));
-		// Current date
-		model.addAttribute("currentDate", userSession.getCurrentDate(session).toString());
-		// View
-		return "student";
-	}
+    @RequestMapping("/{id:\\d+}")
+    public String details (@PathVariable int id, Model model, HttpSession session) {
+        // Loads the student details
+        model.addAttribute("student", ui.getStudent(id));
+        // Current date
+        model.addAttribute("currentDate", userSession.getCurrentDate(session).toString());
+        // View
+        return "student";
+    }
+
+    @RequestMapping(value = "/{id:\\d+}/disable", method = RequestMethod.GET)
+    public String disable (@PathVariable int id) {
+        ui.disableStudent(id);
+        return "redirect:/gui/student/" + id;
+    }
+
+    @RequestMapping(value = "/{id:\\d+}/enable", method = RequestMethod.GET)
+    public String enable (@PathVariable int id) {
+        ui.enableStudent(id);
+        return "redirect:/gui/student/" + id;
+    }
 	
 	@RequestMapping(value = "/{id:\\d+}/lessons", method = RequestMethod.GET)
 	public @ResponseBody StudentLessons getStudentLessons (Locale locale, @PathVariable int id, HttpSession session) {

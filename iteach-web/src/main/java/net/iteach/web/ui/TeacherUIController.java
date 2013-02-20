@@ -4,40 +4,16 @@ import net.iteach.api.LessonService;
 import net.iteach.api.ProfileService;
 import net.iteach.api.SchoolService;
 import net.iteach.api.StudentService;
-import net.iteach.core.model.AccountProfile;
-import net.iteach.core.model.Ack;
-import net.iteach.core.model.Comment;
-import net.iteach.core.model.CommentFormat;
-import net.iteach.core.model.Comments;
-import net.iteach.core.model.CommentsForm;
-import net.iteach.core.model.Coordinates;
-import net.iteach.core.model.ID;
-import net.iteach.core.model.LessonChange;
-import net.iteach.core.model.LessonDetails;
-import net.iteach.core.model.LessonForm;
-import net.iteach.core.model.LessonRange;
-import net.iteach.core.model.Lessons;
-import net.iteach.core.model.SchoolDetails;
-import net.iteach.core.model.SchoolForm;
-import net.iteach.core.model.SchoolSummaries;
-import net.iteach.core.model.StudentDetails;
-import net.iteach.core.model.StudentForm;
-import net.iteach.core.model.StudentLessons;
-import net.iteach.core.model.StudentSummaries;
+import net.iteach.core.model.*;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.core.ui.TeacherUI;
 import net.iteach.web.support.AbstractUIController;
 import net.iteach.web.support.ErrorHandler;
 import net.sf.jstring.Strings;
-
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
 
@@ -149,8 +125,26 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// OK
 		return studentService.editStudentForTeacher(userId, id, form);
 	}
-	
-	@Override
+
+    @Override
+    @RequestMapping(value = "/student/{id}/disable", method = RequestMethod.PUT)
+    public @ResponseBody Ack disableStudent(@PathVariable int id) {
+        // Gets the current teacher
+        int userId = securityUtils.getCurrentUserId();
+        // OK
+        return studentService.disableStudentForTeacher(userId, id);
+    }
+
+    @Override
+    @RequestMapping(value = "/student/{id}/enable", method = RequestMethod.PUT)
+    public @ResponseBody Ack enableStudent(@PathVariable int id) {
+        // Gets the current teacher
+        int userId = securityUtils.getCurrentUserId();
+        // OK
+        return studentService.enableStudentForTeacher(userId, id);
+    }
+
+    @Override
 	@RequestMapping(value = "/student/{id}", method = RequestMethod.GET)
 	public @ResponseBody StudentDetails getStudent(@PathVariable int id) {
 		// Gets the current teacher

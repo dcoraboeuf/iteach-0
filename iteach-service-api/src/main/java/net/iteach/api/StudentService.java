@@ -1,17 +1,8 @@
 package net.iteach.api;
 
-import java.math.BigDecimal;
+import net.iteach.core.model.*;
 
-import net.iteach.core.model.Ack;
-import net.iteach.core.model.Comment;
-import net.iteach.core.model.CommentFormat;
-import net.iteach.core.model.Comments;
-import net.iteach.core.model.CommentsForm;
-import net.iteach.core.model.Coordinates;
-import net.iteach.core.model.ID;
-import net.iteach.core.model.StudentDetails;
-import net.iteach.core.model.StudentForm;
-import net.iteach.core.model.StudentSummaries;
+import java.math.BigDecimal;
 
 public interface StudentService {
 
@@ -37,4 +28,7 @@ public interface StudentService {
 
 	Ack deleteStudentComment(int userId, int studentId, int commentId);
 
+    Ack disableStudentForTeacher(int userId, int id);
+
+    Ack enableStudentForTeacher(int userId, int id);
 }
