@@ -1,18 +1,11 @@
 package net.iteach.service.impl
 
 import net.iteach.api.SchoolService
-import net.iteach.core.model.CommentFormat
-import net.iteach.core.model.CommentsForm
-import net.iteach.core.model.CoordinateType
-import net.iteach.core.model.Coordinates
-import net.iteach.core.model.SchoolDetails
-import net.iteach.core.model.SchoolDetailsStudent
-import net.iteach.core.model.SchoolForm
+import net.iteach.core.model.*
 import net.iteach.core.validation.ValidationException
 import net.iteach.test.AbstractIntegrationTest
 import net.sf.jstring.Strings
 import net.sf.jstring.support.StringsLoader
-
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.AccessDeniedException
@@ -188,8 +181,8 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
 			MoneyUtils.money(10),
 			Coordinates.create().add(CoordinateType.ADDRESS, "At my school 1").add(CoordinateType.WEB, "http://school/1"),
 			[
-				new SchoolDetailsStudent(1, "Student 1", "Subject 1", 0),
-				new SchoolDetailsStudent(2, "Student 2", "Subject 2", 0)
+				new SchoolDetailsStudent(1, "Student 1", "Subject 1", false, 0),
+				new SchoolDetailsStudent(2, "Student 2", "Subject 2", false, 0)
 			], 0) == school
 	}
 	

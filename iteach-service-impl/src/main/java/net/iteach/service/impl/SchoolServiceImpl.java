@@ -1,42 +1,29 @@
 package net.iteach.service.impl;
 
-import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-
-import javax.sql.DataSource;
-import javax.validation.Validator;
-
 import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.SchoolService;
 import net.iteach.api.StudentService;
 import net.iteach.api.model.CommentEntity;
 import net.iteach.api.model.CoordinateEntity;
-import net.iteach.core.model.Ack;
-import net.iteach.core.model.Comment;
-import net.iteach.core.model.CommentFormat;
-import net.iteach.core.model.Comments;
-import net.iteach.core.model.CommentsForm;
-import net.iteach.core.model.Coordinates;
-import net.iteach.core.model.ID;
-import net.iteach.core.model.SchoolDetails;
-import net.iteach.core.model.SchoolDetailsStudent;
-import net.iteach.core.model.SchoolForm;
-import net.iteach.core.model.SchoolSummaries;
-import net.iteach.core.model.SchoolSummary;
+import net.iteach.core.model.*;
 import net.iteach.core.validation.SchoolFormValidation;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.sql.DataSource;
+import javax.validation.Validator;
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class SchoolServiceImpl extends AbstractServiceImpl implements
@@ -86,6 +73,7 @@ public class SchoolServiceImpl extends AbstractServiceImpl implements
 						studentId,
 						rs.getString("name"),
 						rs.getString("subject"),
+                        rs.getBoolean("disabled"),
 						studentService.getStudentHours(userId, studentId));
 				}
 				

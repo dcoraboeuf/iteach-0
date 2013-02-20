@@ -9,5 +9,6 @@ public class StudentSummary {
 	private final String subject;
 	private final String name;
 	private final SchoolSummary school;
+    private final boolean disabled;
 
 }

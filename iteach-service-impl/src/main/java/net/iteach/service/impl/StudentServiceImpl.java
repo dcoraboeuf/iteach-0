@@ -1,40 +1,27 @@
 package net.iteach.service.impl;
 
-import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.concurrent.atomic.AtomicReference;
-
-import javax.sql.DataSource;
-import javax.validation.Validator;
-
 import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.StudentService;
 import net.iteach.api.model.CommentEntity;
 import net.iteach.api.model.CoordinateEntity;
-import net.iteach.core.model.Ack;
-import net.iteach.core.model.Comment;
-import net.iteach.core.model.CommentFormat;
-import net.iteach.core.model.Comments;
-import net.iteach.core.model.CommentsForm;
-import net.iteach.core.model.Coordinates;
-import net.iteach.core.model.ID;
-import net.iteach.core.model.SchoolSummary;
-import net.iteach.core.model.StudentDetails;
-import net.iteach.core.model.StudentForm;
-import net.iteach.core.model.StudentSummaries;
-import net.iteach.core.model.StudentSummary;
+import net.iteach.core.model.*;
 import net.iteach.core.validation.StudentFormValidation;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.sql.DataSource;
+import javax.validation.Validator;
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class StudentServiceImpl extends AbstractServiceImpl implements
@@ -68,7 +55,8 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 										rs.getInt("ID"),
 										rs.getString("SUBJECT"),
 										rs.getString("NAME"),
-										school);
+										school,
+                                        rs.getBoolean("DISABLED"));
 							}
 						}));
 	}
@@ -100,7 +88,8 @@ public class StudentServiceImpl extends AbstractServiceImpl implements
 								rs.getString("NAME"),
 								coordinatesService.getCoordinates(CoordinateEntity.STUDENT, id),
 								school,
-								studentHours);
+								studentHours,
+                                rs.getBoolean("DISABLED"));
 					}
 					
 				});

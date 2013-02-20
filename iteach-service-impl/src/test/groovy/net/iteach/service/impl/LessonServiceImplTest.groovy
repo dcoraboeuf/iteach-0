@@ -1,20 +1,8 @@
 package net.iteach.service.impl
 
 import net.iteach.api.LessonService
-import net.iteach.core.model.CoordinateType
-import net.iteach.core.model.Coordinates
-import net.iteach.core.model.Lesson
-import net.iteach.core.model.LessonChange;
-import net.iteach.core.model.LessonDetails
-import net.iteach.core.model.LessonForm
-import net.iteach.core.model.LessonRange
-import net.iteach.core.model.SchoolSummary
-import net.iteach.core.model.SchoolSummaryWithCoordinates
-import net.iteach.core.model.StudentLesson
-import net.iteach.core.model.StudentSummary
-import net.iteach.core.model.StudentSummaryWithCoordinates
+import net.iteach.core.model.*
 import net.iteach.test.AbstractIntegrationTest
-
 import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalTime
@@ -69,8 +57,8 @@ class LessonServiceImplTest extends AbstractIntegrationTest {
 		assert result != null
 		assert result.lessons != null
 		
-		def student1 = new StudentSummary(1, "English", "A. Albert", new SchoolSummary(1, "My school 1", "#FF0000", MoneyUtils.money(10)))
-		def student3 = new StudentSummary(3, "German", "C. Charles", new SchoolSummary(3, "My school 3", "#0000FF", MoneyUtils.money(30)))
+		def student1 = new StudentSummary(1, "English", "A. Albert", new SchoolSummary(1, "My school 1", "#FF0000", MoneyUtils.money(10)), false)
+		def student3 = new StudentSummary(3, "German", "C. Charles", new SchoolSummary(3, "My school 3", "#0000FF", MoneyUtils.money(30)), false)
 		
 		assert [
 			new Lesson(2, student1, new LocalDate(2013,1,7), new LocalTime(18,0), new LocalTime(20,30), "Home"),
@@ -85,8 +73,8 @@ class LessonServiceImplTest extends AbstractIntegrationTest {
 		assert result != null
 		assert result.lessons != null
 		
-		def student1 = new StudentSummary(1, "English", "A. Albert", new SchoolSummary(1, "My school 1", "#FF0000", MoneyUtils.money(10)))
-		def student3 = new StudentSummary(3, "German", "C. Charles", new SchoolSummary(3, "My school 3", "#0000FF", MoneyUtils.money(30)))
+		def student1 = new StudentSummary(1, "English", "A. Albert", new SchoolSummary(1, "My school 1", "#FF0000", MoneyUtils.money(10)), false)
+		def student3 = new StudentSummary(3, "German", "C. Charles", new SchoolSummary(3, "My school 3", "#0000FF", MoneyUtils.money(30)), false)
 		
 		assert [
 			new Lesson(4, student1, new LocalDate(2013,2,1), new LocalTime(18,0), new LocalTime(20,30), "Home"),
@@ -117,9 +105,10 @@ class LessonServiceImplTest extends AbstractIntegrationTest {
 					Coordinates.create()
 						.add(CoordinateType.ADDRESS, "At my school 1")
 						.add(CoordinateType.WEB, "http://school/1")),
-				Coordinates.create()
-					.add(CoordinateType.MOBILE_PHONE, "0123456789")
-					.add(CoordinateType.EMAIL, "albert@test.com")
+                false,
+                Coordinates.create()
+                    .add(CoordinateType.MOBILE_PHONE, "0123456789")
+                    .add(CoordinateType.EMAIL, "albert@test.com")
 				),
 			new LocalDate(2012,12,21),
 			new LocalTime(12,0),

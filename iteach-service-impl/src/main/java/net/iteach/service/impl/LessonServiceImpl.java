@@ -1,45 +1,15 @@
 package net.iteach.service.impl;
 
-import static net.iteach.service.db.SQLUtils.dateToDB;
-import static net.iteach.service.db.SQLUtils.timeToDB;
-
-import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Locale;
-
-import javax.sql.DataSource;
-import javax.validation.Validator;
-
 import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.LessonService;
 import net.iteach.api.model.CommentEntity;
 import net.iteach.api.model.CoordinateEntity;
-import net.iteach.core.model.Ack;
-import net.iteach.core.model.Comment;
-import net.iteach.core.model.CommentFormat;
-import net.iteach.core.model.Comments;
-import net.iteach.core.model.CommentsForm;
-import net.iteach.core.model.ID;
-import net.iteach.core.model.Lesson;
-import net.iteach.core.model.LessonChange;
-import net.iteach.core.model.LessonDetails;
-import net.iteach.core.model.LessonForm;
-import net.iteach.core.model.LessonRange;
-import net.iteach.core.model.Lessons;
-import net.iteach.core.model.SchoolSummary;
-import net.iteach.core.model.SchoolSummaryWithCoordinates;
-import net.iteach.core.model.StudentLesson;
-import net.iteach.core.model.StudentLessons;
-import net.iteach.core.model.StudentSummary;
-import net.iteach.core.model.StudentSummaryWithCoordinates;
+import net.iteach.core.model.*;
 import net.iteach.core.validation.LessonFormValidation;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 import net.sf.jstring.LocalizableMessage;
-
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
@@ -50,6 +20,17 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.sql.DataSource;
+import javax.validation.Validator;
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Locale;
+
+import static net.iteach.service.db.SQLUtils.dateToDB;
+import static net.iteach.service.db.SQLUtils.timeToDB;
 
 @Service
 public class LessonServiceImpl extends AbstractServiceImpl implements LessonService {
@@ -141,7 +122,8 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 										rs.getInt("STUDENT_ID"),
 										rs.getString("STUDENT_SUBJECT"),
 										rs.getString("STUDENT_NAME"),
-										school);
+										school,
+                                        rs.getBoolean("STUDENT_DISABLED"));
 								return new Lesson(
 										rs.getInt("id"),
 										student,
@@ -177,6 +159,7 @@ public class LessonServiceImpl extends AbstractServiceImpl implements LessonServ
 							rs.getString("STUDENT_SUBJECT"),
 							rs.getString("STUDENT_NAME"),
 							school,
+                            rs.getBoolean("STUDENT_DISABLED"),
 							coordinatesService.getCoordinates(CoordinateEntity.STUDENT, studentId));
 					return new LessonDetails(
 							rs.getInt("id"),

@@ -7,9 +7,9 @@
 	<SCHOOLS id="2" teacher="2" name="My school 2" color="#00FF00" hrate="20" />
 	<SCHOOLS id="3" teacher="1" name="My school 3" color="#0000FF" hrate="30" />
 	
-	<STUDENTS id="1" school="1" subject="English" name="A. Albert" />
-	<STUDENTS id="2" school="1" subject="German" name="B. Bernard" />
-	<STUDENTS id="3" school="3" subject="German" name="C. Charles" />
+	<STUDENTS id="1" school="1" subject="English" name="A. Albert" disabled="false" />
+	<STUDENTS id="2" school="1" subject="German" name="B. Bernard" disabled="false" />
+	<STUDENTS id="3" school="3" subject="German" name="C. Charles" disabled="false" />
 	
 	<COORDINATES id="1" school="1" coord_type="ADDRESS" coord_value="At my school 1" />
 	<COORDINATES id="2" school="1" coord_type="WEB" coord_value="http://school/1" />
