@@ -38,7 +38,11 @@
 							<#list school.students as student>
 								<tr>
 									<td>
-										<a href="gui/student/${student.id}">${student.name?html}</a>
+                                        <#assign linkClass = "" />
+                                        <#if student.disabled>
+                                            <#assign linkClass = "muted" />
+                                        </#if>
+										<a href="gui/student/${student.id}" class="${linkClass}">${student.name?html}</a>
 										<span class="label">${student.subject?html}</span>
 									</td>
 									<td class="hours">
