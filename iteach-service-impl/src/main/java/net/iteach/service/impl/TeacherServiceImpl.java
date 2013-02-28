@@ -2,7 +2,6 @@ package net.iteach.service.impl;
 
 import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
-import net.iteach.api.StudentService;
 import net.iteach.api.TeacherService;
 import net.iteach.api.model.CommentEntity;
 import net.iteach.api.model.CoordinateEntity;
@@ -42,14 +41,12 @@ import static net.iteach.service.db.SQLUtils.timeToDB;
 public class TeacherServiceImpl extends AbstractServiceImpl implements
         TeacherService {
 
-    private final StudentService studentService;
     private final CoordinatesService coordinatesService;
     private final CommentsService commentsService;
 
     @Autowired
-    public TeacherServiceImpl(DataSource dataSource, Validator validator, StudentService studentService, CoordinatesService coordinatesService, CommentsService commentsService) {
+    public TeacherServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService, CommentsService commentsService) {
         super(dataSource, validator);
-        this.studentService = studentService;
         this.coordinatesService = coordinatesService;
         this.commentsService = commentsService;
     }
@@ -87,7 +84,7 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
                                 rs.getString("name"),
                                 rs.getString("subject"),
                                 rs.getBoolean("disabled"),
-                                studentService.getStudentHours(userId, studentId));
+                                getStudentHours(userId, studentId));
                     }
 
                 }

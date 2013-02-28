@@ -2,10 +2,8 @@ package net.iteach.service.admin;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import net.iteach.api.LessonService;
 import net.iteach.api.ProfileService;
 import net.iteach.api.TeacherService;
-import net.iteach.api.StudentService;
 import net.iteach.api.admin.*;
 import net.iteach.api.model.ConfigurationKey;
 import net.iteach.api.model.copy.Comment;
@@ -65,17 +63,13 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
     private final SecurityUtils securityUtils;
     private final ProfileService profileService;
     private final TeacherService teacherService;
-    private final StudentService studentService;
-    private final LessonService lessonService;
 
     @Autowired
-    public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, ProfileService profileService, TeacherService teacherService, StudentService studentService, LessonService lessonService) {
+    public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, ProfileService profileService, TeacherService teacherService) {
         super(dataSource, validator);
         this.securityUtils = securityUtils;
         this.profileService = profileService;
         this.teacherService = teacherService;
-        this.studentService = studentService;
-        this.lessonService = lessonService;
     }
 
     @Override
