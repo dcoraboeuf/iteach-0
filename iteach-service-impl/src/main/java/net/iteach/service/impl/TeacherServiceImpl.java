@@ -26,7 +26,6 @@ import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
@@ -261,23 +260,7 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
     @Transactional(readOnly = true)
     public BigDecimal getStudentHours(int userId, int id) {
         checkTeacherForStudent(userId, id);
-        final AtomicReference<BigDecimal> hours = new AtomicReference<>(BigDecimal.ZERO);
-        getNamedParameterJdbcTemplate().query(
-                SQL.STUDENT_TOTAL_HOURS,
-                params("id", id),
-                new RowCallbackHandler() {
-
-                    @Override
-                    public void processRow(ResultSet rs) throws SQLException {
-                        hours.set(hours.get().add(getHours(
-                                SQLUtils.timeFromDB(rs.getString("pfrom")),
-                                SQLUtils.timeFromDB(rs.getString("pto"))
-                        )));
-                    }
-                }
-        );
-        final BigDecimal studentHours = hours.get();
-        return studentHours;
+        return lessonDao.getHoursForStudent(id);
     }
 
     @Override
@@ -444,7 +427,7 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         // Total hours
         BigDecimal hours = BigDecimal.ZERO;
         for (StudentLesson lesson : lessons) {
-            hours = hours.add(getHours(lesson.getFrom(), lesson.getTo()));
+            hours = hours.add(SQLUtils.getHours(lesson.getFrom(), lesson.getTo()));
         }
         // OK
         return new StudentLessons(

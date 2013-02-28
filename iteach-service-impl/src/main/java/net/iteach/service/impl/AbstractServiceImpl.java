@@ -8,8 +8,6 @@ import net.sf.jstring.Localizable;
 import net.sf.jstring.LocalizableMessage;
 import net.sf.jstring.MultiLocalizable;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalTime;
-import org.joda.time.Period;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.security.access.AccessDeniedException;
@@ -17,16 +15,12 @@ import org.springframework.security.access.AccessDeniedException;
 import javax.sql.DataSource;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 public abstract class AbstractServiceImpl extends NamedParameterJdbcDaoSupport {
-
-	private static final BigDecimal MINUTES_IN_HOUR = BigDecimal.valueOf(60);
 
     private final Validator validator;
 	
@@ -54,12 +48,6 @@ public abstract class AbstractServiceImpl extends NamedParameterJdbcDaoSupport {
 		if (teacher == null) {
 			throw new AccessDeniedException(String.format("User %d cannot access lesson %d", userId, id));
 		}
-	}
-	
-	protected BigDecimal getHours(LocalTime from, LocalTime to) {
-		Period duration = new Period(from, to);
-		BigDecimal minutes = new BigDecimal(duration.toStandardMinutes().getMinutes());
-		return minutes.divide(MINUTES_IN_HOUR, 2, RoundingMode.HALF_UP);
 	}
 
     /**

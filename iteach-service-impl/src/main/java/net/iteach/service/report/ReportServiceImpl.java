@@ -1,15 +1,5 @@
 package net.iteach.service.report;
 
-import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import javax.sql.DataSource;
-import javax.validation.Validator;
-
 import net.iteach.api.report.ReportService;
 import net.iteach.core.report.MonthlyReport;
 import net.iteach.core.report.SchoolMonthlyHours;
@@ -18,7 +8,6 @@ import net.iteach.core.security.SecurityUtils;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 import net.iteach.service.impl.AbstractServiceImpl;
-
 import org.joda.money.Money;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -27,6 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.sql.DataSource;
+import javax.validation.Validator;
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Service
 public class ReportServiceImpl extends AbstractServiceImpl implements ReportService {
@@ -61,7 +59,7 @@ public class ReportServiceImpl extends AbstractServiceImpl implements ReportServ
 					LocalDate lineDate = SQLUtils.dateFromDB(rs.getString("pdate"));
 					LocalTime timeFrom = SQLUtils.timeFromDB(rs.getString("pfrom"));
 					LocalTime timeTo = SQLUtils.timeFromDB(rs.getString("pto"));
-					BigDecimal hours = getHours(timeFrom, timeTo);
+					BigDecimal hours = SQLUtils.getHours(timeFrom, timeTo);
 					
 					boolean monthlyHours = (lineDate.compareTo(from) >= 0) && (lineDate.compareTo(to) <= 0);
 					
