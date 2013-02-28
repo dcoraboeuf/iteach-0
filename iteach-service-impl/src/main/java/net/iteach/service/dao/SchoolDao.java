@@ -16,4 +16,6 @@ public interface SchoolDao {
     ID createSchool(int teacherId, String name, String color, BigDecimal hourlyRate);
 
     Ack deleteSchool(int id);
+
+    Ack updateSchool(int id, String name, String color, BigDecimal hourlyRate);
 }

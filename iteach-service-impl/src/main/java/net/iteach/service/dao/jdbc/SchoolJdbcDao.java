@@ -66,6 +66,23 @@ public class SchoolJdbcDao extends AbstractJdbcDao implements SchoolDao {
     }
 
     @Override
+    @Transactional
+    public Ack updateSchool(int id, String name, String color, BigDecimal hourlyRate) {
+        try {
+            return Ack.one(getNamedParameterJdbcTemplate().update(
+                    SQL.SCHOOL_UPDATE,
+                    params("id", id)
+                            .addValue("name", name)
+                            .addValue("color", color)
+                            .addValue("hourlyRate", hourlyRate)
+            ));
+        } catch (DuplicateKeyException ex) {
+            // Duplicate school name
+            throw new SchoolNameAlreadyDefined(name);
+        }
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public TSchool getSchoolById(int id) {
         return getNamedParameterJdbcTemplate().queryForObject(

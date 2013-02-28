@@ -26,7 +26,6 @@ import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -169,26 +168,13 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         // Form validation
         validate(form, SchoolFormValidation.class);
         // Query
-        try {
-            int count = getNamedParameterJdbcTemplate().update(
-                    SQL.SCHOOL_UPDATE,
-                    params("teacher", userId)
-                            .addValue("id", id)
-                            .addValue("name", form.getName())
-                            .addValue("color", form.getColor())
-                            .addValue("hourlyRate", form.getHourlyRate())
-            );
-            Ack ack = Ack.one(count);
-            // Coordinates
-            if (ack.isSuccess()) {
-                coordinatesService.setCoordinates(CoordinateEntity.SCHOOL, id, form.getCoordinates());
-            }
-            // OK
-            return ack;
-        } catch (DuplicateKeyException ex) {
-            // Duplicate school name
-            throw new SchoolNameAlreadyDefined(form.getName());
+        Ack ack = schoolDao.updateSchool(id, form.getName(), form.getColor(), form.getHourlyRate());
+        // Coordinates
+        if (ack.isSuccess()) {
+            coordinatesService.setCoordinates(CoordinateEntity.SCHOOL, id, form.getCoordinates());
         }
+        // OK
+        return ack;
     }
 
     @Override

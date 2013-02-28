@@ -30,7 +30,7 @@ public interface SQL {
 
 	String SCHOOL_DELETE = "DELETE FROM SCHOOLS WHERE ID = :id";
 
-	String SCHOOL_UPDATE = "UPDATE SCHOOLS SET NAME = :name, COLOR = :color, HRATE = :hourlyRate WHERE TEACHER = :teacher AND ID = :id";
+	String SCHOOL_UPDATE = "UPDATE SCHOOLS SET NAME = :name, COLOR = :color, HRATE = :hourlyRate WHERE ID = :id";
 
 	String STUDENTS_FOR_SCHOOL = "SELECT * FROM STUDENTS WHERE SCHOOL = :id";
 
