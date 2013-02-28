@@ -12,6 +12,8 @@ import net.iteach.core.validation.LessonFormValidation;
 import net.iteach.core.validation.SchoolFormValidation;
 import net.iteach.core.validation.StudentFormValidation;
 import net.iteach.service.dao.LessonDao;
+import net.iteach.service.dao.SchoolDao;
+import net.iteach.service.dao.StudentDao;
 import net.iteach.service.dao.model.TLesson;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
@@ -48,13 +50,17 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
     private final CoordinatesService coordinatesService;
     private final CommentsService commentsService;
     private final LessonDao lessonDao;
+    private final StudentDao studentDao;
+    private final SchoolDao schoolDao;
 
     @Autowired
-    public TeacherServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService, CommentsService commentsService, LessonDao lessonDao) {
+    public TeacherServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService, CommentsService commentsService, LessonDao lessonDao, StudentDao studentDao, SchoolDao schoolDao) {
         super(dataSource, validator);
         this.coordinatesService = coordinatesService;
         this.commentsService = commentsService;
         this.lessonDao = lessonDao;
+        this.studentDao = studentDao;
+        this.schoolDao = schoolDao;
     }
 
     @Override
@@ -493,38 +499,24 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
     @Override
     @Transactional(readOnly = true)
     public Lessons getLessonsForTeacher(int userId, LessonRange range) {
-        // TODO Validation
         return new Lessons(
-                getNamedParameterJdbcTemplate().query(
-                        SQL.LESSONS,
-                        params("teacher", userId)
-                                .addValue("from", range.getFrom().toString())
-                                .addValue("to", range.getTo().toString()),
-                        new RowMapper<Lesson>() {
+                Lists.transform(lessonDao.findLessonsForTeacher(userId, range.getFrom(), range.getTo()),
+                        new Function<TLesson, Lesson>() {
                             @Override
-                            public Lesson mapRow(ResultSet rs, int rowNum)
-                                    throws SQLException {
-                                SchoolSummary school = new SchoolSummary(
-                                        rs.getInt("SCHOOL_ID"),
-                                        rs.getString("SCHOOL_NAME"),
-                                        rs.getString("SCHOOL_COLOR"),
-                                        SQLUtils.moneyFromDB(rs, "SCHOOL_HRATE"));
-                                StudentSummary student = new StudentSummary(
-                                        rs.getInt("STUDENT_ID"),
-                                        rs.getString("STUDENT_SUBJECT"),
-                                        rs.getString("STUDENT_NAME"),
-                                        school,
-                                        rs.getBoolean("STUDENT_DISABLED"));
+                            public Lesson apply(TLesson t) {
+                                // FIXME Gets the student summary
                                 return new Lesson(
-                                        rs.getInt("id"),
-                                        student,
-                                        SQLUtils.dateFromDB(rs.getString("pdate")),
-                                        SQLUtils.timeFromDB(rs.getString("pfrom")),
-                                        SQLUtils.timeFromDB(rs.getString("pto")),
-                                        rs.getString("location")
+                                        t.getId(),
+                                        null,
+                                        t.getDate(),
+                                        t.getFrom(),
+                                        t.getTo(),
+                                        t.getLocation()
                                 );
                             }
-                        }));
+                        }
+                )
+        );
     }
 
     @Override

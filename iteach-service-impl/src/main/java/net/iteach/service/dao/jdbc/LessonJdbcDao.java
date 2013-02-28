@@ -5,6 +5,7 @@ import net.iteach.service.dao.model.TLesson;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -19,9 +20,36 @@ import java.util.List;
 @Component
 public class LessonJdbcDao extends AbstractJdbcDao implements LessonDao {
 
+    private final RowMapper<TLesson> lessonRowMapper = new RowMapper<TLesson>() {
+        @Override
+        public TLesson mapRow(ResultSet rs, int rowNum)
+                throws SQLException {
+            LocalDate rsDate = SQLUtils.dateFromDB(rs.getString("pdate"));
+            LocalTime rsFrom = SQLUtils.timeFromDB(rs.getString("pfrom"));
+            LocalTime rsTo = SQLUtils.timeFromDB(rs.getString("pto"));
+            return new TLesson(
+                    rs.getInt("id"),
+                    rs.getInt("student"),
+                    rsDate,
+                    rsFrom,
+                    rsTo,
+                    rs.getString("location"));
+        }
+    };
+
     @Autowired
     public LessonJdbcDao(DataSource dataSource) {
         super(dataSource);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TLesson> findLessonsForTeacher(int userId, LocalDateTime from, LocalDateTime to) {
+        return getNamedParameterJdbcTemplate().query(
+                SQL.LESSONS,
+                params("teacher", userId).addValue("from", from.toString()).addValue("to", to.toString()),
+                lessonRowMapper
+        );
     }
 
     @Override
@@ -30,22 +58,7 @@ public class LessonJdbcDao extends AbstractJdbcDao implements LessonDao {
         return getNamedParameterJdbcTemplate().query(
                 SQL.LESSONS_FOR_STUDENT,
                 params("id", studentId).addValue("from", from.toString()).addValue("to", to.toString()),
-                new RowMapper<TLesson>() {
-                    @Override
-                    public TLesson mapRow(ResultSet rs, int rowNum)
-                            throws SQLException {
-                        LocalDate rsDate = SQLUtils.dateFromDB(rs.getString("pdate"));
-                        LocalTime rsFrom = SQLUtils.timeFromDB(rs.getString("pfrom"));
-                        LocalTime rsTo = SQLUtils.timeFromDB(rs.getString("pto"));
-                        return new TLesson(
-                                rs.getInt("id"),
-                                rs.getInt("student"),
-                                rsDate,
-                                rsFrom,
-                                rsTo,
-                                rs.getString("location"));
-                    }
-                }
+                lessonRowMapper
         );
     }
 }
