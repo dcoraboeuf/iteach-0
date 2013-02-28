@@ -1,4 +1,4 @@
-package net.iteach.core.copy;
+package net.iteach.api.model.copy;
 
 import lombok.Data;
 

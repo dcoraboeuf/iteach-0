@@ -1,4 +1,4 @@
-package net.iteach.core.copy;
+package net.iteach.api.model.copy;
 
 import lombok.Data;
 
@@ -7,9 +7,9 @@ import java.util.List;
 @Data
 public class Copy {
 
-    // TODO Version
-    // TODO Preferences
+    private static final int CURRENT_VERSION = 1;
 
+    private final int version;
     private final List<School> schools;
 
 }
