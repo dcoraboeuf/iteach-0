@@ -1,5 +1,7 @@
 package net.iteach.service.impl;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.TeacherService;
@@ -9,6 +11,8 @@ import net.iteach.core.model.*;
 import net.iteach.core.validation.LessonFormValidation;
 import net.iteach.core.validation.SchoolFormValidation;
 import net.iteach.core.validation.StudentFormValidation;
+import net.iteach.service.dao.LessonDao;
+import net.iteach.service.dao.model.TLesson;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 import net.sf.jstring.LocalizableMessage;
@@ -43,12 +47,14 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
 
     private final CoordinatesService coordinatesService;
     private final CommentsService commentsService;
+    private final LessonDao lessonDao;
 
     @Autowired
-    public TeacherServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService, CommentsService commentsService) {
+    public TeacherServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService, CommentsService commentsService, LessonDao lessonDao) {
         super(dataSource, validator);
         this.coordinatesService = coordinatesService;
         this.commentsService = commentsService;
+        this.lessonDao = lessonDao;
     }
 
     @Override
@@ -440,34 +446,30 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         // Check for the associated teacher
         checkTeacherForStudent(userId, id);
         // From: first day of the month
-        String from = date.withDayOfMonth(1).toString();
+        LocalDate from = date.withDayOfMonth(1);
         // To: last day of the month
-        String to = date.withDayOfMonth(date.dayOfMonth().getMaximumValue()).toString();
+        LocalDate to = date.withDayOfMonth(date.dayOfMonth().getMaximumValue());
         // Localization
         final DateTimeFormatter dateFormat = DateTimeFormat.mediumDate().withLocale(locale);
         final DateTimeFormatter timeFormat = DateTimeFormat.shortTime().withLocale(locale);
         // All lessons
-        List<StudentLesson> lessons = getNamedParameterJdbcTemplate().query(
-                SQL.LESSONS_FOR_STUDENT,
-                params("id", id).addValue("from", from).addValue("to", to),
-                new RowMapper<StudentLesson>() {
+        List<StudentLesson> lessons = Lists.transform(
+                lessonDao.findLessonsForStudent(id, from, to),
+                new Function<TLesson, StudentLesson>() {
+
                     @Override
-                    public StudentLesson mapRow(ResultSet rs, int rowNum)
-                            throws SQLException {
-                        LocalDate rsDate = SQLUtils.dateFromDB(rs.getString("pdate"));
-                        LocalTime rsFrom = SQLUtils.timeFromDB(rs.getString("pfrom"));
-                        LocalTime rsTo = SQLUtils.timeFromDB(rs.getString("pto"));
+                    public StudentLesson apply(TLesson t) {
                         // Localization
-                        String sDate = dateFormat.print(rsDate);
-                        String sFrom = timeFormat.print(rsFrom);
-                        String sTo = timeFormat.print(rsTo);
+                        String sDate = dateFormat.print(t.getDate());
+                        String sFrom = timeFormat.print(t.getFrom());
+                        String sTo = timeFormat.print(t.getTo());
                         // OK
                         return new StudentLesson(
-                                rs.getInt("id"),
-                                rsDate,
-                                rsFrom,
-                                rsTo,
-                                rs.getString("location"),
+                                t.getId(),
+                                t.getDate(),
+                                t.getFrom(),
+                                t.getTo(),
+                                t.getLocation(),
                                 sDate,
                                 sFrom,
                                 sTo

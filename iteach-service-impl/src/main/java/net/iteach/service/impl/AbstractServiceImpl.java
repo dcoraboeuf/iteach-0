@@ -1,22 +1,12 @@
 package net.iteach.service.impl;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
-import javax.sql.DataSource;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import net.iteach.core.validation.ValidationException;
 import net.iteach.service.db.SQL;
 import net.sf.jstring.Localizable;
 import net.sf.jstring.LocalizableMessage;
 import net.sf.jstring.MultiLocalizable;
-
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
@@ -24,8 +14,15 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.security.access.AccessDeniedException;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
+import javax.sql.DataSource;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 public abstract class AbstractServiceImpl extends NamedParameterJdbcDaoSupport {
 
@@ -64,7 +61,11 @@ public abstract class AbstractServiceImpl extends NamedParameterJdbcDaoSupport {
 		BigDecimal minutes = new BigDecimal(duration.toStandardMinutes().getMinutes());
 		return minutes.divide(MINUTES_IN_HOUR, 2, RoundingMode.HALF_UP);
 	}
-	
+
+    /**
+     * @deprecated Migration to DAO
+     */
+    @Deprecated
 	protected <T> T getFirstItem (String sql, MapSqlParameterSource criteria, Class<T> type) {
 		List<T> items = getNamedParameterJdbcTemplate().queryForList(sql, criteria, type);
 		if (items.isEmpty()) {
@@ -73,7 +74,11 @@ public abstract class AbstractServiceImpl extends NamedParameterJdbcDaoSupport {
 			return items.get(0);
 		}
 	}
-	
+
+    /**
+     * @deprecated Migration to DAO
+     */
+    @Deprecated
 	protected MapSqlParameterSource params (String name, Object value) {
 		return new MapSqlParameterSource(name, value);
 	}
