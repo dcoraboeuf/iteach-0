@@ -72,7 +72,7 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
                     t.getId(),
                     t.getSubject(),
                     t.getName(),
-                    schoolSummaryFunction.apply(schoolDao.getSchoolById(t.getSchool())),
+                    getSchoolSummary(t.getSchool()),
                     t.isDisabled()
             );
         }
@@ -241,30 +241,20 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         // Total hours
         final BigDecimal studentHours = getStudentHours(userId, id);
         // Details
-        return getNamedParameterJdbcTemplate().queryForObject(
-                SQL.STUDENT_DETAILS,
-                params("id", id),
-                new RowMapper<StudentDetails>() {
+        TStudent student = studentDao.getStudentById(id);
+        return new StudentDetails(
+                student.getId(),
+                student.getSubject(),
+                student.getName(),
+                coordinatesService.getCoordinates(CoordinateEntity.STUDENT, id),
+                getSchoolSummary(student.getSchool()),
+                studentHours,
+                student.isDisabled()
+        );
+    }
 
-                    @Override
-                    public StudentDetails mapRow(ResultSet rs, int rowNum)
-                            throws SQLException {
-                        SchoolSummary school = new SchoolSummary(
-                                rs.getInt("SCHOOL_ID"),
-                                rs.getString("SCHOOL_NAME"),
-                                rs.getString("SCHOOL_COLOR"),
-                                SQLUtils.moneyFromDB(rs, "SCHOOL_HRATE"));
-                        return new StudentDetails(
-                                rs.getInt("ID"),
-                                rs.getString("SUBJECT"),
-                                rs.getString("NAME"),
-                                coordinatesService.getCoordinates(CoordinateEntity.STUDENT, id),
-                                school,
-                                studentHours,
-                                rs.getBoolean("DISABLED"));
-                    }
-
-                });
+    private SchoolSummary getSchoolSummary(int school) {
+        return schoolSummaryFunction.apply(schoolDao.getSchoolById(school));
     }
 
     @Override
