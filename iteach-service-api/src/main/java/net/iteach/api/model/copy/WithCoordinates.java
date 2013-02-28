@@ -9,9 +9,9 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public abstract class WithCoordinates extends WithComments {
 
-    private final List<Coordinate> coordinates;
+    private final List<CoordinateCopy> coordinates;
 
-    protected WithCoordinates(List<Comment> comments, List<Coordinate> coordinates) {
+    protected WithCoordinates(List<Comment> comments, List<CoordinateCopy> coordinates) {
         super(comments);
         this.coordinates = coordinates;
     }

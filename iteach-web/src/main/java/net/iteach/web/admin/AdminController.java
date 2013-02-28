@@ -1,17 +1,20 @@
 package net.iteach.web.admin;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import net.iteach.api.admin.AccountSummary;
 import net.iteach.api.admin.AdminService;
 import net.iteach.api.admin.SettingsUpdate;
 import net.iteach.api.model.ConfigurationKey;
+import net.iteach.api.model.copy.Copy;
 import net.iteach.core.model.UserMessage;
 import net.iteach.utils.InputException;
 import net.iteach.web.support.AbstractGUIController;
 import net.iteach.web.support.ErrorHandler;
 import net.sf.jstring.Strings;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,19 +23,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController extends AbstractGUIController {
 
 	private final AdminService adminService;
 	private final Strings strings;
+    private final ObjectMapper mapper;
 		
 	@Autowired
-	public AdminController(ErrorHandler errorHandler, AdminService adminService, Strings strings) {
+	public AdminController(ErrorHandler errorHandler, AdminService adminService, Strings strings, ObjectMapper mapper) {
 		super(errorHandler);
 		this.adminService = adminService;
 		this.strings = strings;
-	}
+        this.mapper = mapper;
+    }
 
 	/**
 	 * Settings
@@ -106,5 +113,19 @@ public class AdminController extends AbstractGUIController {
 		// OK
 		return "redirect:/admin/accounts";
 	}
+
+    /**
+     * Exports the data for the user
+     */
+    @RequestMapping(value = "/account/{id}/export", method = RequestMethod.GET)
+    public void accountExport(@PathVariable int id, HttpServletResponse response) throws IOException {
+        // Gets a copy of the account
+        Copy copy = adminService.export(id);
+        // Serializes as JSON
+        mapper.writeValue(response.getOutputStream(), copy);
+        // Headers
+        response.addHeader("Content-Type", "application/json");
+        response.addHeader("Content-Disposition", "attachment; filename=account.json");
+    }
 
 }

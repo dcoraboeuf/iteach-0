@@ -1,5 +1,7 @@
 package net.iteach.api.admin;
 
+import net.iteach.api.model.copy.Copy;
+
 import java.util.List;
 
 public interface AdminService {
@@ -14,4 +16,5 @@ public interface AdminService {
 
 	void setSettings(SettingsUpdate update);
 
+    Copy export(int id);
 }
