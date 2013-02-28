@@ -15,6 +15,7 @@ import net.iteach.service.dao.LessonDao;
 import net.iteach.service.dao.SchoolDao;
 import net.iteach.service.dao.StudentDao;
 import net.iteach.service.dao.model.TLesson;
+import net.iteach.service.dao.model.TSchool;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 import net.sf.jstring.LocalizableMessage;
@@ -67,14 +68,19 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
     @Transactional(readOnly = true)
     public SchoolSummaries getSchoolsForTeacher(int teacherId) {
         return new SchoolSummaries(
-                getNamedParameterJdbcTemplate().query(SQL.SCHOOLS_FOR_TEACHER, params("teacher", teacherId),
-                        new RowMapper<SchoolSummary>() {
+                Lists.transform(schoolDao.findSchoolsByTeacher(teacherId),
+                        new Function<TSchool, SchoolSummary>() {
                             @Override
-                            public SchoolSummary mapRow(ResultSet rs, int rowNum)
-                                    throws SQLException {
-                                return new SchoolSummary(rs.getInt("id"), rs.getString("name"), rs.getString("color"), SQLUtils.moneyFromDB(rs, "hrate"));
+                            public SchoolSummary apply(TSchool t) {
+                                return new SchoolSummary(
+                                        t.getId(),
+                                        t.getName(),
+                                        t.getColor(),
+                                        t.getHourlyRate()
+                                );
                             }
-                        }));
+                        })
+        );
     }
 
     @Override

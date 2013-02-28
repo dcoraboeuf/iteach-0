@@ -1,8 +1,7 @@
 package net.iteach.service.dao.model;
 
 import lombok.Data;
-
-import java.math.BigDecimal;
+import org.joda.money.Money;
 
 @Data
 public class TSchool {
@@ -10,6 +9,6 @@ public class TSchool {
     private final int id;
     private final String name;
     private final String color;
-    private final BigDecimal hourlyRate;
+    private final Money hourlyRate;
 
 }
