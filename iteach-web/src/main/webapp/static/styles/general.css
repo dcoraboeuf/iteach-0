@@ -9,6 +9,10 @@
 	cursor: pointer;
 }
 
+.hidden {
+    display: none;
+}
+
 .invalid {
 	border: red;
 }

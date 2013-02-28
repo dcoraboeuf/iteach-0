@@ -692,6 +692,14 @@ admin.accounts.mode.password
 	en -> Password
 	fr -> Mot de passe
 
+admin.accounts.export
+    en -> Export data
+    fr -> Exporter les données
+
+admin.accounts.import
+    en -> Import data
+    fr -> Importer les données
+
 page.accountDelete
 	en -> Account deletion confirmation
 	fr -> Confirmation pour la suppression d'un compte
