@@ -78,7 +78,6 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
             );
         }
     };
-    ;
 
     @Autowired
     public TeacherServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService, CommentsService commentsService, LessonDao lessonDao, StudentDao studentDao, SchoolDao schoolDao) {
@@ -144,26 +143,13 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
     @Transactional
     public ID createSchoolForTeacher(int teacherId, SchoolForm form) {
         validate(form, SchoolFormValidation.class);
-        try {
-            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-            int count = getNamedParameterJdbcTemplate().update(
-                    SQL.SCHOOL_CREATE,
-                    params("teacher", teacherId)
-                            .addValue("name", form.getName())
-                            .addValue("color", form.getColor())
-                            .addValue("hourlyRate", form.getHourlyRate()),
-                    keyHolder);
-            ID id = ID.count(count).withId(keyHolder.getKey().intValue());
-            // Coordinates
-            if (id.isSuccess()) {
-                coordinatesService.setCoordinates(CoordinateEntity.SCHOOL, id.getValue(), form.getCoordinates());
-            }
-            // OK
-            return id;
-        } catch (DuplicateKeyException ex) {
-            // Duplicate school name
-            throw new SchoolNameAlreadyDefined(form.getName());
+        ID id = schoolDao.createSchool(teacherId, form.getName(), form.getColor(), form.getHourlyRate());
+        // Coordinates
+        if (id.isSuccess()) {
+            coordinatesService.setCoordinates(CoordinateEntity.SCHOOL, id.getValue(), form.getCoordinates());
         }
+        // OK
+        return id;
     }
 
     @Override
@@ -172,9 +158,7 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         // Check for the associated teacher
         checkTeacherForSchool(teacherId, id);
         // Update
-        int count = getNamedParameterJdbcTemplate().update(SQL.SCHOOL_DELETE, params("teacher", teacherId).addValue("id", id));
-        // OK
-        return Ack.one(count);
+        return schoolDao.deleteSchool(id);
     }
 
     @Override

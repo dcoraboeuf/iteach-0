@@ -1,15 +1,21 @@
 package net.iteach.service.dao.jdbc;
 
+import net.iteach.core.model.Ack;
+import net.iteach.core.model.ID;
 import net.iteach.service.dao.SchoolDao;
 import net.iteach.service.dao.model.TSchool;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
+import net.iteach.service.impl.SchoolNameAlreadyDefined;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -32,6 +38,31 @@ public class SchoolJdbcDao extends AbstractJdbcDao implements SchoolDao {
     @Autowired
     public SchoolJdbcDao(DataSource dataSource) {
         super(dataSource);
+    }
+
+    @Override
+    @Transactional
+    public ID createSchool(int teacherId, String name, String color, BigDecimal hourlyRate) {
+        try {
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+            int count = getNamedParameterJdbcTemplate().update(
+                    SQL.SCHOOL_CREATE,
+                    params("teacher", teacherId)
+                            .addValue("name", name)
+                            .addValue("color", color)
+                            .addValue("hourlyRate", hourlyRate),
+                    keyHolder);
+            return ID.count(count).withId(keyHolder.getKey().intValue());
+        } catch (DuplicateKeyException ex) {
+            // Duplicate school name
+            throw new SchoolNameAlreadyDefined(name);
+        }
+    }
+
+    @Override
+    @Transactional
+    public Ack deleteSchool(int id) {
+        return Ack.one(getNamedParameterJdbcTemplate().update(SQL.SCHOOL_DELETE, params("id", id)));
     }
 
     @Override

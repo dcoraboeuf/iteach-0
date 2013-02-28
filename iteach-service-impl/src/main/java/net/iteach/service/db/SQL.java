@@ -28,7 +28,7 @@ public interface SQL {
 
 	String SCHOOL_CREATE = "INSERT INTO SCHOOLS (TEACHER, NAME, COLOR, HRATE) VALUES (:teacher, :name, :color, :hourlyRate)";
 
-	String SCHOOL_DELETE = "DELETE FROM SCHOOLS WHERE TEACHER = :teacher AND ID = :id";
+	String SCHOOL_DELETE = "DELETE FROM SCHOOLS WHERE ID = :id";
 
 	String SCHOOL_UPDATE = "UPDATE SCHOOLS SET NAME = :name, COLOR = :color, HRATE = :hourlyRate WHERE TEACHER = :teacher AND ID = :id";
 
