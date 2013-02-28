@@ -52,4 +52,14 @@ public class StudentJdbcDao extends AbstractJdbcDao implements StudentDao {
                 studentRowMapper
         );
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TStudent> findStudentsBySchool(int schoolId) {
+        return getNamedParameterJdbcTemplate().query(
+                SQL.STUDENTS_FOR_SCHOOL,
+                params("id", schoolId),
+                studentRowMapper
+        );
+    }
 }

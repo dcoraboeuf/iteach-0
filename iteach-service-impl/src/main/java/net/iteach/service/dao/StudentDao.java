@@ -8,4 +8,6 @@ public interface StudentDao {
     List<TStudent> findStudentsByTeacher(int teacherId);
 
     TStudent getStudentById(int studentId);
+
+    List<TStudent> findStudentsBySchool(int schoolId);
 }

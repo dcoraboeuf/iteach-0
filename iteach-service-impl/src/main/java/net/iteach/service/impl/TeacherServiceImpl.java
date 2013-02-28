@@ -105,23 +105,21 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
     public SchoolDetails getSchoolForTeacher(final int userId, final int id) {
         // Check for the associated teacher
         checkTeacherForSchool(userId, id);
-        // Student summaries
-        final List<SchoolDetailsStudent> students = getNamedParameterJdbcTemplate().query(
-                SQL.STUDENTS_FOR_SCHOOL,
-                params("id", id),
-                new RowMapper<SchoolDetailsStudent>() {
 
+        List<TStudent> studentsForSchool = studentDao.findStudentsBySchool(id);
+        final List<SchoolDetailsStudent> students = Lists.transform(
+                studentsForSchool,
+                new Function<TStudent, SchoolDetailsStudent>() {
                     @Override
-                    public SchoolDetailsStudent mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        int studentId = rs.getInt("id");
+                    public SchoolDetailsStudent apply(TStudent t) {
                         return new SchoolDetailsStudent(
-                                studentId,
-                                rs.getString("name"),
-                                rs.getString("subject"),
-                                rs.getBoolean("disabled"),
-                                getStudentHours(userId, studentId));
+                                t.getId(),
+                                t.getName(),
+                                t.getSubject(),
+                                t.isDisabled(),
+                                getStudentHours(userId, t.getId())
+                        );
                     }
-
                 }
         );
         // Total hours
@@ -130,25 +128,15 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
             totalHours.set(totalHours.get().add(student.getHours()));
         }
         // Details
-        return getNamedParameterJdbcTemplate().queryForObject(
-                SQL.SCHOOL_DETAILS,
-                params("id", id),
-                new RowMapper<SchoolDetails>() {
-
-                    @Override
-                    public SchoolDetails mapRow(ResultSet rs, int rowNum)
-                            throws SQLException {
-                        return new SchoolDetails(
-                                rs.getInt("id"),
-                                rs.getString("name"),
-                                rs.getString("color"),
-                                SQLUtils.moneyFromDB(rs, "hrate"),
-                                coordinatesService.getCoordinates(CoordinateEntity.SCHOOL, id),
-                                students,
-                                totalHours.get());
-                    }
-
-                }
+        TSchool school = schoolDao.getSchoolById(id);
+        return new SchoolDetails(
+                school.getId(),
+                school.getName(),
+                school.getColor(),
+                school.getHourlyRate(),
+                coordinatesService.getCoordinates(CoordinateEntity.SCHOOL, id),
+                students,
+                totalHours.get()
         );
     }
 
