@@ -1,7 +1,6 @@
 package net.iteach.service.impl
 
-import net.iteach.api.LessonService
-import net.iteach.core.model.Lesson
+import net.iteach.api.TeacherService
 import net.iteach.core.model.*
 import net.iteach.test.AbstractIntegrationTest
 import org.joda.time.LocalDate
@@ -14,7 +13,7 @@ import org.springframework.security.access.AccessDeniedException
 class LessonServiceImplTest extends AbstractIntegrationTest {
 	
 	@Autowired
-	private LessonService service
+	private TeacherService service
 	
 	@Test(expected = AccessDeniedException)
 	void getLessonsForStudent_access_denied() {

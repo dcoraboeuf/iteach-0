@@ -1,10 +1,12 @@
 package net.iteach.api;
 
 import net.iteach.core.model.*;
+import org.joda.time.LocalDate;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
-public interface TeacherService extends LessonService {
+public interface TeacherService {
 
 	SchoolSummaries getSchoolsForTeacher(int teacherId);
 
@@ -51,5 +53,27 @@ public interface TeacherService extends LessonService {
     Ack disableStudentForTeacher(int userId, int id);
 
     Ack enableStudentForTeacher(int userId, int id);
+
+    Lessons getLessonsForTeacher(int userId, LessonRange range);
+
+    ID createLessonForTeacher(int userId, LessonForm form);
+
+    Ack editLessonForTeacher(int userId, int id, LessonForm form);
+
+    Ack deleteLessonForTeacher(int userId, int id);
+
+    StudentLessons getLessonsForStudent(int userId, int id, LocalDate date, Locale locale);
+
+    LessonDetails getLessonDetails(int userId, int id);
+
+    Comments getLessonComments(int userId, int lessonId, int offset, int count, int maxlength, CommentFormat format);
+
+    Comment editLessonComment(int userId, int lessonId, CommentFormat format, CommentsForm form);
+
+    Comment getLessonComment(int userId, int lessonId, int commentId, CommentFormat format);
+
+    Ack deleteLessonComment(int userId, int lessonId, int commentId);
+
+    Ack changeLessonForTeacher(int userId, int id, LessonChange change);
 
 }
