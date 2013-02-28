@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import net.iteach.api.LessonService;
 import net.iteach.api.ProfileService;
-import net.iteach.api.SchoolService;
+import net.iteach.api.TeacherService;
 import net.iteach.api.StudentService;
 import net.iteach.api.admin.*;
 import net.iteach.api.model.ConfigurationKey;
@@ -64,16 +64,16 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
 
     private final SecurityUtils securityUtils;
     private final ProfileService profileService;
-    private final SchoolService schoolService;
+    private final TeacherService teacherService;
     private final StudentService studentService;
     private final LessonService lessonService;
 
     @Autowired
-    public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, ProfileService profileService, SchoolService schoolService, StudentService studentService, LessonService lessonService) {
+    public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, ProfileService profileService, TeacherService teacherService, StudentService studentService, LessonService lessonService) {
         super(dataSource, validator);
         this.securityUtils = securityUtils;
         this.profileService = profileService;
-        this.schoolService = schoolService;
+        this.teacherService = teacherService;
         this.studentService = studentService;
         this.lessonService = lessonService;
     }
@@ -152,7 +152,7 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
     }
 
     protected List<School> exportSchools(final int userId) {
-        return Lists.transform(schoolService.getSchoolsForTeacher(userId).getSummaries(),
+        return Lists.transform(teacherService.getSchoolsForTeacher(userId).getSummaries(),
                 new Function<SchoolSummary, School>() {
                     @Override
                     public School apply(SchoolSummary input) {
@@ -163,8 +163,8 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
 
     protected School exportSchool(int userId, SchoolSummary input) {
         return new School(
-                exportComments(schoolService.getSchoolComments(userId, input.getId(), 0, Integer.MAX_VALUE, Integer.MAX_VALUE, CommentFormat.RAW)),
-                exportCoordinates(schoolService.getSchoolCoordinates(userId, input.getId())),
+                exportComments(teacherService.getSchoolComments(userId, input.getId(), 0, Integer.MAX_VALUE, Integer.MAX_VALUE, CommentFormat.RAW)),
+                exportCoordinates(teacherService.getSchoolCoordinates(userId, input.getId())),
                 input.getName(),
                 input.getColor(),
                 input.getHourlyRate(),

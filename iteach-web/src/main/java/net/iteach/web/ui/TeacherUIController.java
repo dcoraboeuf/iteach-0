@@ -2,7 +2,7 @@ package net.iteach.web.ui;
 
 import net.iteach.api.LessonService;
 import net.iteach.api.ProfileService;
-import net.iteach.api.SchoolService;
+import net.iteach.api.TeacherService;
 import net.iteach.api.StudentService;
 import net.iteach.core.model.*;
 import net.iteach.core.security.SecurityUtils;
@@ -22,13 +22,13 @@ import java.util.Locale;
 public class TeacherUIController extends AbstractUIController implements TeacherUI {
 
 	private final ProfileService profileService;
-	private final SchoolService schoolService;
+	private final TeacherService teacherService;
 	private final StudentService studentService;
 	private final LessonService lessonService;
 
 	@Autowired
 	public TeacherUIController(ProfileService profileService,
-			SchoolService schoolService,
+			TeacherService teacherService,
 			StudentService studentService,
 			LessonService lessonService,
 			SecurityUtils securityUtils,
@@ -36,7 +36,7 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 			Strings strings) {
         super(securityUtils, errorHandler, strings);
         this.profileService = profileService;
-		this.schoolService = schoolService;
+		this.teacherService = teacherService;
 		this.studentService = studentService;
 		this.lessonService = lessonService;
 	}
@@ -48,7 +48,7 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return schoolService.getSchoolsForTeacher(userId);
+		return teacherService.getSchoolsForTeacher(userId);
 	}
 	
 	@Override
@@ -57,7 +57,7 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return schoolService.getSchoolForTeacher (userId, id);
+		return teacherService.getSchoolForTeacher (userId, id);
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return schoolService.createSchoolForTeacher(userId, form);
+		return teacherService.createSchoolForTeacher(userId, form);
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return schoolService.deleteSchoolForTeacher(userId, id);
+		return teacherService.deleteSchoolForTeacher(userId, id);
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return schoolService.editSchoolForTeacher(userId, id, form);
+		return teacherService.editSchoolForTeacher(userId, id, form);
 	}
 
 	@Override
@@ -231,7 +231,7 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return schoolService.getSchoolCoordinates (userId, id);
+		return teacherService.getSchoolCoordinates (userId, id);
 	}
 	
 	@Override
@@ -276,7 +276,7 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return schoolService.getSchoolComments(userId, schoolId, offset, count, maxlength, format);
+		return teacherService.getSchoolComments(userId, schoolId, offset, count, maxlength, format);
 	}
 	
 	@Override
@@ -285,7 +285,7 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return schoolService.getSchoolComment(userId, schoolId, commentId, format);
+		return teacherService.getSchoolComment(userId, schoolId, commentId, format);
 	}
 	
 	@Override
@@ -294,7 +294,7 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return schoolService.editSchoolComment(userId, schoolId, format, form);
+		return teacherService.editSchoolComment(userId, schoolId, format, form);
 	}
 	
 	@Override
@@ -303,7 +303,7 @@ public class TeacherUIController extends AbstractUIController implements Teacher
 		// Gets the current teacher
 		int userId = securityUtils.getCurrentUserId();
 		// OK
-		return schoolService.deleteSchoolComment(userId, schoolId, commentId);
+		return teacherService.deleteSchoolComment(userId, schoolId, commentId);
 	}
 	
 	@Override

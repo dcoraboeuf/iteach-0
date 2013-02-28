@@ -1,6 +1,6 @@
 package net.iteach.service.impl
 
-import net.iteach.api.SchoolService
+import net.iteach.api.TeacherService
 import net.iteach.core.model.*
 import net.iteach.core.validation.ValidationException
 import net.iteach.test.AbstractIntegrationTest
@@ -15,7 +15,7 @@ class SchoolServiceImplTest extends AbstractIntegrationTest {
     private static Strings strings = StringsLoader.auto(Locale.ENGLISH, Locale.FRENCH, Locale.GERMAN);
 	
 	@Autowired
-	private SchoolService service
+	private TeacherService service
 	
 	@Test
 	void getSchools() {

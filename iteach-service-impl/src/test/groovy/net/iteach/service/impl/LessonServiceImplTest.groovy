@@ -1,6 +1,7 @@
 package net.iteach.service.impl
 
 import net.iteach.api.LessonService
+import net.iteach.core.model.Lesson
 import net.iteach.core.model.*
 import net.iteach.test.AbstractIntegrationTest
 import org.joda.time.LocalDate

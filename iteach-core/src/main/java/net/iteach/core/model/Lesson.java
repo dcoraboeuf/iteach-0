@@ -1,5 +1,6 @@
 package net.iteach.core.model;
 
+import net.iteach.core.model.StudentSummary;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
