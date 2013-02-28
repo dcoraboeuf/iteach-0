@@ -16,6 +16,7 @@ import net.iteach.service.dao.SchoolDao;
 import net.iteach.service.dao.StudentDao;
 import net.iteach.service.dao.model.TLesson;
 import net.iteach.service.dao.model.TSchool;
+import net.iteach.service.dao.model.TStudent;
 import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 import net.sf.jstring.LocalizableMessage;
@@ -54,6 +55,31 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
     private final StudentDao studentDao;
     private final SchoolDao schoolDao;
 
+    private final Function<TSchool, SchoolSummary> schoolSummaryFunction = new Function<TSchool, SchoolSummary>() {
+        @Override
+        public SchoolSummary apply(TSchool t) {
+            return new SchoolSummary(
+                    t.getId(),
+                    t.getName(),
+                    t.getColor(),
+                    t.getHourlyRate()
+            );
+        }
+    };
+    private final Function<TStudent, StudentSummary> studentSummaryFunction = new Function<TStudent, StudentSummary>() {
+        @Override
+        public StudentSummary apply(TStudent t) {
+            return new StudentSummary(
+                    t.getId(),
+                    t.getSubject(),
+                    t.getName(),
+                    schoolSummaryFunction.apply(schoolDao.getSchoolById(t.getSchool())),
+                    t.isDisabled()
+            );
+        }
+    };
+    ;
+
     @Autowired
     public TeacherServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService, CommentsService commentsService, LessonDao lessonDao, StudentDao studentDao, SchoolDao schoolDao) {
         super(dataSource, validator);
@@ -68,18 +94,9 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
     @Transactional(readOnly = true)
     public SchoolSummaries getSchoolsForTeacher(int teacherId) {
         return new SchoolSummaries(
-                Lists.transform(schoolDao.findSchoolsByTeacher(teacherId),
-                        new Function<TSchool, SchoolSummary>() {
-                            @Override
-                            public SchoolSummary apply(TSchool t) {
-                                return new SchoolSummary(
-                                        t.getId(),
-                                        t.getName(),
-                                        t.getColor(),
-                                        t.getHourlyRate()
-                                );
-                            }
-                        })
+                Lists.transform(
+                        schoolDao.findSchoolsByTeacher(teacherId),
+                        schoolSummaryFunction)
         );
     }
 
@@ -251,24 +268,11 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
     @Transactional(readOnly = true)
     public StudentSummaries getStudentsForTeacher(int teacherId) {
         return new StudentSummaries(
-                getNamedParameterJdbcTemplate().query(SQL.STUDENTS_FOR_TEACHER, params("teacher", teacherId),
-                        new RowMapper<StudentSummary>() {
-                            @Override
-                            public StudentSummary mapRow(ResultSet rs, int rowNum)
-                                    throws SQLException {
-                                SchoolSummary school = new SchoolSummary(
-                                        rs.getInt("SCHOOL_ID"),
-                                        rs.getString("SCHOOL_NAME"),
-                                        rs.getString("SCHOOL_COLOR"),
-                                        SQLUtils.moneyFromDB(rs, "SCHOOL_HRATE"));
-                                return new StudentSummary(
-                                        rs.getInt("ID"),
-                                        rs.getString("SUBJECT"),
-                                        rs.getString("NAME"),
-                                        school,
-                                        rs.getBoolean("DISABLED"));
-                            }
-                        }));
+                Lists.transform(
+                        studentDao.findStudentsByTeacher(teacherId),
+                        studentSummaryFunction
+                )
+        );
     }
 
     @Override
@@ -510,10 +514,9 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
                         new Function<TLesson, Lesson>() {
                             @Override
                             public Lesson apply(TLesson t) {
-                                // FIXME Gets the student summary
                                 return new Lesson(
                                         t.getId(),
-                                        null,
+                                        studentSummaryFunction.apply(studentDao.getStudentById(t.getStudent())),
                                         t.getDate(),
                                         t.getFrom(),
                                         t.getTo(),

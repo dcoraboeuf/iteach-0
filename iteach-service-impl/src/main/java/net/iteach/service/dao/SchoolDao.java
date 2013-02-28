@@ -8,4 +8,5 @@ public interface SchoolDao {
 
     List<TSchool> findSchoolsByTeacher(int teacherId);
 
+    TSchool getSchoolById(int id);
 }
