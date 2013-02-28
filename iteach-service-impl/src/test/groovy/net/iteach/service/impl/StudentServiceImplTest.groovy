@@ -1,6 +1,6 @@
 package net.iteach.service.impl
 
-import net.iteach.api.StudentService
+import net.iteach.api.TeacherService
 import net.iteach.core.model.*
 import net.iteach.test.AbstractIntegrationTest
 import org.joda.money.CurrencyUnit
@@ -12,7 +12,7 @@ import org.springframework.security.access.AccessDeniedException
 class StudentServiceImplTest extends AbstractIntegrationTest {
 	
 	@Autowired
-	private StudentService service
+	private TeacherService service
 	
 	@Test
 	void getStudents() {

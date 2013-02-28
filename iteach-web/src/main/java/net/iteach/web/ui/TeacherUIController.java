@@ -1,9 +1,7 @@
 package net.iteach.web.ui;
 
-import net.iteach.api.LessonService;
 import net.iteach.api.ProfileService;
 import net.iteach.api.TeacherService;
-import net.iteach.api.StudentService;
 import net.iteach.core.model.*;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.core.ui.TeacherUI;
