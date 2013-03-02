@@ -6,14 +6,25 @@ import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.ProfileService;
 import net.iteach.api.admin.*;
+import net.iteach.api.model.CommentEntity;
 import net.iteach.api.model.ConfigurationKey;
+import net.iteach.api.model.CoordinateEntity;
+import net.iteach.api.model.copy.ExportedLesson;
+import net.iteach.api.model.copy.ExportedSchool;
+import net.iteach.api.model.copy.ExportedStudent;
 import net.iteach.api.model.copy.ExportedTeacher;
 import net.iteach.core.model.AccountProfile;
+import net.iteach.core.model.Comment;
+import net.iteach.core.model.CommentFormat;
+import net.iteach.core.model.CommentSummary;
 import net.iteach.core.security.SecurityRoles;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.service.dao.LessonDao;
 import net.iteach.service.dao.SchoolDao;
 import net.iteach.service.dao.StudentDao;
+import net.iteach.service.dao.model.TLesson;
+import net.iteach.service.dao.model.TSchool;
+import net.iteach.service.dao.model.TStudent;
 import net.iteach.service.db.SQL;
 import net.iteach.service.impl.AbstractServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -152,8 +163,77 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
     @Transactional(readOnly = true)
     @Secured(SecurityRoles.ADMINISTRATOR)
     public ExportedTeacher export(int id) {
-        // FIXME
-        return null;
+        return new ExportedTeacher(
+                exportedSchools(id)
+        );
+    }
+
+    private List<ExportedSchool> exportedSchools(int userId) {
+        return Lists.transform(
+                schoolDao.findSchoolsByTeacher(userId),
+                new Function<TSchool, ExportedSchool>() {
+                    @Override
+                    public ExportedSchool apply(TSchool t) {
+                        return new ExportedSchool(
+                                exportedComments(CommentEntity.SCHOOL, t.getId()),
+                                coordinatesService.getCoordinates(CoordinateEntity.SCHOOL, t.getId()).getList(),
+                                t.getName(),
+                                t.getColor(),
+                                t.getHourlyRate(),
+                                exportedStudents(t.getId())
+                        );
+                    }
+                }
+        );
+    }
+
+    private List<Comment> exportedComments(final CommentEntity entity, final int id) {
+        return Lists.transform(
+                commentsService.getComments(entity, id, 0, Integer.MAX_VALUE, Integer.MAX_VALUE, CommentFormat.RAW).getList(),
+                new Function<CommentSummary, Comment>() {
+                    @Override
+                    public Comment apply(CommentSummary it) {
+                        return commentsService.getComment(entity, id, it.getId(), CommentFormat.RAW);
+                    }
+                }
+        );
+    }
+
+    private List<ExportedStudent> exportedStudents(int schoolId) {
+        return Lists.transform(
+                studentDao.findStudentsBySchool(schoolId),
+                new Function<TStudent, ExportedStudent>() {
+                    @Override
+                    public ExportedStudent apply(TStudent t) {
+                        return new ExportedStudent(
+                                exportedComments(CommentEntity.STUDENT, t.getId()),
+                                coordinatesService.getCoordinates(CoordinateEntity.STUDENT, t.getId()).getList(),
+                                t.getName(),
+                                t.getSubject(),
+                                t.isDisabled(),
+                                exportedLessons(t.getId())
+                        );
+                    }
+                }
+        );
+    }
+
+    private List<ExportedLesson> exportedLessons(int studentId) {
+        return Lists.transform(
+                lessonDao.findAllLessonsForStudent(studentId),
+                new Function<TLesson, ExportedLesson>() {
+                    @Override
+                    public ExportedLesson apply(TLesson t) {
+                        return new ExportedLesson(
+                                exportedComments(CommentEntity.LESSON, t.getId()),
+                                t.getDate(),
+                                t.getFrom(),
+                                t.getTo(),
+                                t.getLocation()
+                        );
+                    }
+                }
+        );
     }
 
 }

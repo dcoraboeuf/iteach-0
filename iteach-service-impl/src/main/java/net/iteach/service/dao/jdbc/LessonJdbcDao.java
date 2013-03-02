@@ -168,4 +168,14 @@ public class LessonJdbcDao extends AbstractJdbcDao implements LessonDao {
                 lessonRowMapper
         );
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TLesson> findAllLessonsForStudent(int studentId) {
+        return getNamedParameterJdbcTemplate().query(
+                SQL.LESSONS_ALL_FOR_STUDENT,
+                params("id", studentId),
+                lessonRowMapper
+        );
+    }
 }

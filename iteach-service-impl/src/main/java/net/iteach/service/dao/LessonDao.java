@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface LessonDao {
 
+    List<TLesson> findAllLessonsForStudent(int studentId);
+
     List<TLesson> findLessonsForStudent(int studentId, LocalDate from, LocalDate to);
 
     List<TLesson> findLessonsForTeacher(int userId, LocalDateTime from, LocalDateTime to);
