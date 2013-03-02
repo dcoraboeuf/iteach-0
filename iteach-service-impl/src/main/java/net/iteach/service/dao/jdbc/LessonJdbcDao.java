@@ -47,6 +47,16 @@ public class LessonJdbcDao extends AbstractJdbcDao implements LessonDao {
 
     @Override
     @Transactional(readOnly = true)
+    public TLesson getLessonById(int id) {
+        return getNamedParameterJdbcTemplate().queryForObject(
+                SQL.LESSON,
+                params("id", id),
+                lessonRowMapper
+        );
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<TLesson> findLessonsForTeacher(int userId, LocalDateTime from, LocalDateTime to) {
         return getNamedParameterJdbcTemplate().query(
                 SQL.LESSONS,

@@ -428,7 +428,7 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
                             public Lesson apply(TLesson t) {
                                 return new Lesson(
                                         t.getId(),
-                                        studentSummaryFunction.apply(studentDao.getStudentById(t.getStudent())),
+                                        getStudentSummary(t.getStudent()),
                                         t.getDate(),
                                         t.getFrom(),
                                         t.getTo(),
@@ -440,41 +440,35 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         );
     }
 
+    private StudentSummary getStudentSummary(int studentId) {
+        return studentSummaryFunction.apply(studentDao.getStudentById(studentId));
+    }
+
     @Override
     @Transactional(readOnly = true)
     public LessonDetails getLessonDetails(int userId, int id) {
+        // Check for the associated teacher
         checkTeacherForLesson(userId, id);
-        return getNamedParameterJdbcTemplate().queryForObject(
-                SQL.LESSON_DETAILS,
-                params("id", id),
-                new RowMapper<LessonDetails>() {
-                    @Override
-                    public LessonDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        int studentId = rs.getInt("STUDENT_ID");
-                        int schoolId = rs.getInt("SCHOOL_ID");
-                        SchoolSummaryWithCoordinates school = new SchoolSummaryWithCoordinates(
-                                schoolId,
-                                rs.getString("SCHOOL_NAME"),
-                                rs.getString("SCHOOL_COLOR"),
-                                SQLUtils.moneyFromDB(rs, "SCHOOL_HRATE"),
-                                coordinatesService.getCoordinates(CoordinateEntity.SCHOOL, schoolId));
-                        StudentSummaryWithCoordinates student = new StudentSummaryWithCoordinates(
-                                studentId,
-                                rs.getString("STUDENT_SUBJECT"),
-                                rs.getString("STUDENT_NAME"),
-                                school,
-                                rs.getBoolean("STUDENT_DISABLED"),
-                                coordinatesService.getCoordinates(CoordinateEntity.STUDENT, studentId));
-                        return new LessonDetails(
-                                rs.getInt("id"),
-                                student,
-                                SQLUtils.dateFromDB(rs.getString("pdate")),
-                                SQLUtils.timeFromDB(rs.getString("pfrom")),
-                                SQLUtils.timeFromDB(rs.getString("pto")),
-                                rs.getString("location")
-                        );
-                    }
-                }
+        // The lesson
+        TLesson t = lessonDao.getLessonById(id);
+        // Student information
+        int studentId = t.getStudent();
+        StudentSummary studentSummary = getStudentSummary(studentId);
+        StudentSummaryWithCoordinates studentSummaryWithCoordinates = new StudentSummaryWithCoordinates(
+                studentSummary,
+                new SchoolSummaryWithCoordinates(
+                        studentSummary.getSchool(),
+                        getSchoolCoordinates(userId, studentSummary.getSchool().getId())
+                ),
+                getStudentCoordinates(userId, studentId)
+        );
+        return new LessonDetails(
+                id,
+                studentSummaryWithCoordinates,
+                t.getDate(),
+                t.getFrom(),
+                t.getTo(),
+                t.getLocation()
         );
     }
 

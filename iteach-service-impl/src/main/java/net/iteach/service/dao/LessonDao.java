@@ -14,4 +14,6 @@ public interface LessonDao {
     List<TLesson> findLessonsForTeacher(int userId, LocalDateTime from, LocalDateTime to);
 
     BigDecimal getHoursForStudent(int studentId);
+
+    TLesson getLessonById(int id);
 }

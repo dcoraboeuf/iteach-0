@@ -6,15 +6,19 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class SchoolSummaryWithCoordinates extends SchoolSummary {
 
-	private final Coordinates coordinates;
+    private final Coordinates coordinates;
 
-	public SchoolSummaryWithCoordinates(int id, String name, String color, Money hourlyRate,
-			Coordinates coordinates) {
-		super(id, name, color, hourlyRate);
-		this.coordinates = coordinates;
-	}
+    public SchoolSummaryWithCoordinates(SchoolSummary schoolSummary,
+                                        Coordinates coordinates) {
+        super(
+                schoolSummary.getId(),
+                schoolSummary.getName(),
+                schoolSummary.getColor(),
+                schoolSummary.getHourlyRate());
+        this.coordinates = coordinates;
+    }
 
 }
