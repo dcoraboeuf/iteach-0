@@ -2,6 +2,7 @@ package net.iteach.service.dao;
 
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
+import net.iteach.core.model.LessonRange;
 import net.iteach.service.dao.model.TLesson;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -25,4 +26,8 @@ public interface LessonDao {
     Ack updateLesson(int id, int student, String location, LocalDate date, LocalTime from, LocalTime to);
 
     Ack deleteLesson(int id);
+
+    LessonRange getLessonRange(int lessonId);
+
+    Ack setLessonRange(int lessonId, LocalDate pdate, LocalTime pfrom, LocalTime pto);
 }

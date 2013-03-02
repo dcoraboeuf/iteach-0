@@ -2,6 +2,7 @@ package net.iteach.service.dao.jdbc;
 
 import net.iteach.core.model.Ack;
 import net.iteach.core.model.ID;
+import net.iteach.core.model.LessonRange;
 import net.iteach.service.dao.LessonDao;
 import net.iteach.service.dao.model.TLesson;
 import net.iteach.service.db.SQL;
@@ -94,6 +95,37 @@ public class LessonJdbcDao extends AbstractJdbcDao implements LessonDao {
                 params("id", id),
                 lessonRowMapper
         );
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public LessonRange getLessonRange(int lessonId) {
+        return getNamedParameterJdbcTemplate().queryForObject(
+                SQL.LESSON_RANGE,
+                params("id", lessonId),
+                new RowMapper<LessonRange>() {
+                    @Override
+                    public LessonRange mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        LocalDate date = SQLUtils.dateFromDB(rs.getString("pdate"));
+                        LocalTime from = SQLUtils.timeFromDB(rs.getString("pfrom"));
+                        LocalTime to = SQLUtils.timeFromDB(rs.getString("pto"));
+                        return new LessonRange(
+                                date.toLocalDateTime(from),
+                                date.toLocalDateTime(to));
+                    }
+                });
+    }
+
+    @Override
+    @Transactional
+    public Ack setLessonRange(int lessonId, LocalDate pdate, LocalTime pfrom, LocalTime pto) {
+        return Ack.one(getNamedParameterJdbcTemplate().update(
+                SQL.LESSON_RANGE_UPDATE,
+                params("id", lessonId)
+                        .addValue("date", dateToDB(pdate))
+                        .addValue("from", timeToDB(pfrom))
+                        .addValue("to", timeToDB(pto))
+        ));
     }
 
     @Override

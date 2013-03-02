@@ -17,7 +17,6 @@ import net.iteach.service.dao.StudentDao;
 import net.iteach.service.dao.model.TLesson;
 import net.iteach.service.dao.model.TSchool;
 import net.iteach.service.dao.model.TStudent;
-import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 import net.sf.jstring.LocalizableMessage;
 import org.joda.time.LocalDate;
@@ -26,21 +25,15 @@ import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import javax.validation.Validator;
 import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
-
-import static net.iteach.service.db.SQLUtils.dateToDB;
-import static net.iteach.service.db.SQLUtils.timeToDB;
 
 @Service
 public class TeacherServiceImpl extends AbstractServiceImpl implements
@@ -518,20 +511,7 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         // Check for the associated teacher
         checkTeacherForLesson(userId, lessonId);
         // Loads the lesson range
-        LessonRange range = getNamedParameterJdbcTemplate().queryForObject(
-                SQL.LESSON_RANGE,
-                params("id", lessonId),
-                new RowMapper<LessonRange>() {
-                    @Override
-                    public LessonRange mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        LocalDate date = SQLUtils.dateFromDB(rs.getString("pdate"));
-                        LocalTime from = SQLUtils.timeFromDB(rs.getString("pfrom"));
-                        LocalTime to = SQLUtils.timeFromDB(rs.getString("pto"));
-                        return new LessonRange(
-                                date.toLocalDateTime(from),
-                                date.toLocalDateTime(to));
-                    }
-                });
+        LessonRange range = lessonDao.getLessonRange(lessonId);
         // Adjust the range
         LocalDateTime from = range.getFrom();
         LocalDateTime to = range.getTo();
@@ -553,14 +533,7 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         LocalTime pfrom = from.toLocalTime();
         LocalTime pto = to.toLocalTime();
         // Updates the period
-        int count = getNamedParameterJdbcTemplate().update(
-                SQL.LESSON_RANGE_UPDATE,
-                params("id", lessonId)
-                        .addValue("date", dateToDB(pdate))
-                        .addValue("from", timeToDB(pfrom))
-                        .addValue("to", timeToDB(pto))
-        );
-        return Ack.one(count);
+        return lessonDao.setLessonRange(lessonId, pdate, pfrom, pto);
     }
 
     @Override
