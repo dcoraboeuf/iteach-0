@@ -9,10 +9,7 @@ import net.iteach.api.admin.*;
 import net.iteach.api.model.CommentEntity;
 import net.iteach.api.model.ConfigurationKey;
 import net.iteach.api.model.CoordinateEntity;
-import net.iteach.api.model.copy.ExportedLesson;
-import net.iteach.api.model.copy.ExportedSchool;
-import net.iteach.api.model.copy.ExportedStudent;
-import net.iteach.api.model.copy.ExportedTeacher;
+import net.iteach.api.model.copy.*;
 import net.iteach.core.model.AccountProfile;
 import net.iteach.core.model.Comment;
 import net.iteach.core.model.CommentFormat;
@@ -187,13 +184,18 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
         );
     }
 
-    private List<Comment> exportedComments(final CommentEntity entity, final int id) {
+    private List<ExportedComment> exportedComments(final CommentEntity entity, final int id) {
         return Lists.transform(
                 commentsService.getComments(entity, id, 0, Integer.MAX_VALUE, Integer.MAX_VALUE, CommentFormat.RAW).getList(),
-                new Function<CommentSummary, Comment>() {
+                new Function<CommentSummary, ExportedComment>() {
                     @Override
-                    public Comment apply(CommentSummary it) {
-                        return commentsService.getComment(entity, id, it.getId(), CommentFormat.RAW);
+                    public ExportedComment apply(CommentSummary it) {
+                        Comment c = commentsService.getComment(entity, id, it.getId(), CommentFormat.RAW);
+                        return new ExportedComment(
+                                c.getCreation(),
+                                c.getEdition(),
+                                c.getContent()
+                        );
                     }
                 }
         );

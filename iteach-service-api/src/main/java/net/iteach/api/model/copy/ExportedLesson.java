@@ -2,7 +2,6 @@ package net.iteach.api.model.copy;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import net.iteach.core.model.Comment;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
@@ -17,7 +16,7 @@ public class ExportedLesson extends ExportedWithComments {
     private final LocalTime to;
     private final String location;
 
-    public ExportedLesson(List<Comment> comments, LocalDate date, LocalTime from, LocalTime to, String location) {
+    public ExportedLesson(List<ExportedComment> comments, LocalDate date, LocalTime from, LocalTime to, String location) {
         super(comments);
         this.date = date;
         this.from = from;
