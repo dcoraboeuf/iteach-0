@@ -16,6 +16,7 @@ import net.iteach.core.model.CommentFormat;
 import net.iteach.core.model.CommentSummary;
 import net.iteach.core.security.SecurityRoles;
 import net.iteach.core.security.SecurityUtils;
+import net.iteach.service.dao.ConfigurationDao;
 import net.iteach.service.dao.LessonDao;
 import net.iteach.service.dao.SchoolDao;
 import net.iteach.service.dao.StudentDao;
@@ -24,7 +25,6 @@ import net.iteach.service.dao.model.TSchool;
 import net.iteach.service.dao.model.TStudent;
 import net.iteach.service.db.SQL;
 import net.iteach.service.impl.AbstractServiceImpl;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.access.annotation.Secured;
@@ -77,9 +77,10 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
     private final LessonDao lessonDao;
     private final CommentsService commentsService;
     private final CoordinatesService coordinatesService;
+    private final ConfigurationDao configurationDao;
 
     @Autowired
-    public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, ProfileService profileService, SchoolDao schoolDao, StudentDao studentDao, LessonDao lessonDao, CommentsService commentsService, CoordinatesService coordinatesService) {
+    public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, ProfileService profileService, SchoolDao schoolDao, StudentDao studentDao, LessonDao lessonDao, CommentsService commentsService, CoordinatesService coordinatesService, ConfigurationDao configurationDao) {
         super(dataSource, validator);
         this.securityUtils = securityUtils;
         this.profileService = profileService;
@@ -88,6 +89,7 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
         this.lessonDao = lessonDao;
         this.commentsService = commentsService;
         this.coordinatesService = coordinatesService;
+        this.configurationDao = configurationDao;
     }
 
     @Override
@@ -98,7 +100,7 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
                 new Function<ConfigurationKey, Setting>() {
                     @Override
                     public Setting apply(ConfigurationKey key) {
-                        String value = getFirstItem(SQL.CONFIGURATION_GET, params("name", key.name()), String.class);
+                        String value = configurationDao.getValue(key.name());
                         String defaultValue = key.getDefaultValue();
                         return new Setting(key, defaultValue, value, key.getType());
                     }
@@ -111,16 +113,11 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
     @Secured(SecurityRoles.ADMINISTRATOR)
     public void setSettings(SettingsUpdate update) {
         for (ConfigurationKey key : ConfigurationKey.values()) {
-            // Deletes the property in all cases
-            getNamedParameterJdbcTemplate().update(SQL.CONFIGURATION_DELETE, params("name", key.name()));
             // Gets the input value
             String value = update.getValue(key);
-            // Update if not blank
-            if (StringUtils.isNotBlank(value)) {
-                // TODO Control for the value
-                // Updates the value
-                getNamedParameterJdbcTemplate().update(SQL.CONFIGURATION_SET, params("name", key.name()).addValue("value", value));
-            }
+            // TODO Control for the value
+            // Updates the configuration value
+            configurationDao.setValue(key.name(), value);
         }
     }
 
