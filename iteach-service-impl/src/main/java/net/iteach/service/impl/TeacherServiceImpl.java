@@ -271,21 +271,7 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         // Check for the associated teacher
         checkTeacherForSchool(teacherId, form.getSchool());
         // Creation
-        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        int count = getNamedParameterJdbcTemplate().update(
-                SQL.STUDENT_CREATE,
-                params("school", form.getSchool())
-                        .addValue("subject", form.getSubject())
-                        .addValue("name", form.getName()),
-                keyHolder);
-        // Gets the ID
-        ID id = ID.count(count).withId(keyHolder.getKey().intValue());
-        // Coordinates
-        if (id.isSuccess()) {
-            coordinatesService.setCoordinates(CoordinateEntity.STUDENT, id.getValue(), form.getCoordinates());
-        }
-        // OK
-        return id;
+        return studentDao.createStudent(form.getName(), form.getSchool(), form.getSubject());
     }
 
     @Override
@@ -294,8 +280,7 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         // Check for the associated teacher
         checkTeacherForStudent(teacherId, id);
         // Deletion
-        int count = getNamedParameterJdbcTemplate().update(SQL.STUDENT_DELETE, params("id", id));
-        return Ack.one(count);
+        return studentDao.deleteStudent(id);
     }
 
     @Override
@@ -304,8 +289,7 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         // Check for the associated teacher
         checkTeacherForStudent(teacherId, id);
         // Update
-        int count = getNamedParameterJdbcTemplate().update(SQL.STUDENT_DISABLE, params("id", id));
-        return Ack.one(count);
+        return studentDao.disableStudent(id);
     }
 
     @Override
@@ -314,8 +298,7 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         // Check for the associated teacher
         checkTeacherForStudent(teacherId, id);
         // Update
-        int count = getNamedParameterJdbcTemplate().update(SQL.STUDENT_ENABLE, params("id", id));
-        return Ack.one(count);
+        return studentDao.enableStudent(id);
     }
 
     @Override
@@ -326,14 +309,12 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         // Validation
         validate(form, StudentFormValidation.class);
         // Update
-        int count = getNamedParameterJdbcTemplate().update(
-                SQL.STUDENT_UPDATE,
-                params("id", id)
-                        .addValue("school", form.getSchool())
-                        .addValue("subject", form.getSubject())
-                        .addValue("name", form.getName())
+        Ack ack = studentDao.updateStudent(
+                id,
+                form.getName(),
+                form.getSchool(),
+                form.getSubject()
         );
-        Ack ack = Ack.one(count);
         // Coordinates
         if (ack.isSuccess()) {
             coordinatesService.setCoordinates(CoordinateEntity.STUDENT, id, form.getCoordinates());

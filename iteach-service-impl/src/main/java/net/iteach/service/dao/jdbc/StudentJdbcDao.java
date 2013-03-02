@@ -1,10 +1,13 @@
 package net.iteach.service.dao.jdbc;
 
+import net.iteach.core.model.Ack;
+import net.iteach.core.model.ID;
 import net.iteach.service.dao.StudentDao;
 import net.iteach.service.dao.model.TStudent;
 import net.iteach.service.db.SQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +34,50 @@ public class StudentJdbcDao extends AbstractJdbcDao implements StudentDao {
     @Autowired
     public StudentJdbcDao(DataSource dataSource) {
         super(dataSource);
+    }
+
+    @Override
+    @Transactional
+    public ID createStudent(String name, int school, String subject) {
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        int count = getNamedParameterJdbcTemplate().update(
+                SQL.STUDENT_CREATE,
+                params("school", school)
+                        .addValue("subject", subject)
+                        .addValue("name", name),
+                keyHolder);
+        // Gets the ID
+        return ID.count(count).withId(keyHolder.getKey().intValue());
+    }
+
+    @Override
+    @Transactional
+    public Ack deleteStudent(int id) {
+        return Ack.one(getNamedParameterJdbcTemplate().update(SQL.STUDENT_DELETE, params("id", id)));
+    }
+
+    @Override
+    @Transactional
+    public Ack disableStudent(int id) {
+        return Ack.one(getNamedParameterJdbcTemplate().update(SQL.STUDENT_DISABLE, params("id", id)));
+    }
+
+    @Override
+    @Transactional
+    public Ack enableStudent(int id) {
+        return Ack.one(getNamedParameterJdbcTemplate().update(SQL.STUDENT_ENABLE, params("id", id)));
+    }
+
+    @Override
+    @Transactional
+    public Ack updateStudent(int id, String name, int school, String subject) {
+        return Ack.one(getNamedParameterJdbcTemplate().update(
+                SQL.STUDENT_UPDATE,
+                params("id", id)
+                        .addValue("school", school)
+                        .addValue("subject", subject)
+                        .addValue("name", name)
+        ));
     }
 
     @Override
