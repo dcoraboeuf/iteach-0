@@ -2,15 +2,18 @@ package net.iteach.service.admin;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import net.iteach.api.CommentsService;
+import net.iteach.api.CoordinatesService;
 import net.iteach.api.ProfileService;
-import net.iteach.api.TeacherService;
 import net.iteach.api.admin.*;
 import net.iteach.api.model.ConfigurationKey;
-import net.iteach.api.model.copy.Comment;
-import net.iteach.api.model.copy.*;
-import net.iteach.core.model.*;
+import net.iteach.api.model.copy.ExportedTeacher;
+import net.iteach.core.model.AccountProfile;
 import net.iteach.core.security.SecurityRoles;
 import net.iteach.core.security.SecurityUtils;
+import net.iteach.service.dao.LessonDao;
+import net.iteach.service.dao.SchoolDao;
+import net.iteach.service.dao.StudentDao;
 import net.iteach.service.db.SQL;
 import net.iteach.service.impl.AbstractServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +28,6 @@ import javax.validation.Validator;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -62,14 +64,22 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
 
     private final SecurityUtils securityUtils;
     private final ProfileService profileService;
-    private final TeacherService teacherService;
+    private final SchoolDao schoolDao;
+    private final StudentDao studentDao;
+    private final LessonDao lessonDao;
+    private final CommentsService commentsService;
+    private final CoordinatesService coordinatesService;
 
     @Autowired
-    public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, ProfileService profileService, TeacherService teacherService) {
+    public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, ProfileService profileService, SchoolDao schoolDao, StudentDao studentDao, LessonDao lessonDao, CommentsService commentsService, CoordinatesService coordinatesService) {
         super(dataSource, validator);
         this.securityUtils = securityUtils;
         this.profileService = profileService;
-        this.teacherService = teacherService;
+        this.schoolDao = schoolDao;
+        this.studentDao = studentDao;
+        this.lessonDao = lessonDao;
+        this.commentsService = commentsService;
+        this.coordinatesService = coordinatesService;
     }
 
     @Override
@@ -141,73 +151,9 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
     @Override
     @Transactional(readOnly = true)
     @Secured(SecurityRoles.ADMINISTRATOR)
-    public Copy export(int id) {
-        return new Copy(exportSchools(id));
-    }
-
-    protected List<School> exportSchools(final int userId) {
-        return Lists.transform(teacherService.getSchoolsForTeacher(userId).getSummaries(),
-                new Function<SchoolSummary, School>() {
-                    @Override
-                    public School apply(SchoolSummary input) {
-                        return exportSchool(userId, input);
-                    }
-                });
-    }
-
-    protected School exportSchool(int userId, SchoolSummary input) {
-        return new School(
-                exportComments(teacherService.getSchoolComments(userId, input.getId(), 0, Integer.MAX_VALUE, Integer.MAX_VALUE, CommentFormat.RAW)),
-                exportCoordinates(teacherService.getSchoolCoordinates(userId, input.getId())),
-                input.getName(),
-                input.getColor(),
-                input.getHourlyRate(),
-                exportStudents(userId, input.getId())
-        );
-    }
-
-    private List<Student> exportStudents(final int userId, int id) {
-        // FIXME Wait for refactoring of services using DAO
-        return Collections.emptyList();
-//        return Lists.transform(
-//                studentService.getStudentsForSchool(userId, id),
-//                new Function<StudentSummary, Student>() {
-//                    @Override
-//                    public Student apply(StudentSummary input) {
-//                        return new Student(
-//                                exportComments(studentService.getStudentComments(userId, input.getId(), 0, Integer.MAX_VALUE, Integer.MAX_VALUE, CommentFormat.RAW)),
-//                                exportCoordinates(studentService.getStudentCoordinates(userId, input.getId())),
-//                                input.getName(),
-//                                input.getSubject(),
-//                                input.isDisabled(),
-//                                exportLessons(userId, input.getId())
-//                        );
-//                    }
-//                }
-//        );
-    }
-
-    private List<LessonCopy> exportLessons(int userId, int id) {
-        // FIXME Wait for refactoring of services using DAO
-        return Collections.emptyList();
-    }
-
-    private List<CoordinateCopy> exportCoordinates(Coordinates input) {
-        return Lists.transform(input.getList(), new Function<Coordinate, CoordinateCopy>() {
-            @Override
-            public CoordinateCopy apply(net.iteach.core.model.Coordinate input) {
-                return new CoordinateCopy(input.getType(), input.getValue());
-            }
-        });
-    }
-
-    private List<Comment> exportComments(Comments input) {
-        return Lists.transform(input.getList(), new Function<CommentSummary, Comment>() {
-            @Override
-            public Comment apply(CommentSummary input) {
-                return new Comment(input.getCreation(), input.getEdition(), input.getContent());
-            }
-        });
+    public ExportedTeacher export(int id) {
+        // FIXME
+        return null;
     }
 
 }

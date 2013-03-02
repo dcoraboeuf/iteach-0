@@ -8,14 +8,14 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class Copy {
+public class ExportedTeacher {
 
     private static final int CURRENT_VERSION = 1;
 
     private final int version;
-    private final List<School> schools;
+    private final List<ExportedSchool> schools;
 
-    public Copy(List<School> schools) {
+    public ExportedTeacher(List<ExportedSchool> schools) {
         this(CURRENT_VERSION, schools);
     }
 }

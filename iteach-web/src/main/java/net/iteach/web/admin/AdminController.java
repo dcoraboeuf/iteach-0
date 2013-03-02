@@ -7,7 +7,7 @@ import net.iteach.api.admin.AccountSummary;
 import net.iteach.api.admin.AdminService;
 import net.iteach.api.admin.SettingsUpdate;
 import net.iteach.api.model.ConfigurationKey;
-import net.iteach.api.model.copy.Copy;
+import net.iteach.api.model.copy.ExportedTeacher;
 import net.iteach.core.model.UserMessage;
 import net.iteach.utils.InputException;
 import net.iteach.web.support.AbstractGUIController;
@@ -120,7 +120,7 @@ public class AdminController extends AbstractGUIController {
     @RequestMapping(value = "/account/{id}/export", method = RequestMethod.GET)
     public void accountExport(@PathVariable int id, HttpServletResponse response) throws IOException {
         // Gets a copy of the account
-        Copy copy = adminService.export(id);
+        ExportedTeacher copy = adminService.export(id);
         // Serializes as JSON
         mapper.writeValue(response.getOutputStream(), copy);
         // Headers

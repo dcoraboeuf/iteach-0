@@ -2,19 +2,21 @@ package net.iteach.api.model.copy;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.iteach.core.model.Comment;
+import net.iteach.core.model.Coordinate;
 
 import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Student extends WithCoordinates {
+public class ExportedStudent extends ExportedWithCoordinates {
 
     private final String name;
     private final String subject;
     private final boolean disabled;
-    private final List<LessonCopy> lessons;
+    private final List<ExportedLesson> lessons;
 
-    public Student(List<Comment> comments, List<CoordinateCopy> coordinates, String name, String subject, boolean disabled, List<LessonCopy> lessons) {
+    public ExportedStudent(List<Comment> comments, List<Coordinate> coordinates, String name, String subject, boolean disabled, List<ExportedLesson> lessons) {
         super(comments, coordinates);
         this.name = name;
         this.subject = subject;
