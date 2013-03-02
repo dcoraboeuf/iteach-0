@@ -60,7 +60,7 @@ public class ProfileServiceImpl extends AbstractServiceImpl implements
     public AccountProfile getProfile(final int userId) {
         // OK
         return getNamedParameterJdbcTemplate().queryForObject(
-                SQL.PROFILE,
+                SQL.USER_BY_ID,
                 params("id", userId),
                 new RowMapper<AccountProfile>() {
                     @Override

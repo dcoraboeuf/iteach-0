@@ -16,59 +16,24 @@ import net.iteach.core.model.CommentFormat;
 import net.iteach.core.model.CommentSummary;
 import net.iteach.core.security.SecurityRoles;
 import net.iteach.core.security.SecurityUtils;
-import net.iteach.service.dao.ConfigurationDao;
-import net.iteach.service.dao.LessonDao;
-import net.iteach.service.dao.SchoolDao;
-import net.iteach.service.dao.StudentDao;
+import net.iteach.service.dao.*;
 import net.iteach.service.dao.model.TLesson;
 import net.iteach.service.dao.model.TSchool;
 import net.iteach.service.dao.model.TStudent;
-import net.iteach.service.db.SQL;
+import net.iteach.service.dao.model.TUser;
 import net.iteach.service.impl.AbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import javax.validation.Validator;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class AdminServiceImpl extends AbstractServiceImpl implements AdminService {
-
-    public class AccountSummaryRowMapper implements RowMapper<AccountSummary> {
-
-        private final int userId;
-
-        public AccountSummaryRowMapper(int userId) {
-            this.userId = userId;
-        }
-
-        @Override
-        public AccountSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
-            int id = rs.getInt("id");
-            // Gets the profile
-            AccountProfile profile = profileService.getProfile(id);
-            // Summary
-            return new AccountSummary(
-                    id == userId,
-                    id,
-                    profile.getMode(),
-                    profile.getFirstName(),
-                    profile.getLastName(),
-                    profile.getEmail(),
-                    profile.isAdmin(),
-                    rs.getBoolean("verified"),
-                    profile.getSchoolCount(),
-                    profile.getStudentCount(),
-                    profile.getLessonCount());
-        }
-    }
 
     private final SecurityUtils securityUtils;
     private final ProfileService profileService;
@@ -78,9 +43,10 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
     private final CommentsService commentsService;
     private final CoordinatesService coordinatesService;
     private final ConfigurationDao configurationDao;
+    private final UserDao userDao;
 
     @Autowired
-    public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, ProfileService profileService, SchoolDao schoolDao, StudentDao studentDao, LessonDao lessonDao, CommentsService commentsService, CoordinatesService coordinatesService, ConfigurationDao configurationDao) {
+    public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, ProfileService profileService, SchoolDao schoolDao, StudentDao studentDao, LessonDao lessonDao, CommentsService commentsService, CoordinatesService coordinatesService, ConfigurationDao configurationDao, UserDao userDao) {
         super(dataSource, validator);
         this.securityUtils = securityUtils;
         this.profileService = profileService;
@@ -90,6 +56,7 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
         this.commentsService = commentsService;
         this.coordinatesService = coordinatesService;
         this.configurationDao = configurationDao;
+        this.userDao = userDao;
     }
 
     @Override
@@ -127,10 +94,11 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
     public List<AccountSummary> getAccounts() {
         // Current user
         final int userId = securityUtils.getCurrentUserId();
-        // Query
-        return getJdbcTemplate().query(
-                SQL.ADMIN_ACCOUNTS,
-                new AccountSummaryRowMapper(userId));
+        // All users
+        return Lists.transform(
+                userDao.findAll(),
+                loadAccountSummaryFn(userId)
+        );
     }
 
     @Override
@@ -139,18 +107,39 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
     public AccountSummary getAccount(int id) {
         // Current user
         int userId = securityUtils.getCurrentUserId();
-        // Summary
-        return getNamedParameterJdbcTemplate().queryForObject(
-                SQL.ADMIN_ACCOUNT_BY_ID,
-                params("id", id),
-                new AccountSummaryRowMapper(userId));
+        // Loads the user data
+        return loadAccountSummaryFn(userId).apply(userDao.getUserById(id));
+
+    }
+
+    private Function<TUser, AccountSummary> loadAccountSummaryFn(final int userId) {
+        return new Function<TUser, AccountSummary>() {
+            @Override
+            public AccountSummary apply(TUser user) {
+                // Gets the profile
+                AccountProfile profile = profileService.getProfile(user.getId());
+                // Summary
+                return new AccountSummary(
+                        user.getId() == userId,
+                        user.getId(),
+                        profile.getMode(),
+                        profile.getFirstName(),
+                        profile.getLastName(),
+                        profile.getEmail(),
+                        profile.isAdmin(),
+                        user.isVerified(),
+                        profile.getSchoolCount(),
+                        profile.getStudentCount(),
+                        profile.getLessonCount());
+            }
+        };
     }
 
     @Override
     @Transactional
     @Secured(SecurityRoles.ADMINISTRATOR)
     public void deleteAccount(int id) {
-        getNamedParameterJdbcTemplate().update(SQL.ADMIN_ACCOUNT_DELETE, params("id", id));
+        userDao.deleteUser(id);
     }
 
     @Override
