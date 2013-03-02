@@ -1,14 +1,14 @@
 package net.iteach.core.model;
 
 import lombok.Data;
-import lombok.experimental.Wither;
 
 @Data
 public class CommentPreview {
-	
-	private final CommentFormat format;
-	
-	@Wither
-	private final String content;
 
+    private final CommentFormat format;
+    private final String content;
+
+    public CommentPreview withContent(String content) {
+        return new CommentPreview(format, content);
+    }
 }
