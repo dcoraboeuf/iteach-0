@@ -27,7 +27,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -479,17 +478,14 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         validate(form, LessonFormValidation.class);
         validate(form.getTo().isAfter(form.getFrom()), new LocalizableMessage("lesson.error.timeorder"));
         checkTeacherForStudent(userId, form.getStudent());
-
-        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        int count = getNamedParameterJdbcTemplate().update(
-                SQL.LESSON_CREATE,
-                params("student", form.getStudent())
-                        .addValue("date", dateToDB(form.getDate()))
-                        .addValue("from", timeToDB(form.getFrom()))
-                        .addValue("to", timeToDB(form.getTo()))
-                        .addValue("location", form.getLocation()),
-                keyHolder);
-        return ID.count(count).withId(keyHolder.getKey().intValue());
+        // Creation
+        return lessonDao.createLesson(
+                form.getStudent(),
+                form.getLocation(),
+                form.getDate(),
+                form.getFrom(),
+                form.getTo()
+        );
     }
 
     @Override
@@ -498,25 +494,22 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         // Validation
         validate(form, LessonFormValidation.class);
         checkTeacherForLesson(userId, id);
-
-        int count = getNamedParameterJdbcTemplate().update(
-                SQL.LESSON_UPDATE,
-                params("id", id)
-                        .addValue("student", form.getStudent())
-                        .addValue("date", dateToDB(form.getDate()))
-                        .addValue("from", timeToDB(form.getFrom()))
-                        .addValue("to", timeToDB(form.getTo()))
-                        .addValue("location", form.getLocation())
+        // Update
+        return lessonDao.updateLesson(
+                id,
+                form.getStudent(),
+                form.getLocation(),
+                form.getDate(),
+                form.getFrom(),
+                form.getTo()
         );
-        return Ack.one(count);
     }
 
     @Override
     @Transactional
     public Ack deleteLessonForTeacher(int teacherId, int id) {
         checkTeacherForLesson(teacherId, id);
-        int count = getNamedParameterJdbcTemplate().update(SQL.LESSON_DELETE, params("id", id));
-        return Ack.one(count);
+        return lessonDao.deleteLesson(id);
     }
 
     @Override

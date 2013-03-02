@@ -1,8 +1,11 @@
 package net.iteach.service.dao;
 
+import net.iteach.core.model.Ack;
+import net.iteach.core.model.ID;
 import net.iteach.service.dao.model.TLesson;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,4 +19,10 @@ public interface LessonDao {
     BigDecimal getHoursForStudent(int studentId);
 
     TLesson getLessonById(int id);
+
+    ID createLesson(int student, String location, LocalDate date, LocalTime from, LocalTime to);
+
+    Ack updateLesson(int id, int student, String location, LocalDate date, LocalTime from, LocalTime to);
+
+    Ack deleteLesson(int id);
 }
