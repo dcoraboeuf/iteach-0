@@ -3,18 +3,23 @@ package net.iteach.service.security;
 import net.iteach.core.security.User;
 import net.iteach.test.AbstractIntegrationTest;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static org.junit.Assert.*;
 
 public class BasicUserServiceTest extends AbstractIntegrationTest {
 
-    private BasicUserService service;
+    @Autowired
+    @Qualifier("basicUserService")
+    private UserDetailsService service;
 
     @Test
     public void admin() {
-        User details = service.loadUserByUsername("admin");
+        User details = (User) service.loadUserByUsername("admin");
         assertNotNull(details);
         assertEquals("admin", details.getPassword());
         assertEquals("The Administrator", details.getUsername());
@@ -24,7 +29,7 @@ public class BasicUserServiceTest extends AbstractIntegrationTest {
 
     @Test
     public void user() {
-        User details = service.loadUserByUsername("user");
+        User details = (User) service.loadUserByUsername("user");
         assertNotNull(details);
         assertEquals("user", details.getPassword());
         assertEquals("A User", details.getUsername());

@@ -2,13 +2,13 @@ package net.iteach.service.security
 
 import net.iteach.api.SecurityService
 import net.iteach.api.support.InMemoryPost
-import net.iteach.core.model.AuthenticationMode;
+import net.iteach.core.model.AuthenticationMode
 import net.iteach.test.AbstractIntegrationTest
-
 import org.apache.commons.lang3.StringUtils
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.encoding.PasswordEncoder
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 class AccountTest extends AbstractIntegrationTest {
@@ -23,7 +23,7 @@ class AccountTest extends AbstractIntegrationTest {
 	PasswordEncoder passwordEncoder
 	
 	@Autowired
-	BasicUserService basicUserService
+	UserDetailsService basicUserService
 
 	/**
 	 * Tests the registration process for a user using {@link AuthenticationMode#password password} mode.
