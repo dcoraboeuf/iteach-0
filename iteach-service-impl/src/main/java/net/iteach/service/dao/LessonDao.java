@@ -34,4 +34,6 @@ public interface LessonDao {
     Ack setLessonRange(int lessonId, LocalDate pdate, LocalTime pfrom, LocalTime pto);
 
     List<TLesson> findAllLessonsForTeacher(int userId);
+
+    boolean doesLessonBelongToTeacher(int id, int userId);
 }

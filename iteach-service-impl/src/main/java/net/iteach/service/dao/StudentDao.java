@@ -22,4 +22,6 @@ public interface StudentDao {
     Ack enableStudent(int id);
 
     Ack updateStudent(int id, String name, int school, String subject);
+
+    boolean doesStudentBelongToTeacher(int id, int userId);
 }

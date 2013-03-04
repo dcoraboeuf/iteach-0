@@ -18,4 +18,6 @@ public interface SchoolDao {
     Ack deleteSchool(int id);
 
     Ack updateSchool(int id, String name, String color, BigDecimal hourlyRate);
+
+    boolean doesSchoolBelongToTeacher(int id, int userId);
 }

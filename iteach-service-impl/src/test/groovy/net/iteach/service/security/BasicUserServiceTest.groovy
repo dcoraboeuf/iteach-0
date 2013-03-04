@@ -1,10 +1,10 @@
 package net.iteach.service.security
 
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
+import net.iteach.test.AbstractIntegrationTest
+import org.junit.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-import net.iteach.test.AbstractIntegrationTest;
 
 class BasicUserServiceTest extends AbstractIntegrationTest {
 	

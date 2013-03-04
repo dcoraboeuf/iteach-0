@@ -21,19 +21,16 @@ import net.iteach.service.dao.model.TLesson;
 import net.iteach.service.dao.model.TSchool;
 import net.iteach.service.dao.model.TStudent;
 import net.iteach.service.dao.model.TUser;
-import net.iteach.service.impl.AbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
-import javax.validation.Validator;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class AdminServiceImpl extends AbstractServiceImpl implements AdminService {
+public class AdminServiceImpl implements AdminService {
 
     private final SecurityUtils securityUtils;
     private final ProfileService profileService;
@@ -46,8 +43,7 @@ public class AdminServiceImpl extends AbstractServiceImpl implements AdminServic
     private final UserDao userDao;
 
     @Autowired
-    public AdminServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, ProfileService profileService, SchoolDao schoolDao, StudentDao studentDao, LessonDao lessonDao, CommentsService commentsService, CoordinatesService coordinatesService, ConfigurationDao configurationDao, UserDao userDao) {
-        super(dataSource, validator);
+    public AdminServiceImpl(SecurityUtils securityUtils, ProfileService profileService, SchoolDao schoolDao, StudentDao studentDao, LessonDao lessonDao, CommentsService commentsService, CoordinatesService coordinatesService, ConfigurationDao configurationDao, UserDao userDao) {
         this.securityUtils = securityUtils;
         this.profileService = profileService;
         this.schoolDao = schoolDao;

@@ -1,39 +1,23 @@
 package net.iteach.service.security;
 
-import java.util.List;
-
-import javax.sql.DataSource;
-import javax.validation.Validator;
-
 import net.iteach.core.security.User;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
-public abstract class AbstractUserService extends AbstractSecurityService implements UserDetailsService {
-	
-	private final String query;
+public abstract class AbstractUserService implements UserDetailsService {
 
-	@Autowired
-	public AbstractUserService(DataSource dataSource, Validator validator, String query) {
-		super(dataSource, validator);
-		this.query = query;
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public User loadUserByUsername(final String identifier) throws UsernameNotFoundException {
+        UserAccount userAccount = loadUserAccount(identifier);
+        if (userAccount != null) {
+            return new UserDefinition(userAccount);
+        } else {
+            throw new UsernameNotFoundException(identifier);
+        }
+    }
 
-	@Override
-	public User loadUserByUsername(final String identifier) throws UsernameNotFoundException {
-		RowMapper<UserAccount> accountMapper = getAccountRowMapper(identifier);
-		List<UserAccount> users = getNamedParameterJdbcTemplate().query(query, params("identifier", identifier), accountMapper);
-		if (users.size() != 1) {
-			throw new UsernameNotFoundException(identifier);
-		} else {
-			final UserAccount account = users.get(0);
-			return new UserDefinition(account);
-		}
-	}
-
-	protected abstract RowMapper<UserAccount> getAccountRowMapper(String identifier);
+    protected abstract UserAccount loadUserAccount(String identifier);
 
 }

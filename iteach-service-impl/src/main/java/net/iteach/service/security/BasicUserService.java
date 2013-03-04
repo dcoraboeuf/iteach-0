@@ -1,42 +1,38 @@
 package net.iteach.service.security;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-import javax.validation.Validator;
-
 import net.iteach.core.model.AuthenticationMode;
-import net.iteach.service.db.SQL;
-
+import net.iteach.service.dao.UserDao;
+import net.iteach.service.dao.model.TUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 @Service("basicUserService")
 public class BasicUserService extends AbstractUserService {
 
-	@Autowired
-	public BasicUserService(DataSource dataSource, Validator validator) {
-		super(dataSource, validator, SQL.USER_BY_PASSWORD);
-	}
-	
-	@Override
-	protected RowMapper<UserAccount> getAccountRowMapper(final String identifier) {
-		return new RowMapper<UserAccount>() {
-			@Override
-			public UserAccount mapRow(ResultSet rs, int rowNum) throws SQLException {
-				return new UserAccount(
-						rs.getInt("id"),
-						AuthenticationMode.password,
-						identifier,
-						rs.getString("password"),
-						rs.getString("email"),
-						rs.getString("firstName"),
-						rs.getString("lastName"),
-						rs.getBoolean("administrator"));
-			}
-		};
-	}
+    private final UserDao userDao;
 
+    @Autowired
+    public BasicUserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    @Override
+    protected UserAccount loadUserAccount(String username) {
+        TUser t = userDao.findUserByUsernameForPasswordMode(username);
+        if (t != null) {
+            String password = userDao.getPassword(t.getId());
+            return new UserAccount(
+                    t.getId(),
+                    AuthenticationMode.password,
+                    username,
+                    password,
+                    t.getEmail(),
+                    t.getFirstName(),
+                    t.getLastName(),
+                    t.isAdministrator()
+            );
+        } else {
+            return null;
+        }
+    }
 }

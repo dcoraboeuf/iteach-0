@@ -37,6 +37,12 @@ public class StudentJdbcDao extends AbstractJdbcDao implements StudentDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public boolean doesStudentBelongToTeacher(int id, int userId) {
+        return getFirstItem(SQL.TEACHER_FOR_STUDENT, params("teacher", userId).addValue("id", id), Integer.class) != null;
+    }
+
+    @Override
     @Transactional
     public ID createStudent(String name, int school, String subject) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();

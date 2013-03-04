@@ -53,6 +53,12 @@ public class LessonJdbcDao extends AbstractJdbcDao implements LessonDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public boolean doesLessonBelongToTeacher(int id, int userId) {
+        return getFirstItem(SQL.TEACHER_FOR_LESSON, params("teacher", userId).addValue("id", id), Integer.class) != null;
+    }
+
+    @Override
     @Transactional
     public ID createLesson(int student, String location, LocalDate date, LocalTime from, LocalTime to) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();

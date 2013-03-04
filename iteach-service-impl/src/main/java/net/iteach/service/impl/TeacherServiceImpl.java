@@ -25,10 +25,10 @@ import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
 import javax.validation.Validator;
 import java.math.BigDecimal;
 import java.util.List;
@@ -70,13 +70,31 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
     };
 
     @Autowired
-    public TeacherServiceImpl(DataSource dataSource, Validator validator, CoordinatesService coordinatesService, CommentsService commentsService, LessonDao lessonDao, StudentDao studentDao, SchoolDao schoolDao) {
-        super(dataSource, validator);
+    public TeacherServiceImpl(Validator validator, CoordinatesService coordinatesService, CommentsService commentsService, LessonDao lessonDao, StudentDao studentDao, SchoolDao schoolDao) {
+        super(validator);
         this.coordinatesService = coordinatesService;
         this.commentsService = commentsService;
         this.lessonDao = lessonDao;
         this.studentDao = studentDao;
         this.schoolDao = schoolDao;
+    }
+
+    protected void checkTeacherForSchool(int userId, int id) {
+        if (!schoolDao.doesSchoolBelongToTeacher(id, userId)) {
+            throw new AccessDeniedException(String.format("User %d cannot access school %d", userId, id));
+        }
+    }
+
+    protected void checkTeacherForStudent(int userId, int id) {
+        if (!studentDao.doesStudentBelongToTeacher(id, userId)) {
+            throw new AccessDeniedException(String.format("User %d cannot access student %d", userId, id));
+        }
+    }
+
+    protected void checkTeacherForLesson(int userId, int id) {
+        if (!lessonDao.doesLessonBelongToTeacher(id, userId)) {
+            throw new AccessDeniedException(String.format("User %d cannot access lesson %d", userId, id));
+        }
     }
 
     @Override

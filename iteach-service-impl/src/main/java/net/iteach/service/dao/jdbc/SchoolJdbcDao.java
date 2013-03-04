@@ -42,6 +42,12 @@ public class SchoolJdbcDao extends AbstractJdbcDao implements SchoolDao {
 
     @Override
     @Transactional
+    public boolean doesSchoolBelongToTeacher(int id, int userId) {
+        return getFirstItem(SQL.TEACHER_FOR_SCHOOL, params("teacher", userId).addValue("id", id), Integer.class) != null;
+    }
+
+    @Override
+    @Transactional
     public ID createSchool(int teacherId, String name, String color, BigDecimal hourlyRate) {
         try {
             GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();

@@ -11,7 +11,6 @@ import net.iteach.core.security.SecurityUtils;
 import net.iteach.service.dao.LessonDao;
 import net.iteach.service.dao.model.TLesson;
 import net.iteach.service.db.SQLUtils;
-import net.iteach.service.impl.AbstractServiceImpl;
 import org.joda.money.Money;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -20,8 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
-import javax.validation.Validator;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -29,15 +26,14 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ReportServiceImpl extends AbstractServiceImpl implements ReportService {
+public class ReportServiceImpl implements ReportService {
 
     private final TeacherService teacherService;
     private final SecurityUtils securityUtils;
     private final LessonDao lessonDao;
 
     @Autowired
-    public ReportServiceImpl(DataSource dataSource, Validator validator, TeacherService teacherService, SecurityUtils securityUtils, LessonDao lessonDao) {
-        super(dataSource, validator);
+    public ReportServiceImpl(TeacherService teacherService, SecurityUtils securityUtils, LessonDao lessonDao) {
         this.teacherService = teacherService;
         this.securityUtils = securityUtils;
         this.lessonDao = lessonDao;
