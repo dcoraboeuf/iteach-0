@@ -432,7 +432,9 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         );
     }
 
-    private StudentSummary getStudentSummary(int studentId) {
+    @Override
+    @Transactional(readOnly = true)
+    public StudentSummary getStudentSummary(int studentId) {
         return studentSummaryFunction.apply(studentDao.getStudentById(studentId));
     }
 

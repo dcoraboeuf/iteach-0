@@ -32,4 +32,6 @@ public interface LessonDao {
     LessonRange getLessonRange(int lessonId);
 
     Ack setLessonRange(int lessonId, LocalDate pdate, LocalTime pfrom, LocalTime pto);
+
+    List<TLesson> findAllLessonsForTeacher(int userId);
 }

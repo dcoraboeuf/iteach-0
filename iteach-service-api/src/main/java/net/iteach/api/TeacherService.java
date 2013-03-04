@@ -30,6 +30,8 @@ public interface TeacherService {
 
     StudentSummaries getStudentsForTeacher(int teacherId);
 
+    StudentSummary getStudentSummary(int studentId);
+
     ID createStudentForTeacher(int teacherId, StudentForm form);
 
     Ack deleteStudentForTeacher(int teacherId, int id);

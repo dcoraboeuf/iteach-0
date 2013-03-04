@@ -140,6 +140,16 @@ public class LessonJdbcDao extends AbstractJdbcDao implements LessonDao {
 
     @Override
     @Transactional(readOnly = true)
+    public List<TLesson> findAllLessonsForTeacher(int userId) {
+        return getNamedParameterJdbcTemplate().query(
+                SQL.LESSONS_ALL_FOR_TEACHER,
+                params("teacher", userId),
+                lessonRowMapper
+        );
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public BigDecimal getHoursForStudent(int studentId) {
         final AtomicReference<BigDecimal> hours = new AtomicReference<>(BigDecimal.ZERO);
         getNamedParameterJdbcTemplate().query(
