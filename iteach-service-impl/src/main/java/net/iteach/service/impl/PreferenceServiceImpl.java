@@ -4,28 +4,25 @@ import net.iteach.api.PreferenceService;
 import net.iteach.core.model.PreferenceKey;
 import net.iteach.core.model.Preferences;
 import net.iteach.core.security.SecurityUtils;
-import net.iteach.service.db.SQL;
+import net.iteach.service.dao.PreferenceDao;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
-import javax.validation.Validator;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class PreferenceServiceImpl extends AbstractServiceImpl implements PreferenceService {
+public class PreferenceServiceImpl implements PreferenceService {
 
     private final SecurityUtils securityUtils;
+    private final PreferenceDao preferenceDao;
 
     @Autowired
-    public PreferenceServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils) {
-        super(dataSource, validator);
+    public PreferenceServiceImpl(SecurityUtils securityUtils, PreferenceDao preferenceDao) {
         this.securityUtils = securityUtils;
+        this.preferenceDao = preferenceDao;
     }
 
     @Override
@@ -34,7 +31,7 @@ public class PreferenceServiceImpl extends AbstractServiceImpl implements Prefer
         // Gets the current user
         int userId = securityUtils.getCurrentUserId();
         // Gets the stored value
-        String value = getFirstItem(SQL.PREF_GET, params("user", userId).addValue("name", key.name()), String.class);
+        String value = preferenceDao.getValue(userId, key.name());
         // If not found, returns the default value
         if (value == null) {
             return key.getDefaultValue();
@@ -52,21 +49,14 @@ public class PreferenceServiceImpl extends AbstractServiceImpl implements Prefer
     @Override
     @Transactional
     public void setPreference(PreferenceKey key, String value) {
-        NamedParameterJdbcTemplate t = getNamedParameterJdbcTemplate();
         // Gets the current user
         int userId = securityUtils.getCurrentUserId();
-        // Parameters
-        MapSqlParameterSource params = params("user", userId).addValue("name", key.name());
-        // Removes any previous value
-        t.update(SQL.PREF_DELETE, params);
         // In any case, trims the value
         String valueToStore = StringUtils.trim(value);
         // Validates and format the value
-        valueToStore = key.validateAndFormat(value);
+        valueToStore = key.validateAndFormat(valueToStore);
         // Stores the value
-        t.update(
-                SQL.PREF_SET,
-                params.addValue("value", valueToStore));
+        preferenceDao.storeValue(userId, key.name(), valueToStore);
     }
 
     @Override
