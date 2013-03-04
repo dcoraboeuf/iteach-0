@@ -4,8 +4,10 @@ var Report = function () {
         var totalDisplayed = $('#displayTotal').is(':checked');
         if (totalDisplayed) {
             $('#report .total').show();
+            $('tr.zero').show();
         } else {
             $('#report .total').hide();
+            $('tr.zero').hide();
         }
     }
 

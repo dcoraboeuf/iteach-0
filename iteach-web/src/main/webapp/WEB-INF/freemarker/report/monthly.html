@@ -36,9 +36,19 @@
 					<td class="total money">${school.totalAmount}</td>
 				</tr>
 				<#list school.students?values as student>
-					<tr>
+                    <#assign studentTrClass="" />
+                    <#if student.monthlyHours == 0>
+                        <#assign studentTrClass = "zero" />
+                    </#if>
+					<tr class="${studentTrClass}">
 						<td colspan="2">&nbsp;</td>
-						<td><a href="gui/student/${student.id}">${student.name?html}</a></td>
+						<td>
+                            <#assign studentClass="" />
+                            <#if student.disabled>
+                                <#assign studentClass = "muted" />
+                            </#if>
+                            <a href="gui/student/${student.id}" class="${studentClass}">${student.name?html}</a>
+                        </td>
 						<td>${student.monthlyHours}</td>
 						<td class="money">${student.monthlyAmount}</td>
 						<td class="total"><i>${student.totalHours}</i></td>

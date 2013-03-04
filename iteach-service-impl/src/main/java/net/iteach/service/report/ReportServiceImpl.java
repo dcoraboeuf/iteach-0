@@ -73,7 +73,7 @@ public class ReportServiceImpl extends AbstractServiceImpl implements ReportServ
             // Student hours
             StudentMonthlyHours studentHours = studentHoursIndex.get(studentId);
             if (studentHours == null) {
-                studentHours = new StudentMonthlyHours(studentId, studentName, hourlyRate);
+                studentHours = new StudentMonthlyHours(studentId, studentName, student.isDisabled(), hourlyRate);
             }
             studentHours = studentHours.addHours(hours, monthlyHours);
             studentHoursIndex.put(studentId, studentHours);
