@@ -6,35 +6,39 @@ import net.iteach.api.SecurityService;
 import net.iteach.core.model.*;
 import net.iteach.core.security.SecurityRoles;
 import net.iteach.core.security.SecurityUtils;
-import net.iteach.service.db.SQL;
-import net.iteach.service.db.SQLUtils;
+import net.iteach.service.dao.LessonDao;
+import net.iteach.service.dao.SchoolDao;
+import net.iteach.service.dao.StudentDao;
+import net.iteach.service.dao.UserDao;
+import net.iteach.service.dao.model.TUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
-import javax.validation.Validator;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Map;
 
 @Service
-public class ProfileServiceImpl extends AbstractServiceImpl implements
-        ProfileService {
+public class ProfileServiceImpl implements ProfileService {
 
     private final SecurityUtils securityUtils;
     private final SecurityService securityService;
     private final PreferenceService preferenceService;
+    private final UserDao userDao;
+    private final SchoolDao schoolDao;
+    private final StudentDao studentDao;
+    private final LessonDao lessonDao;
 
     @Autowired
-    public ProfileServiceImpl(DataSource dataSource, Validator validator, SecurityUtils securityUtils, SecurityService securityService, PreferenceService preferenceService) {
-        super(dataSource, validator);
+    public ProfileServiceImpl(SecurityUtils securityUtils, SecurityService securityService, PreferenceService preferenceService, UserDao userDao, SchoolDao schoolDao, StudentDao studentDao, LessonDao lessonDao) {
         this.securityUtils = securityUtils;
         this.securityService = securityService;
         this.preferenceService = preferenceService;
+        this.userDao = userDao;
+        this.schoolDao = schoolDao;
+        this.studentDao = studentDao;
+        this.lessonDao = lessonDao;
     }
 
     @Override
@@ -58,44 +62,27 @@ public class ProfileServiceImpl extends AbstractServiceImpl implements
     @Transactional(readOnly = true)
     @Secured(SecurityRoles.ADMINISTRATOR)
     public AccountProfile getProfile(final int userId) {
+        // Loads the user
+        TUser user = userDao.getUserById(userId);
+        // Counts
+        int schoolCount = schoolDao.findSchoolsByTeacher(userId).size();
+        int studentCount = studentDao.findStudentsByTeacher(userId).size();
+        int lessonCount = lessonDao.findAllLessonsForTeacher(userId).size();
+        // Gets all the preferences for the user
+        Preferences preferences = preferenceService.getPreferences();
         // OK
-        return getNamedParameterJdbcTemplate().queryForObject(
-                SQL.USER_BY_ID,
-                params("id", userId),
-                new RowMapper<AccountProfile>() {
-                    @Override
-                    public AccountProfile mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        // Count of schools
-                        int schoolCount = getNamedParameterJdbcTemplate().queryForList(
-                                SQL.SCHOOL_IDS_FOR_TEACHER,
-                                params("teacher", userId),
-                                Integer.class).size();
-                        // Count of students
-                        int studentCount = getNamedParameterJdbcTemplate().queryForList(
-                                SQL.STUDENT_IDS_FOR_TEACHER,
-                                params("teacher", userId),
-                                Integer.class).size();
-                        // Count of lessons
-                        int lessonCount = getNamedParameterJdbcTemplate().queryForList(
-                                SQL.LESSON_IDS_FOR_TEACHER,
-                                params("teacher", userId),
-                                Integer.class).size();
-                        // Gets all the preferences for the user
-                        Preferences preferences = preferenceService.getPreferences();
-                        // OK
-                        return new AccountProfile(
-                                userId,
-                                SQLUtils.getEnum(AuthenticationMode.class, rs, "mode"),
-                                rs.getString("firstName"),
-                                rs.getString("lastName"),
-                                rs.getString("email"),
-                                rs.getBoolean("administrator"),
-                                schoolCount,
-                                studentCount,
-                                lessonCount,
-                                preferences);
-                    }
-                });
+        return new AccountProfile(
+                user.getId(),
+                user.getMode(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.isAdministrator(),
+                schoolCount,
+                studentCount,
+                lessonCount,
+                preferences
+        );
     }
 
     @Override
