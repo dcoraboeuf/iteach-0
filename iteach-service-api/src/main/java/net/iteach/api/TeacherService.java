@@ -78,4 +78,5 @@ public interface TeacherService {
 
     Ack changeLessonForTeacher(int userId, int id, LessonChange change);
 
+    Ack moveLessonForTeacher(int userId, int id, LessonChange change);
 }

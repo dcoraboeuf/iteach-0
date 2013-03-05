@@ -243,6 +243,17 @@ public class TeacherUIController extends AbstractUIController implements Teacher
     }
 
     @Override
+    @RequestMapping(value = "/lesson/{id}/move", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    Ack moveLesson(@PathVariable int id, @RequestBody LessonChange change) {
+        // Gets the current teacher
+        int userId = securityUtils.getCurrentUserId();
+        // OK
+        return teacherService.moveLessonForTeacher(userId, id, change);
+    }
+
+    @Override
     @RequestMapping(value = "/student/{id:\\d+}/coordinates", method = RequestMethod.GET)
     public
     @ResponseBody

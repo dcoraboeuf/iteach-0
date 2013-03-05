@@ -46,8 +46,10 @@ public interface TeacherUI {
 	Coordinates getStudentCoordinates(int id);
 
 	Coordinates getSchoolCoordinates(int id);
-	
-	Ack changeLesson (int id, LessonChange change);
+
+    Ack changeLesson (int id, LessonChange change);
+
+    Ack moveLesson (int id, LessonChange change);
 	
 	// Comments for lessons
 	

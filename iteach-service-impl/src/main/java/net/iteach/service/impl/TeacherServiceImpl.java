@@ -21,7 +21,6 @@ import net.iteach.service.db.SQLUtils;
 import net.sf.jstring.LocalizableMessage;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -525,35 +524,75 @@ public class TeacherServiceImpl extends AbstractServiceImpl implements
         return lessonDao.deleteLesson(id);
     }
 
-    @Override
-    @Transactional
-    public Ack changeLessonForTeacher(int userId, int lessonId, LessonChange change) {
+    protected Ack changeLessonRange(int userId, int lessonId, Function<LessonRange, LessonRange> changeFn) {
         // Check for the associated teacher
         checkTeacherForLesson(userId, lessonId);
         // Loads the lesson range
-        LessonRange range = lessonDao.getLessonRange(lessonId);
+        final LessonRange range = lessonDao.getLessonRange(lessonId);
         // Adjust the range
-        LocalDateTime from = range.getFrom();
-        LocalDateTime to = range.getTo();
-        // Days?
-        int dayDelta = change.getDayDelta();
-        if (dayDelta != 0) {
-            // Shifts both dates
-            from = from.plusDays(dayDelta);
-            to = to.plusDays(dayDelta);
-        }
-        // Minutes
-        int minuteDelta = change.getMinuteDelta();
-        if (minuteDelta != 0) {
-            // Shifts only the end
-            to = to.plusMinutes(minuteDelta);
-        }
-        // Redefines the lesson range
-        LocalDate pdate = from.toLocalDate();
-        LocalTime pfrom = from.toLocalTime();
-        LocalTime pto = to.toLocalTime();
+        LessonRange newRange = changeFn.apply(range);
         // Updates the period
-        return lessonDao.setLessonRange(lessonId, pdate, pfrom, pto);
+        return lessonDao.setLessonRange(lessonId,
+                newRange.getFrom().toLocalDate(),
+                newRange.getFrom().toLocalTime(),
+                newRange.getTo().toLocalTime());
+    }
+
+    @Override
+    @Transactional
+    public Ack changeLessonForTeacher(int userId, int lessonId, final LessonChange change) {
+        return changeLessonRange(userId, lessonId, new Function<LessonRange, LessonRange>() {
+            @Override
+            public LessonRange apply(final LessonRange range) {
+                // Adjust the range
+                LocalDateTime from = range.getFrom();
+                LocalDateTime to = range.getTo();
+                // Days?
+                int dayDelta = change.getDayDelta();
+                if (dayDelta != 0) {
+                    // Shifts both dates
+                    from = from.plusDays(dayDelta);
+                    to = to.plusDays(dayDelta);
+                }
+                // Minutes
+                int minuteDelta = change.getMinuteDelta();
+                if (minuteDelta != 0) {
+                    // Shifts only the end
+                    to = to.plusMinutes(minuteDelta);
+                }
+                // Redefines the lesson range
+                return new LessonRange(from, to);
+            }
+        });
+    }
+
+    @Override
+    @Transactional
+    public Ack moveLessonForTeacher(int userId, int lessonId, final LessonChange change) {
+        return changeLessonRange(userId, lessonId, new Function<LessonRange, LessonRange>() {
+            @Override
+            public LessonRange apply(final LessonRange range) {
+                // Adjust the range
+                LocalDateTime from = range.getFrom();
+                LocalDateTime to = range.getTo();
+                // Days?
+                int dayDelta = change.getDayDelta();
+                if (dayDelta != 0) {
+                    // Shifts both dates
+                    from = from.plusDays(dayDelta);
+                    to = to.plusDays(dayDelta);
+                }
+                // Minutes
+                int minuteDelta = change.getMinuteDelta();
+                if (minuteDelta != 0) {
+                    // Shifts both times
+                    from = from.plusMinutes(minuteDelta);
+                    to = to.plusMinutes(minuteDelta);
+                }
+                // Redefines the lesson range
+                return new LessonRange(from, to);
+            }
+        });
     }
 
     @Override
