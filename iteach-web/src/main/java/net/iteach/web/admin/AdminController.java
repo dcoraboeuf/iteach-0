@@ -17,7 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -139,6 +142,19 @@ public class AdminController extends AbstractGUIController {
     public String accountImportForm(@PathVariable int id) {
         // Gets to the form
         return "admin/import";
+    }
+
+    /**
+     * Import the data for a user
+     */
+    @RequestMapping(value = "/account/{id}/import", method = RequestMethod.POST)
+    public String accountImport(Locale locale, @PathVariable int id, @RequestParam MultipartFile file, RedirectAttributes redirectAttributes) {
+        // Performs the import
+        AccountSummary account = adminService.importData(id, file);
+        // Message
+        redirectAttributes.addFlashAttribute("message", UserMessage.success(strings.get(locale, "admin.accounts.import.success", account.getEmail())));
+        // Gets to the form
+        return "redirect:/admin/accounts";
     }
 
 }

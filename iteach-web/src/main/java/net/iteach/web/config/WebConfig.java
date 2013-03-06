@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jmx.export.MBeanExporter;
 
 import com.netbeetle.jackson.ObjectMapperFactory;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Configuration
 public class WebConfig {
@@ -39,6 +40,13 @@ public class WebConfig {
 		exporter.setBeans(Collections.<String,Object>singletonMap("bean:name=strings", strings()));
 		return exporter;
 	}
+
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver o = new CommonsMultipartResolver();
+        o.setMaxUploadSize(1024 * 1024); // 1024K limit
+        return o;
+    }
 	
 	@Bean
 	public ObjectMapper jacksonObjectMapper() {

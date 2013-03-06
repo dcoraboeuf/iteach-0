@@ -715,6 +715,10 @@ admin.accounts.import.prompt
     en -> @[admin.accounts.import.warning] Do you want to go on?
     fr -> @[admin.accounts.import.warning] Voulez-vous continuer ?
 
+admin.accounts.import.success
+    en -> Data imported successfully for {0}.
+    en -> Données importées avec succès pour {0}.
+
 page.accountDelete
 	en -> Account deletion confirmation
 	fr -> Confirmation pour la suppression d'un compte

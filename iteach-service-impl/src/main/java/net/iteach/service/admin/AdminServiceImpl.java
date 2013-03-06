@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -220,4 +221,13 @@ public class AdminServiceImpl implements AdminService {
         );
     }
 
+    @Override
+    @Transactional
+    public AccountSummary importData(int id, MultipartFile file) {
+        // Gets the account
+        AccountSummary account = getAccount(id);
+        // FIXME Importing data
+        // OK
+        return account;
+    }
 }
