@@ -3,6 +3,8 @@ package net.iteach.service.admin;
 import net.iteach.api.model.copy.ExportedComment;
 import net.iteach.api.model.copy.ExportedLesson;
 import net.iteach.api.model.copy.ExportedStudent;
+import net.iteach.core.model.Coordinate;
+import net.iteach.core.model.CoordinateType;
 import net.iteach.service.config.DefaultConfiguration;
 import net.iteach.test.Helper;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -38,6 +40,12 @@ public class ExportedStudentTest {
                         )
                 ),
                 student.getComments());
+        assertEquals(
+                Arrays.asList(
+                        new Coordinate(CoordinateType.EMAIL, "test@test.com")
+                ),
+                student.getCoordinates()
+        );
         assertEquals(
                 Arrays.asList(
                         new ExportedLesson(

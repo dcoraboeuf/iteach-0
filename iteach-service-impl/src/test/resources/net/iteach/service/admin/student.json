@@ -4,7 +4,10 @@
         "edition" : null,
         "content" : "Some comments"
     }],
-    "coordinates" : [],
+    "coordinates" : [{
+        "type": "EMAIL",
+        "value": "test@test.com"
+    }],
     "name" : "Mister Test",
     "subject" : "Deutsch",
     "disabled" : false,
