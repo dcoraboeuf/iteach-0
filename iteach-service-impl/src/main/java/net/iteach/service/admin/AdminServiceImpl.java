@@ -10,10 +10,7 @@ import net.iteach.api.model.CommentEntity;
 import net.iteach.api.model.ConfigurationKey;
 import net.iteach.api.model.CoordinateEntity;
 import net.iteach.api.model.copy.*;
-import net.iteach.core.model.AccountProfile;
-import net.iteach.core.model.Comment;
-import net.iteach.core.model.CommentFormat;
-import net.iteach.core.model.CommentSummary;
+import net.iteach.core.model.*;
 import net.iteach.core.security.SecurityRoles;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.service.dao.*;
@@ -262,28 +259,53 @@ public class AdminServiceImpl implements AdminService {
     private void importSchool(int id, ExportedSchool school) {
         // School
         int schoolId = schoolDao.createSchool(id, school.getName(), school.getColor(), school.getHrate()).getValue();
-        // FIXME Comments
-        // FIXME Coordinates
+        // Comments
+        importComments(CommentEntity.SCHOOL, schoolId, school.getComments());
+        // Coordinates
+        importCoordinates(CoordinateEntity.SCHOOL, schoolId, school.getCoordinates());
         // Students
         for (ExportedStudent student : school.getStudents()) {
             importStudent(schoolId, student);
         }
     }
 
+    private void importComments(CommentEntity entity, int id, List<ExportedComment> comments) {
+        for (ExportedComment comment : comments) {
+            commentsService.editComment(
+                    entity,
+                    id,
+                    CommentFormat.RAW,
+                    // FIXME Creation & edition
+                    new CommentsForm(0, comment.getContent())
+            );
+        }
+    }
+
     private void importStudent(int schoolId, ExportedStudent student) {
         // Student
         int studentId = studentDao.createStudent(student.getName(), schoolId, student.getSubject()).getValue();
-        // FIXME Comments
-        // FIXME Coordinates
+        // Comments
+        importComments(CommentEntity.STUDENT, studentId, student.getComments());
+        // Coordinates
+        importCoordinates(CoordinateEntity.STUDENT, studentId, student.getCoordinates());
         // Lessons
         for (ExportedLesson lesson : student.getLessons()) {
             importLesson(studentId, lesson);
         }
     }
 
+    private void importCoordinates(CoordinateEntity entity, int id, List<Coordinate> coordinates) {
+        Coordinates c = Coordinates.create();
+        for (Coordinate coordinate : coordinates) {
+            c = c.add(coordinate.getType(), coordinate.getValue());
+        }
+        coordinatesService.setCoordinates(entity, id, c);
+    }
+
     private void importLesson(int studentId, ExportedLesson lesson) {
         // Lesson
         int lessonId = lessonDao.createLesson(studentId, lesson.getLocation(), lesson.getDate(), lesson.getFrom(), lesson.getTo()).getValue();
-        // FIXME Comments
+        // Comments
+        importComments(CommentEntity.LESSON, lessonId, lesson.getComments());
     }
 }
