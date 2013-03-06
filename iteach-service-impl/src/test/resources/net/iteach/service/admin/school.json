@@ -1,0 +1,35 @@
+{
+			"comments" : [],
+			"coordinates" : [],
+			"name" : "Big School",
+			"color" : "#ff80ff",
+			"hrate" : 27.00,
+			"currency" : "EUR",
+			"students": [{
+                "comments" : [{
+                    "creation" : 1360765631000,
+                    "edition" : null,
+                    "content" : "Some comments"
+                }],
+                "coordinates" : [{
+                    "type": "EMAIL",
+                    "value": "test@test.com"
+                }],
+                "name" : "Mister Test",
+                "subject" : "Deutsch",
+                "disabled" : false,
+                "lessons" : [{
+                        "comments" : [],
+                        "date" : "2013-01-15",
+                        "from" : "12:30",
+                        "to" : "14:00",
+                        "location" : "Office"
+                    }, {
+                        "comments" : [],
+                        "date" : "2013-01-22",
+                        "from" : "12:30",
+                        "to" : "14:00",
+                        "location" : "Office"
+                    }]
+            }]
+}
