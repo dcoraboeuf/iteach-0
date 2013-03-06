@@ -132,4 +132,13 @@ public class AdminController extends AbstractGUIController {
                 copy);
     }
 
+    /**
+     * Import the data for a user, selection page
+     */
+    @RequestMapping(value = "/account/{id}/import", method = RequestMethod.GET)
+    public String accountImportForm(@PathVariable int id) {
+        // Gets to the form
+        return "admin/import";
+    }
+
 }

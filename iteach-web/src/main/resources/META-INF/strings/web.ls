@@ -696,9 +696,24 @@ admin.accounts.export
     en -> Export data
     fr -> Exporter les données
 
+page.import
+    en,fr,de -> @[admin.accounts.import]
+
 admin.accounts.import
     en -> Import data
     fr -> Importer les données
+
+admin.accounts.import.file
+    en -> Data file
+    fr -> Fichier de données
+
+admin.accounts.import.warning
+    en -> Importing the data will erase all existing data.
+    fr -> Importer les données écrasera toutes les données déjà existantes.
+
+admin.accounts.import.prompt
+    en -> @[admin.accounts.import.warning] Do you want to go on?
+    fr -> @[admin.accounts.import.warning] Voulez-vous continuer ?
 
 page.accountDelete
 	en -> Account deletion confirmation

@@ -1,0 +1,11 @@
+<#include "/lib/layout.html">
+
+<@layout_std pageId="import" breadcrumbs = {loc("page.index"): "", loc("page.accounts"): "admin/accounts"}>
+    <form id="importForm" class="form-inline" method="POST" enctype="multipart/form-data">
+        <label for="file"><@lh key="admin.accounts.import.file" /></label>
+        <input id="file" name="file" type="file" accept=".json" required="true" />
+        <button type="submit" class="btn btn-danger"><@lh key="general.submit" /></button>
+        <a href="admin/accounts" class="btn"><@lh key="general.close" /></a>
+    </form>
+    <div class="alert alert-error"><@lh key="admin.accounts.import.warning" /></div>
+</@layout_std>
