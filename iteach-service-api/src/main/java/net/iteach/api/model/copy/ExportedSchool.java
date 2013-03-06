@@ -20,16 +20,6 @@ public class ExportedSchool extends ExportedWithCoordinates {
     private final String currency;
     private final List<ExportedStudent> students;
 
-    public ExportedSchool(
-            List<ExportedComment> comments,
-            List<Coordinate> coordinates,
-            String name,
-            String color,
-            Money hrate,
-            List<ExportedStudent> students) {
-        this(comments, coordinates, name, color, hrate.getAmount(), hrate.getCurrencyUnit().getCurrencyCode(), students);
-    }
-
     @JsonCreator
     public ExportedSchool(
             @JsonProperty("comments")
@@ -52,5 +42,15 @@ public class ExportedSchool extends ExportedWithCoordinates {
         this.hrate = hrate;
         this.currency = currency;
         this.students = students;
+    }
+
+    public ExportedSchool(
+            List<ExportedComment> comments,
+            List<Coordinate> coordinates,
+            String name,
+            String color,
+            Money hrate,
+            List<ExportedStudent> students) {
+        this(comments, coordinates, name, color, hrate.getAmount(), hrate.getCurrencyUnit().getCurrencyCode(), students);
     }
 }
