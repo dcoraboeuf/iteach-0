@@ -1,0 +1,20 @@
+{
+    "comments" : [],
+    "coordinates" : [],
+    "name" : "Mister Test",
+    "subject" : "Deutsch",
+    "disabled" : false,
+    "lessons" : [{
+            "comments" : [],
+            "date" : "2013-01-15",
+            "from" : "12:30",
+            "to" : "14:00",
+            "location" : "Office"
+        }, {
+            "comments" : [],
+            "date" : "2013-01-22",
+            "from" : "12:30",
+            "to" : "14:00",
+            "location" : "Office"
+        }]
+}

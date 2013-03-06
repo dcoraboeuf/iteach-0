@@ -3,6 +3,8 @@ package net.iteach.api.model.copy;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import net.iteach.core.model.Coordinate;
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
 
@@ -15,7 +17,20 @@ public class ExportedStudent extends ExportedWithCoordinates {
     private final boolean disabled;
     private final List<ExportedLesson> lessons;
 
-    public ExportedStudent(List<ExportedComment> comments, List<Coordinate> coordinates, String name, String subject, boolean disabled, List<ExportedLesson> lessons) {
+    @JsonCreator
+    public ExportedStudent(
+            @JsonProperty("comments")
+            List<ExportedComment> comments,
+            @JsonProperty("coordinates")
+            List<Coordinate> coordinates,
+            @JsonProperty("name")
+            String name,
+            @JsonProperty("subject")
+            String subject,
+            @JsonProperty("disabled")
+            boolean disabled,
+            @JsonProperty("lessons")
+            List<ExportedLesson> lessons) {
         super(comments, coordinates);
         this.name = name;
         this.subject = subject;
