@@ -2,7 +2,6 @@ package net.iteach.service.admin;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import net.iteach.api.CommentsService;
 import net.iteach.api.CoordinatesService;
 import net.iteach.api.ProfileService;
 import net.iteach.api.admin.*;
@@ -10,14 +9,13 @@ import net.iteach.api.model.CommentEntity;
 import net.iteach.api.model.ConfigurationKey;
 import net.iteach.api.model.CoordinateEntity;
 import net.iteach.api.model.copy.*;
-import net.iteach.core.model.*;
+import net.iteach.core.model.AccountProfile;
+import net.iteach.core.model.Coordinate;
+import net.iteach.core.model.Coordinates;
 import net.iteach.core.security.SecurityRoles;
 import net.iteach.core.security.SecurityUtils;
 import net.iteach.service.dao.*;
-import net.iteach.service.dao.model.TLesson;
-import net.iteach.service.dao.model.TSchool;
-import net.iteach.service.dao.model.TStudent;
-import net.iteach.service.dao.model.TUser;
+import net.iteach.service.dao.model.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -39,20 +37,20 @@ public class AdminServiceImpl implements AdminService {
     private final SchoolDao schoolDao;
     private final StudentDao studentDao;
     private final LessonDao lessonDao;
-    private final CommentsService commentsService;
+    private final CommentDao commentDao;
     private final CoordinatesService coordinatesService;
     private final ConfigurationDao configurationDao;
     private final UserDao userDao;
 
     @Autowired
-    public AdminServiceImpl(ObjectMapper objectMapper, SecurityUtils securityUtils, ProfileService profileService, SchoolDao schoolDao, StudentDao studentDao, LessonDao lessonDao, CommentsService commentsService, CoordinatesService coordinatesService, ConfigurationDao configurationDao, UserDao userDao) {
+    public AdminServiceImpl(ObjectMapper objectMapper, SecurityUtils securityUtils, ProfileService profileService, SchoolDao schoolDao, StudentDao studentDao, LessonDao lessonDao, CommentDao commentDao, CoordinatesService coordinatesService, ConfigurationDao configurationDao, UserDao userDao) {
         this.objectMapper = objectMapper;
         this.securityUtils = securityUtils;
         this.profileService = profileService;
         this.schoolDao = schoolDao;
         this.studentDao = studentDao;
         this.lessonDao = lessonDao;
-        this.commentsService = commentsService;
+        this.commentDao = commentDao;
         this.coordinatesService = coordinatesService;
         this.configurationDao = configurationDao;
         this.userDao = userDao;
@@ -171,15 +169,14 @@ public class AdminServiceImpl implements AdminService {
 
     private List<ExportedComment> exportedComments(final CommentEntity entity, final int id) {
         return Lists.transform(
-                commentsService.getComments(entity, id, 0, Integer.MAX_VALUE, Integer.MAX_VALUE, CommentFormat.RAW).getList(),
-                new Function<CommentSummary, ExportedComment>() {
+                commentDao.findForEntity(entity, id, 0, Integer.MAX_VALUE),
+                new Function<TComment, ExportedComment>() {
                     @Override
-                    public ExportedComment apply(CommentSummary it) {
-                        Comment c = commentsService.getComment(entity, id, it.getId(), CommentFormat.RAW);
+                    public ExportedComment apply(TComment t) {
                         return new ExportedComment(
-                                c.getCreation(),
-                                c.getEdition(),
-                                c.getContent()
+                                t.getCreation(),
+                                t.getEdition(),
+                                t.getContent()
                         );
                     }
                 }
@@ -271,12 +268,12 @@ public class AdminServiceImpl implements AdminService {
 
     private void importComments(CommentEntity entity, int id, List<ExportedComment> comments) {
         for (ExportedComment comment : comments) {
-            commentsService.editComment(
+            commentDao.importComment(
                     entity,
                     id,
-                    CommentFormat.RAW,
-                    // FIXME Creation & edition
-                    new CommentsForm(0, comment.getContent())
+                    comment.getCreation(),
+                    comment.getEdition(),
+                    comment.getContent()
             );
         }
     }

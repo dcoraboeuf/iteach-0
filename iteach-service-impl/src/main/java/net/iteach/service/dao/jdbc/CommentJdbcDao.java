@@ -6,6 +6,7 @@ import net.iteach.service.dao.CommentDao;
 import net.iteach.service.dao.model.TComment;
 import net.iteach.service.db.SQLUtils;
 import net.iteach.service.impl.CommentUpdateException;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -26,6 +27,7 @@ public class CommentJdbcDao extends AbstractJdbcDao implements CommentDao {
     private static final String SQL_COUNT_FOR_ENTITY = "SELECT COUNT(ID) FROM COMMENTS WHERE %s = :id";
     private static final String SQL_SELECT_FOR_ENTITY_WITH_OFFSET = "SELECT ID, CREATION, EDITION, CONTENT FROM COMMENTS WHERE %s = :id ORDER BY ID DESC LIMIT :count OFFSET :offset";
     private static final String SQL_INSERT = "INSERT INTO COMMENTS (%s, CREATION, EDITION, CONTENT) VALUES (:entityId, :creation, NULL, :content)";
+    private static final String SQL_IMPORT = "INSERT INTO COMMENTS (%s, CREATION, EDITION, CONTENT) VALUES (:entityId, :creation, :edition, :content)";
     private static final String SQL_EDIT = "UPDATE COMMENTS SET EDITION = :edition, CONTENT = :content WHERE ID = :id";
     private static final String SQL_DELETE = "DELETE FROM COMMENTS WHERE ID = :id";
 
@@ -104,6 +106,17 @@ public class CommentJdbcDao extends AbstractJdbcDao implements CommentDao {
         } else {
             return getCommentById(keyHolder.getKey().intValue());
         }
+    }
+
+    @Override
+    @Transactional
+    public void importComment(CommentEntity entity, int id, DateTime creation, DateTime edition, String content) {
+        getNamedParameterJdbcTemplate().update(
+                format(SQL_IMPORT, entity),
+                params("entityId", id)
+                        .addValue("content", content)
+                        .addValue("creation", SQLUtils.toTimestamp(creation))
+                        .addValue("edition", SQLUtils.toTimestamp(edition)));
     }
 
     @Override

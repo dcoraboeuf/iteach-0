@@ -44,7 +44,7 @@ public final class SQLUtils {
     }
 
     public static Timestamp toTimestamp(DateTime dateTime) {
-        return new Timestamp(dateTime.getMillis());
+        return dateTime != null ? new Timestamp(dateTime.getMillis()) : null;
     }
 
     public static DateTime getDateTime(ResultSet rs, String columnName) throws SQLException {
