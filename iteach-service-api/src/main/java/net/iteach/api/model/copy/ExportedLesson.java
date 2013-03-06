@@ -2,6 +2,8 @@ package net.iteach.api.model.copy;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
@@ -16,7 +18,18 @@ public class ExportedLesson extends ExportedWithComments {
     private final LocalTime to;
     private final String location;
 
-    public ExportedLesson(List<ExportedComment> comments, LocalDate date, LocalTime from, LocalTime to, String location) {
+    @JsonCreator
+    public ExportedLesson(
+            @JsonProperty("comments")
+            List<ExportedComment> comments,
+            @JsonProperty("date")
+            LocalDate date,
+            @JsonProperty("from")
+            LocalTime from,
+            @JsonProperty("to")
+            LocalTime to,
+            @JsonProperty("location")
+            String location) {
         super(comments);
         this.date = date;
         this.from = from;

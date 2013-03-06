@@ -21,18 +21,22 @@ import net.iteach.service.dao.model.TLesson;
 import net.iteach.service.dao.model.TSchool;
 import net.iteach.service.dao.model.TStudent;
 import net.iteach.service.dao.model.TUser;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
 
+    private final ObjectMapper objectMapper;
     private final SecurityUtils securityUtils;
     private final ProfileService profileService;
     private final SchoolDao schoolDao;
@@ -44,7 +48,8 @@ public class AdminServiceImpl implements AdminService {
     private final UserDao userDao;
 
     @Autowired
-    public AdminServiceImpl(SecurityUtils securityUtils, ProfileService profileService, SchoolDao schoolDao, StudentDao studentDao, LessonDao lessonDao, CommentsService commentsService, CoordinatesService coordinatesService, ConfigurationDao configurationDao, UserDao userDao) {
+    public AdminServiceImpl(ObjectMapper objectMapper, SecurityUtils securityUtils, ProfileService profileService, SchoolDao schoolDao, StudentDao studentDao, LessonDao lessonDao, CommentsService commentsService, CoordinatesService coordinatesService, ConfigurationDao configurationDao, UserDao userDao) {
+        this.objectMapper = objectMapper;
         this.securityUtils = securityUtils;
         this.profileService = profileService;
         this.schoolDao = schoolDao;
@@ -226,8 +231,59 @@ public class AdminServiceImpl implements AdminService {
     public AccountSummary importData(int id, MultipartFile file) {
         // Gets the account
         AccountSummary account = getAccount(id);
-        // FIXME Importing data
+
+        // Parses the file
+        // TODO Version management
+        ExportedTeacher data;
+        try (InputStream in = file.getInputStream()) {
+            data = objectMapper.readValue(in, ExportedTeacher.class);
+        } catch (IOException ex) {
+            throw new ImportCannotReadFileException(file.getOriginalFilename(), ex);
+        }
+
+        // Deleting all data
+        for (TSchool tSchool : schoolDao.findSchoolsByTeacher(id)) {
+            schoolDao.deleteSchool(tSchool.getId());
+        }
+
+        // Importing data
+        importData(id, data);
+
         // OK
         return account;
+    }
+
+    private void importData(int id, ExportedTeacher data) {
+        for (ExportedSchool school : data.getSchools()) {
+            importSchool(id, school);
+        }
+    }
+
+    private void importSchool(int id, ExportedSchool school) {
+        // School
+        int schoolId = schoolDao.createSchool(id, school.getName(), school.getColor(), school.getHrate()).getValue();
+        // FIXME Comments
+        // FIXME Coordinates
+        // Students
+        for (ExportedStudent student : school.getStudents()) {
+            importStudent(schoolId, student);
+        }
+    }
+
+    private void importStudent(int schoolId, ExportedStudent student) {
+        // Student
+        int studentId = studentDao.createStudent(student.getName(), schoolId, student.getSubject()).getValue();
+        // FIXME Comments
+        // FIXME Coordinates
+        // Lessons
+        for (ExportedLesson lesson : student.getLessons()) {
+            importLesson(studentId, lesson);
+        }
+    }
+
+    private void importLesson(int studentId, ExportedLesson lesson) {
+        // Lesson
+        int lessonId = lessonDao.createLesson(studentId, lesson.getLocation(), lesson.getDate(), lesson.getFrom(), lesson.getTo()).getValue();
+        // FIXME Comments
     }
 }

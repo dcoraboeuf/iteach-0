@@ -25,3 +25,7 @@ net.iteach.service.token.TokenExpiredException
 net.iteach.service.security.TokenMatchException
 	en -> [E-009] The token does not match with the "{2}" email
 	fr -> [E-009] Le jeton ne correspond pas au courriel "{2}".
+net.iteach.service.admin.ImportCannotReadFileException
+    en -> [E-010] Error while reading {0}: {1}
+    fr -> [E-010] Erreur lors de la lecture de {0} : {1}
+
