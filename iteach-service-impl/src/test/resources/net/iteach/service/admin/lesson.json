@@ -1,5 +1,9 @@
 {
-    "comments" : [],
+    "comments" : [{
+        "creation" : 1360765631000,
+        "edition" : null,
+        "content" : "Some comments"
+    }],
     "date" : "2013-01-15",
     "from" : "12:30",
     "to" : "14:00",

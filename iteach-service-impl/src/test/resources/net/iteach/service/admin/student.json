@@ -1,5 +1,9 @@
 {
-    "comments" : [],
+    "comments" : [{
+        "creation" : 1360765631000,
+        "edition" : null,
+        "content" : "Some comments"
+    }],
     "coordinates" : [],
     "name" : "Mister Test",
     "subject" : "Deutsch",

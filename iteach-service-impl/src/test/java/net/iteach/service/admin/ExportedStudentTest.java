@@ -6,6 +6,8 @@ import net.iteach.api.model.copy.ExportedStudent;
 import net.iteach.service.config.DefaultConfiguration;
 import net.iteach.test.Helper;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.junit.Test;
@@ -27,6 +29,15 @@ public class ExportedStudentTest {
         assertNotNull(student);
         assertEquals("Mister Test", student.getName());
         assertEquals("Deutsch", student.getSubject());
+        assertEquals(
+                Arrays.asList(
+                        new ExportedComment(
+                                new DateTime(2013, 2, 13, 14, 27, 11, DateTimeZone.UTC),
+                                null,
+                                "Some comments"
+                        )
+                ),
+                student.getComments());
         assertEquals(
                 Arrays.asList(
                         new ExportedLesson(
