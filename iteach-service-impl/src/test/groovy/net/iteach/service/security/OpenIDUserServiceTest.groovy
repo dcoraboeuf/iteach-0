@@ -1,5 +1,6 @@
 package net.iteach.service.security
 
+import net.iteach.api.UserNonVerifiedOrDisabledException
 import net.iteach.test.AbstractIntegrationTest
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,6 +26,11 @@ class OpenIDUserServiceTest extends AbstractIntegrationTest {
     @Test(expected = UsernameNotFoundException.class)
     void not_found() {
         openIDUserService.loadUserByUsername("test.notfound")
+    }
+
+    @Test(expected = UserNonVerifiedOrDisabledException.class)
+    void disabled() {
+        openIDUserService.loadUserByUsername("disabled.openid")
     }
 
 }

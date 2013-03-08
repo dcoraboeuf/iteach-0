@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -40,6 +41,13 @@ public class BasicUserServiceTest extends AbstractIntegrationTest {
     @Test(expected = UsernameNotFoundException.class)
     public void not_found() {
         service.loadUserByUsername("password.notfound");
+    }
+
+    public void disabled() {
+        UserDetails user = service.loadUserByUsername("disabled");
+        assertNotNull(user);
+        assertFalse(user.isAccountNonLocked());
+        assertFalse(user.isEnabled());
     }
 
 }
