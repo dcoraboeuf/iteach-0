@@ -1,6 +1,6 @@
 <dataset>
 
-	<USERS id="1" administrator="false" verified="true" mode="password" identifier="admin" password="admin" email="admin@test.com" firstName="The" lastName="Administrator" />
-	<USERS id="2" administrator="false" verified="true" mode="password" identifier="user" password="user" email="user@test.com" firstName="A" lastName="User" /> 
+	<USERS id="1" administrator="false" verified="true" disabled="false" mode="password" identifier="admin" password="admin" email="admin@test.com" firstName="The" lastName="Administrator" />
+	<USERS id="2" administrator="false" verified="true" disabled="false" mode="password" identifier="user" password="user" email="user@test.com" firstName="A" lastName="User" />
 
 </dataset>
