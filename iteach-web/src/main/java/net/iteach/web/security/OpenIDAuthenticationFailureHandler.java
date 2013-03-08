@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.iteach.api.UserNonVerifiedOrDisabledException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.openid.OpenIDAuthenticationStatus;
@@ -29,9 +30,12 @@ public class OpenIDAuthenticationFailureHandler extends
 				&& ((OpenIDAuthenticationToken) exception.getAuthentication()).getStatus().equals(OpenIDAuthenticationStatus.SUCCESS)) {
 			request.getSession(true).setAttribute(
 					"USER_OPENID_CREDENTIAL",
-					((UsernameNotFoundException) exception).getAuthentication().getName());
+					exception.getAuthentication().getName());
 			// redirect to create account page
 			redirectStrategy.sendRedirect(request, response, "/registration_openid");
+        } else if (exception instanceof UserNonVerifiedOrDisabledException) {
+            // Goes back to the login page with an error message
+            redirectStrategy.sendRedirect(request, response, "/login_error");
 		} else {
 			// Goes back to the login page with an error message
 			redirectStrategy.sendRedirect(request, response, "/login_openid_failed");

@@ -14,5 +14,7 @@ public class UserAccount {
 	private final String firstName;
 	private final String lastName;
 	private final boolean administrator;
+    private final boolean verified;
+    private final boolean disabled;
 
 }

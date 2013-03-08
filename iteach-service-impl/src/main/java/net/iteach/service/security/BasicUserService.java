@@ -29,7 +29,9 @@ public class BasicUserService extends AbstractUserService {
                     t.getEmail(),
                     t.getFirstName(),
                     t.getLastName(),
-                    t.isAdministrator()
+                    t.isAdministrator(),
+                    t.isVerified(),
+                    t.isDisabled()
             );
         } else {
             return null;

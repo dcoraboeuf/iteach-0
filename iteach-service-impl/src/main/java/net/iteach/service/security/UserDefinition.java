@@ -52,7 +52,7 @@ public class UserDefinition implements User {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return !account.isDisabled();
 	}
 
 	@Override
@@ -62,8 +62,7 @@ public class UserDefinition implements User {
 
 	@Override
 	public boolean isEnabled() {
-		// FIXME Implement UserDetails.isEnabled
-		return true;
+        return account.isVerified() && !account.isDisabled();
 	}
 
 	@Override
