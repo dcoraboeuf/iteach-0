@@ -33,8 +33,9 @@
 			<script src="${base}/bootstrap/js/bootstrap.min.js"></script>
 			<script src="${base}/scripts/i18n_${locSelected()}.js" type="text/javascript"></script>
 			<script src="${base}/fullcalendar/fullcalendar.js" type="text/javascript"></script>
-			<script src="${base}/scripts/application.js" type="text/javascript"></script>	
-			<script src="localization/${locSelected()}/<@lh key='app.version'/>" type="text/javascript"></script>
+            <script src="${base}/scripts/ajax.js" type="text/javascript"></script>
+            <script src="${base}/scripts/application.js" type="text/javascript"></script>
+            <script src="localization/${locSelected()}/<@lh key='app.version'/>" type="text/javascript"></script>
 			
 			<#list modules as module>
 				<!-- Module: ${module} -->

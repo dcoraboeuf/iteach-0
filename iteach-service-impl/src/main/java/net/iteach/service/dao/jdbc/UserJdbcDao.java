@@ -34,7 +34,8 @@ public class UserJdbcDao extends AbstractJdbcDao implements UserDao {
                     rs.getString("firstName"),
                     rs.getString("lastName"),
                     rs.getBoolean("administrator"),
-                    rs.getBoolean("verified")
+                    rs.getBoolean("verified"),
+                    rs.getBoolean("disabled")
             );
         }
     };
@@ -153,6 +154,24 @@ public class UserJdbcDao extends AbstractJdbcDao implements UserDao {
         return Ack.one(getNamedParameterJdbcTemplate().update(
                 SQL.USER_SET_VERIFIED,
                 params("id", id)));
+    }
+
+    @Override
+    @Transactional
+    public Ack userDisable(int id) {
+        return Ack.one(getNamedParameterJdbcTemplate().update(
+                SQL.USER_DISABLE,
+                params("id", id)
+        ));
+    }
+
+    @Override
+    @Transactional
+    public Ack userEnable(int id) {
+        return Ack.one(getNamedParameterJdbcTemplate().update(
+                SQL.USER_ENABLE,
+                params("id", id)
+        ));
     }
 
     @Override

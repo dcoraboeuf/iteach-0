@@ -10,6 +10,7 @@ import net.iteach.api.model.ConfigurationKey;
 import net.iteach.api.model.CoordinateEntity;
 import net.iteach.api.model.copy.*;
 import net.iteach.core.model.AccountProfile;
+import net.iteach.core.model.Ack;
 import net.iteach.core.model.Coordinate;
 import net.iteach.core.model.Coordinates;
 import net.iteach.core.security.SecurityRoles;
@@ -125,6 +126,7 @@ public class AdminServiceImpl implements AdminService {
                         profile.getEmail(),
                         profile.isAdmin(),
                         user.isVerified(),
+                        user.isDisabled(),
                         profile.getSchoolCount(),
                         profile.getStudentCount(),
                         profile.getLessonCount());
@@ -137,6 +139,20 @@ public class AdminServiceImpl implements AdminService {
     @Secured(SecurityRoles.ADMINISTRATOR)
     public void deleteAccount(int id) {
         userDao.deleteUser(id);
+    }
+
+    @Override
+    @Transactional
+    @Secured(SecurityRoles.ADMINISTRATOR)
+    public Ack userDisable(int userId) {
+        return userDao.userDisable(userId);
+    }
+
+    @Override
+    @Transactional
+    @Secured(SecurityRoles.ADMINISTRATOR)
+    public Ack userEnable(int userId) {
+        return userDao.userEnable(userId);
     }
 
     @Override

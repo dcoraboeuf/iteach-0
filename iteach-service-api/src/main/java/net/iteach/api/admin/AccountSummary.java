@@ -14,6 +14,7 @@ public class AccountSummary {
 	private final String email;
 	private final boolean admin;
 	private final boolean verified;
+    private final boolean disabled;
 	
 	private final int schoolCount;
 	private final int studentCount;

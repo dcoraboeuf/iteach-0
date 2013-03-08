@@ -14,5 +14,6 @@ public class TUser {
     private final String lastName;
     private final boolean administrator;
     private final boolean verified;
+    private final boolean disabled;
 
 }

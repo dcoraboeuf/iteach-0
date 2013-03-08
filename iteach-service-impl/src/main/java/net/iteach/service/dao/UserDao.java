@@ -26,6 +26,10 @@ public interface UserDao {
 
     Ack userVerified(int id);
 
+    Ack userDisable(int id);
+
+    Ack userEnable(int id);
+
     Ack changePassword(int id, String newPassword, String oldPassword);
 
     TUser findUserByEmail(String email);

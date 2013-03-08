@@ -14,15 +14,17 @@
 				<th><@lh key="admin.accounts.mode" /></th>
 				<th><@lh key="profile.administrator" /></th>
 				<th><@lh key="admin.accounts.verified" /></th>
+                <th><@lh key="admin.accounts.disabled" /></th>
 				<th><@lh key="profile.schoolCount" /></th>
 				<th><@lh key="profile.studentCount" /></th>
 				<th><@lh key="profile.lessonCount" /></th>
+                <th>&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>
 			<#list accounts as account>
 				<#assign classes="" />
-				<#if !account.verified>
+				<#if !account.verified || account.disabled>
 					<#assign classes = "error" />
 				</#if>
 				<tr class="${classes}">
@@ -31,24 +33,31 @@
 							&#9658;
 						</#if>
 					</td>
-					<td><button type="button" class="btn-link" onclick="Accounts.displayActions(${account.id})">${account.lastName?html}</button></td>
-					<td><button type="button" class="btn-link" onclick="Accounts.displayActions(${account.id})">${account.firstName?html}</button></td>
+					<td>${account.lastName?html}</td>
+					<td>${account.firstName?html}</td>
 					<td><a href="mailto:${account.email?html}">${account.email?html}</a></td>
 					<td><@lh key= "admin.accounts.mode." + account.mode /></td>
 					<td><@yes_no value=account.admin /></td>
-					<td><@yes_no value=account.verified /></td>
+                    <td><@yes_no value=account.verified /></td>
+                    <td><@yes_no value=account.disabled /></td>
 					<td>${account.schoolCount}</td>
 					<td>${account.studentCount}</td>
 					<td>${account.lessonCount}</td>
+                    <td><i class="action icon-exclamation-sign" onclick="Accounts.displayActions(${account.id})"></i></td>
 				</tr>
-                <tr id="actions-${account.id}" class="info hidden">
+                <tr id="actions-${account.id}" class="account-actions info hidden">
                     <td colspan="4">&nbsp;</td>
-                    <td colspan="6">
+                    <td colspan="8">
+                        <a class="btn" href="admin/account/${account.id}/export"><i class="icon-download"></i> <@lh key="admin.accounts.export"/></a>
+                        <a class="btn" href="admin/account/${account.id}/import"><i class="icon-upload"></i> <@lh key="admin.accounts.import"/></a>
                         <#if !account.admin>
-                            <a href="admin/account/${account.id}/delete" class="btn btn-link"><i class="icon-trash"></i> <@lh key="general.delete"/></a>
+                            <#if account.disabled>
+                                <button type="button" class="btn btn-success" onclick="Accounts.enableUser(this,${account.id})"><i class="icon-thumbs-up"></i> <@lh key="account.enable" /></button>
+                            <#else>
+                                <button type="button" class="btn btn-warning" onclick="Accounts.disableUser(this,${account.id})"><i class="icon-thumbs-down"></i> <@lh key="account.disable" /></button>
+                            </#if>
+                            <a href="admin/account/${account.id}/delete" class="btn btn-danger"><i class="icon-trash"></i> <@lh key="general.delete"/></a>
                         </#if>
-                        <a class="btn btn-link" href="admin/account/${account.id}/export"><i class="icon-download"></i> <@lh key="admin.accounts.export"/></a>
-                        <a class="btn btn-link" href="admin/account/${account.id}/import"><i class="icon-upload"></i> <@lh key="admin.accounts.import"/></a>
                     </td>
                 </tr>
 			</#list>

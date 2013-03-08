@@ -685,6 +685,9 @@ admin.accounts.mode
 admin.accounts.verified
 	en -> Verified
 	fr -> Vérifié
+admin.accounts.disabled
+    en -> Disabled
+    fr -> Désactivé
 
 admin.accounts.mode.openid
 	en,fr,de -> OpenID
@@ -695,6 +698,18 @@ admin.accounts.mode.password
 admin.accounts.export
     en -> Export data
     fr -> Exporter les données
+
+account.disable
+    en -> Disable
+    fr -> Désactiver
+
+account.disable.prompt
+    en -> Are you sure to disable this user? His data won't be lost but he won't be able to connect any longer until re-enabled.
+    fr -> Etes-vous sûr de désactiver cet utilisateur ? Ses données ne seront pas perdues mais il ne sera pas capable de se connecter avant d'être ré-activé.
+
+account.enable
+    en -> Enable
+    fr -> Activer
 
 page.import
     en,fr,de -> @[admin.accounts.import]
