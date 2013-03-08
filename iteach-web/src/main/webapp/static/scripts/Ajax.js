@@ -51,12 +51,30 @@ var AJAX = function () {
     }
 
     /**
-     * Shows a loading indicator on a element.
-     * @param config.el jQuery object or selector for the object which will contain the loading indicator
-     * @param (optional, defaults to 'false') show Boolean that indicates if the the loading must be hidden or shown
+     * Shows a loading indicator on a element. If not element is defined, no loading occurs.
+     * @param config.el     jQuery object or selector for the object which will contain the loading indicator (default: undefined)
+     * @param config.mode   Way of displaying the loading indicator (default: append):
+     *      'append' - appends a loading image at the end of the element
+     * @param show          Boolean that indicates if the the loading must be hidden or shown (default: false)
      */
-    function showLoading (config, hide) {
-
+    function showLoading (config, show) {
+        if (config && config.el) {
+            var c = $.extend({
+                mode: 'append'
+            }, config);
+            if (c.mode == 'append') {
+                if (show) {
+                    $(config.el).addClass('disabled');
+                    $(config.el).append('&nbsp;<img class="ajax-loader" src="static/images/ajax-loader.gif" />');
+                } else {
+                    $(config.el).removeClass('disabled');
+                    $(config.el).find('.ajax-loader').remove();
+                }
+            } else {
+                // TODO 0.3 Use console.log in Application
+                throw 'ShowLoading: mode={0} not known'.format(c.mode);
+            }
+        }
     }
 
     /**
