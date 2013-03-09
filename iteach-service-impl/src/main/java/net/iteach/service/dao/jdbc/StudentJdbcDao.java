@@ -6,6 +6,8 @@ import net.iteach.service.dao.StudentDao;
 import net.iteach.service.dao.model.TStudent;
 import net.iteach.service.db.SQL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Component;
@@ -58,24 +60,28 @@ public class StudentJdbcDao extends AbstractJdbcDao implements StudentDao {
 
     @Override
     @Transactional
+    @CacheEvict(value = DaoCacheKeys.STUDENT, key = "#id")
     public Ack deleteStudent(int id) {
         return Ack.one(getNamedParameterJdbcTemplate().update(SQL.STUDENT_DELETE, params("id", id)));
     }
 
     @Override
     @Transactional
+    @CacheEvict(value = DaoCacheKeys.STUDENT, key = "#id")
     public Ack disableStudent(int id) {
         return Ack.one(getNamedParameterJdbcTemplate().update(SQL.STUDENT_DISABLE, params("id", id)));
     }
 
     @Override
     @Transactional
+    @CacheEvict(value = DaoCacheKeys.STUDENT, key = "#id")
     public Ack enableStudent(int id) {
         return Ack.one(getNamedParameterJdbcTemplate().update(SQL.STUDENT_ENABLE, params("id", id)));
     }
 
     @Override
     @Transactional
+    @CacheEvict(value = DaoCacheKeys.STUDENT, key = "#id")
     public Ack updateStudent(int id, String name, int school, String subject) {
         return Ack.one(getNamedParameterJdbcTemplate().update(
                 SQL.STUDENT_UPDATE,
@@ -88,6 +94,7 @@ public class StudentJdbcDao extends AbstractJdbcDao implements StudentDao {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(DaoCacheKeys.STUDENT)
     public TStudent getStudentById(int studentId) {
         return getNamedParameterJdbcTemplate().queryForObject(
                 SQL.STUDENT,
