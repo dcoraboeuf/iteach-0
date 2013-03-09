@@ -8,6 +8,8 @@ import net.iteach.service.db.SQL;
 import net.iteach.service.db.SQLUtils;
 import net.iteach.service.impl.SchoolNameAlreadyDefined;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -67,12 +69,14 @@ public class SchoolJdbcDao extends AbstractJdbcDao implements SchoolDao {
 
     @Override
     @Transactional
+    @CacheEvict(value = DaoCacheKeys.SCHOOL, key = "#id")
     public Ack deleteSchool(int id) {
         return Ack.one(getNamedParameterJdbcTemplate().update(SQL.SCHOOL_DELETE, params("id", id)));
     }
 
     @Override
     @Transactional
+    @CacheEvict(value = DaoCacheKeys.SCHOOL, key = "#id")
     public Ack updateSchool(int id, String name, String color, BigDecimal hourlyRate) {
         try {
             return Ack.one(getNamedParameterJdbcTemplate().update(
@@ -90,6 +94,7 @@ public class SchoolJdbcDao extends AbstractJdbcDao implements SchoolDao {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(DaoCacheKeys.SCHOOL)
     public TSchool getSchoolById(int id) {
         return getNamedParameterJdbcTemplate().queryForObject(
                 SQL.SCHOOL,
