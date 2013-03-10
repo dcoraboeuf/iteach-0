@@ -1,0 +1,12 @@
+Dear Damien Coraboeuf,
+
+A new account has been registered for you using the following email:
+
+user@test.com
+
+Please follow this link in order to validate your account:
+
+http://my/link
+
+Regards,
+the iTeach team.

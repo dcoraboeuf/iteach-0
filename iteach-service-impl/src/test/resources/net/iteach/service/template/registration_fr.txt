@@ -1,12 +1,12 @@
-Cher/chère ${userFirstName} ${userLastName},
+Cher/chère Damien Coraboeuf,
 
 Un nouveau compte a été enrégistré pour le courriel suivant :
 
-${userEmail}
+user@test.com
 
 Veuillez suivre le lien suivant afin de poursuivre la validation de votre compte :
 
-${link}
+http://my/link
 
 Cordialement,
 l'équipe iTeach.
