@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
+
 @Component
 public class TokenCleanupTask {
 
 	private final Logger logger = LoggerFactory.getLogger(TokenCleanupTask.class);
 
-	private static final long DELAY = 12 * 60 * 60 * 1000; // 12 hours
+	private static final long DELAY = TimeUnit.DAYS.toMillis(30); // 30 days
 
 	private final TokenService tokenService;
 
