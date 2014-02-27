@@ -297,6 +297,10 @@ public class AdminServiceImpl implements AdminService {
     private void importStudent(int schoolId, ExportedStudent student) {
         // Student
         int studentId = studentDao.createStudent(student.getName(), schoolId, student.getSubject()).getValue();
+        // Disabled
+        if (student.isDisabled()) {
+            studentDao.disableStudent(studentId);
+        }
         // Comments
         importComments(CommentEntity.STUDENT, studentId, student.getComments());
         // Coordinates
