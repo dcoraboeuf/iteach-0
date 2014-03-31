@@ -11,8 +11,8 @@
 			<div class="span4">
 				<@panel title=loc("lesson.details.data")>
 					<form>
-						<input id="lesson-id" type="hidden" name="id" value="${lesson.id}" />
-						<input id="lesson-student" type="hidden" name="student" value="${lesson.student.id}" />
+						<input id="lesson-id" type="hidden" name="id" value="${lesson.id?c}" />
+						<input id="lesson-student" type="hidden" name="student" value="${lesson.student.id?c}" />
 						<input id="lesson-date" type="hidden" name="date" value="${lesson.date}" />
 						<input id="lesson-from" type="hidden" name="from" value="${locFormatTimeISO(lesson.from)}" />
 						<input id="lesson-to" type="hidden" name="to" value="${locFormatTimeISO(lesson.to)}" />
@@ -58,7 +58,7 @@
 							<tbody>
 								<tr>
 									<td class="data-label"><@lh key="student.name" /></td>
-									<td class="data-value"><a href="gui/student/${lesson.student.id}">${lesson.student.name?html}</a></td>
+									<td class="data-value"><a href="gui/student/${lesson.student.id?c}">${lesson.student.name?html}</a></td>
 								</tr>
 								<tr>
 									<td class="data-label"><@lh key="student.subject" /></td>
@@ -76,7 +76,7 @@
 							<tbody>
 								<tr>
 									<td class="data-label"><@lh key="school.name" /></td>
-									<td class="data-value"><a href="gui/school/${lesson.student.school.id}">${lesson.student.school.name?html}</a></td>
+									<td class="data-value"><a href="gui/school/${lesson.student.school.id?c}">${lesson.student.school.name?html}</a></td>
 								</tr>
 								<tr>
 									<td class="data-label"><@lh key="school.color" /></td>
@@ -97,7 +97,7 @@
 			<!-- Right column -->
 			<div class="span4">
 				<@panel id="comments" title=loc("lesson.details.comments")>
-					<@comments url="ui/teacher/lesson/${lesson.id}/comment" />
+					<@comments url="ui/teacher/lesson/${lesson.id?c}/comment" />
 				</@panel>
 			</div>
 		</div>
